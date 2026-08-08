@@ -1,0 +1,127 @@
+{
+  "assets": [
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/card-deep-observatory.png",
+      "sha256": "8a8794f4899e38b02815aef3c962d0c2d8883e11c65d2a3b4cf66b3a88fbe2b8",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/card-lavender.png",
+      "sha256": "b1548c24700e8563cabe2274dfb23f375798327f2b312f062996dc399d8826c4",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/card-midnight-transit.png",
+      "sha256": "5ca1a8d8a09f7d57a39bff544f9e01036b0597e4cb9ed8f7d8b061c4eecf8c71",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/card-registration.png",
+      "sha256": "09a8a4b4eb97a44bb257eea6a8ada6f97b683dfb2d90de093fc26876f0fb267f",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/card-slipware.png",
+      "sha256": "31ce95fce92777fb1a2792d16d1d819dba739716835e667e6f138d3e0b172571",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/card-ultraviolet.png",
+      "sha256": "084b11154a6890a8c4f27175d34c0735da5db056395dfac517b732c8ca2104a4",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/evidence-full-stress-lavender.png",
+      "sha256": "e9fd31112455db86d955e7057ffcca5206c39100639f204c4d8e5aa8d42b82cb",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/evidence-full-stress-ultraviolet.png",
+      "sha256": "9a5f756d1db52bb87e6b33fe3bc35bf3473cdceb64f0489777061cfd26113967",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/evidence-grayscale.png",
+      "sha256": "81e87ab7a393ff82b75378ff6b555ad3a73cd3d275a2cb0ef537718eab9b9fdc",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/evidence-line.png",
+      "sha256": "0c9003856aae01086fc6991e6b6bf45eb8daae5e4038dfa3d293197df49eb3f5",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/evidence-matrix.png",
+      "sha256": "8595c28cff5a6fb0e67a2d333fc2246fb4df2fd8971b781bfbc225a76d7559b5",
+      "width": 1180
+    },
+    {
+      "bytes": 12277833,
+      "height": 1420,
+      "path": "assets/evidence-paper-183mm.png",
+      "sha256": "867e9514fb8ac9519f8e3239210463806e7ee2fb67726f3add05b23514fd5143",
+      "width": 2161
+    },
+    {
+      "bytes": 3129058,
+      "height": 744,
+      "path": "assets/evidence-paper-89mm.png",
+      "sha256": "5bf4f27843a5ce6dfe4d53bee3fc4460ca165b4d88f0eb98e32f1cd0800b4253",
+      "width": 1051
+    },
+    {
+      "bytes": 1089308,
+      "height": 760,
+      "path": "assets/evidence-phone.png",
+      "sha256": "88cfd77f221a0fce0939b0a95b833bd7bd409a90cbbfb4ba96dfa179a442fcdc",
+      "width": 358
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/evidence-scatter.png",
+      "sha256": "10318dbd70b81e3be76fe6d792b6dbcf5cd8c630bb432def358afdd1db1504e7",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/evidence-summary-threshold.png",
+      "sha256": "24a2bb988bed63bc100c482028808f8cc84dfce9cc50e86807c820ff59dbfdcb",
+      "width": 1180
+    },
+    {
+      "bytes": 3777438,
+      "height": 800,
+      "path": "assets/hero-slipware-line.png",
+      "sha256": "0c9003856aae01086fc6991e6b6bf45eb8daae5e4038dfa3d293197df49eb3f5",
+      "width": 1180
+    }
+  ],
+  "provenance": "Figurestead · deterministic synthetic evidence",
+  "schemaVersion": "figurestead.public-alpha-assets/1",
+  "sourceCommit": "1a219e0e393751f2ca2500ed79d56b941b09d658",
+  "synthetic": true
+}

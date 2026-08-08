@@ -1,0 +1,28 @@
+{
+  "drafts": {},
+  "name": "Slipware",
+  "schemaVersion": "figurestead.theme-pack/1",
+  "themes": {
+    "slipware": {
+      "faint": "#9C8F84",
+      "field": "#E0D3C4",
+      "grid": "#DCD1C2",
+      "key": "slipware",
+      "label": "#2B2320",
+      "name": "Slipware",
+      "panel": "#FAF5EE",
+      "primary": "#1B4C8A",
+      "secondary": "#6B5D53",
+      "series": [
+        "#1B4C8A",
+        "#143F33",
+        "#0E766E",
+        "#8B7A16",
+        "#3C97AC"
+      ],
+      "spine": "#6E6055",
+      "summaryCore": "#0E0A08",
+      "warm": "#B4552A"
+    }
+  }
+}

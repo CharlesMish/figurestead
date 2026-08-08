@@ -1,0 +1,28 @@
+{
+  "drafts": {},
+  "name": "Deep Observatory / Sage Core",
+  "schemaVersion": "figurestead.theme-pack/1",
+  "themes": {
+    "deep_observatory_sage_core": {
+      "faint": "#71817C",
+      "field": "#10171D",
+      "grid": "#29393A",
+      "key": "deep_observatory_sage_core",
+      "label": "#E3ECE8",
+      "name": "Deep Observatory / Sage Core",
+      "panel": "#19252A",
+      "primary": "#5A9FA4",
+      "secondary": "#A8B5AE",
+      "series": [
+        "#5A9FA4",
+        "#C59C3E",
+        "#B44D4F",
+        "#8A76C4",
+        "#7BB888"
+      ],
+      "spine": "#748780",
+      "summaryCore": "#C1C7BC",
+      "warm": "#D45A34"
+    }
+  }
+}

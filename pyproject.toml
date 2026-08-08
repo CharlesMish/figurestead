@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "figurestead"
+version = "0.9.0a1"
+description = "A framework-free scientific figure system for deterministic, inspectable Python and browser output."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = ["matplotlib>=3.7", "numpy>=1.24", "Pillow>=10"]
+
+[project.urls]
+Homepage = "https://github.com/CharlesMish/figurestead"
+Repository = "https://github.com/CharlesMish/figurestead"
+Issues = "https://github.com/CharlesMish/figurestead/issues"
+
+[project.optional-dependencies]
+themes = ["PyYAML>=6"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+figurestead = ["themes/*.json"]
+
+[project.scripts]
+figurestead-gallery = "figurestead.gallery:main"
+figurestead-motion-gallery = "figurestead.motion_gallery:main"
+figurestead-portable = "figurestead.portable:main"
+figurestead-theme = "figurestead.theme_io:main"

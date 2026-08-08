@@ -1,0 +1,28 @@
+{
+  "drafts": {},
+  "name": "Midnight Transit / Signal Slate",
+  "schemaVersion": "figurestead.theme-pack/1",
+  "themes": {
+    "midnight_transit_signal_slate": {
+      "faint": "#637980",
+      "field": "#0A1522",
+      "grid": "#263D4E",
+      "key": "midnight_transit_signal_slate",
+      "label": "#DDE7E5",
+      "name": "Midnight Transit / Signal Slate",
+      "panel": "#13243A",
+      "primary": "#5EA5C8",
+      "secondary": "#9EAFB3",
+      "series": [
+        "#5EA5C8",
+        "#8BAF81",
+        "#B6696B",
+        "#8B69A3",
+        "#CDAD33"
+      ],
+      "spine": "#708A93",
+      "summaryCore": "#C3C8BC",
+      "warm": "#E06018"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "drafts": {},
+  "name": "Lavender Fog Notebook",
+  "schemaVersion": "figurestead.theme-pack/1",
+  "themes": {
+    "lavender_fog_notebook": {
+      "faint": "#7B718B",
+      "field": "#F4F1F8",
+      "grid": "#DDD7E7",
+      "key": "lavender_fog_notebook",
+      "label": "#201B2B",
+      "name": "Lavender Fog Notebook",
+      "panel": "#FCFAFF",
+      "primary": "#6855A8",
+      "secondary": "#51495F",
+      "series": [
+        "#6855A8",
+        "#18776D",
+        "#9B5B16",
+        "#A44E5E",
+        "#326D9B",
+        "#52752C"
+      ],
+      "spine": "#9087A1",
+      "summaryCore": "#18776D",
+      "warm": "#A44E5E"
+    }
+  }
+}

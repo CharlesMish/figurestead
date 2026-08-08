@@ -1,0 +1,31 @@
+{
+  "name": "@figurestead/web",
+  "version": "0.9.0-alpha.1",
+  "private": false,
+  "type": "module",
+  "license": "MIT",
+  "description": "A framework-free scientific figure system for deterministic, inspectable Python and browser output.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CharlesMish/figurestead.git",
+    "directory": "web"
+  },
+  "homepage": "https://github.com/CharlesMish/figurestead#readme",
+  "bugs": {
+    "url": "https://github.com/CharlesMish/figurestead/issues"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./extensions/temporal": "./src/extensions/temporal/index.js"
+  },
+  "files": [
+    "src",
+    "LICENSE",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "TRADEMARKS.md"
+  ]
+}

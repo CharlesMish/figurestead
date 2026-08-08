@@ -1,0 +1,29 @@
+{
+  "drafts": {},
+  "name": "Ultraviolet Laboratory",
+  "schemaVersion": "figurestead.theme-pack/1",
+  "themes": {
+    "ultraviolet_laboratory": {
+      "faint": "#8D83B2",
+      "field": "#0D0B18",
+      "grid": "#302A4E",
+      "key": "ultraviolet_laboratory",
+      "label": "#F6F2FF",
+      "name": "Ultraviolet Laboratory",
+      "panel": "#171329",
+      "primary": "#B59BFF",
+      "secondary": "#C9C0E5",
+      "series": [
+        "#B59BFF",
+        "#67D7C4",
+        "#F2A65A",
+        "#E57FA6",
+        "#8DB7FF",
+        "#BBD66B"
+      ],
+      "spine": "#4D4672",
+      "summaryCore": "#67D7C4",
+      "warm": "#F2A65A"
+    }
+  }
+}

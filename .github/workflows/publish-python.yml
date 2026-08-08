@@ -1,0 +1,263 @@
+name: Publish accepted Figurestead Python artifacts
+
+run-name: >-
+  Figurestead 0.9.0a1 → ${{ inputs.destination }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      destination:
+        description: Registry destination
+        required: true
+        type: choice
+        options:
+          - testpypi
+          - pypi
+      expected_commit:
+        description: Exact 40-character commit selected in the Run workflow menu
+        required: true
+        type: string
+      confirmation:
+        description: Type the exact confirmation phrase documented in release/README.md
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: figurestead-python-${{ inputs.destination }}
+  cancel-in-progress: false
+
+jobs:
+  verify-local-artifacts:
+    name: Verify repository identity and accepted bytes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the selected commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Authenticate dispatch and accepted distributions
+        shell: bash
+        env:
+          DESTINATION: ${{ inputs.destination }}
+          EXPECTED_COMMIT: ${{ inputs.expected_commit }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+          REF_PROTECTED: ${{ github.ref_protected }}
+        run: |
+          set -euo pipefail
+
+          test "$GITHUB_REPOSITORY" = "CharlesMish/figurestead"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$REF_PROTECTED" = "true"
+          [[ "$EXPECTED_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          test "$GITHUB_SHA" = "$EXPECTED_COMMIT"
+
+          case "$DESTINATION" in
+            testpypi)
+              expected_confirmation="publish figurestead 0.9.0a1 to testpypi"
+              ;;
+            pypi)
+              expected_confirmation="publish figurestead 0.9.0a1 to pypi"
+              ;;
+            *)
+              exit 64
+              ;;
+          esac
+          test "$CONFIRMATION" = "$expected_confirmation"
+
+          release_dir="release/python/0.9.0a1"
+          dist_dir="$release_dir/dist"
+
+          mapfile -t members < <(find "$dist_dir" -maxdepth 1 -type f -printf '%f\n' | LC_ALL=C sort)
+          expected_members=(
+            "figurestead-0.9.0a1-py3-none-any.whl"
+            "figurestead-0.9.0a1.tar.gz"
+          )
+          test "${#members[@]}" -eq "${#expected_members[@]}"
+          test "${members[*]}" = "${expected_members[*]}"
+
+          (
+            cd "$dist_dir"
+            sha256sum --check ../SHA256SUMS.txt
+            python -m zipfile --test "figurestead-0.9.0a1-py3-none-any.whl"
+            tar -tzf "figurestead-0.9.0a1.tar.gz" >/dev/null
+          )
+
+      - name: Stage exact distributions between jobs
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: figurestead-python-0.9.0a1
+          path: release/python/0.9.0a1/dist/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+
+  publish-testpypi:
+    name: Publish exact files to TestPyPI
+    if: inputs.destination == 'testpypi'
+    needs: verify-local-artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/figurestead
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download authenticated distributions
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        with:
+          name: figurestead-python-0.9.0a1
+          path: dist/
+
+      - name: Recheck exact bytes before OIDC minting
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "29bdfb3f38d0933a237248fc9cdf5e6b92ebf1dff47a734fc363f07061e4ddb5  dist/figurestead-0.9.0a1-py3-none-any.whl" | sha256sum --check -
+          echo "935d3344ceb1e6e43fbe96215115079dda9783320c7c53d16e03a08dc75570bb  dist/figurestead-0.9.0a1.tar.gz" | sha256sum --check -
+
+      - name: Publish to TestPyPI with Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1, resolved 2026-08-08
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: dist/
+          print-hash: true
+          attestations: true
+          skip-existing: false
+
+  verify-testpypi:
+    name: Verify public TestPyPI bytes
+    if: inputs.destination == 'testpypi'
+    needs: publish-testpypi
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Check out verifier and manifest
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Verify TestPyPI JSON and downloaded bytes
+        run: >-
+          python release/python/verify_index_release.py
+          --index https://test.pypi.org
+          --project figurestead
+          --version 0.9.0a1
+          --manifest release/python/0.9.0a1/SHA256SUMS.txt
+
+  require-testpypi-before-pypi:
+    name: Require identical verified TestPyPI release
+    if: inputs.destination == 'pypi'
+    needs: verify-local-artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Check out verifier and manifest
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Reauthenticate the TestPyPI candidate
+        run: >-
+          python release/python/verify_index_release.py
+          --index https://test.pypi.org
+          --project figurestead
+          --version 0.9.0a1
+          --manifest release/python/0.9.0a1/SHA256SUMS.txt
+
+  publish-pypi:
+    name: Publish exact files to PyPI
+    if: inputs.destination == 'pypi'
+    needs:
+      - verify-local-artifacts
+      - require-testpypi-before-pypi
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: pypi
+      url: https://pypi.org/p/figurestead
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download authenticated distributions
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        with:
+          name: figurestead-python-0.9.0a1
+          path: dist/
+
+      - name: Recheck exact bytes before OIDC minting
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "29bdfb3f38d0933a237248fc9cdf5e6b92ebf1dff47a734fc363f07061e4ddb5  dist/figurestead-0.9.0a1-py3-none-any.whl" | sha256sum --check -
+          echo "935d3344ceb1e6e43fbe96215115079dda9783320c7c53d16e03a08dc75570bb  dist/figurestead-0.9.0a1.tar.gz" | sha256sum --check -
+
+      - name: Publish to PyPI with Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1, resolved 2026-08-08
+        with:
+          packages-dir: dist/
+          print-hash: true
+          attestations: true
+          skip-existing: false
+
+  verify-pypi:
+    name: Verify public PyPI bytes
+    if: inputs.destination == 'pypi'
+    needs: publish-pypi
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Check out verifier and manifest
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Verify PyPI JSON and downloaded bytes
+        run: >-
+          python release/python/verify_index_release.py
+          --index https://pypi.org
+          --project figurestead
+          --version 0.9.0a1
+          --manifest release/python/0.9.0a1/SHA256SUMS.txt
+
+  clean-install-pypi:
+    name: Clean PyPI install — Python ${{ matrix.python }}
+    if: inputs.destination == 'pypi'
+    needs: verify-pypi
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        python:
+          - "3.10"
+          - "3.12"
+          - "3.14"
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install exact public version and import
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir "figurestead==0.9.0a1"
+          python -c "import figurestead; print(figurestead.__file__)"

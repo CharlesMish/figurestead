@@ -1,0 +1,28 @@
+{
+  "drafts": {},
+  "name": "Registration Ink",
+  "schemaVersion": "figurestead.theme-pack/1",
+  "themes": {
+    "registration_ink": {
+      "faint": "#94877B",
+      "field": "#E7DFD2",
+      "grid": "#D7CCC0",
+      "key": "registration_ink",
+      "label": "#271E1B",
+      "name": "Registration Ink",
+      "panel": "#F5EFE4",
+      "primary": "#9C3038",
+      "secondary": "#62564F",
+      "series": [
+        "#9C3038",
+        "#1C6673",
+        "#4E3E78",
+        "#B16D28",
+        "#6C2948"
+      ],
+      "spine": "#806F64",
+      "summaryCore": "#241B1C",
+      "warm": "#A83A9A"
+    }
+  }
+}

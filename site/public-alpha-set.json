@@ -1,0 +1,109 @@
+{
+  "catalogSha256": "c2ef1f251386151eb925d1e30cd59638547078e4b12ed3cb83d6af87da0de200",
+  "internalCatalog": {
+    "packs": 16,
+    "themes": 40
+  },
+  "schemaVersion": "figurestead.public-alpha-set/1",
+  "sourceCommit": "1a219e0e393751f2ca2500ed79d56b941b09d658",
+  "themes": [
+    {
+      "group": "foundation",
+      "guidance": "sage-toned dark five-series foundation",
+      "image": "assets/card-deep-observatory.png",
+      "key": "deep_observatory_sage_core",
+      "name": "Deep Observatory / Sage Core",
+      "recommendedColorLedSeries": 5,
+      "role": "Sage-toned dark five-series foundation",
+      "series": [
+        "#5A9FA4",
+        "#C59C3E",
+        "#B44D4F",
+        "#8A76C4",
+        "#7BB888"
+      ]
+    },
+    {
+      "group": "foundation",
+      "guidance": "light five-series flagship",
+      "image": "assets/card-slipware.png",
+      "key": "slipware",
+      "name": "Slipware",
+      "recommendedColorLedSeries": 5,
+      "role": "Light five-series flagship",
+      "series": [
+        "#1B4C8A",
+        "#143F33",
+        "#0E766E",
+        "#8B7A16",
+        "#3C97AC"
+      ]
+    },
+    {
+      "group": "foundation",
+      "guidance": "balanced dark five-series foundation",
+      "image": "assets/card-midnight-transit.png",
+      "key": "midnight_transit_signal_slate",
+      "name": "Midnight Transit / Signal Slate",
+      "recommendedColorLedSeries": 5,
+      "role": "Balanced dark five-series foundation",
+      "series": [
+        "#5EA5C8",
+        "#8BAF81",
+        "#B6696B",
+        "#8B69A3",
+        "#CDAD33"
+      ]
+    },
+    {
+      "group": "signature",
+      "guidance": "Use active marker/dash redundancy for larger series counts.",
+      "image": "assets/card-ultraviolet.png",
+      "key": "ultraviolet_laboratory",
+      "name": "Ultraviolet Laboratory",
+      "recommendedColorLedSeries": 3,
+      "role": "High-contrast dark signature",
+      "series": [
+        "#B59BFF",
+        "#67D7C4",
+        "#F2A65A",
+        "#E57FA6",
+        "#8DB7FF",
+        "#BBD66B"
+      ]
+    },
+    {
+      "group": "signature",
+      "guidance": "Use active marker/dash redundancy for larger series counts.",
+      "image": "assets/card-lavender.png",
+      "key": "lavender_fog_notebook",
+      "name": "Lavender Fog Notebook",
+      "recommendedColorLedSeries": 3,
+      "role": "Editorial light signature",
+      "series": [
+        "#6855A8",
+        "#18776D",
+        "#9B5B16",
+        "#A44E5E",
+        "#326D9B",
+        "#52752C"
+      ]
+    },
+    {
+      "group": "signature",
+      "guidance": "publication/registration-print specialist",
+      "image": "assets/card-registration.png",
+      "key": "registration_ink",
+      "name": "Registration Ink",
+      "recommendedColorLedSeries": 5,
+      "role": "Publication / registration-print specialist",
+      "series": [
+        "#9C3038",
+        "#1C6673",
+        "#4E3E78",
+        "#B16D28",
+        "#6C2948"
+      ]
+    }
+  ]
+}
