@@ -38,7 +38,8 @@ jobs:
           test "$GITHUB_REPOSITORY" = "CharlesMish/figurestead"
           test "$GITHUB_REF" = "refs/heads/main"
           test "$(git rev-parse 'refs/tags/v0.9.0-alpha.1^{commit}')" = "f3cc4a4dbf40b60635707c5ad6e21856bac57057"
-          git diff --quiet f3cc4a4dbf40b60635707c5ad6e21856bac57057 -- site
+          changed_site_files="$(git diff --name-only f3cc4a4dbf40b60635707c5ad6e21856bac57057 -- site | LC_ALL=C sort)"
+          test "$changed_site_files" = $'site/evidence/index.html\nsite/index.html\nsite/styles.css'
           test -f site/index.html
           test -f site/evidence/index.html
           test -f site/ASSET_MANIFEST.json
@@ -50,6 +51,14 @@ jobs:
           from pathlib import Path
 
           root = Path("site")
+          accepted_pages = {
+              "index.html": "af0d82e4cdb8a1a33841459359b3d1d97b415d7a054b311476051b76926bfa77",
+              "evidence/index.html": "4a9a8dc174299a14ed63719942ff17b59a5cc57a353b10bddf986bcf15907b9e",
+              "styles.css": "761d00c69424db87fa0430f639ba6ff2bea1d94cbcb4501f7744ceabdda93d28",
+          }
+          for relative, expected in accepted_pages.items():
+              assert hashlib.sha256((root / relative).read_bytes()).hexdigest() == expected
+
           manifest = json.loads((root / "ASSET_MANIFEST.json").read_text(encoding="utf-8"))
           assert manifest["schemaVersion"] == "figurestead.public-alpha-assets/1"
           assert manifest["synthetic"] is True
