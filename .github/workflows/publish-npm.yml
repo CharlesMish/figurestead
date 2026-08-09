@@ -1,0 +1,164 @@
+name: Publish accepted Figurestead browser artifact
+
+run-name: >-
+  @figurestead/web ${{ inputs.version }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact accepted npm version, without a leading v
+        required: true
+        type: string
+      dist_tag:
+        description: Explicit npm dist-tag for the accepted version
+        required: true
+        default: alpha
+        type: choice
+        options:
+          - alpha
+          - next
+          - latest
+      expected_commit:
+        description: Exact 40-character protected-main commit selected for dispatch
+        required: true
+        type: string
+      expected_sha256:
+        description: Exact SHA-256 from the accepted release manifest
+        required: true
+        type: string
+      confirmation:
+        description: Type the exact phrase documented in release/npm/README.md
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: figurestead-npm-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Authenticate and publish exact accepted tarball
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@figurestead/web/v/${{ inputs.version }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out selected commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up the accepted Node/npm runtime
+        uses: actions/setup-node@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          node-version: 24.17.0
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Authenticate repository, manifest, metadata, and registry absence
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+          DIST_TAG: ${{ inputs.dist_tag }}
+          EXPECTED_COMMIT: ${{ inputs.expected_commit }}
+          EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+          REF_PROTECTED: ${{ github.ref_protected }}
+        run: |
+          set -euo pipefail
+
+          test "$GITHUB_REPOSITORY" = "CharlesMish/figurestead"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$REF_PROTECTED" = "true"
+          [[ "$EXPECTED_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$EXPECTED_SHA256" =~ ^[0-9a-f]{64}$ ]]
+          test "$GITHUB_SHA" = "$EXPECTED_COMMIT"
+          test "$CONFIRMATION" = "publish @figurestead/web $VERSION with tag $DIST_TAG from accepted tarball"
+          case "$DIST_TAG" in alpha|next|latest) ;; *) exit 64 ;; esac
+          test "$(node --version)" = "v24.17.0"
+          test "$(npm --version)" = "11.13.0"
+
+          release_dir="release/npm/$VERSION"
+          dist_dir="$release_dir/dist"
+          tarball="$dist_dir/figurestead-web-$VERSION.tgz"
+          manifest="$release_dir/SHA256SUMS.txt"
+
+          test -f "$tarball"
+          test -f "$manifest"
+          mapfile -t release_members < <(find "$release_dir" -type f -printf '%P\n' | LC_ALL=C sort)
+          expected_members=("SHA256SUMS.txt" "dist/figurestead-web-$VERSION.tgz")
+          test "${#release_members[@]}" -eq 2
+          test "${release_members[*]}" = "${expected_members[*]}"
+          test "$(wc -l < "$manifest" | tr -d ' ')" = "1"
+          test "$(cut -d ' ' -f 1 "$manifest")" = "$EXPECTED_SHA256"
+          (
+            cd "$dist_dir"
+            sha256sum --check "../SHA256SUMS.txt"
+            tar -tzf "figurestead-web-$VERSION.tgz" >/dev/null
+          )
+
+          TARBALL="$tarball" VERSION="$VERSION" node --input-type=module <<'NODE'
+          import { execFileSync } from "node:child_process";
+          const packageJson = JSON.parse(execFileSync(
+            "tar", ["-xOf", process.env.TARBALL, "package/package.json"], { encoding: "utf8" }
+          ));
+          if (packageJson.name !== "@figurestead/web") throw new Error("package name differs");
+          if (packageJson.version !== process.env.VERSION) throw new Error("package version differs");
+          if (packageJson.private !== false) throw new Error("private disposition differs");
+          if (packageJson.repository?.url !== "git+https://github.com/CharlesMish/figurestead.git") {
+            throw new Error("repository URL differs");
+          }
+          const url = "https://registry.npmjs.org/" + encodeURIComponent(packageJson.name) + "/" + encodeURIComponent(packageJson.version);
+          const response = await fetch(url, { headers: { accept: "application/json" } });
+          if (response.status === 200) throw new Error("version already exists");
+          if (response.status !== 404) throw new Error(`registry preflight returned ${response.status}`);
+          NODE
+
+      - name: Publish with npm Trusted Publishing
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+          DIST_TAG: ${{ inputs.dist_tag }}
+        run: >-
+          npm publish
+          "release/npm/$VERSION/dist/figurestead-web-$VERSION.tgz"
+          --access public
+          --tag "$DIST_TAG"
+          --registry=https://registry.npmjs.org/
+
+  verify-public:
+    name: Verify exact public registry bytes
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          node-version: 24.17.0
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Download and verify published tarball
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+          DIST_TAG: ${{ inputs.dist_tag }}
+          EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+        run: |
+          set -euo pipefail
+          mkdir registry-copy
+          packed="$(npm pack "@figurestead/web@$VERSION" --pack-destination registry-copy --registry=https://registry.npmjs.org/)"
+          test "$packed" = "figurestead-web-$VERSION.tgz"
+          echo "$EXPECTED_SHA256  registry-copy/$packed" | sha256sum --check -
+          test "$(npm view "@figurestead/web@$VERSION" version --registry=https://registry.npmjs.org/)" = "$VERSION"
+          test "$(npm view "@figurestead/web" "dist-tags.$DIST_TAG" --registry=https://registry.npmjs.org/)" = "$VERSION"
