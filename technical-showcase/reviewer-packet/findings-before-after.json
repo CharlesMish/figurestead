@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "figurestead.technical-showcase-review-closure/1",
+  "baseline": {
+    "source": "pre-review local V2 snapshot",
+    "findings": [
+      {
+        "id": "report-key-source",
+        "before": "Five CSS circles hardcoded to #5A9FA4, #C59C3E, #B44D4F, #8A76C4, and #7BB888; zero matched the resolved Slipware series colors.",
+        "after": "Five rendered key entries derive from resolveSeriesStyles(); audit compares rendered color, glyph, and line style with the resolved contract styles."
+      },
+      {
+        "id": "hidden-keyboard-stops",
+        "before": "Six focusable summary elements were placed in permanently clipped 1x1 companions.",
+        "after": "Hidden companions contain zero interactive elements and retain six data tables; the visible mode retains an interactive disclosure."
+      },
+      {
+        "id": "duplicate-headings",
+        "before": "Six single-panel companions repeated the contract title as an immediate panel heading.",
+        "after": "Zero immediate duplicate contract/panel heading pairs."
+      },
+      {
+        "id": "cvd-scope",
+        "before": "Visible and implementation terms mixed protanopia/deuteranopia/tritanopia with Protanomaly/Deuteranomaly/Tritanomaly reference names.",
+        "after": "Severity-1 protanomaly and deuteranomaly simulations plus a severity-1 tritanomaly approximation are named consistently in UI, metadata, and validation."
+      },
+      {
+        "id": "motion-sequence-claim",
+        "before": "Free-running intermediate captures were labelled a deterministic motion sequence.",
+        "after": "The gate is labelled a recorded restrained-motion sequence; requested and observed progress are retained, while only terminal invariance is asserted."
+      },
+      {
+        "id": "paper-delivery",
+        "before": "The two pages served 15406891 canonical PNG bytes directly.",
+        "after": "The same canonical files are linked for inspection while 384171 bytes of lossless web derivatives are served, a 97.506% reduction; decoded RGBA pixels are identical."
+      },
+      {
+        "id": "panel-d-labels",
+        "before": "Wide Panel D visibly truncated full category keys such as headwat… and agricul….",
+        "after": "Panel D alone renders HW, FT, AF, UR, and ES; the shared key supplies full site names."
+      },
+      {
+        "id": "group-semantics",
+        "before": "Three generic containers carried aria-label without an exposed naming role.",
+        "after": "Report key, CVD plate, and paper pair are named role=group structures associated with visible text."
+      },
+      {
+        "id": "packet-hygiene",
+        "before": "Browser records exposed local executable paths; preservation inputs included OS artifacts.",
+        "after": "Browser/runtime versions and executable hashes are recorded without machine paths; new evidence excludes OS-artifact entries."
+      }
+    ]
+  },
+  "afterVerification": {
+    "status": "PASS",
+    "chromiumCases": 4,
+    "firefoxCases": 4,
+    "findingCount": 0
+  }
+}

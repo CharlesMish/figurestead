@@ -1,0 +1,2899 @@
+{
+  "schemaVersion": "figurestead.technical-showcase-local-verification/2",
+  "generatedAt": "2026-08-10T14:19:04.216Z",
+  "baseUrl": "http://127.0.0.1:4177/technical-showcase/",
+  "engine": "firefox",
+  "playwrightVersion": "1.62.0",
+  "browserVersion": "153.0",
+  "nodeVersion": "v24.14.0",
+  "executableSha256": "65ecab21ee6aa479836eb27aec213e15295f07ca21b5aa995d45bcaff4d09d7d",
+  "cases": [
+    {
+      "width": 390,
+      "motionPreference": "no-preference",
+      "reducedMotion": false,
+      "structure": {
+        "title": "Figurestead — local V2 Technical Showcase",
+        "language": "en",
+        "innerWidth": 390,
+        "clientWidth": 390,
+        "horizontalOverflow": 0,
+        "pageHeight": 6192,
+        "headings": [
+          {
+            "level": 1,
+            "text": "A figure system under scientific load."
+          },
+          {
+            "level": 2,
+            "text": "Evidence in motion"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "One coherent synthetic report"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "Rainfall–response relationship"
+          },
+          {
+            "level": 2,
+            "text": "Nitrate distribution by site"
+          },
+          {
+            "level": 2,
+            "text": "Sampling coverage, 2021–2024"
+          },
+          {
+            "level": 2,
+            "text": "Perceptual stress, simulated"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "Paper, at the size it will live"
+          }
+        ],
+        "headingJumps": [],
+        "duplicateIds": [],
+        "selectedRecipe": "restrained",
+        "recipes": [
+          "static",
+          "restrained",
+          "expressive"
+        ],
+        "mainAction": "Play restrained motion",
+        "fingerprintMatch": true,
+        "pixelMatch": true,
+        "terminalText": "Terminal evidence invariant · fnv1a32-c46d7647",
+        "terminalPixelFingerprints": {
+          "static": "fnv1a32-55cffca1@362x196",
+          "restrained": "fnv1a32-55cffca1@362x196",
+          "expressive": "fnv1a32-55cffca1@362x196"
+        },
+        "terminalNormalizedFingerprints": {
+          "static": "fnv1a32-c46d7647",
+          "restrained": "fnv1a32-c46d7647",
+          "expressive": "fnv1a32-c46d7647"
+        },
+        "autoplay": false,
+        "initialStates": {
+          "main": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "line": {
+            "progress": 0,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "scatter": {
+            "progress": 0,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "scatter"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "strip": {
+            "progress": 0,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "strip_summary"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 0,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "dataCounts": {
+          "lineSeries": 5,
+          "lineIntervals": 18,
+          "scatterObservations": 30,
+          "stripObservations": 30,
+          "coverageObservations": 30
+        },
+        "rendererFamilies": [
+          "line",
+          "scatter",
+          "strip_summary",
+          "temporal_coverage"
+        ],
+        "reportPanels": [
+          {
+            "top": 1889.5833740234375,
+            "left": 14
+          },
+          {
+            "top": 2300.166748046875,
+            "left": 14
+          },
+          {
+            "top": 2689.85009765625,
+            "left": 14
+          },
+          {
+            "top": 3079.533447265625,
+            "left": 14
+          }
+        ],
+        "cvdFigures": [
+          {
+            "top": 3903.416748046875,
+            "left": 14
+          },
+          {
+            "top": 4189.31689453125,
+            "left": 14
+          },
+          {
+            "top": 4475.216796875,
+            "left": 14
+          },
+          {
+            "top": 4761.11669921875,
+            "left": 14
+          }
+        ],
+        "paper": [
+          {
+            "width": 115.18333435058594,
+            "top": 5808.31689453125,
+            "captionTop": 5897.43310546875,
+            "caption": "89 mm · single column · canonical PNG"
+          },
+          {
+            "width": 236.81666564941406,
+            "top": 5808.31689453125,
+            "captionTop": 5971.61669921875,
+            "caption": "183 mm · double column · canonical PNG"
+          }
+        ],
+        "paperWidthRatio": 2.0559976578609036,
+        "paperCaptionBaselineDelta": 74.18359375,
+        "cvdFingerprints": {
+          "original": "fnv1a32-84c5409b@362x219",
+          "protanomaly": "fnv1a32-449602d5@362x219",
+          "deuteranomaly": "fnv1a32-a62cc1bc@362x219",
+          "tritanomalyApproximation": "fnv1a32-98f5040d@362x219"
+        },
+        "cvdMethod": {
+          "model": "Machado, Oliveira & Fernandes 2009 severity model",
+          "severity": 1,
+          "colorSpace": "linear-light sRGB with standard sRGB transfer functions",
+          "conditions": {
+            "protanomaly": "Machado severity-1 protanomaly simulation",
+            "deuteranomaly": "Machado severity-1 deuteranomaly simulation",
+            "tritanomalyApproximation": "Machado severity-1 tritanomaly approximation"
+          },
+          "matrices": {
+            "protanomaly": [
+              [
+                0.152286,
+                1.052583,
+                -0.204868
+              ],
+              [
+                0.114503,
+                0.786281,
+                0.099216
+              ],
+              [
+                -0.003882,
+                -0.048116,
+                1.051998
+              ]
+            ],
+            "deuteranomaly": [
+              [
+                0.367322,
+                0.860646,
+                -0.227968
+              ],
+              [
+                0.280085,
+                0.672501,
+                0.047413
+              ],
+              [
+                -0.01182,
+                0.04294,
+                0.968881
+              ]
+            ],
+            "tritanomalyApproximation": [
+              [
+                1.255528,
+                -0.076749,
+                -0.178779
+              ],
+              [
+                -0.078411,
+                0.930809,
+                0.147602
+              ],
+              [
+                0.004733,
+                0.691367,
+                0.3039
+              ]
+            ]
+          }
+        },
+        "cvdVisibleTerminology": "03\n        \n          Perceptual stress, simulated\n          The same terminal five-site figure is reviewed with Machado severity-1 anomaly matrices while marker and dash identity remains unchanged.\n        \n      \n      \n        Synthetic storm response across five watershed sitesDeterministic modeled turbidity response after one rainfall pulseFive deterministic synthetic monitoring-site series across eighteen intervals.Five deterministic synthetic monitoring-site series across eighteen intervals.Horizontal axishours after rainfall onsetVertical axisstandardized turbidity responseRendererlineSynthetic storm response across five watershed sites datahours after rainfall onsetHeadwaterForest tributaryAgricultural forkUrban reachEstuary00.120.180.280.340.210.170.220.390.580.2420.250.30.610.920.3130.420.490.911.310.4540.660.721.221.630.6250.880.951.491.820.861.041.151.681.890.9971.121.251.721.771.1881.061.181.611.551.3390.911.011.421.321.41100.740.831.181.111.38110.590.660.960.941.29120.470.520.780.81.16130.390.430.650.691.03140.330.360.540.60.9150.290.310.460.530.78160.250.270.40.470.68170.220.240.360.430.59Original renderingFoundation palette + redundant encoding\n        Severity-1 protanomaly simulationMachado model\n        Severity-1 deuteranomaly simulationMachado model\n        Severity-1 tritanomaly approximationMachado model\n      \n      \n        Method. Machado, Oliveira & Fernandes’ severity-1 matrices in linear-light sRGB: decode sRGB → apply 3×3 matrix → clamp → encode sRGB. A narrow matrix-and-vector gate checks the browser assumptions against Colour Science’s reference matrices.\n        Limits. These simulations support perceptual review, not medical or accessibility certification, and not testing with people. The referenced tritanomaly result is explicitly treated as an approximation. The public Atlas remains the broader non-color evidence.\n        Machado et al. 2009 · Colour Science reference implementation",
+        "immediateDuplicateCompanionHeadings": [],
+        "hiddenCompanionInteractive": [],
+        "hiddenCompanionTableCount": 6,
+        "reportKey": [
+          {
+            "series": "headwater",
+            "rendered": {
+              "color": "#1B4C8A",
+              "computedLineColor": "rgb(27, 76, 138)",
+              "computedMarkerColor": "rgb(27, 76, 138)",
+              "glyph": "ring",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#1B4C8A",
+              "glyph": "ring",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "forest",
+            "rendered": {
+              "color": "#143F33",
+              "computedLineColor": "rgb(20, 63, 51)",
+              "computedMarkerColor": "rgb(20, 63, 51)",
+              "glyph": "square",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#143F33",
+              "glyph": "square",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "agricultural",
+            "rendered": {
+              "color": "#0E766E",
+              "computedLineColor": "rgb(14, 118, 110)",
+              "computedMarkerColor": "rgb(14, 118, 110)",
+              "glyph": "triangle",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#0E766E",
+              "glyph": "triangle",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "urban",
+            "rendered": {
+              "color": "#8B7A16",
+              "computedLineColor": "rgb(139, 122, 22)",
+              "computedMarkerColor": "rgb(139, 122, 22)",
+              "glyph": "diamond",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#8B7A16",
+              "glyph": "diamond",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "estuary",
+            "rendered": {
+              "color": "#3C97AC",
+              "computedLineColor": "rgb(60, 151, 172)",
+              "computedMarkerColor": "rgb(60, 151, 172)",
+              "glyph": "ring",
+              "lineStyle": "dash",
+              "strokeDasharray": "7 4"
+            },
+            "expected": {
+              "color": "#3C97AC",
+              "glyph": "ring",
+              "lineStyle": "dash"
+            },
+            "matches": true
+          }
+        ],
+        "coverageLabels": [
+          "HW",
+          "FT",
+          "AF",
+          "UR",
+          "ES"
+        ],
+        "semanticGroups": [
+          {
+            "selector": ".report-key",
+            "role": "group",
+            "labelledBy": "report-key-title"
+          },
+          {
+            "selector": ".cvd-grid",
+            "role": "group",
+            "labelledBy": "cvd-title"
+          },
+          {
+            "selector": ".paper-pair",
+            "role": "group",
+            "labelledBy": "paper-title"
+          }
+        ],
+        "visibleModeProbe": {
+          "hasVisibleClass": true,
+          "disclosureCount": 1,
+          "focusableDisclosureCount": 1
+        },
+        "definitionTop": 326.5,
+        "ledeTop": 473.5,
+        "focusableCount": 11,
+        "paperSources": [
+          {
+            "served": "../site/assets/web/evidence-paper-89mm.png",
+            "canonical": "../site/assets/evidence-paper-89mm.png",
+            "naturalWidth": 1051,
+            "naturalHeight": 744
+          },
+          {
+            "served": "../site/assets/web/evidence-paper-183mm.png",
+            "canonical": "../site/assets/evidence-paper-183mm.png",
+            "naturalWidth": 2161,
+            "naturalHeight": 1420
+          }
+        ],
+        "imageFailures": [],
+        "bannedText": [],
+        "presentationViolations": [],
+        "publicNavigationCount": 0
+      },
+      "keyboard": {
+        "sequence": [
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "#main",
+            "text": "Skip to technical showcase",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9136.599731445312,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "value": "restrained",
+            "href": null,
+            "text": "",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 196,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "motion-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play restrained motion",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 7626.1748971557245,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "report-line-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play point-to-line motion",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 6092.668656158494,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "report-coverage-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play coverage reveal",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 4995.732175699901,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "https://doi.org/10.1109/TVCG.2009.113",
+            "text": "Machado et al. 2009",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 1760.0332336425781,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "https://colour.readthedocs.io/en/latest/generated/colour.matrix_cvd_Machado2009.html",
+            "text": "Colour Science reference implementation",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9283.183395385742,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "../site/assets/evidence-paper-89mm.png",
+            "text": "Open canonical full-resolution 89 millimetre paper evidence",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9458.471706763376,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "../site/assets/evidence-paper-183mm.png",
+            "text": "Open canonical full-resolution 183 millimetre paper evidence",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 37014.44556371053,
+            "clippedAncestors": []
+          }
+        ],
+        "completedCycle": true,
+        "arrowLeft": {
+          "tag": "input",
+          "id": null,
+          "type": "radio",
+          "value": "static",
+          "href": null,
+          "text": "",
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "visibleArea": 196,
+          "clippedAncestors": []
+        },
+        "arrowRight": {
+          "tag": "input",
+          "id": null,
+          "type": "radio",
+          "value": "restrained",
+          "href": null,
+          "text": "",
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "visibleArea": 196,
+          "clippedAncestors": []
+        }
+      },
+      "motion": {
+        "reducedMotion": false,
+        "initial": {
+          "selected": "restrained",
+          "action": "Play restrained motion",
+          "main": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "restrainedStarted": {
+          "progress": 0,
+          "playing": true,
+          "reducedMotion": false,
+          "renderers": [
+            "line"
+          ],
+          "sceneVersion": "figurestead.scene/1",
+          "resolvedSceneVersion": "figurestead.resolved-scene/1",
+          "composedSceneVersion": "figurestead.composed-scene/1",
+          "profile": "atlas",
+          "destroyed": false
+        },
+        "restrainedSettled": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Replay restrained motion",
+          "pixels": "fnv1a32-57928655@362x196"
+        },
+        "staticState": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Static terminal state",
+          "disabled": true,
+          "pixels": "fnv1a32-57928655@362x196"
+        },
+        "expressiveReady": "Play expressive motion",
+        "expressiveStarted": {
+          "progress": 0,
+          "playing": true,
+          "reducedMotion": false,
+          "renderers": [
+            "line"
+          ],
+          "sceneVersion": "figurestead.scene/1",
+          "resolvedSceneVersion": "figurestead.resolved-scene/1",
+          "composedSceneVersion": "figurestead.composed-scene/1",
+          "profile": "atlas",
+          "destroyed": false
+        },
+        "expressiveSettled": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Replay expressive motion",
+          "pixels": "fnv1a32-57928655@362x196"
+        },
+        "localStarted": {
+          "line": {
+            "progress": 0.03332999999999993,
+            "playing": true,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 0,
+            "playing": true,
+            "reducedMotion": false,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "localSettled": {
+          "line": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "lineAction": "Replay point-to-line motion",
+          "coverageAction": "Replay coverage reveal"
+        }
+      },
+      "runtimeErrors": [],
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "motionPreference": "reduce",
+      "reducedMotion": true,
+      "structure": {
+        "title": "Figurestead — local V2 Technical Showcase",
+        "language": "en",
+        "innerWidth": 390,
+        "clientWidth": 390,
+        "horizontalOverflow": 0,
+        "pageHeight": 6192,
+        "headings": [
+          {
+            "level": 1,
+            "text": "A figure system under scientific load."
+          },
+          {
+            "level": 2,
+            "text": "Evidence in motion"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "One coherent synthetic report"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "Rainfall–response relationship"
+          },
+          {
+            "level": 2,
+            "text": "Nitrate distribution by site"
+          },
+          {
+            "level": 2,
+            "text": "Sampling coverage, 2021–2024"
+          },
+          {
+            "level": 2,
+            "text": "Perceptual stress, simulated"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "Paper, at the size it will live"
+          }
+        ],
+        "headingJumps": [],
+        "duplicateIds": [],
+        "selectedRecipe": "restrained",
+        "recipes": [
+          "static",
+          "restrained",
+          "expressive"
+        ],
+        "mainAction": "Play restrained motion",
+        "fingerprintMatch": true,
+        "pixelMatch": true,
+        "terminalText": "Terminal evidence invariant · fnv1a32-c46d7647",
+        "terminalPixelFingerprints": {
+          "static": "fnv1a32-55cffca1@362x196",
+          "restrained": "fnv1a32-55cffca1@362x196",
+          "expressive": "fnv1a32-55cffca1@362x196"
+        },
+        "terminalNormalizedFingerprints": {
+          "static": "fnv1a32-c46d7647",
+          "restrained": "fnv1a32-c46d7647",
+          "expressive": "fnv1a32-c46d7647"
+        },
+        "autoplay": false,
+        "initialStates": {
+          "main": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "line": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "scatter": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "scatter"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "strip": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "strip_summary"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "dataCounts": {
+          "lineSeries": 5,
+          "lineIntervals": 18,
+          "scatterObservations": 30,
+          "stripObservations": 30,
+          "coverageObservations": 30
+        },
+        "rendererFamilies": [
+          "line",
+          "scatter",
+          "strip_summary",
+          "temporal_coverage"
+        ],
+        "reportPanels": [
+          {
+            "top": 1889.5833740234375,
+            "left": 14
+          },
+          {
+            "top": 2300.166748046875,
+            "left": 14
+          },
+          {
+            "top": 2689.85009765625,
+            "left": 14
+          },
+          {
+            "top": 3079.533447265625,
+            "left": 14
+          }
+        ],
+        "cvdFigures": [
+          {
+            "top": 3903.416748046875,
+            "left": 14
+          },
+          {
+            "top": 4189.31689453125,
+            "left": 14
+          },
+          {
+            "top": 4475.216796875,
+            "left": 14
+          },
+          {
+            "top": 4761.11669921875,
+            "left": 14
+          }
+        ],
+        "paper": [
+          {
+            "width": 115.18333435058594,
+            "top": 5808.31689453125,
+            "captionTop": 5897.43310546875,
+            "caption": "89 mm · single column · canonical PNG"
+          },
+          {
+            "width": 236.81666564941406,
+            "top": 5808.31689453125,
+            "captionTop": 5971.61669921875,
+            "caption": "183 mm · double column · canonical PNG"
+          }
+        ],
+        "paperWidthRatio": 2.0559976578609036,
+        "paperCaptionBaselineDelta": 74.18359375,
+        "cvdFingerprints": {
+          "original": "fnv1a32-84c5409b@362x219",
+          "protanomaly": "fnv1a32-449602d5@362x219",
+          "deuteranomaly": "fnv1a32-a62cc1bc@362x219",
+          "tritanomalyApproximation": "fnv1a32-98f5040d@362x219"
+        },
+        "cvdMethod": {
+          "model": "Machado, Oliveira & Fernandes 2009 severity model",
+          "severity": 1,
+          "colorSpace": "linear-light sRGB with standard sRGB transfer functions",
+          "conditions": {
+            "protanomaly": "Machado severity-1 protanomaly simulation",
+            "deuteranomaly": "Machado severity-1 deuteranomaly simulation",
+            "tritanomalyApproximation": "Machado severity-1 tritanomaly approximation"
+          },
+          "matrices": {
+            "protanomaly": [
+              [
+                0.152286,
+                1.052583,
+                -0.204868
+              ],
+              [
+                0.114503,
+                0.786281,
+                0.099216
+              ],
+              [
+                -0.003882,
+                -0.048116,
+                1.051998
+              ]
+            ],
+            "deuteranomaly": [
+              [
+                0.367322,
+                0.860646,
+                -0.227968
+              ],
+              [
+                0.280085,
+                0.672501,
+                0.047413
+              ],
+              [
+                -0.01182,
+                0.04294,
+                0.968881
+              ]
+            ],
+            "tritanomalyApproximation": [
+              [
+                1.255528,
+                -0.076749,
+                -0.178779
+              ],
+              [
+                -0.078411,
+                0.930809,
+                0.147602
+              ],
+              [
+                0.004733,
+                0.691367,
+                0.3039
+              ]
+            ]
+          }
+        },
+        "cvdVisibleTerminology": "03\n        \n          Perceptual stress, simulated\n          The same terminal five-site figure is reviewed with Machado severity-1 anomaly matrices while marker and dash identity remains unchanged.\n        \n      \n      \n        Synthetic storm response across five watershed sitesDeterministic modeled turbidity response after one rainfall pulseFive deterministic synthetic monitoring-site series across eighteen intervals.Five deterministic synthetic monitoring-site series across eighteen intervals.Horizontal axishours after rainfall onsetVertical axisstandardized turbidity responseRendererlineSynthetic storm response across five watershed sites datahours after rainfall onsetHeadwaterForest tributaryAgricultural forkUrban reachEstuary00.120.180.280.340.210.170.220.390.580.2420.250.30.610.920.3130.420.490.911.310.4540.660.721.221.630.6250.880.951.491.820.861.041.151.681.890.9971.121.251.721.771.1881.061.181.611.551.3390.911.011.421.321.41100.740.831.181.111.38110.590.660.960.941.29120.470.520.780.81.16130.390.430.650.691.03140.330.360.540.60.9150.290.310.460.530.78160.250.270.40.470.68170.220.240.360.430.59Original renderingFoundation palette + redundant encoding\n        Severity-1 protanomaly simulationMachado model\n        Severity-1 deuteranomaly simulationMachado model\n        Severity-1 tritanomaly approximationMachado model\n      \n      \n        Method. Machado, Oliveira & Fernandes’ severity-1 matrices in linear-light sRGB: decode sRGB → apply 3×3 matrix → clamp → encode sRGB. A narrow matrix-and-vector gate checks the browser assumptions against Colour Science’s reference matrices.\n        Limits. These simulations support perceptual review, not medical or accessibility certification, and not testing with people. The referenced tritanomaly result is explicitly treated as an approximation. The public Atlas remains the broader non-color evidence.\n        Machado et al. 2009 · Colour Science reference implementation",
+        "immediateDuplicateCompanionHeadings": [],
+        "hiddenCompanionInteractive": [],
+        "hiddenCompanionTableCount": 6,
+        "reportKey": [
+          {
+            "series": "headwater",
+            "rendered": {
+              "color": "#1B4C8A",
+              "computedLineColor": "rgb(27, 76, 138)",
+              "computedMarkerColor": "rgb(27, 76, 138)",
+              "glyph": "ring",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#1B4C8A",
+              "glyph": "ring",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "forest",
+            "rendered": {
+              "color": "#143F33",
+              "computedLineColor": "rgb(20, 63, 51)",
+              "computedMarkerColor": "rgb(20, 63, 51)",
+              "glyph": "square",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#143F33",
+              "glyph": "square",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "agricultural",
+            "rendered": {
+              "color": "#0E766E",
+              "computedLineColor": "rgb(14, 118, 110)",
+              "computedMarkerColor": "rgb(14, 118, 110)",
+              "glyph": "triangle",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#0E766E",
+              "glyph": "triangle",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "urban",
+            "rendered": {
+              "color": "#8B7A16",
+              "computedLineColor": "rgb(139, 122, 22)",
+              "computedMarkerColor": "rgb(139, 122, 22)",
+              "glyph": "diamond",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#8B7A16",
+              "glyph": "diamond",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "estuary",
+            "rendered": {
+              "color": "#3C97AC",
+              "computedLineColor": "rgb(60, 151, 172)",
+              "computedMarkerColor": "rgb(60, 151, 172)",
+              "glyph": "ring",
+              "lineStyle": "dash",
+              "strokeDasharray": "7 4"
+            },
+            "expected": {
+              "color": "#3C97AC",
+              "glyph": "ring",
+              "lineStyle": "dash"
+            },
+            "matches": true
+          }
+        ],
+        "coverageLabels": [
+          "HW",
+          "FT",
+          "AF",
+          "UR",
+          "ES"
+        ],
+        "semanticGroups": [
+          {
+            "selector": ".report-key",
+            "role": "group",
+            "labelledBy": "report-key-title"
+          },
+          {
+            "selector": ".cvd-grid",
+            "role": "group",
+            "labelledBy": "cvd-title"
+          },
+          {
+            "selector": ".paper-pair",
+            "role": "group",
+            "labelledBy": "paper-title"
+          }
+        ],
+        "visibleModeProbe": {
+          "hasVisibleClass": true,
+          "disclosureCount": 1,
+          "focusableDisclosureCount": 1
+        },
+        "definitionTop": 326.5,
+        "ledeTop": 473.5,
+        "focusableCount": 11,
+        "paperSources": [
+          {
+            "served": "../site/assets/web/evidence-paper-89mm.png",
+            "canonical": "../site/assets/evidence-paper-89mm.png",
+            "naturalWidth": 1051,
+            "naturalHeight": 744
+          },
+          {
+            "served": "../site/assets/web/evidence-paper-183mm.png",
+            "canonical": "../site/assets/evidence-paper-183mm.png",
+            "naturalWidth": 2161,
+            "naturalHeight": 1420
+          }
+        ],
+        "imageFailures": [],
+        "bannedText": [],
+        "presentationViolations": [],
+        "publicNavigationCount": 0
+      },
+      "keyboard": {
+        "sequence": [
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "#main",
+            "text": "Skip to technical showcase",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9136.599731445312,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "value": "restrained",
+            "href": null,
+            "text": "",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 196,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "motion-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play restrained motion",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 7626.1748971557245,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "report-line-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play point-to-line motion",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 6092.668656158494,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "report-coverage-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play coverage reveal",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 4995.732175699901,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "https://doi.org/10.1109/TVCG.2009.113",
+            "text": "Machado et al. 2009",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 1760.0332336425781,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "https://colour.readthedocs.io/en/latest/generated/colour.matrix_cvd_Machado2009.html",
+            "text": "Colour Science reference implementation",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9283.183395385742,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "../site/assets/evidence-paper-89mm.png",
+            "text": "Open canonical full-resolution 89 millimetre paper evidence",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9458.471706763376,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "../site/assets/evidence-paper-183mm.png",
+            "text": "Open canonical full-resolution 183 millimetre paper evidence",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 37014.44556371053,
+            "clippedAncestors": []
+          }
+        ],
+        "completedCycle": true,
+        "arrowLeft": {
+          "tag": "input",
+          "id": null,
+          "type": "radio",
+          "value": "static",
+          "href": null,
+          "text": "",
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "visibleArea": 196,
+          "clippedAncestors": []
+        },
+        "arrowRight": {
+          "tag": "input",
+          "id": null,
+          "type": "radio",
+          "value": "restrained",
+          "href": null,
+          "text": "",
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "visibleArea": 196,
+          "clippedAncestors": []
+        }
+      },
+      "motion": {
+        "reducedMotion": true,
+        "initial": {
+          "selected": "restrained",
+          "action": "Play restrained motion",
+          "main": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "restrainedStarted": {
+          "progress": 1,
+          "playing": false,
+          "reducedMotion": true,
+          "renderers": [
+            "line"
+          ],
+          "sceneVersion": "figurestead.scene/1",
+          "resolvedSceneVersion": "figurestead.resolved-scene/1",
+          "composedSceneVersion": "figurestead.composed-scene/1",
+          "profile": "atlas",
+          "destroyed": false
+        },
+        "restrainedSettled": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Replay restrained motion",
+          "pixels": "fnv1a32-57928655@362x196"
+        },
+        "staticState": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Static terminal state",
+          "disabled": true,
+          "pixels": "fnv1a32-57928655@362x196"
+        },
+        "expressiveReady": "Play expressive motion",
+        "expressiveStarted": {
+          "progress": 1,
+          "playing": false,
+          "reducedMotion": true,
+          "renderers": [
+            "line"
+          ],
+          "sceneVersion": "figurestead.scene/1",
+          "resolvedSceneVersion": "figurestead.resolved-scene/1",
+          "composedSceneVersion": "figurestead.composed-scene/1",
+          "profile": "atlas",
+          "destroyed": false
+        },
+        "expressiveSettled": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Replay expressive motion",
+          "pixels": "fnv1a32-57928655@362x196"
+        },
+        "localStarted": {
+          "line": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "localSettled": {
+          "line": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "lineAction": "Replay point-to-line motion",
+          "coverageAction": "Replay coverage reveal"
+        }
+      },
+      "runtimeErrors": [],
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "motionPreference": "no-preference",
+      "reducedMotion": false,
+      "structure": {
+        "title": "Figurestead — local V2 Technical Showcase",
+        "language": "en",
+        "innerWidth": 1440,
+        "clientWidth": 1440,
+        "horizontalOverflow": 0,
+        "pageHeight": 4795,
+        "headings": [
+          {
+            "level": 1,
+            "text": "A figure system under scientific load."
+          },
+          {
+            "level": 2,
+            "text": "Evidence in motion"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "One coherent synthetic report"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "Rainfall–response relationship"
+          },
+          {
+            "level": 2,
+            "text": "Nitrate distribution by site"
+          },
+          {
+            "level": 2,
+            "text": "Sampling coverage, 2021–2024"
+          },
+          {
+            "level": 2,
+            "text": "Perceptual stress, simulated"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "Paper, at the size it will live"
+          }
+        ],
+        "headingJumps": [],
+        "duplicateIds": [],
+        "selectedRecipe": "restrained",
+        "recipes": [
+          "static",
+          "restrained",
+          "expressive"
+        ],
+        "mainAction": "Play restrained motion",
+        "fingerprintMatch": true,
+        "pixelMatch": true,
+        "terminalText": "Terminal evidence invariant · fnv1a32-c46d7647",
+        "terminalPixelFingerprints": {
+          "static": "fnv1a32-eb129e3c@992x538",
+          "restrained": "fnv1a32-eb129e3c@992x538",
+          "expressive": "fnv1a32-eb129e3c@992x538"
+        },
+        "terminalNormalizedFingerprints": {
+          "static": "fnv1a32-c46d7647",
+          "restrained": "fnv1a32-c46d7647",
+          "expressive": "fnv1a32-c46d7647"
+        },
+        "autoplay": false,
+        "initialStates": {
+          "main": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "line": {
+            "progress": 0,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "scatter": {
+            "progress": 0,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "scatter"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "strip": {
+            "progress": 0,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "strip_summary"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 0,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "dataCounts": {
+          "lineSeries": 5,
+          "lineIntervals": 18,
+          "scatterObservations": 30,
+          "stripObservations": 30,
+          "coverageObservations": 30
+        },
+        "rendererFamilies": [
+          "line",
+          "scatter",
+          "strip_summary",
+          "temporal_coverage"
+        ],
+        "reportPanels": [
+          {
+            "top": -2193.533447265625,
+            "left": 80
+          },
+          {
+            "top": -2193.533447265625,
+            "left": 732
+          },
+          {
+            "top": -1647.8499755859375,
+            "left": 80
+          },
+          {
+            "top": -1647.8499755859375,
+            "left": 732
+          }
+        ],
+        "cvdFigures": [
+          {
+            "top": -811.36669921875,
+            "left": 80
+          },
+          {
+            "top": -811.36669921875,
+            "left": 732
+          },
+          {
+            "top": -381.8666687011719,
+            "left": 80
+          },
+          {
+            "top": -381.8666687011719,
+            "left": 732
+          }
+        ],
+        "paper": [
+          {
+            "width": 317.3833312988281,
+            "top": 388.933349609375,
+            "captionTop": 621.2000122070312,
+            "caption": "89 mm · single column · canonical PNG"
+          },
+          {
+            "width": 652.61669921875,
+            "top": 388.933349609375,
+            "captionTop": 825.4500122070312,
+            "caption": "183 mm · double column · canonical PNG"
+          }
+        ],
+        "paperWidthRatio": 2.056241254221027,
+        "paperCaptionBaselineDelta": 204.25,
+        "cvdFingerprints": {
+          "original": "fnv1a32-4b381bbd@628x380",
+          "protanomaly": "fnv1a32-f1540bac@628x380",
+          "deuteranomaly": "fnv1a32-05dab300@628x380",
+          "tritanomalyApproximation": "fnv1a32-a806a056@628x380"
+        },
+        "cvdMethod": {
+          "model": "Machado, Oliveira & Fernandes 2009 severity model",
+          "severity": 1,
+          "colorSpace": "linear-light sRGB with standard sRGB transfer functions",
+          "conditions": {
+            "protanomaly": "Machado severity-1 protanomaly simulation",
+            "deuteranomaly": "Machado severity-1 deuteranomaly simulation",
+            "tritanomalyApproximation": "Machado severity-1 tritanomaly approximation"
+          },
+          "matrices": {
+            "protanomaly": [
+              [
+                0.152286,
+                1.052583,
+                -0.204868
+              ],
+              [
+                0.114503,
+                0.786281,
+                0.099216
+              ],
+              [
+                -0.003882,
+                -0.048116,
+                1.051998
+              ]
+            ],
+            "deuteranomaly": [
+              [
+                0.367322,
+                0.860646,
+                -0.227968
+              ],
+              [
+                0.280085,
+                0.672501,
+                0.047413
+              ],
+              [
+                -0.01182,
+                0.04294,
+                0.968881
+              ]
+            ],
+            "tritanomalyApproximation": [
+              [
+                1.255528,
+                -0.076749,
+                -0.178779
+              ],
+              [
+                -0.078411,
+                0.930809,
+                0.147602
+              ],
+              [
+                0.004733,
+                0.691367,
+                0.3039
+              ]
+            ]
+          }
+        },
+        "cvdVisibleTerminology": "03\n        \n          Perceptual stress, simulated\n          The same terminal five-site figure is reviewed with Machado severity-1 anomaly matrices while marker and dash identity remains unchanged.\n        \n      \n      \n        Synthetic storm response across five watershed sitesDeterministic modeled turbidity response after one rainfall pulseFive deterministic synthetic monitoring-site series across eighteen intervals.Five deterministic synthetic monitoring-site series across eighteen intervals.Horizontal axishours after rainfall onsetVertical axisstandardized turbidity responseRendererlineSynthetic storm response across five watershed sites datahours after rainfall onsetHeadwaterForest tributaryAgricultural forkUrban reachEstuary00.120.180.280.340.210.170.220.390.580.2420.250.30.610.920.3130.420.490.911.310.4540.660.721.221.630.6250.880.951.491.820.861.041.151.681.890.9971.121.251.721.771.1881.061.181.611.551.3390.911.011.421.321.41100.740.831.181.111.38110.590.660.960.941.29120.470.520.780.81.16130.390.430.650.691.03140.330.360.540.60.9150.290.310.460.530.78160.250.270.40.470.68170.220.240.360.430.59Original renderingFoundation palette + redundant encoding\n        Severity-1 protanomaly simulationMachado model\n        Severity-1 deuteranomaly simulationMachado model\n        Severity-1 tritanomaly approximationMachado model\n      \n      \n        Method. Machado, Oliveira & Fernandes’ severity-1 matrices in linear-light sRGB: decode sRGB → apply 3×3 matrix → clamp → encode sRGB. A narrow matrix-and-vector gate checks the browser assumptions against Colour Science’s reference matrices.\n        Limits. These simulations support perceptual review, not medical or accessibility certification, and not testing with people. The referenced tritanomaly result is explicitly treated as an approximation. The public Atlas remains the broader non-color evidence.\n        Machado et al. 2009 · Colour Science reference implementation",
+        "immediateDuplicateCompanionHeadings": [],
+        "hiddenCompanionInteractive": [],
+        "hiddenCompanionTableCount": 6,
+        "reportKey": [
+          {
+            "series": "headwater",
+            "rendered": {
+              "color": "#1B4C8A",
+              "computedLineColor": "rgb(27, 76, 138)",
+              "computedMarkerColor": "rgb(27, 76, 138)",
+              "glyph": "ring",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#1B4C8A",
+              "glyph": "ring",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "forest",
+            "rendered": {
+              "color": "#143F33",
+              "computedLineColor": "rgb(20, 63, 51)",
+              "computedMarkerColor": "rgb(20, 63, 51)",
+              "glyph": "square",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#143F33",
+              "glyph": "square",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "agricultural",
+            "rendered": {
+              "color": "#0E766E",
+              "computedLineColor": "rgb(14, 118, 110)",
+              "computedMarkerColor": "rgb(14, 118, 110)",
+              "glyph": "triangle",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#0E766E",
+              "glyph": "triangle",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "urban",
+            "rendered": {
+              "color": "#8B7A16",
+              "computedLineColor": "rgb(139, 122, 22)",
+              "computedMarkerColor": "rgb(139, 122, 22)",
+              "glyph": "diamond",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#8B7A16",
+              "glyph": "diamond",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "estuary",
+            "rendered": {
+              "color": "#3C97AC",
+              "computedLineColor": "rgb(60, 151, 172)",
+              "computedMarkerColor": "rgb(60, 151, 172)",
+              "glyph": "ring",
+              "lineStyle": "dash",
+              "strokeDasharray": "7 4"
+            },
+            "expected": {
+              "color": "#3C97AC",
+              "glyph": "ring",
+              "lineStyle": "dash"
+            },
+            "matches": true
+          }
+        ],
+        "coverageLabels": [
+          "HW",
+          "FT",
+          "AF",
+          "UR",
+          "ES"
+        ],
+        "semanticGroups": [
+          {
+            "selector": ".report-key",
+            "role": "group",
+            "labelledBy": "report-key-title"
+          },
+          {
+            "selector": ".cvd-grid",
+            "role": "group",
+            "labelledBy": "cvd-title"
+          },
+          {
+            "selector": ".paper-pair",
+            "role": "group",
+            "labelledBy": "paper-title"
+          }
+        ],
+        "visibleModeProbe": {
+          "hasVisibleClass": true,
+          "disclosureCount": 1,
+          "focusableDisclosureCount": 1
+        },
+        "definitionTop": -3462.566650390625,
+        "ledeTop": -3365.066650390625,
+        "focusableCount": 11,
+        "paperSources": [
+          {
+            "served": "../site/assets/web/evidence-paper-89mm.png",
+            "canonical": "../site/assets/evidence-paper-89mm.png",
+            "naturalWidth": 1051,
+            "naturalHeight": 744
+          },
+          {
+            "served": "../site/assets/web/evidence-paper-183mm.png",
+            "canonical": "../site/assets/evidence-paper-183mm.png",
+            "naturalWidth": 2161,
+            "naturalHeight": 1420
+          }
+        ],
+        "imageFailures": [],
+        "bannedText": [],
+        "presentationViolations": [],
+        "publicNavigationCount": 0
+      },
+      "keyboard": {
+        "sequence": [
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "#main",
+            "text": "Skip to technical showcase",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9136.599731445312,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "value": "restrained",
+            "href": null,
+            "text": "",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 196,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "motion-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play restrained motion",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 10504.002380371094,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "report-line-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play point-to-line motion",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 6092.668656158494,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "report-coverage-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play coverage reveal",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 4995.7346832274925,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "https://doi.org/10.1109/TVCG.2009.113",
+            "text": "Machado et al. 2009",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 1760.033447265625,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "https://colour.readthedocs.io/en/latest/generated/colour.matrix_cvd_Machado2009.html",
+            "text": "Colour Science reference implementation",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 4843.400093078613,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "../site/assets/evidence-paper-89mm.png",
+            "text": "Open canonical full-resolution 89 millimetre paper evidence",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 71495.88380581327,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "../site/assets/evidence-paper-183mm.png",
+            "text": "Open canonical full-resolution 183 millimetre paper evidence",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 280309.74660393596,
+            "clippedAncestors": []
+          }
+        ],
+        "completedCycle": true,
+        "arrowLeft": {
+          "tag": "input",
+          "id": null,
+          "type": "radio",
+          "value": "static",
+          "href": null,
+          "text": "",
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "visibleArea": 196,
+          "clippedAncestors": []
+        },
+        "arrowRight": {
+          "tag": "input",
+          "id": null,
+          "type": "radio",
+          "value": "restrained",
+          "href": null,
+          "text": "",
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "visibleArea": 196,
+          "clippedAncestors": []
+        }
+      },
+      "motion": {
+        "reducedMotion": false,
+        "initial": {
+          "selected": "restrained",
+          "action": "Play restrained motion",
+          "main": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "restrainedStarted": {
+          "progress": 0,
+          "playing": true,
+          "reducedMotion": false,
+          "renderers": [
+            "line"
+          ],
+          "sceneVersion": "figurestead.scene/1",
+          "resolvedSceneVersion": "figurestead.resolved-scene/1",
+          "composedSceneVersion": "figurestead.composed-scene/1",
+          "profile": "atlas",
+          "destroyed": false
+        },
+        "restrainedSettled": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Replay restrained motion",
+          "pixels": "fnv1a32-eb129e3c@992x538"
+        },
+        "staticState": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Static terminal state",
+          "disabled": true,
+          "pixels": "fnv1a32-eb129e3c@992x538"
+        },
+        "expressiveReady": "Play expressive motion",
+        "expressiveStarted": {
+          "progress": 0,
+          "playing": true,
+          "reducedMotion": false,
+          "renderers": [
+            "line"
+          ],
+          "sceneVersion": "figurestead.scene/1",
+          "resolvedSceneVersion": "figurestead.resolved-scene/1",
+          "composedSceneVersion": "figurestead.composed-scene/1",
+          "profile": "atlas",
+          "destroyed": false
+        },
+        "expressiveSettled": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Replay expressive motion",
+          "pixels": "fnv1a32-eb129e3c@992x538"
+        },
+        "localStarted": {
+          "line": {
+            "progress": 0.02513000000000011,
+            "playing": true,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 0,
+            "playing": true,
+            "reducedMotion": false,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "localSettled": {
+          "line": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": false,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "lineAction": "Replay point-to-line motion",
+          "coverageAction": "Replay coverage reveal"
+        }
+      },
+      "runtimeErrors": [],
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "motionPreference": "reduce",
+      "reducedMotion": true,
+      "structure": {
+        "title": "Figurestead — local V2 Technical Showcase",
+        "language": "en",
+        "innerWidth": 1440,
+        "clientWidth": 1440,
+        "horizontalOverflow": 0,
+        "pageHeight": 4795,
+        "headings": [
+          {
+            "level": 1,
+            "text": "A figure system under scientific load."
+          },
+          {
+            "level": 2,
+            "text": "Evidence in motion"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "One coherent synthetic report"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "Rainfall–response relationship"
+          },
+          {
+            "level": 2,
+            "text": "Nitrate distribution by site"
+          },
+          {
+            "level": 2,
+            "text": "Sampling coverage, 2021–2024"
+          },
+          {
+            "level": 2,
+            "text": "Perceptual stress, simulated"
+          },
+          {
+            "level": 2,
+            "text": "Synthetic storm response across five watershed sites"
+          },
+          {
+            "level": 2,
+            "text": "Paper, at the size it will live"
+          }
+        ],
+        "headingJumps": [],
+        "duplicateIds": [],
+        "selectedRecipe": "restrained",
+        "recipes": [
+          "static",
+          "restrained",
+          "expressive"
+        ],
+        "mainAction": "Play restrained motion",
+        "fingerprintMatch": true,
+        "pixelMatch": true,
+        "terminalText": "Terminal evidence invariant · fnv1a32-c46d7647",
+        "terminalPixelFingerprints": {
+          "static": "fnv1a32-eb129e3c@992x538",
+          "restrained": "fnv1a32-eb129e3c@992x538",
+          "expressive": "fnv1a32-eb129e3c@992x538"
+        },
+        "terminalNormalizedFingerprints": {
+          "static": "fnv1a32-c46d7647",
+          "restrained": "fnv1a32-c46d7647",
+          "expressive": "fnv1a32-c46d7647"
+        },
+        "autoplay": false,
+        "initialStates": {
+          "main": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "line": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "scatter": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "scatter"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "strip": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "strip_summary"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "dataCounts": {
+          "lineSeries": 5,
+          "lineIntervals": 18,
+          "scatterObservations": 30,
+          "stripObservations": 30,
+          "coverageObservations": 30
+        },
+        "rendererFamilies": [
+          "line",
+          "scatter",
+          "strip_summary",
+          "temporal_coverage"
+        ],
+        "reportPanels": [
+          {
+            "top": 1600.4666748046875,
+            "left": 80
+          },
+          {
+            "top": 1600.4666748046875,
+            "left": 732
+          },
+          {
+            "top": 2146.14990234375,
+            "left": 80
+          },
+          {
+            "top": 2146.14990234375,
+            "left": 732
+          }
+        ],
+        "cvdFigures": [
+          {
+            "top": 2982.63330078125,
+            "left": 80
+          },
+          {
+            "top": 2982.63330078125,
+            "left": 732
+          },
+          {
+            "top": 3412.13330078125,
+            "left": 80
+          },
+          {
+            "top": 3412.13330078125,
+            "left": 732
+          }
+        ],
+        "paper": [
+          {
+            "width": 317.3833312988281,
+            "top": 4182.93310546875,
+            "captionTop": 4415.2001953125,
+            "caption": "89 mm · single column · canonical PNG"
+          },
+          {
+            "width": 652.61669921875,
+            "top": 4182.93310546875,
+            "captionTop": 4619.4501953125,
+            "caption": "183 mm · double column · canonical PNG"
+          }
+        ],
+        "paperWidthRatio": 2.056241254221027,
+        "paperCaptionBaselineDelta": 204.25,
+        "cvdFingerprints": {
+          "original": "fnv1a32-4b381bbd@628x380",
+          "protanomaly": "fnv1a32-f1540bac@628x380",
+          "deuteranomaly": "fnv1a32-05dab300@628x380",
+          "tritanomalyApproximation": "fnv1a32-a806a056@628x380"
+        },
+        "cvdMethod": {
+          "model": "Machado, Oliveira & Fernandes 2009 severity model",
+          "severity": 1,
+          "colorSpace": "linear-light sRGB with standard sRGB transfer functions",
+          "conditions": {
+            "protanomaly": "Machado severity-1 protanomaly simulation",
+            "deuteranomaly": "Machado severity-1 deuteranomaly simulation",
+            "tritanomalyApproximation": "Machado severity-1 tritanomaly approximation"
+          },
+          "matrices": {
+            "protanomaly": [
+              [
+                0.152286,
+                1.052583,
+                -0.204868
+              ],
+              [
+                0.114503,
+                0.786281,
+                0.099216
+              ],
+              [
+                -0.003882,
+                -0.048116,
+                1.051998
+              ]
+            ],
+            "deuteranomaly": [
+              [
+                0.367322,
+                0.860646,
+                -0.227968
+              ],
+              [
+                0.280085,
+                0.672501,
+                0.047413
+              ],
+              [
+                -0.01182,
+                0.04294,
+                0.968881
+              ]
+            ],
+            "tritanomalyApproximation": [
+              [
+                1.255528,
+                -0.076749,
+                -0.178779
+              ],
+              [
+                -0.078411,
+                0.930809,
+                0.147602
+              ],
+              [
+                0.004733,
+                0.691367,
+                0.3039
+              ]
+            ]
+          }
+        },
+        "cvdVisibleTerminology": "03\n        \n          Perceptual stress, simulated\n          The same terminal five-site figure is reviewed with Machado severity-1 anomaly matrices while marker and dash identity remains unchanged.\n        \n      \n      \n        Synthetic storm response across five watershed sitesDeterministic modeled turbidity response after one rainfall pulseFive deterministic synthetic monitoring-site series across eighteen intervals.Five deterministic synthetic monitoring-site series across eighteen intervals.Horizontal axishours after rainfall onsetVertical axisstandardized turbidity responseRendererlineSynthetic storm response across five watershed sites datahours after rainfall onsetHeadwaterForest tributaryAgricultural forkUrban reachEstuary00.120.180.280.340.210.170.220.390.580.2420.250.30.610.920.3130.420.490.911.310.4540.660.721.221.630.6250.880.951.491.820.861.041.151.681.890.9971.121.251.721.771.1881.061.181.611.551.3390.911.011.421.321.41100.740.831.181.111.38110.590.660.960.941.29120.470.520.780.81.16130.390.430.650.691.03140.330.360.540.60.9150.290.310.460.530.78160.250.270.40.470.68170.220.240.360.430.59Original renderingFoundation palette + redundant encoding\n        Severity-1 protanomaly simulationMachado model\n        Severity-1 deuteranomaly simulationMachado model\n        Severity-1 tritanomaly approximationMachado model\n      \n      \n        Method. Machado, Oliveira & Fernandes’ severity-1 matrices in linear-light sRGB: decode sRGB → apply 3×3 matrix → clamp → encode sRGB. A narrow matrix-and-vector gate checks the browser assumptions against Colour Science’s reference matrices.\n        Limits. These simulations support perceptual review, not medical or accessibility certification, and not testing with people. The referenced tritanomaly result is explicitly treated as an approximation. The public Atlas remains the broader non-color evidence.\n        Machado et al. 2009 · Colour Science reference implementation",
+        "immediateDuplicateCompanionHeadings": [],
+        "hiddenCompanionInteractive": [],
+        "hiddenCompanionTableCount": 6,
+        "reportKey": [
+          {
+            "series": "headwater",
+            "rendered": {
+              "color": "#1B4C8A",
+              "computedLineColor": "rgb(27, 76, 138)",
+              "computedMarkerColor": "rgb(27, 76, 138)",
+              "glyph": "ring",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#1B4C8A",
+              "glyph": "ring",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "forest",
+            "rendered": {
+              "color": "#143F33",
+              "computedLineColor": "rgb(20, 63, 51)",
+              "computedMarkerColor": "rgb(20, 63, 51)",
+              "glyph": "square",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#143F33",
+              "glyph": "square",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "agricultural",
+            "rendered": {
+              "color": "#0E766E",
+              "computedLineColor": "rgb(14, 118, 110)",
+              "computedMarkerColor": "rgb(14, 118, 110)",
+              "glyph": "triangle",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#0E766E",
+              "glyph": "triangle",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "urban",
+            "rendered": {
+              "color": "#8B7A16",
+              "computedLineColor": "rgb(139, 122, 22)",
+              "computedMarkerColor": "rgb(139, 122, 22)",
+              "glyph": "diamond",
+              "lineStyle": "solid",
+              "strokeDasharray": ""
+            },
+            "expected": {
+              "color": "#8B7A16",
+              "glyph": "diamond",
+              "lineStyle": "solid"
+            },
+            "matches": true
+          },
+          {
+            "series": "estuary",
+            "rendered": {
+              "color": "#3C97AC",
+              "computedLineColor": "rgb(60, 151, 172)",
+              "computedMarkerColor": "rgb(60, 151, 172)",
+              "glyph": "ring",
+              "lineStyle": "dash",
+              "strokeDasharray": "7 4"
+            },
+            "expected": {
+              "color": "#3C97AC",
+              "glyph": "ring",
+              "lineStyle": "dash"
+            },
+            "matches": true
+          }
+        ],
+        "coverageLabels": [
+          "HW",
+          "FT",
+          "AF",
+          "UR",
+          "ES"
+        ],
+        "semanticGroups": [
+          {
+            "selector": ".report-key",
+            "role": "group",
+            "labelledBy": "report-key-title"
+          },
+          {
+            "selector": ".cvd-grid",
+            "role": "group",
+            "labelledBy": "cvd-title"
+          },
+          {
+            "selector": ".paper-pair",
+            "role": "group",
+            "labelledBy": "paper-title"
+          }
+        ],
+        "visibleModeProbe": {
+          "hasVisibleClass": true,
+          "disclosureCount": 1,
+          "focusableDisclosureCount": 1
+        },
+        "definitionTop": 331.433349609375,
+        "ledeTop": 428.933349609375,
+        "focusableCount": 11,
+        "paperSources": [
+          {
+            "served": "../site/assets/web/evidence-paper-89mm.png",
+            "canonical": "../site/assets/evidence-paper-89mm.png",
+            "naturalWidth": 1051,
+            "naturalHeight": 744
+          },
+          {
+            "served": "../site/assets/web/evidence-paper-183mm.png",
+            "canonical": "../site/assets/evidence-paper-183mm.png",
+            "naturalWidth": 2161,
+            "naturalHeight": 1420
+          }
+        ],
+        "imageFailures": [],
+        "bannedText": [],
+        "presentationViolations": [],
+        "publicNavigationCount": 0
+      },
+      "keyboard": {
+        "sequence": [
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "#main",
+            "text": "Skip to technical showcase",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9136.599731445312,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "value": "restrained",
+            "href": null,
+            "text": "",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 196,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "motion-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play restrained motion",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 10504.002380371094,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "report-line-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play point-to-line motion",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 6092.668656158494,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "button",
+            "id": "report-coverage-action",
+            "type": "button",
+            "value": null,
+            "href": null,
+            "text": "Play coverage reveal",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 4995.7346832274925,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "https://doi.org/10.1109/TVCG.2009.113",
+            "text": "Machado et al. 2009",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 1760.033447265625,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "https://colour.readthedocs.io/en/latest/generated/colour.matrix_cvd_Machado2009.html",
+            "text": "Colour Science reference implementation",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 4843.400093078613,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "../site/assets/evidence-paper-89mm.png",
+            "text": "Open canonical full-resolution 89 millimetre paper evidence",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 71495.88380581327,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "value": null,
+            "href": "../site/assets/evidence-paper-183mm.png",
+            "text": "Open canonical full-resolution 183 millimetre paper evidence",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 280309.74660393596,
+            "clippedAncestors": []
+          }
+        ],
+        "completedCycle": true,
+        "arrowLeft": {
+          "tag": "input",
+          "id": null,
+          "type": "radio",
+          "value": "static",
+          "href": null,
+          "text": "",
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "visibleArea": 196,
+          "clippedAncestors": []
+        },
+        "arrowRight": {
+          "tag": "input",
+          "id": null,
+          "type": "radio",
+          "value": "restrained",
+          "href": null,
+          "text": "",
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "visibleArea": 196,
+          "clippedAncestors": []
+        }
+      },
+      "motion": {
+        "reducedMotion": true,
+        "initial": {
+          "selected": "restrained",
+          "action": "Play restrained motion",
+          "main": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "restrainedStarted": {
+          "progress": 1,
+          "playing": false,
+          "reducedMotion": true,
+          "renderers": [
+            "line"
+          ],
+          "sceneVersion": "figurestead.scene/1",
+          "resolvedSceneVersion": "figurestead.resolved-scene/1",
+          "composedSceneVersion": "figurestead.composed-scene/1",
+          "profile": "atlas",
+          "destroyed": false
+        },
+        "restrainedSettled": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Replay restrained motion",
+          "pixels": "fnv1a32-eb129e3c@992x538"
+        },
+        "staticState": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Static terminal state",
+          "disabled": true,
+          "pixels": "fnv1a32-eb129e3c@992x538"
+        },
+        "expressiveReady": "Play expressive motion",
+        "expressiveStarted": {
+          "progress": 1,
+          "playing": false,
+          "reducedMotion": true,
+          "renderers": [
+            "line"
+          ],
+          "sceneVersion": "figurestead.scene/1",
+          "resolvedSceneVersion": "figurestead.resolved-scene/1",
+          "composedSceneVersion": "figurestead.composed-scene/1",
+          "profile": "atlas",
+          "destroyed": false
+        },
+        "expressiveSettled": {
+          "state": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "action": "Replay expressive motion",
+          "pixels": "fnv1a32-eb129e3c@992x538"
+        },
+        "localStarted": {
+          "line": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          }
+        },
+        "localSettled": {
+          "line": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "line"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "coverage": {
+            "progress": 1,
+            "playing": false,
+            "reducedMotion": true,
+            "renderers": [
+              "temporal_coverage"
+            ],
+            "sceneVersion": "figurestead.scene/1",
+            "resolvedSceneVersion": "figurestead.resolved-scene/1",
+            "composedSceneVersion": "figurestead.composed-scene/1",
+            "profile": "atlas",
+            "destroyed": false
+          },
+          "lineAction": "Replay point-to-line motion",
+          "coverageAction": "Replay coverage reveal"
+        }
+      },
+      "runtimeErrors": [],
+      "findings": [],
+      "status": "PASS"
+    }
+  ],
+  "caseCount": 4,
+  "findingCount": 0,
+  "status": "PASS"
+}

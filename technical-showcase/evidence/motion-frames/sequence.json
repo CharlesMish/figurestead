@@ -1,0 +1,110 @@
+{
+  "gate": "recorded restrained-motion sequence",
+  "recipe": "restrained",
+  "deterministicSeed": 2409,
+  "autoplay": false,
+  "interpretation": "Requested thresholds are observed on a free-running animation clock; intermediate frame hashes document this run and are not machine-independent deterministic proof.",
+  "terminalFrameIsInvariant": true,
+  "frames": [
+    {
+      "index": 0,
+      "requestedProgress": 0,
+      "observedProgress": 0,
+      "state": {
+        "progress": 0,
+        "playing": true,
+        "reducedMotion": false,
+        "renderers": [
+          "line"
+        ],
+        "sceneVersion": "figurestead.scene/1",
+        "resolvedSceneVersion": "figurestead.resolved-scene/1",
+        "composedSceneVersion": "figurestead.composed-scene/1",
+        "profile": "atlas",
+        "destroyed": false
+      },
+      "file": "evidence/motion-frames/chromium-restrained-00.png",
+      "sha256": "29bebf9e1d09d9b4322b848fa0e99349908fe7a9f3701c6c6b206c793985ee9c"
+    },
+    {
+      "index": 1,
+      "requestedProgress": 0.25,
+      "observedProgress": 0.2500188888888889,
+      "state": {
+        "progress": 0.2500188888888889,
+        "playing": true,
+        "reducedMotion": false,
+        "renderers": [
+          "line"
+        ],
+        "sceneVersion": "figurestead.scene/1",
+        "resolvedSceneVersion": "figurestead.resolved-scene/1",
+        "composedSceneVersion": "figurestead.composed-scene/1",
+        "profile": "atlas",
+        "destroyed": false
+      },
+      "file": "evidence/motion-frames/chromium-restrained-01.png",
+      "sha256": "3789bb3670fcea22161cf4c68420dae81af453a2acb449fb533e7f7131ea3cfb"
+    },
+    {
+      "index": 2,
+      "requestedProgress": 0.5,
+      "observedProgress": 0.5000188888888889,
+      "state": {
+        "progress": 0.5000188888888889,
+        "playing": true,
+        "reducedMotion": false,
+        "renderers": [
+          "line"
+        ],
+        "sceneVersion": "figurestead.scene/1",
+        "resolvedSceneVersion": "figurestead.resolved-scene/1",
+        "composedSceneVersion": "figurestead.composed-scene/1",
+        "profile": "atlas",
+        "destroyed": false
+      },
+      "file": "evidence/motion-frames/chromium-restrained-02.png",
+      "sha256": "01465c0119b3cd24a8021a2485267b3ad8603ed080db44dbdab9d2ec987c25cc"
+    },
+    {
+      "index": 3,
+      "requestedProgress": 0.75,
+      "observedProgress": 0.7592411111111111,
+      "state": {
+        "progress": 0.7592411111111111,
+        "playing": true,
+        "reducedMotion": false,
+        "renderers": [
+          "line"
+        ],
+        "sceneVersion": "figurestead.scene/1",
+        "resolvedSceneVersion": "figurestead.resolved-scene/1",
+        "composedSceneVersion": "figurestead.composed-scene/1",
+        "profile": "atlas",
+        "destroyed": false
+      },
+      "file": "evidence/motion-frames/chromium-restrained-03.png",
+      "sha256": "a9de41b37bb538cd957f0a1d122717860905cf6a9f95b0eb8c87a128dba0580a"
+    },
+    {
+      "index": 4,
+      "requestedProgress": 1,
+      "observedProgress": 1,
+      "state": {
+        "progress": 1,
+        "playing": false,
+        "reducedMotion": false,
+        "renderers": [
+          "line"
+        ],
+        "sceneVersion": "figurestead.scene/1",
+        "resolvedSceneVersion": "figurestead.resolved-scene/1",
+        "composedSceneVersion": "figurestead.composed-scene/1",
+        "profile": "atlas",
+        "destroyed": false
+      },
+      "file": "evidence/motion-frames/chromium-restrained-04.png",
+      "sha256": "c2fdc4bc79bc2fbbcaebe54d052e74bda87b655fbc77b2154584498d18591b84"
+    }
+  ]
+}
