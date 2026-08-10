@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Figurestead Browser first success</title>
+  <style>body{margin:24px;background:#f1eee5;color:#152023;font:16px/1.5 system-ui,sans-serif}main{max-width:900px;margin:auto}canvas{display:block;width:100%;height:auto;background:#fffdfa;border:1px solid #c8c6bc}code{font-family:ui-monospace,monospace}#status{font-weight:700}</style>
+</head>
+<body>
+  <main>
+    <h1>Figurestead Browser first success</h1>
+    <p>Serve the repository root over HTTP, then open this file. The example imports the repository’s browser source and theme pack directly.</p>
+    <canvas id="figure" width="760" height="520" aria-label="Three-point deterministic Figurestead line example"></canvas>
+    <p id="status" role="status">Rendering…</p>
+  </main>
+  <script type="module">
+    import { createFigurestead, loadThemePack, resolveTheme } from "../../web/src/index.js";
+
+    const themePack = await loadThemePack("../../src/figurestead/themes/slipware.json");
+    const theme = resolveTheme(themePack, "slipware");
+    const contract = {
+      schemaVersion: "0.4",
+      rendererApiVersion: "1",
+      theme,
+      profile: { key: "first_success", name: "First success", marker: "ring_core", markerSize: 42, markerAlpha: 0.84, edgeWidth: 1.05, coreFraction: 0.12, pointGlow: false, gridX: true, gridY: true, gridAlpha: 0.4, summaryGlow: false },
+      timeline: { rainIn: [0, 0], marksEnter: [0, 1], summaryCompiles: [0.8, 1], rainOut: [0, 0], settle: [0.9, 1] },
+      motion: { frames: 1, fps: 1, rainStreams: 0, rainGlyphs: 0, lightingPeak: 0, trailAlpha: 0, seed: 1, durationMs: 1 },
+      style: { glyphs: ["ring", "square", "triangle", "diamond"], lineStyles: ["solid", "dash", "dot", "dash-dot"], series: {} },
+      spec: { title: "Figurestead first success", subtitle: "One deterministic normalized line contract", xLabel: "observation", yLabel: "response", signature: "figurestead · first success", description: "One line with three observations." },
+      layout: { type: "grid", columns: 1, gap: 18, sharedX: false, sharedY: false },
+      view: { profile: "atlas", motion: "none", ambient: "none", strategy: "none" },
+      panels: [{ id: "line", renderer: "line", spec: { title: "Figurestead first success", xLabel: "observation", yLabel: "response", description: "One line with three observations." }, xScale: { type: "linear" }, yScale: { type: "linear" }, annotations: [], encoding: { interpolation: "linear" }, presentation: { panelSurface: true, frame: true, legend: "none", lineWidth: 2, markerScale: 1 }, data: { x: [0, 1, 2], revealOrder: "x", series: [{ key: "series-1", label: "Series 1", y: [0, 1, 0] }] } }],
+    };
+    const canvas = document.querySelector("#figure");
+    const figure = createFigurestead(canvas, contract, { autoplay: false, reducedMotion: true });
+    figure.resize();
+    document.querySelector("#status").textContent = `Rendered · ${figure.getState().renderers.join(", ")} · terminal progress ${figure.getState().progress}`;
+    document.documentElement.dataset.exampleReady = "true";
+  </script>
+</body>
+</html>

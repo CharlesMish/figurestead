@@ -38,37 +38,183 @@ jobs:
           test "$GITHUB_REPOSITORY" = "CharlesMish/figurestead"
           test "$GITHUB_REF" = "refs/heads/main"
           test "$(git rev-parse 'refs/tags/v0.9.0-alpha.1^{commit}')" = "f3cc4a4dbf40b60635707c5ad6e21856bac57057"
-          changed_site_files="$(git diff --name-only f3cc4a4dbf40b60635707c5ad6e21856bac57057 -- site | LC_ALL=C sort)"
-          test "$changed_site_files" = $'site/evidence/index.html\nsite/index.html\nsite/styles.css'
           test -f site/index.html
           test -f site/evidence/index.html
           test -f site/ASSET_MANIFEST.json
+          test -f site/WEB_ASSET_MANIFEST.json
           test -z "$(find site -type l -print -quit)"
 
           python3 - <<'PY'
           import hashlib
           import json
+          import struct
+          import subprocess
+          import zlib
           from pathlib import Path
 
           root = Path("site")
+          changed = subprocess.check_output(
+              ["git", "diff", "--name-only", "f3cc4a4dbf40b60635707c5ad6e21856bac57057", "--", "site"],
+              text=True,
+          ).splitlines()
+          accepted_changed_files = {
+              "site/README.md",
+              "site/evidence/index.html",
+              "site/index.html",
+              "site/public-alpha-set.json",
+              "site/styles.css",
+              "site/WEB_ASSET_MANIFEST.json",
+          }
+          unexpected = [
+              relative for relative in changed
+              if relative not in accepted_changed_files and not relative.startswith("site/assets/web/")
+          ]
+          assert not unexpected, unexpected
+
           accepted_pages = {
-              "index.html": "af0d82e4cdb8a1a33841459359b3d1d97b415d7a054b311476051b76926bfa77",
-              "evidence/index.html": "4a9a8dc174299a14ed63719942ff17b59a5cc57a353b10bddf986bcf15907b9e",
-              "styles.css": "761d00c69424db87fa0430f639ba6ff2bea1d94cbcb4501f7744ceabdda93d28",
+              "index.html": "572120e037d96209c507f1f23a00e070e9a649ca3015f8121734276f9d6d62ca",
+              "evidence/index.html": "e9bf28929af0e1210f749cbc7686c2106f6f8eae66dbd33a45b19bb36db3641f",
+              "styles.css": "281d7261c7663621d9e6632fcafb1cbc4d5a5a4550546b31fc7c3c9cbdd89b59",
+              "README.md": "e089b27769a66923d11d7e873912f847fcb36fc43d0b5d0534184a77e006419c",
+              "public-alpha-set.json": "657cc806d1ee4ae43c2cb70a910da4360c896e87e5855f5c16fa163b0b42bef9",
+              "WEB_ASSET_MANIFEST.json": "f5865fc6cc06703358e6cd859fb88c8ed950c17c1d96041413d81fab91522d07",
           }
           for relative, expected in accepted_pages.items():
               assert hashlib.sha256((root / relative).read_bytes()).hexdigest() == expected
 
-          manifest = json.loads((root / "ASSET_MANIFEST.json").read_text(encoding="utf-8"))
-          assert manifest["schemaVersion"] == "figurestead.public-alpha-assets/1"
-          assert manifest["synthetic"] is True
-          assert len(manifest["assets"]) == 17
-          for entry in manifest["assets"]:
+          canonical_manifest = json.loads((root / "ASSET_MANIFEST.json").read_text(encoding="utf-8"))
+          assert canonical_manifest["schemaVersion"] == "figurestead.public-alpha-assets/1"
+          assert canonical_manifest["synthetic"] is True
+          assert len(canonical_manifest["assets"]) == 17
+          canonical_by_path = {entry["path"]: entry for entry in canonical_manifest["assets"]}
+          for entry in canonical_manifest["assets"]:
               path = root / entry["path"]
               assert path.is_file()
               payload = path.read_bytes()
               assert len(payload) == entry["bytes"]
               assert hashlib.sha256(payload).hexdigest() == entry["sha256"]
+
+          def paeth(left, above, upper_left):
+              estimate = left + above - upper_left
+              left_distance = abs(estimate - left)
+              above_distance = abs(estimate - above)
+              upper_left_distance = abs(estimate - upper_left)
+              if left_distance <= above_distance and left_distance <= upper_left_distance:
+                  return left
+              if above_distance <= upper_left_distance:
+                  return above
+              return upper_left
+
+          def decode_rgba(path):
+              payload = path.read_bytes()
+              assert payload[:8] == b"\x89PNG\r\n\x1a\n"
+              position = 8
+              compressed = bytearray()
+              width = height = None
+              while position < len(payload):
+                  length = struct.unpack(">I", payload[position:position + 4])[0]
+                  chunk_type = payload[position + 4:position + 8]
+                  chunk = payload[position + 8:position + 8 + length]
+                  position += 12 + length
+                  if chunk_type == b"IHDR":
+                      width, height, depth, color_type, compression, filtering, interlace = struct.unpack(">IIBBBBB", chunk)
+                      assert (depth, color_type, compression, filtering, interlace) == (8, 6, 0, 0, 0)
+                  elif chunk_type == b"IDAT":
+                      compressed.extend(chunk)
+                  elif chunk_type == b"IEND":
+                      break
+              assert width and height
+              encoded = zlib.decompress(bytes(compressed))
+              stride = width * 4
+              assert len(encoded) == height * (stride + 1)
+              rows = []
+              previous = bytearray(stride)
+              offset = 0
+              for _ in range(height):
+                  filter_type = encoded[offset]
+                  source = encoded[offset + 1:offset + 1 + stride]
+                  offset += stride + 1
+                  row = bytearray(stride)
+                  for index, value in enumerate(source):
+                      left = row[index - 4] if index >= 4 else 0
+                      above = previous[index]
+                      upper_left = previous[index - 4] if index >= 4 else 0
+                      if filter_type == 0:
+                          predictor = 0
+                      elif filter_type == 1:
+                          predictor = left
+                      elif filter_type == 2:
+                          predictor = above
+                      elif filter_type == 3:
+                          predictor = (left + above) // 2
+                      elif filter_type == 4:
+                          predictor = paeth(left, above, upper_left)
+                      else:
+                          raise AssertionError(f"unsupported PNG filter {filter_type}")
+                      row[index] = (value + predictor) & 255
+                  rows.append(bytes(row))
+                  previous = row
+              return width, height, b"".join(rows)
+
+          web_manifest = json.loads((root / "WEB_ASSET_MANIFEST.json").read_text(encoding="utf-8"))
+          assert web_manifest["schemaVersion"] == "figurestead.web-delivery-assets/1"
+          assert web_manifest["canonicalAssetsPreserved"] is True
+          assert web_manifest["canonicalManifest"] == "ASSET_MANIFEST.json"
+          assert len(web_manifest["losslessDerivatives"]) == 17
+          recorded_web_paths = set()
+          for entry in web_manifest["losslessDerivatives"]:
+              canonical = canonical_by_path[entry["canonicalPath"]]
+              assert entry["canonicalBytes"] == canonical["bytes"]
+              assert entry["canonicalSha256"] == canonical["sha256"]
+              derivative_path = root / entry["derivativePath"]
+              derivative_payload = derivative_path.read_bytes()
+              assert len(derivative_payload) == entry["derivativeBytes"]
+              assert hashlib.sha256(derivative_payload).hexdigest() == entry["derivativeSha256"]
+              source_width, source_height, source_pixels = decode_rgba(root / entry["canonicalPath"])
+              derivative_width, derivative_height, derivative_pixels = decode_rgba(derivative_path)
+              assert (source_width, source_height) == (derivative_width, derivative_height)
+              assert source_pixels == derivative_pixels
+              assert hashlib.sha256(source_pixels).hexdigest() == entry["decodedPixelSha256"]
+              assert entry["decodedPixelsIdentical"] is True
+              recorded_web_paths.add(entry["derivativePath"])
+
+          for entry in web_manifest["responsiveDerivatives"]:
+              path = root / entry["path"]
+              payload = path.read_bytes()
+              assert len(payload) == entry["bytes"]
+              assert hashlib.sha256(payload).hexdigest() == entry["sha256"]
+              recorded_web_paths.add(entry["path"])
+
+          grayscale = web_manifest["grayscaleCase05"]
+          assert grayscale["sourceCanonicalSha256"] == canonical_by_path[grayscale["sourceCanonicalPath"]]["sha256"]
+          grayscale_path = root / grayscale["derivativePath"]
+          grayscale_payload = grayscale_path.read_bytes()
+          assert len(grayscale_payload) == grayscale["derivativeBytes"]
+          assert hashlib.sha256(grayscale_payload).hexdigest() == grayscale["derivativeSha256"]
+          grayscale_width, grayscale_height, grayscale_pixels = decode_rgba(grayscale_path)
+          source_width, source_height, source_pixels = decode_rgba(root / grayscale["sourceCanonicalPath"])
+          assert (grayscale_width, grayscale_height) == (source_width, source_height)
+          assert all(grayscale_pixels[index] == grayscale_pixels[index + 1] == grayscale_pixels[index + 2] for index in range(0, len(grayscale_pixels), 4))
+          assert grayscale_pixels[3::4] == source_pixels[3::4]
+          assert hashlib.sha256(grayscale_pixels).hexdigest() == grayscale["decodedPixelSha256"]
+          assert grayscale["channelsEqual"] is True and grayscale["alphaPreserved"] is True and grayscale["geometryPreserved"] is True
+          recorded_web_paths.add(grayscale["derivativePath"])
+          responsive_grayscale = grayscale["responsiveDerivative"]
+          responsive_grayscale_path = root / responsive_grayscale["path"]
+          responsive_grayscale_payload = responsive_grayscale_path.read_bytes()
+          assert len(responsive_grayscale_payload) == responsive_grayscale["bytes"]
+          assert hashlib.sha256(responsive_grayscale_payload).hexdigest() == responsive_grayscale["sha256"]
+          recorded_web_paths.add(responsive_grayscale["path"])
+
+          actual_web_paths = {path.as_posix() for path in (root / "assets" / "web").glob("*.png")}
+          assert actual_web_paths == {f"site/{relative}" for relative in recorded_web_paths}
+          totals = web_manifest["totals"]
+          assert totals == {
+              "canonicalBytes": 69380331,
+              "losslessDerivativeBytes": 2127517,
+              "savingBytes": 67252814,
+              "savingPercent": 96.934,
+          }
           PY
 
       - name: Configure GitHub Pages
