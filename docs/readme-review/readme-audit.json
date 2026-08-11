@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "figurestead.readme-audit/1",
+  "result": "PASS",
+  "baseline": "0f077b7fd5ab4840e73b65c133f09bad89187e39",
+  "outline": [
+    "Figurestead",
+    "Start here",
+    "Python",
+    "Browser",
+    "Figurestead at a glance",
+    "Beyond the montage",
+    "Python and browser",
+    "Evidence and documentation",
+    "Status and limits"
+  ],
+  "editorialDepth": {
+    "pythonInstallLine": 12,
+    "browserInstallLine": 27,
+    "firstVisualLine": 42
+  },
+  "checks": {
+    "identityFirst": true,
+    "startHereFirstSection": true,
+    "pythonInstallNearTop": true,
+    "browserInstallNearTop": true,
+    "visualAfterQuickstart": true,
+    "relativeLinksExist": true,
+    "meaningfulImageAlt": true,
+    "assetManifestPasses": true,
+    "protectedSurfacesUnchanged": true,
+    "noLocalPathLeaks": true,
+    "noTrackedOsArtifacts": true,
+    "packageVersionsUnchanged": true,
+    "sharedSemanticsLimitPresent": true,
+    "matrixAsymmetryPresent": true,
+    "syntheticScopePresent": true
+  },
+  "relativeTargets": [
+    "THIRD_PARTY_NOTICES.md",
+    "TRADEMARKS.md",
+    "VERSIONING.md",
+    "docs/assets/readme/figurestead-at-a-glance.png",
+    "docs/assets/readme/populated-categorical-response-matrix.png",
+    "examples/browser-first-success/",
+    "examples/python-first-success.py",
+    "specimen-study/README.md",
+    "specimen-study/matrix-study.html",
+    "technical-showcase/reviewer-packet/README.md"
+  ],
+  "missingTargets": [],
+  "protectedPaths": [
+    "site",
+    "technical-showcase",
+    "src",
+    "web",
+    "specimen-study/corpus",
+    "specimen-study/corpus-v0.2",
+    "examples",
+    "pyproject.toml",
+    "release",
+    ".github",
+    "VERSIONING.md"
+  ],
+  "protectedChanges": [],
+  "localPathLeaks": [],
+  "trackedOsArtifacts": [],
+  "screenshots": {
+    "before-1440.png": {
+      "dimensions": [
+        1440,
+        1000
+      ],
+      "bytes": 50861,
+      "sha256": "243d74b7050a19918c18ebc4989ea3df9c72fcb747053b1f721f157ab036de3b"
+    },
+    "after-1440.png": {
+      "dimensions": [
+        1425,
+        990
+      ],
+      "bytes": 85449,
+      "sha256": "62c561e28778fbfbdb24267d3e4a29c60237fa4420a80a28abc4da1ce78a3261"
+    },
+    "after-390.png": {
+      "dimensions": [
+        375,
+        812
+      ],
+      "bytes": 38427,
+      "sha256": "9f9291966ddd797885b565ed538d943d40186e7d2724fdde0988265044539798"
+    }
+  },
+  "browserEvidence": {
+    "desktop": {
+      "viewport": [
+        1440,
+        1000
+      ],
+      "pythonInstallTopPx": 392.6640625,
+      "browserInstallTopPx": 706.6640625,
+      "imagesLoaded": 2
+    },
+    "narrow": {
+      "viewport": [
+        390,
+        844
+      ],
+      "documentHorizontalOverflowPx": 0,
+      "imagesLoaded": 2
+    },
+    "firstSuccess": {
+      "ready": true,
+      "status": "Rendered \u00b7 line \u00b7 terminal progress 1",
+      "consoleErrors": 0
+    },
+    "captureLimitation": "Full-page stitching was incorrect with an active in-app viewport override; retained evidence uses verified viewport captures and the full-size image assets."
+  },
+  "packageVerification": {
+    "python": {
+      "registryVersion": "0.9.0a1",
+      "result": "PASS",
+      "headlessEnvironmentOverride": "MPLBACKEND=Agg",
+      "outputDimensions": [
+        1260,
+        780
+      ],
+      "outputSha256": "34b1117229b84cc6ce1d493253d993d4605697131ba30cb31ae6586e305a2fa8"
+    },
+    "browser": {
+      "registryVersion": "0.9.0-alpha.1",
+      "result": "PASS",
+      "node": "v24.14.0",
+      "createFiguresteadType": "function"
+    }
+  }
+}
