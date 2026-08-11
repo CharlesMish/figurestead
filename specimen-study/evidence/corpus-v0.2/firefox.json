@@ -25,16 +25,18 @@
           "paired_seasonal_distributions",
           "field_sampling_coverage",
           "reservoir_oxygen_thresholds",
-          "habitat_class_response",
+          "habitat_response_matrix",
           "gene_expression_recovery",
           "particle_size_relationship",
+          "habitat_class_response",
           "lab_precision",
           "migration_monitoring_coverage"
         ],
-        "sceneCount": 13,
+        "sceneCount": 14,
         "stressInMontage": [
           "gene_expression_recovery",
           "particle_size_relationship",
+          "habitat_class_response",
           "lab_precision",
           "migration_monitoring_coverage"
         ],
@@ -45,79 +47,79 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-3ykio2ljbj6-title figurestead-3ykio2ljbj6-description",
+            "labelledBy": "figurestead-dxfqdo0q1gr-title figurestead-dxfqdo0q1gr-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-kkupkim5e19-title figurestead-kkupkim5e19-description",
+            "labelledBy": "figurestead-xf8g0rketgb-title figurestead-xf8g0rketgb-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-sh16nk5i27-title figurestead-sh16nk5i27-description",
+            "labelledBy": "figurestead-dg94clsak7l-title figurestead-dg94clsak7l-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-21fern9429p-title figurestead-21fern9429p-description",
+            "labelledBy": "figurestead-5icpmaqa82f-title figurestead-5icpmaqa82f-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-vdyjv0a0ues-title figurestead-vdyjv0a0ues-description",
+            "labelledBy": "figurestead-we91rnb8ri-title figurestead-we91rnb8ri-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-sy4266e8j1f-title figurestead-sy4266e8j1f-description",
+            "labelledBy": "figurestead-87dsec2p4wp-title figurestead-87dsec2p4wp-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-l3ozdv08e5m-title figurestead-l3ozdv08e5m-description",
+            "labelledBy": "figurestead-3nvnay5a14r-title figurestead-3nvnay5a14r-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-8rbem79aaoh-title figurestead-8rbem79aaoh-description",
-            "targetsExist": true
-          },
-          {
-            "sceneId": "habitat_class_response",
-            "role": "img",
-            "labelledBy": "figurestead-x2zq282e6rp-title figurestead-x2zq282e6rp-description",
+            "labelledBy": "figurestead-24c8dxsl0m7-title figurestead-24c8dxsl0m7-description",
             "targetsExist": true
           },
           {
             "sceneId": "gene_expression_recovery",
             "role": "img",
-            "labelledBy": "figurestead-gyuzxup3qfg-title figurestead-gyuzxup3qfg-description",
+            "labelledBy": "figurestead-i53jngyie5-title figurestead-i53jngyie5-description",
             "targetsExist": true
           },
           {
             "sceneId": "particle_size_relationship",
             "role": "img",
-            "labelledBy": "figurestead-ls5qtr2fauj-title figurestead-ls5qtr2fauj-description",
+            "labelledBy": "figurestead-rsmemgcbu8-title figurestead-rsmemgcbu8-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "habitat_class_response",
+            "role": "img",
+            "labelledBy": "figurestead-yya0idg3goa-title figurestead-yya0idg3goa-description",
             "targetsExist": true
           },
           {
             "sceneId": "lab_precision",
             "role": "img",
-            "labelledBy": "figurestead-mosksxv6h9-title figurestead-mosksxv6h9-description",
+            "labelledBy": "figurestead-xqyj1f0z72-title figurestead-xqyj1f0z72-description",
             "targetsExist": true
           },
           {
             "sceneId": "migration_monitoring_coverage",
             "role": "img",
-            "labelledBy": "figurestead-pbynn1y74k-title figurestead-pbynn1y74k-description",
+            "labelledBy": "figurestead-b7i1dg4kzft-title figurestead-b7i1dg4kzft-description",
             "targetsExist": true
           }
         ],
@@ -350,44 +352,6 @@
             "provenanceKind": "deterministic_synthetic"
           },
           {
-            "id": "habitat_class_response",
-            "tier": "showcase_candidate",
-            "renderer": "strip_summary",
-            "theme": "slipware",
-            "seed": 15401,
-            "fingerprint": "fnv1a32-b8a2911b",
-            "state": {
-              "progress": 1,
-              "playing": false,
-              "reducedMotion": false,
-              "renderers": [
-                "strip_summary"
-              ],
-              "sceneVersion": "figurestead.scene/1",
-              "resolvedSceneVersion": "figurestead.resolved-scene/1",
-              "composedSceneVersion": "figurestead.composed-scene/1",
-              "profile": "atlas",
-              "destroyed": false
-            },
-            "glyphCount": 4,
-            "lineStyleCount": 4,
-            "seriesCount": 1,
-            "observationCount": 90,
-            "groupOrder": [
-              "headwater",
-              "riffle",
-              "deep pool",
-              "side channel",
-              "floodplain",
-              "wet meadow",
-              "tidal creek",
-              "mudflat",
-              "seagrass bed",
-              "open estuary"
-            ],
-            "provenanceKind": "deterministic_synthetic"
-          },
-          {
             "id": "gene_expression_recovery",
             "tier": "stress",
             "renderer": "line",
@@ -439,6 +403,44 @@
             "seriesCount": 3,
             "observationCount": 37,
             "groupOrder": null,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "habitat_class_response",
+            "tier": "stress",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 15401,
+            "fingerprint": "fnv1a32-b8a2911b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 1,
+            "observationCount": 90,
+            "groupOrder": [
+              "headwater",
+              "riffle",
+              "deep pool",
+              "side channel",
+              "floodplain",
+              "wet meadow",
+              "tidal creek",
+              "mudflat",
+              "seagrass bed",
+              "open estuary"
+            ],
             "provenanceKind": "deterministic_synthetic"
           },
           {
@@ -671,6 +673,12 @@
           "markIdsMatch": true,
           "fullLabelsPresent": true
         },
+        "matrixCandidate": {
+          "tier": "showcase_candidate",
+          "renderer": "categorical_matrix",
+          "imageLoaded": true,
+          "studyLinked": true
+        },
         "pixelHashes": {
           "watershed_storm_response": "fnv1a32-2f020afe@674x407",
           "circadian_phase_shift": "fnv1a32-c441267d@674x407",
@@ -680,16 +688,16 @@
           "paired_seasonal_distributions": "fnv1a32-60acf563@674x407",
           "field_sampling_coverage": "fnv1a32-1e08c7ef@674x407",
           "reservoir_oxygen_thresholds": "fnv1a32-6ebbc729@674x407",
-          "habitat_class_response": "fnv1a32-112105df@674x407",
           "gene_expression_recovery": "fnv1a32-2c421664@674x407",
           "particle_size_relationship": "fnv1a32-a12a408d@674x407",
+          "habitat_class_response": "fnv1a32-112105df@674x407",
           "lab_precision": "fnv1a32-25fe90fa@674x407",
           "migration_monitoring_coverage": "fnv1a32-d89d234b@674x407"
         }
       },
       "keyboard": {
-        "expectedCount": 43,
-        "reachedCount": 43,
+        "expectedCount": 45,
+        "reachedCount": 45,
         "sequence": [
           {
             "tag": "a",
@@ -733,7 +741,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 2527.9862365722656,
             "clippedAncestors": []
           },
           {
@@ -760,7 +768,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 2527.9862365722656,
             "clippedAncestors": []
           },
           {
@@ -841,7 +849,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 2527.9862365722656,
             "clippedAncestors": []
           },
           {
@@ -868,7 +876,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 2527.9862365722656,
             "clippedAncestors": []
           },
           {
@@ -944,30 +952,21 @@
             "clippedAncestors": []
           },
           {
-            "tag": "summary",
-            "text": "Scene brief and source",
-            "href": null,
+            "tag": "a",
+            "text": "",
+            "href": "matrix-study.html",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 297627.15295410156,
             "clippedAncestors": []
           },
           {
             "tag": "a",
-            "text": "Scene JSON",
-            "href": "corpus-v0.2/scenes/habitat_class_response.json",
+            "text": "Open populated response-matrix study and accessible table",
+            "href": "matrix-study.html",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 926.3334045410156,
-            "clippedAncestors": []
-          },
-          {
-            "tag": "a",
-            "text": "Flat CSV",
-            "href": "corpus-v0.2/tables/habitat_class_response.csv",
-            "outlineStyle": "solid",
-            "outlineWidth": "3px",
-            "visibleArea": 741.0666809082031,
+            "visibleArea": 5280.099914550781,
             "clippedAncestors": []
           },
           {
@@ -1019,6 +1018,33 @@
             "tag": "a",
             "text": "Flat CSV",
             "href": "corpus-v0.2/tables/particle_size_relationship.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus-v0.2/scenes/habitat_class_response.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus-v0.2/tables/habitat_class_response.csv",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
             "visibleArea": 741.0666809082031,
@@ -1104,16 +1130,18 @@
           "paired_seasonal_distributions",
           "field_sampling_coverage",
           "reservoir_oxygen_thresholds",
-          "habitat_class_response",
+          "habitat_response_matrix",
           "gene_expression_recovery",
           "particle_size_relationship",
+          "habitat_class_response",
           "lab_precision",
           "migration_monitoring_coverage"
         ],
-        "sceneCount": 13,
+        "sceneCount": 14,
         "stressInMontage": [
           "gene_expression_recovery",
           "particle_size_relationship",
+          "habitat_class_response",
           "lab_precision",
           "migration_monitoring_coverage"
         ],
@@ -1124,79 +1152,79 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-81k8v39rmt-title figurestead-81k8v39rmt-description",
+            "labelledBy": "figurestead-lzlaurlsraa-title figurestead-lzlaurlsraa-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-7px5qtpoe0k-title figurestead-7px5qtpoe0k-description",
+            "labelledBy": "figurestead-h9k8cqihcts-title figurestead-h9k8cqihcts-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-gc13hga0ihb-title figurestead-gc13hga0ihb-description",
+            "labelledBy": "figurestead-28mrq05i0ua-title figurestead-28mrq05i0ua-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-3xpsse5kceb-title figurestead-3xpsse5kceb-description",
+            "labelledBy": "figurestead-q9bo1xts8o-title figurestead-q9bo1xts8o-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-wds5v4sqze-title figurestead-wds5v4sqze-description",
+            "labelledBy": "figurestead-hv8pnaho314-title figurestead-hv8pnaho314-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-ip3e9bq49y-title figurestead-ip3e9bq49y-description",
+            "labelledBy": "figurestead-l2qbvuas1f-title figurestead-l2qbvuas1f-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-p60aoc3ykzh-title figurestead-p60aoc3ykzh-description",
+            "labelledBy": "figurestead-q70t2q4hf6e-title figurestead-q70t2q4hf6e-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-06dsu34wx35d-title figurestead-06dsu34wx35d-description",
-            "targetsExist": true
-          },
-          {
-            "sceneId": "habitat_class_response",
-            "role": "img",
-            "labelledBy": "figurestead-xazfkck7q9-title figurestead-xazfkck7q9-description",
+            "labelledBy": "figurestead-s3rltp5hi19-title figurestead-s3rltp5hi19-description",
             "targetsExist": true
           },
           {
             "sceneId": "gene_expression_recovery",
             "role": "img",
-            "labelledBy": "figurestead-xrt25c9qj9h-title figurestead-xrt25c9qj9h-description",
+            "labelledBy": "figurestead-2slcuz2qkp6-title figurestead-2slcuz2qkp6-description",
             "targetsExist": true
           },
           {
             "sceneId": "particle_size_relationship",
             "role": "img",
-            "labelledBy": "figurestead-fzuepyqzwe-title figurestead-fzuepyqzwe-description",
+            "labelledBy": "figurestead-qzbftirlxq-title figurestead-qzbftirlxq-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "habitat_class_response",
+            "role": "img",
+            "labelledBy": "figurestead-svc430das7-title figurestead-svc430das7-description",
             "targetsExist": true
           },
           {
             "sceneId": "lab_precision",
             "role": "img",
-            "labelledBy": "figurestead-9n5i61bgoo-title figurestead-9n5i61bgoo-description",
+            "labelledBy": "figurestead-09v0brgl0zd-title figurestead-09v0brgl0zd-description",
             "targetsExist": true
           },
           {
             "sceneId": "migration_monitoring_coverage",
             "role": "img",
-            "labelledBy": "figurestead-25c0gw6by2xh-title figurestead-25c0gw6by2xh-description",
+            "labelledBy": "figurestead-c7ott90c7yt-title figurestead-c7ott90c7yt-description",
             "targetsExist": true
           }
         ],
@@ -1429,44 +1457,6 @@
             "provenanceKind": "deterministic_synthetic"
           },
           {
-            "id": "habitat_class_response",
-            "tier": "showcase_candidate",
-            "renderer": "strip_summary",
-            "theme": "slipware",
-            "seed": 15401,
-            "fingerprint": "fnv1a32-b8a2911b",
-            "state": {
-              "progress": 1,
-              "playing": false,
-              "reducedMotion": true,
-              "renderers": [
-                "strip_summary"
-              ],
-              "sceneVersion": "figurestead.scene/1",
-              "resolvedSceneVersion": "figurestead.resolved-scene/1",
-              "composedSceneVersion": "figurestead.composed-scene/1",
-              "profile": "atlas",
-              "destroyed": false
-            },
-            "glyphCount": 4,
-            "lineStyleCount": 4,
-            "seriesCount": 1,
-            "observationCount": 90,
-            "groupOrder": [
-              "headwater",
-              "riffle",
-              "deep pool",
-              "side channel",
-              "floodplain",
-              "wet meadow",
-              "tidal creek",
-              "mudflat",
-              "seagrass bed",
-              "open estuary"
-            ],
-            "provenanceKind": "deterministic_synthetic"
-          },
-          {
             "id": "gene_expression_recovery",
             "tier": "stress",
             "renderer": "line",
@@ -1518,6 +1508,44 @@
             "seriesCount": 3,
             "observationCount": 37,
             "groupOrder": null,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "habitat_class_response",
+            "tier": "stress",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 15401,
+            "fingerprint": "fnv1a32-b8a2911b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 1,
+            "observationCount": 90,
+            "groupOrder": [
+              "headwater",
+              "riffle",
+              "deep pool",
+              "side channel",
+              "floodplain",
+              "wet meadow",
+              "tidal creek",
+              "mudflat",
+              "seagrass bed",
+              "open estuary"
+            ],
             "provenanceKind": "deterministic_synthetic"
           },
           {
@@ -1750,6 +1778,12 @@
           "markIdsMatch": true,
           "fullLabelsPresent": true
         },
+        "matrixCandidate": {
+          "tier": "showcase_candidate",
+          "renderer": "categorical_matrix",
+          "imageLoaded": true,
+          "studyLinked": true
+        },
         "pixelHashes": {
           "watershed_storm_response": "fnv1a32-2f020afe@674x407",
           "circadian_phase_shift": "fnv1a32-c441267d@674x407",
@@ -1759,16 +1793,16 @@
           "paired_seasonal_distributions": "fnv1a32-60acf563@674x407",
           "field_sampling_coverage": "fnv1a32-1e08c7ef@674x407",
           "reservoir_oxygen_thresholds": "fnv1a32-6ebbc729@674x407",
-          "habitat_class_response": "fnv1a32-112105df@674x407",
           "gene_expression_recovery": "fnv1a32-2c421664@674x407",
           "particle_size_relationship": "fnv1a32-a12a408d@674x407",
+          "habitat_class_response": "fnv1a32-112105df@674x407",
           "lab_precision": "fnv1a32-25fe90fa@674x407",
           "migration_monitoring_coverage": "fnv1a32-d89d234b@674x407"
         }
       },
       "keyboard": {
-        "expectedCount": 43,
-        "reachedCount": 43,
+        "expectedCount": 45,
+        "reachedCount": 45,
         "sequence": [
           {
             "tag": "a",
@@ -1812,7 +1846,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 2527.9862365722656,
             "clippedAncestors": []
           },
           {
@@ -1839,7 +1873,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 2527.9862365722656,
             "clippedAncestors": []
           },
           {
@@ -1920,7 +1954,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 2527.9862365722656,
             "clippedAncestors": []
           },
           {
@@ -1947,7 +1981,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 2527.9862365722656,
             "clippedAncestors": []
           },
           {
@@ -2023,30 +2057,21 @@
             "clippedAncestors": []
           },
           {
-            "tag": "summary",
-            "text": "Scene brief and source",
-            "href": null,
+            "tag": "a",
+            "text": "",
+            "href": "matrix-study.html",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9886054992676,
+            "visibleArea": 297627.15295410156,
             "clippedAncestors": []
           },
           {
             "tag": "a",
-            "text": "Scene JSON",
-            "href": "corpus-v0.2/scenes/habitat_class_response.json",
+            "text": "Open populated response-matrix study and accessible table",
+            "href": "matrix-study.html",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 926.3334045410156,
-            "clippedAncestors": []
-          },
-          {
-            "tag": "a",
-            "text": "Flat CSV",
-            "href": "corpus-v0.2/tables/habitat_class_response.csv",
-            "outlineStyle": "solid",
-            "outlineWidth": "3px",
-            "visibleArea": 741.0666809082031,
+            "visibleArea": 5280.099914550781,
             "clippedAncestors": []
           },
           {
@@ -2098,6 +2123,33 @@
             "tag": "a",
             "text": "Flat CSV",
             "href": "corpus-v0.2/tables/particle_size_relationship.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus-v0.2/scenes/habitat_class_response.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus-v0.2/tables/habitat_class_response.csv",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
             "visibleArea": 741.0666809082031,
@@ -2183,16 +2235,18 @@
           "paired_seasonal_distributions",
           "field_sampling_coverage",
           "reservoir_oxygen_thresholds",
-          "habitat_class_response",
+          "habitat_response_matrix",
           "gene_expression_recovery",
           "particle_size_relationship",
+          "habitat_class_response",
           "lab_precision",
           "migration_monitoring_coverage"
         ],
-        "sceneCount": 13,
+        "sceneCount": 14,
         "stressInMontage": [
           "gene_expression_recovery",
           "particle_size_relationship",
+          "habitat_class_response",
           "lab_precision",
           "migration_monitoring_coverage"
         ],
@@ -2203,79 +2257,79 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-s1ti8wvmw9d-title figurestead-s1ti8wvmw9d-description",
+            "labelledBy": "figurestead-wml3hju9b4e-title figurestead-wml3hju9b4e-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-zenvumoyz9-title figurestead-zenvumoyz9-description",
+            "labelledBy": "figurestead-3gmh9gkmo3s-title figurestead-3gmh9gkmo3s-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-lzej88ivdc-title figurestead-lzej88ivdc-description",
+            "labelledBy": "figurestead-krmuelu3ed-title figurestead-krmuelu3ed-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-8mceb5zip8f-title figurestead-8mceb5zip8f-description",
+            "labelledBy": "figurestead-1z9t1pcjvepj-title figurestead-1z9t1pcjvepj-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-vvutzkvm4c-title figurestead-vvutzkvm4c-description",
+            "labelledBy": "figurestead-errei4lbjtm-title figurestead-errei4lbjtm-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-4l866ektns-title figurestead-4l866ektns-description",
+            "labelledBy": "figurestead-7m3xxa843gr-title figurestead-7m3xxa843gr-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-w7x78erl0vd-title figurestead-w7x78erl0vd-description",
+            "labelledBy": "figurestead-unh2uhq0v4n-title figurestead-unh2uhq0v4n-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-i1jzjjff0y-title figurestead-i1jzjjff0y-description",
-            "targetsExist": true
-          },
-          {
-            "sceneId": "habitat_class_response",
-            "role": "img",
-            "labelledBy": "figurestead-1icrhskok2h-title figurestead-1icrhskok2h-description",
+            "labelledBy": "figurestead-psnslw6jwka-title figurestead-psnslw6jwka-description",
             "targetsExist": true
           },
           {
             "sceneId": "gene_expression_recovery",
             "role": "img",
-            "labelledBy": "figurestead-3wjvn1zxh27-title figurestead-3wjvn1zxh27-description",
+            "labelledBy": "figurestead-1fg6t3qtzrm-title figurestead-1fg6t3qtzrm-description",
             "targetsExist": true
           },
           {
             "sceneId": "particle_size_relationship",
             "role": "img",
-            "labelledBy": "figurestead-4n0bqrbixeu-title figurestead-4n0bqrbixeu-description",
+            "labelledBy": "figurestead-c4qxf2n60gr-title figurestead-c4qxf2n60gr-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "habitat_class_response",
+            "role": "img",
+            "labelledBy": "figurestead-aj3z29vwoe-title figurestead-aj3z29vwoe-description",
             "targetsExist": true
           },
           {
             "sceneId": "lab_precision",
             "role": "img",
-            "labelledBy": "figurestead-gxx1dh442z-title figurestead-gxx1dh442z-description",
+            "labelledBy": "figurestead-vvf0m3hq76-title figurestead-vvf0m3hq76-description",
             "targetsExist": true
           },
           {
             "sceneId": "migration_monitoring_coverage",
             "role": "img",
-            "labelledBy": "figurestead-pfgrq0z2tcc-title figurestead-pfgrq0z2tcc-description",
+            "labelledBy": "figurestead-vzhsuewraf-title figurestead-vzhsuewraf-description",
             "targetsExist": true
           }
         ],
@@ -2508,44 +2562,6 @@
             "provenanceKind": "deterministic_synthetic"
           },
           {
-            "id": "habitat_class_response",
-            "tier": "showcase_candidate",
-            "renderer": "strip_summary",
-            "theme": "slipware",
-            "seed": 15401,
-            "fingerprint": "fnv1a32-b8a2911b",
-            "state": {
-              "progress": 1,
-              "playing": false,
-              "reducedMotion": false,
-              "renderers": [
-                "strip_summary"
-              ],
-              "sceneVersion": "figurestead.scene/1",
-              "resolvedSceneVersion": "figurestead.resolved-scene/1",
-              "composedSceneVersion": "figurestead.composed-scene/1",
-              "profile": "atlas",
-              "destroyed": false
-            },
-            "glyphCount": 4,
-            "lineStyleCount": 4,
-            "seriesCount": 1,
-            "observationCount": 90,
-            "groupOrder": [
-              "headwater",
-              "riffle",
-              "deep pool",
-              "side channel",
-              "floodplain",
-              "wet meadow",
-              "tidal creek",
-              "mudflat",
-              "seagrass bed",
-              "open estuary"
-            ],
-            "provenanceKind": "deterministic_synthetic"
-          },
-          {
             "id": "gene_expression_recovery",
             "tier": "stress",
             "renderer": "line",
@@ -2597,6 +2613,44 @@
             "seriesCount": 3,
             "observationCount": 37,
             "groupOrder": null,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "habitat_class_response",
+            "tier": "stress",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 15401,
+            "fingerprint": "fnv1a32-b8a2911b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 1,
+            "observationCount": 90,
+            "groupOrder": [
+              "headwater",
+              "riffle",
+              "deep pool",
+              "side channel",
+              "floodplain",
+              "wet meadow",
+              "tidal creek",
+              "mudflat",
+              "seagrass bed",
+              "open estuary"
+            ],
             "provenanceKind": "deterministic_synthetic"
           },
           {
@@ -2667,44 +2721,44 @@
         "mediaReduced": false,
         "categoricalLayout": {
           "width": 362,
-          "height": 289.6000061035156,
+          "height": 218.4499969482422,
           "rotateX": true,
           "annotationBounds": {
             "plot": {
               "left": 40.72773361206055,
               "right": 340,
               "top": 72,
-              "bottom": 199.0899399915607
+              "bottom": 127.93993083628726
             },
             "xTicks": {
               "left": 40.72773361206055,
               "right": 340,
-              "top": 203.0899399915607,
-              "bottom": 261.0345764160156
+              "top": 131.93993083628726,
+              "bottom": 189.8845672607422
             },
             "xTitle": {
               "left": 151.2555332183838,
               "right": 229.47220039367676,
-              "top": 265.0345764160156,
-              "bottom": 272.8031311035156
+              "top": 193.8845672607422,
+              "bottom": 201.6531219482422
             },
             "provenance": {
               "left": 40.72773361206055,
               "right": 257.47773361206055,
-              "top": 277.8031311035156,
-              "bottom": 285.6000061035156
+              "top": 206.6531219482422,
+              "bottom": 214.4499969482422
             },
             "yTicks": {
               "left": 18.677734375,
               "right": 36.72773361206055,
               "top": 72,
-              "bottom": 199.0899399915607
+              "bottom": 127.93993083628726
             },
             "yTitle": {
               "left": 4,
               "right": 13.677734375,
               "top": 72,
-              "bottom": 199.0899399915607
+              "bottom": 127.93993083628726
             },
             "gaps": {
               "plotToXTicks": 4,
@@ -2829,6 +2883,12 @@
           "markIdsMatch": true,
           "fullLabelsPresent": true
         },
+        "matrixCandidate": {
+          "tier": "showcase_candidate",
+          "renderer": "categorical_matrix",
+          "imageLoaded": true,
+          "studyLinked": true
+        },
         "pixelHashes": {
           "watershed_storm_response": "fnv1a32-1632329b@362x218",
           "circadian_phase_shift": "fnv1a32-e697d1ad@362x218",
@@ -2838,16 +2898,16 @@
           "paired_seasonal_distributions": "fnv1a32-eebbc4cd@362x218",
           "field_sampling_coverage": "fnv1a32-6d787869@362x218",
           "reservoir_oxygen_thresholds": "fnv1a32-a28290f6@362x218",
-          "habitat_class_response": "fnv1a32-bd2eee99@362x290",
-          "gene_expression_recovery": "fnv1a32-05036873@362x218",
+          "gene_expression_recovery": "fnv1a32-c7071e39@362x218",
           "particle_size_relationship": "fnv1a32-9c825f95@362x218",
+          "habitat_class_response": "fnv1a32-bba18fe0@362x218",
           "lab_precision": "fnv1a32-683154e9@362x218",
           "migration_monitoring_coverage": "fnv1a32-a906f01d@362x218"
         }
       },
       "keyboard": {
-        "expectedCount": 43,
-        "reachedCount": 43,
+        "expectedCount": 45,
+        "reachedCount": 45,
         "sequence": [
           {
             "tag": "a",
@@ -3102,30 +3162,21 @@
             "clippedAncestors": []
           },
           {
-            "tag": "summary",
-            "text": "Scene brief and source",
-            "href": null,
+            "tag": "a",
+            "text": "",
+            "href": "matrix-study.html",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9862365722656,
+            "visibleArea": 85854.3296508789,
             "clippedAncestors": []
           },
           {
             "tag": "a",
-            "text": "Scene JSON",
-            "href": "corpus-v0.2/scenes/habitat_class_response.json",
+            "text": "Open populated response-matrix study and accessible table",
+            "href": "matrix-study.html",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 926.3334045410156,
-            "clippedAncestors": []
-          },
-          {
-            "tag": "a",
-            "text": "Flat CSV",
-            "href": "corpus-v0.2/tables/habitat_class_response.csv",
-            "outlineStyle": "solid",
-            "outlineWidth": "3px",
-            "visibleArea": 741.0666809082031,
+            "visibleArea": 10292.225372314453,
             "clippedAncestors": []
           },
           {
@@ -3161,7 +3212,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9862365722656,
+            "visibleArea": 2527.9886054992676,
             "clippedAncestors": []
           },
           {
@@ -3177,6 +3228,33 @@
             "tag": "a",
             "text": "Flat CSV",
             "href": "corpus-v0.2/tables/particle_size_relationship.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus-v0.2/scenes/habitat_class_response.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus-v0.2/tables/habitat_class_response.csv",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
             "visibleArea": 741.0666809082031,
@@ -3262,16 +3340,18 @@
           "paired_seasonal_distributions",
           "field_sampling_coverage",
           "reservoir_oxygen_thresholds",
-          "habitat_class_response",
+          "habitat_response_matrix",
           "gene_expression_recovery",
           "particle_size_relationship",
+          "habitat_class_response",
           "lab_precision",
           "migration_monitoring_coverage"
         ],
-        "sceneCount": 13,
+        "sceneCount": 14,
         "stressInMontage": [
           "gene_expression_recovery",
           "particle_size_relationship",
+          "habitat_class_response",
           "lab_precision",
           "migration_monitoring_coverage"
         ],
@@ -3282,79 +3362,79 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-6jcwfoyi9z-title figurestead-6jcwfoyi9z-description",
+            "labelledBy": "figurestead-f37h3w00j9-title figurestead-f37h3w00j9-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-ypo73751uio-title figurestead-ypo73751uio-description",
+            "labelledBy": "figurestead-q3xbm2ab2v-title figurestead-q3xbm2ab2v-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-gmines6dh1d-title figurestead-gmines6dh1d-description",
+            "labelledBy": "figurestead-x4hn0bl8tml-title figurestead-x4hn0bl8tml-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-5y0jri0nns9-title figurestead-5y0jri0nns9-description",
+            "labelledBy": "figurestead-p873hvrztp-title figurestead-p873hvrztp-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-5na7ps4zojo-title figurestead-5na7ps4zojo-description",
+            "labelledBy": "figurestead-0zy2drhfwgp8-title figurestead-0zy2drhfwgp8-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-j0f7weo7vrm-title figurestead-j0f7weo7vrm-description",
+            "labelledBy": "figurestead-x5bqjuga6t-title figurestead-x5bqjuga6t-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-2uqel22381k-title figurestead-2uqel22381k-description",
+            "labelledBy": "figurestead-pj0dol8zgz-title figurestead-pj0dol8zgz-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-vmf8d8nou8-title figurestead-vmf8d8nou8-description",
-            "targetsExist": true
-          },
-          {
-            "sceneId": "habitat_class_response",
-            "role": "img",
-            "labelledBy": "figurestead-f5o8nz5mvng-title figurestead-f5o8nz5mvng-description",
+            "labelledBy": "figurestead-4p8e9nn2gax-title figurestead-4p8e9nn2gax-description",
             "targetsExist": true
           },
           {
             "sceneId": "gene_expression_recovery",
             "role": "img",
-            "labelledBy": "figurestead-wikrw587fii-title figurestead-wikrw587fii-description",
+            "labelledBy": "figurestead-f060iuf39g-title figurestead-f060iuf39g-description",
             "targetsExist": true
           },
           {
             "sceneId": "particle_size_relationship",
             "role": "img",
-            "labelledBy": "figurestead-ddr9k17af4p-title figurestead-ddr9k17af4p-description",
+            "labelledBy": "figurestead-vbp9nc9tege-title figurestead-vbp9nc9tege-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "habitat_class_response",
+            "role": "img",
+            "labelledBy": "figurestead-zj5davnzul-title figurestead-zj5davnzul-description",
             "targetsExist": true
           },
           {
             "sceneId": "lab_precision",
             "role": "img",
-            "labelledBy": "figurestead-8egiutmdxyt-title figurestead-8egiutmdxyt-description",
+            "labelledBy": "figurestead-rn1zsaydc4-title figurestead-rn1zsaydc4-description",
             "targetsExist": true
           },
           {
             "sceneId": "migration_monitoring_coverage",
             "role": "img",
-            "labelledBy": "figurestead-c2iepiv2fnm-title figurestead-c2iepiv2fnm-description",
+            "labelledBy": "figurestead-21e0w11nsgu-title figurestead-21e0w11nsgu-description",
             "targetsExist": true
           }
         ],
@@ -3587,44 +3667,6 @@
             "provenanceKind": "deterministic_synthetic"
           },
           {
-            "id": "habitat_class_response",
-            "tier": "showcase_candidate",
-            "renderer": "strip_summary",
-            "theme": "slipware",
-            "seed": 15401,
-            "fingerprint": "fnv1a32-b8a2911b",
-            "state": {
-              "progress": 1,
-              "playing": false,
-              "reducedMotion": true,
-              "renderers": [
-                "strip_summary"
-              ],
-              "sceneVersion": "figurestead.scene/1",
-              "resolvedSceneVersion": "figurestead.resolved-scene/1",
-              "composedSceneVersion": "figurestead.composed-scene/1",
-              "profile": "atlas",
-              "destroyed": false
-            },
-            "glyphCount": 4,
-            "lineStyleCount": 4,
-            "seriesCount": 1,
-            "observationCount": 90,
-            "groupOrder": [
-              "headwater",
-              "riffle",
-              "deep pool",
-              "side channel",
-              "floodplain",
-              "wet meadow",
-              "tidal creek",
-              "mudflat",
-              "seagrass bed",
-              "open estuary"
-            ],
-            "provenanceKind": "deterministic_synthetic"
-          },
-          {
             "id": "gene_expression_recovery",
             "tier": "stress",
             "renderer": "line",
@@ -3676,6 +3718,44 @@
             "seriesCount": 3,
             "observationCount": 37,
             "groupOrder": null,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "habitat_class_response",
+            "tier": "stress",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 15401,
+            "fingerprint": "fnv1a32-b8a2911b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 1,
+            "observationCount": 90,
+            "groupOrder": [
+              "headwater",
+              "riffle",
+              "deep pool",
+              "side channel",
+              "floodplain",
+              "wet meadow",
+              "tidal creek",
+              "mudflat",
+              "seagrass bed",
+              "open estuary"
+            ],
             "provenanceKind": "deterministic_synthetic"
           },
           {
@@ -3746,44 +3826,44 @@
         "mediaReduced": true,
         "categoricalLayout": {
           "width": 362,
-          "height": 289.6000061035156,
+          "height": 218.4499969482422,
           "rotateX": true,
           "annotationBounds": {
             "plot": {
               "left": 40.72773361206055,
               "right": 340,
               "top": 72,
-              "bottom": 199.0899399915607
+              "bottom": 127.93993083628726
             },
             "xTicks": {
               "left": 40.72773361206055,
               "right": 340,
-              "top": 203.0899399915607,
-              "bottom": 261.0345764160156
+              "top": 131.93993083628726,
+              "bottom": 189.8845672607422
             },
             "xTitle": {
               "left": 151.2555332183838,
               "right": 229.47220039367676,
-              "top": 265.0345764160156,
-              "bottom": 272.8031311035156
+              "top": 193.8845672607422,
+              "bottom": 201.6531219482422
             },
             "provenance": {
               "left": 40.72773361206055,
               "right": 257.47773361206055,
-              "top": 277.8031311035156,
-              "bottom": 285.6000061035156
+              "top": 206.6531219482422,
+              "bottom": 214.4499969482422
             },
             "yTicks": {
               "left": 18.677734375,
               "right": 36.72773361206055,
               "top": 72,
-              "bottom": 199.0899399915607
+              "bottom": 127.93993083628726
             },
             "yTitle": {
               "left": 4,
               "right": 13.677734375,
               "top": 72,
-              "bottom": 199.0899399915607
+              "bottom": 127.93993083628726
             },
             "gaps": {
               "plotToXTicks": 4,
@@ -3908,6 +3988,12 @@
           "markIdsMatch": true,
           "fullLabelsPresent": true
         },
+        "matrixCandidate": {
+          "tier": "showcase_candidate",
+          "renderer": "categorical_matrix",
+          "imageLoaded": true,
+          "studyLinked": true
+        },
         "pixelHashes": {
           "watershed_storm_response": "fnv1a32-1632329b@362x218",
           "circadian_phase_shift": "fnv1a32-e697d1ad@362x218",
@@ -3917,16 +4003,16 @@
           "paired_seasonal_distributions": "fnv1a32-eebbc4cd@362x218",
           "field_sampling_coverage": "fnv1a32-6d787869@362x218",
           "reservoir_oxygen_thresholds": "fnv1a32-a28290f6@362x218",
-          "habitat_class_response": "fnv1a32-bd2eee99@362x290",
-          "gene_expression_recovery": "fnv1a32-05036873@362x218",
+          "gene_expression_recovery": "fnv1a32-c7071e39@362x218",
           "particle_size_relationship": "fnv1a32-9c825f95@362x218",
+          "habitat_class_response": "fnv1a32-bba18fe0@362x218",
           "lab_precision": "fnv1a32-683154e9@362x218",
           "migration_monitoring_coverage": "fnv1a32-a906f01d@362x218"
         }
       },
       "keyboard": {
-        "expectedCount": 43,
-        "reachedCount": 43,
+        "expectedCount": 45,
+        "reachedCount": 45,
         "sequence": [
           {
             "tag": "a",
@@ -4181,30 +4267,21 @@
             "clippedAncestors": []
           },
           {
-            "tag": "summary",
-            "text": "Scene brief and source",
-            "href": null,
+            "tag": "a",
+            "text": "",
+            "href": "matrix-study.html",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9862365722656,
+            "visibleArea": 85854.3296508789,
             "clippedAncestors": []
           },
           {
             "tag": "a",
-            "text": "Scene JSON",
-            "href": "corpus-v0.2/scenes/habitat_class_response.json",
+            "text": "Open populated response-matrix study and accessible table",
+            "href": "matrix-study.html",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 926.3334045410156,
-            "clippedAncestors": []
-          },
-          {
-            "tag": "a",
-            "text": "Flat CSV",
-            "href": "corpus-v0.2/tables/habitat_class_response.csv",
-            "outlineStyle": "solid",
-            "outlineWidth": "3px",
-            "visibleArea": 741.0666809082031,
+            "visibleArea": 10292.225372314453,
             "clippedAncestors": []
           },
           {
@@ -4240,7 +4317,7 @@
             "href": null,
             "outlineStyle": "solid",
             "outlineWidth": "3px",
-            "visibleArea": 2527.9862365722656,
+            "visibleArea": 2527.9886054992676,
             "clippedAncestors": []
           },
           {
@@ -4256,6 +4333,33 @@
             "tag": "a",
             "text": "Flat CSV",
             "href": "corpus-v0.2/tables/particle_size_relationship.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus-v0.2/scenes/habitat_class_response.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus-v0.2/tables/habitat_class_response.csv",
             "outlineStyle": "solid",
             "outlineWidth": "3px",
             "visibleArea": 741.0666809082031,
@@ -4351,49 +4455,49 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-gc3cgbfhdn-title figurestead-gc3cgbfhdn-description",
+            "labelledBy": "figurestead-8cwbu5gcm35-title figurestead-8cwbu5gcm35-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-3ubrvqqm67n-title figurestead-3ubrvqqm67n-description",
+            "labelledBy": "figurestead-o1b5iwqayhf-title figurestead-o1b5iwqayhf-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-hwe8bnyf4e5-title figurestead-hwe8bnyf4e5-description",
+            "labelledBy": "figurestead-1yfysre79nr-title figurestead-1yfysre79nr-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-ujeyfzd5hz-title figurestead-ujeyfzd5hz-description",
+            "labelledBy": "figurestead-aajkji1pb9o-title figurestead-aajkji1pb9o-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-kh7787j5wer-title figurestead-kh7787j5wer-description",
+            "labelledBy": "figurestead-jcor6mgc6o-title figurestead-jcor6mgc6o-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-nb8etrnlg77-title figurestead-nb8etrnlg77-description",
+            "labelledBy": "figurestead-6j6uw5wl31y-title figurestead-6j6uw5wl31y-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-ymbzlzu14d9-title figurestead-ymbzlzu14d9-description",
+            "labelledBy": "figurestead-iijwxazpew-title figurestead-iijwxazpew-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-ew3580qycnj-title figurestead-ew3580qycnj-description",
+            "labelledBy": "figurestead-hxwxnqygq3q-title figurestead-hxwxnqygq3q-description",
             "targetsExist": true
           }
         ],
@@ -4633,6 +4737,7 @@
         "categoricalLayout": null,
         "categoricalAccessibility": null,
         "categoricalSvgConsistency": null,
+        "matrixCandidate": null,
         "pixelHashes": {
           "watershed_storm_response": "fnv1a32-21246b34@329x214",
           "circadian_phase_shift": "fnv1a32-f087cdbc@329x214",
@@ -4702,49 +4807,49 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-4wu0xcfkhc6-title figurestead-4wu0xcfkhc6-description",
+            "labelledBy": "figurestead-l233wec0xmn-title figurestead-l233wec0xmn-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-yyzhfxkizvq-title figurestead-yyzhfxkizvq-description",
+            "labelledBy": "figurestead-fly1983g23-title figurestead-fly1983g23-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-l5wz1r6hdef-title figurestead-l5wz1r6hdef-description",
+            "labelledBy": "figurestead-tu63g9d7eoq-title figurestead-tu63g9d7eoq-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-qjqk7bugxgg-title figurestead-qjqk7bugxgg-description",
+            "labelledBy": "figurestead-e8u3axt869-title figurestead-e8u3axt869-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-fno7t72fqze-title figurestead-fno7t72fqze-description",
+            "labelledBy": "figurestead-jnq2s1eqtvk-title figurestead-jnq2s1eqtvk-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-93nz5jxxn3h-title figurestead-93nz5jxxn3h-description",
+            "labelledBy": "figurestead-0xi4lm73wtd-title figurestead-0xi4lm73wtd-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-hhxk728fetn-title figurestead-hhxk728fetn-description",
+            "labelledBy": "figurestead-ry5ef7etiij-title figurestead-ry5ef7etiij-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-owq4a1pkkdd-title figurestead-owq4a1pkkdd-description",
+            "labelledBy": "figurestead-pnz44iz9jon-title figurestead-pnz44iz9jon-description",
             "targetsExist": true
           }
         ],
@@ -4984,6 +5089,7 @@
         "categoricalLayout": null,
         "categoricalAccessibility": null,
         "categoricalSvgConsistency": null,
+        "matrixCandidate": null,
         "pixelHashes": {
           "watershed_storm_response": "fnv1a32-21246b34@329x214",
           "circadian_phase_shift": "fnv1a32-f087cdbc@329x214",
@@ -5053,49 +5159,49 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-binzj98ptj7-title figurestead-binzj98ptj7-description",
+            "labelledBy": "figurestead-e0ps6m4u7l-title figurestead-e0ps6m4u7l-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-i6dax1grv1n-title figurestead-i6dax1grv1n-description",
+            "labelledBy": "figurestead-iruqgzapwdb-title figurestead-iruqgzapwdb-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-mb43jh1cs1-title figurestead-mb43jh1cs1-description",
+            "labelledBy": "figurestead-99ka5e22wza-title figurestead-99ka5e22wza-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-rbhph5dlkdp-title figurestead-rbhph5dlkdp-description",
+            "labelledBy": "figurestead-ib26nklw5be-title figurestead-ib26nklw5be-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-pmrzp9pcq7o-title figurestead-pmrzp9pcq7o-description",
+            "labelledBy": "figurestead-486blhveii4-title figurestead-486blhveii4-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-r5qeszjyzld-title figurestead-r5qeszjyzld-description",
+            "labelledBy": "figurestead-urds2vx8kf8-title figurestead-urds2vx8kf8-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-ndyis76b0yr-title figurestead-ndyis76b0yr-description",
+            "labelledBy": "figurestead-klkfcqo7ae-title figurestead-klkfcqo7ae-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-ha90qvg4xx-title figurestead-ha90qvg4xx-description",
+            "labelledBy": "figurestead-vijir0vfrn-title figurestead-vijir0vfrn-description",
             "targetsExist": true
           }
         ],
@@ -5335,6 +5441,7 @@
         "categoricalLayout": null,
         "categoricalAccessibility": null,
         "categoricalSvgConsistency": null,
+        "matrixCandidate": null,
         "pixelHashes": {
           "watershed_storm_response": "fnv1a32-90a41e6a@362x242",
           "circadian_phase_shift": "fnv1a32-cf8c0564@362x242",
@@ -5404,49 +5511,49 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-rgtupa8v3ur-title figurestead-rgtupa8v3ur-description",
+            "labelledBy": "figurestead-6pm2ushhpnb-title figurestead-6pm2ushhpnb-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-emaiczxhvas-title figurestead-emaiczxhvas-description",
+            "labelledBy": "figurestead-1f9ckf7y7cq-title figurestead-1f9ckf7y7cq-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-whrd3nr2yig-title figurestead-whrd3nr2yig-description",
+            "labelledBy": "figurestead-51xm8pk1teq-title figurestead-51xm8pk1teq-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-dtnbq0o1v9c-title figurestead-dtnbq0o1v9c-description",
+            "labelledBy": "figurestead-gi74m12dq6o-title figurestead-gi74m12dq6o-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-n1s5u4po74i-title figurestead-n1s5u4po74i-description",
+            "labelledBy": "figurestead-5xpukejwwox-title figurestead-5xpukejwwox-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-2do0a4rcm2l-title figurestead-2do0a4rcm2l-description",
+            "labelledBy": "figurestead-cfmfx8utaef-title figurestead-cfmfx8utaef-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-hff8cvxw0u-title figurestead-hff8cvxw0u-description",
+            "labelledBy": "figurestead-61k35dvmhqr-title figurestead-61k35dvmhqr-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-dzw72i7q9f-title figurestead-dzw72i7q9f-description",
+            "labelledBy": "figurestead-n8n2kjc7n1-title figurestead-n8n2kjc7n1-description",
             "targetsExist": true
           }
         ],
@@ -5686,6 +5793,7 @@
         "categoricalLayout": null,
         "categoricalAccessibility": null,
         "categoricalSvgConsistency": null,
+        "matrixCandidate": null,
         "pixelHashes": {
           "watershed_storm_response": "fnv1a32-90a41e6a@362x242",
           "circadian_phase_shift": "fnv1a32-cf8c0564@362x242",

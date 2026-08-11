@@ -21,6 +21,7 @@ def generated_payloads(root: Path) -> dict[str, bytes]:
     paths = [root / "expected-checksums.json"]
     paths.extend(sorted((root / "scenes").glob("*.json")))
     paths.extend(sorted((root / "tables").glob("*.csv")))
+    paths.extend(sorted((root / "derived").glob("*.csv")))
     return {path.relative_to(root).as_posix(): path.read_bytes() for path in paths}
 
 
@@ -64,6 +65,44 @@ def main() -> int:
             "maximum": max(values),
         })
 
+    matrix_scene_path = v02 / "scenes" / "habitat_response_matrix.json"
+    matrix_table_path = v02 / "tables" / "habitat_response_matrix.csv"
+    matrix_scene = json.loads(matrix_scene_path.read_text(encoding="utf-8"))
+    habitats = matrix_scene["data"]["xCategories"]
+    bands = matrix_scene["responseBands"]
+    observations = matrix_scene["rawObservations"]
+    count_matrix = matrix_scene["derived"]["countMatrix"]
+    share_matrix = matrix_scene["derived"]["shareMatrix"]
+    cell_lookup = {(cell["x"], cell["y"]): cell for cell in matrix_scene["data"]["cells"]}
+    observations_by_habitat = {habitat: [item for item in observations if item["habitat"] == habitat] for habitat in habitats}
+    recomputed_counts = []
+    for band in bands:
+        recomputed_counts.append([
+            sum(item["responseBand"] == band["label"] for item in observations_by_habitat[habitat])
+            for habitat in habitats
+        ])
+    recomputed_shares = [[count / 30 for count in row] for row in recomputed_counts]
+    bin_membership_exact = all(
+        sum(
+            item["responseIndex"] >= band["lowerInclusive"]
+            and (
+                item["responseIndex"] <= band["upperInclusive"]
+                if band["upperInclusive"] is not None
+                else item["responseIndex"] < band["upperExclusive"]
+            )
+            for band in bands
+        ) == 1
+        for item in observations
+    )
+    cells_exact = all(
+        cell_lookup[(habitat, band["label"])]["count"] == recomputed_counts[row_index][column_index]
+        and cell_lookup[(habitat, band["label"])]["share"] == recomputed_shares[row_index][column_index]
+        and cell_lookup[(habitat, band["label"])]["value"] == recomputed_shares[row_index][column_index]
+        and cell_lookup[(habitat, band["label"])]["label"] == f"{recomputed_shares[row_index][column_index]:.0%}\nn={recomputed_counts[row_index][column_index]}"
+        for row_index, band in enumerate(bands)
+        for column_index, habitat in enumerate(habitats)
+    )
+
     report = {
         "schemaVersion": "figurestead.specimen-corpus-regeneration/1",
         "result": "PASS",
@@ -83,10 +122,31 @@ def main() -> int:
             "table": {"path": table_path.relative_to(study).as_posix(), "bytes": table_path.stat().st_size, "sha256": sha256(table_path.read_bytes())},
         },
         "statistics": statistics_by_group,
+        "responseMatrix": {
+            "scenePath": matrix_scene_path.relative_to(study).as_posix(),
+            "sceneSha256": sha256(matrix_scene_path.read_bytes()),
+            "rawTablePath": matrix_table_path.relative_to(study).as_posix(),
+            "rawTableSha256": sha256(matrix_table_path.read_bytes()),
+            "seed": matrix_scene["seed"],
+            "renderer": matrix_scene["renderer"],
+            "rendererAuthority": matrix_scene["rendererAuthority"],
+            "observationCount": len(observations),
+            "habitatCount": len(habitats),
+            "responseBandCount": len(bands),
+            "observationsPerHabitat": {habitat: len(items) for habitat, items in observations_by_habitat.items()},
+            "binMembershipExact": bin_membership_exact,
+            "derivedCountsMatchRaw": count_matrix == recomputed_counts,
+            "derivedSharesMatchCounts": share_matrix == recomputed_shares,
+            "columnCountSums": [sum(row[column] for row in count_matrix) for column in range(len(habitats))],
+            "columnShareSums": [sum(row[column] for row in share_matrix) for column in range(len(habitats))],
+            "cellsMatchDerivedMatrices": cells_exact,
+            "countMatrix": count_matrix,
+            "shareMatrix": share_matrix,
+        },
     }
     checks = [
-        report["sceneCount"] == 13,
-        report["tableCount"] == 13,
+        report["sceneCount"] == 14,
+        report["tableCount"] == 14,
         report["seed"] == 15401,
         report["observationCount"] == 90,
         report["regenerationByteStable"],
@@ -94,6 +154,18 @@ def main() -> int:
         all(item["count"] == 9 for item in statistics_by_group),
         all(item["mean"] == item["targetCenter"] for item in statistics_by_group),
         all(item["sampleStandardDeviation"] == item["targetSpread"] for item in statistics_by_group),
+        report["responseMatrix"]["seed"] == 15401,
+        report["responseMatrix"]["renderer"] == "categorical_matrix",
+        report["responseMatrix"]["observationCount"] == 300,
+        report["responseMatrix"]["habitatCount"] == 10,
+        report["responseMatrix"]["responseBandCount"] == 6,
+        set(report["responseMatrix"]["observationsPerHabitat"].values()) == {30},
+        report["responseMatrix"]["binMembershipExact"],
+        report["responseMatrix"]["derivedCountsMatchRaw"],
+        report["responseMatrix"]["derivedSharesMatchCounts"],
+        report["responseMatrix"]["columnCountSums"] == [30] * 10,
+        report["responseMatrix"]["columnShareSums"] == [1.0] * 10,
+        report["responseMatrix"]["cellsMatchDerivedMatrices"],
     ]
     if not all(checks):
         report["result"] = "FAIL"

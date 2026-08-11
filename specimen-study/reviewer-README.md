@@ -1,10 +1,12 @@
 # Figurestead specimen study — reviewer note
 
-## v0.2 categorical decision
+## v0.2 corrected response-matrix decision
 
-`habitat_class_response` is **strong at lab and normal-wide scales** and **usable at the exact current montage-cell scale**. It demonstrates ten ordered multi-word categories, one semantic observation series, 90 points, and per-group median rules without adding color or marker semantics. The exact montage cell visibly ellipsizes several long labels, so it does not meet the authorization threshold for an alternate montage. The accepted eight-scene montage remains unchanged.
+`habitat_response_matrix` is **strong at 1160 × 760 inspection size** and **usable at the exact 640 × 416 montage-cell figure size**. It demonstrates ten habitat columns, six fixed project-defined response bands, 300 raw observations, 60 mechanically derived share/count cells, truthful observed zeros, and the existing bounded sequential matrix grammar. At montage size the field remains recognizable, but the provenance note crosses long rotated labels and exact annotations require close inspection, so it does not meet the authorization threshold for an alternate montage. The accepted eight-scene montage remains unchanged.
 
-The dense fixture reproduced one shared internal layout bug at the old 362 × 218 compact boundary: a fixed 120 px plot minimum overrode the measured rotated-label band. The narrow fix caps that internal minimum by available space; the 390 px candidate also uses the allowed taller evidence box. No public API or theme/typography value changed. See `specimen-evaluation-v0.2.json` and `audit/corpus-v0.2-technical-verification.json`.
+The public sparse matrix and populated field use the exact existing `figurestead.extensions.matrix.categorical_matrix` implementation and contract. The browser runtime has matrix terminal-geometry support but no registered categorical-matrix renderer, so this study uses a narrow Python-rendered image plus HTML-table adapter rather than inventing a new browser renderer. At 390 × 520, the existing static renderer clips title/legend text and crowds labels; that compact policy is held for future product authorization rather than disguised as a pass. See `matrix-study.html`, `specimen-evaluation-v0.2.json`, and `audit/corpus-v0.2-technical-verification.json`.
+
+The prior `habitat_class_response` strip-summary fixture remains useful as **stress evidence**, but it is not the matrix answer and is not a montage candidate.
 
 ## v0.1 decision
 
@@ -14,10 +16,11 @@ This is a **local, undeployed design and renderer-evaluation study**. The scenes
 
 ## Surfaces
 
-- `index.html` — thirteen v0.2 scenes at useful individual scale, with the new candidate explicitly separated from the accepted showcase pool and stress fixtures.
+- `index.html` — fourteen v0.2 scenes, with the static matrix candidate explicitly separated from the accepted showcase pool and five stress fixtures.
+- `matrix-study.html` — the wide, montage-cell, narrow, sparse/reference, and accessible-table matrix study.
 - `at-a-glance.html` — only the exact eight required showcase scenes, in the frozen source order.
 - `specimen-evaluation.json` / `specimen-evaluation-v0.2.json` — preserved v0.1 findings and the new categorical comparison.
-- `evidence/corpus-v0.2/` — Chromium and Firefox full-lab, unchanged montage, narrow, standardized individual, exact montage-cell, and 1160 px captures.
+- `evidence/corpus-v0.2/response-matrix/` — byte-stable Python renders plus Chromium and Firefox study-page captures.
 - `audit/corpus-v0.2-summary.json` — machine-readable responsive, accessibility, determinism, and preservation gates.
 - `evidence/layout-hardening/` — compact-canvas before/after bounds, screenshots, DPR2 evidence, V2 check, and paper/SVG export evidence.
 
@@ -30,16 +33,17 @@ This is a **local, undeployed design and renderer-evaluation study**. The scenes
 5. Existing theme packs, the four-glyph marker vocabulary, existing line-style cycling, core registry, temporal extension, static motion recipe, and accessibility companion were used directly.
 6. No theme alternate was introduced because the first-pass pairings were all at least usable and weak pairings are more informative when preserved.
 
-For v0.2, the twelve v0.1 scene/table pairs remain byte-identical. The thirteenth scene is generated from seed `15401` with nine normal-like draws per category, standardized to the recorded target sample center/spread and rounded to four decimals. `audit/corpus-v0.2-regeneration.json` records all statistics and exact hashes.
+For v0.2, the twelve v0.1 scene/table pairs remain byte-identical. The retained strip fixture is generated from seed `15401` with nine standardized normal-like draws per category. The matrix independently restarts the recorded seed and generates 30 Gaussian observations per habitat, rounds to four decimals, then bins them mechanically into six fixed project bins. `audit/corpus-v0.2-regeneration.json` proves exact membership, counts, shares, cells, and hashes.
 
 ## Reading the montage
 
 The wide target is 1920 × 1080 with a 4 × 2 grid. It is a range statement, not the final inspection surface for every exact label. `field_sampling_coverage` is intentionally classified **weak at montage scale** because dense exact-visit marks compress to texture; its full-lab rendering remains strong. The 390 px view is a diagnostic, single-column reflow with the same source order, not a claim of equal inspection scale.
 
-The lab preserves two important semantic limits:
+The lab preserves three important semantic limits:
 
 - `gene_expression_recovery` has six line series, so identities beyond the four glyphs depend on the existing dash cycle.
 - `lab_precision` has six point-only identities, so it cannot demonstrate universal six-way hue-independent point identity.
+- Dense categorical matrices have no authorized compact annotation/label policy; the 390 px renderer limitation is reported rather than repaired through a new API.
 
 No fifth glyph was added. That remains a separately authorized product decision.
 
@@ -60,6 +64,9 @@ Run from the repository root while it is served at port 4179:
 ```sh
 NODE_PATH="$FIGURESTEAD_NODE_MODULES" "$FIGURESTEAD_NODE" \
   specimen-study/audit/run-specimen-audit.cjs
+
+NODE_PATH="$FIGURESTEAD_NODE_MODULES" "$FIGURESTEAD_NODE" \
+  specimen-study/audit/run-response-matrix-audit.cjs
 
 "$FIGURESTEAD_PYTHON" specimen-study/audit/verify-preservation.py
 "$FIGURESTEAD_PYTHON" specimen-study/audit/verify-corpus-v0.2.py

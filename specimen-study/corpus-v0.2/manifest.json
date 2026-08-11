@@ -3,14 +3,16 @@
   "name": "Figurestead Specimen Corpus v0.2",
   "status": "design-input; not public scientific evidence",
   "created": "2026-08-10",
-  "sceneCount": 13,
+  "updated": "2026-08-11",
+  "sceneCount": 14,
   "showcaseCount": 8,
   "showcaseCandidateCount": 1,
-  "stressCount": 4,
+  "stressCount": 5,
   "supportedRendererTargets": [
     "line",
     "scatter",
     "strip_summary",
+    "categorical_matrix",
     "temporal_coverage",
     "temporal_observations"
   ],
@@ -147,7 +149,7 @@
     },
     {
       "sceneId": "habitat_class_response",
-      "tier": "showcase_candidate",
+      "tier": "stress",
       "renderer": "strip_summary",
       "seed": 15401,
       "title": "Response across ten habitat classes",
@@ -162,6 +164,29 @@
         "median overlay"
       ],
       "question": "Can Figurestead show ten categorical distributions with varied centers and spreads while keeping the categorical structure, individual observations, summaries, and axis labels readable at useful compact sizes?"
+    },
+    {
+      "sceneId": "habitat_response_matrix",
+      "tier": "showcase_candidate",
+      "renderer": "categorical_matrix",
+      "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix",
+      "seed": 15401,
+      "title": "Response distribution across habitat classes",
+      "theme": "slipware",
+      "json": "scenes/habitat_response_matrix.json",
+      "csv": "tables/habitat_response_matrix.csv",
+      "derived": [
+        "derived/habitat_response_matrix-counts.csv",
+        "derived/habitat_response_matrix-shares.csv"
+      ],
+      "stressors": [
+        "ten mixed-length column labels",
+        "six fixed response bands",
+        "sixty exact-value cell annotations",
+        "observed zero cells",
+        "compact matrix density"
+      ],
+      "question": "What does Figurestead's existing Categorical response matrix look like when it has enough real structure to compare, rather than only enough cells to demonstrate that the renderer exists?"
     },
     {
       "sceneId": "lab_precision",

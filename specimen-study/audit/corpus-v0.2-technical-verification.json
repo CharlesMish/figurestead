@@ -1,6 +1,27 @@
 {
-  "schemaVersion": "figurestead.specimen-corpus-v0.2-technical-verification/1",
+  "schemaVersion": "figurestead.specimen-corpus-v0.2-technical-verification/2",
   "result": "PASS",
+  "responseMatrixRender": {
+    "command": "MPLCONFIGDIR=$TEMP_MPLCONFIG PYTHONPATH=src $MATRIX_PYTHON -B specimen-study/matrix-study/render_matrix.py --check",
+    "result": "PASS",
+    "renderer": "figurestead.extensions.matrix.categorical_matrix",
+    "rendererSourceSha256": "6a846d46fff1c2d5cb004df60c45ea3fb8145c92fd9bfc4605b7df27380975cf",
+    "python": "3.13.13",
+    "matplotlib": "3.11.1"
+  },
+  "responseMatrixBrowserAudit": {
+    "command": "NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE specimen-study/audit/run-response-matrix-audit.cjs",
+    "result": "PASS",
+    "engines": {
+      "chromium": {"version": "151.0.7922.34", "cases": 4, "findings": 0},
+      "firefox": {"version": "153.0", "cases": 4, "findings": 0}
+    },
+    "matrix": "matrix-study.html at 1440 and 390 CSS px; normal and reduced motion",
+    "documentedLimitations": [
+      "At 640 × 416, the provenance note crosses long rotated labels and exact annotations require close inspection.",
+      "At 390 × 520, the static renderer clips title/legend text and crowds labels; no compact matrix policy was invented."
+    ]
+  },
   "specimenBrowserAudit": {
     "command": "NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE specimen-study/audit/run-specimen-audit.cjs",
     "result": "PASS",
@@ -8,24 +29,24 @@
       "chromium": {"version": "151.0.7922.34", "cases": 8, "findings": 0},
       "firefox": {"version": "153.0", "cases": 8, "findings": 0}
     },
-    "matrix": "lab and unchanged montage; 1440 and 390 CSS px; normal and reduced motion"
+    "matrix": "14-scene lab and unchanged eight-scene montage; 1440 and 390 CSS px; normal and reduced motion"
   },
   "compactLayoutAudit": {
-    "command": "NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE audit/compact-layout/run-compact-layout-audit.cjs after",
+    "command": "FIGURESTEAD_LAYOUT_URL=http://127.0.0.1:4180/ NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE audit/compact-layout/run-compact-layout-audit.cjs after",
     "result": "PASS",
-    "note": "Generated accepted-baseline evidence files were restored after the zero-finding run; v0.2-specific evidence is stored separately."
+    "note": "Run against a temporary repository copy so accepted historical layout evidence remained untouched."
   },
   "technicalShowcaseV2Audit": {
-    "command": "FIGURESTEAD_TECHNICAL_URL=http://127.0.0.1:4179/technical-showcase/ NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE audit/technical-showcase/run-technical-audit.cjs",
+    "command": "FIGURESTEAD_TECHNICAL_URL=http://127.0.0.1:4180/technical-showcase/ NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE audit/technical-showcase/run-technical-audit.cjs",
     "result": "PASS",
     "engines": {
       "chromium": {"cases": 4, "findings": 0},
       "firefox": {"cases": 4, "findings": 0}
     },
-    "note": "Generated V2 evidence was restored to its accepted byte-identical baseline after the run."
+    "note": "Run against the same temporary repository copy; accepted V2 source and evidence in the working repository remained byte-identical."
   },
   "notRerun": [
-    "Colour Science CVD numerical validation: unrelated to the categorical fixture and unchanged CVD implementation.",
-    "Public R3 browser/network audit: public source and navigation trees are unchanged; preservation checks cover those protected surfaces."
+    "Colour Science CVD numerical validation: unrelated to the matrix corpus/study adapter and unchanged CVD implementation.",
+    "Public R3 browser/network audit: public source and navigation trees are unchanged; preservation hashes cover those protected surfaces."
   ]
 }

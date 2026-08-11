@@ -2,8 +2,8 @@
   "schemaVersion": "figurestead.specimen-corpus-regeneration/1",
   "result": "PASS",
   "corpusVersion": "0.2",
-  "sceneCount": 13,
-  "tableCount": 13,
+  "sceneCount": 14,
+  "tableCount": 14,
   "seed": 15401,
   "samplingMethod": "python_random_gauss_standardized_sample",
   "observationCount": 90,
@@ -22,12 +22,12 @@
   "regenerationByteStable": true,
   "originalV01GeneratedFilesUnchanged": true,
   "originalV01GeneratedFileCount": 24,
-  "v02GeneratedFileCount": 26,
+  "v02GeneratedFileCount": 30,
   "newFiles": {
     "scene": {
       "path": "corpus-v0.2/scenes/habitat_class_response.json",
-      "bytes": 8431,
-      "sha256": "3aca5ecd8292ce4fe27a2db7e2af33783612111bfaaaeb802648a7aaca934697"
+      "bytes": 8419,
+      "sha256": "9a2de40edb8fa53c379c3ed4371cfd1645886f858e89ee7733b4c60d951cfb7d"
     },
     "table": {
       "path": "corpus-v0.2/tables/habitat_class_response.csv",
@@ -146,5 +146,205 @@
       "minimum": 1.1561,
       "maximum": 1.7027
     }
-  ]
+  ],
+  "responseMatrix": {
+    "scenePath": "corpus-v0.2/scenes/habitat_response_matrix.json",
+    "sceneSha256": "ec554acdb01e16b099157da592e3cd4d181254e7163aca028375c82f7b4a0099",
+    "rawTablePath": "corpus-v0.2/tables/habitat_response_matrix.csv",
+    "rawTableSha256": "3106d4bb5ef45d7cfe64b774170a5bde91c85d36339b21a1358f2171f0970bc2",
+    "seed": 15401,
+    "renderer": "categorical_matrix",
+    "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix",
+    "observationCount": 300,
+    "habitatCount": 10,
+    "responseBandCount": 6,
+    "observationsPerHabitat": {
+      "Headwater": 30,
+      "Riffle": 30,
+      "Deep pool": 30,
+      "Side channel": 30,
+      "Floodplain": 30,
+      "Wet meadow": 30,
+      "Tidal creek": 30,
+      "Mudflat": 30,
+      "Seagrass bed": 30,
+      "Open estuary": 30
+    },
+    "binMembershipExact": true,
+    "derivedCountsMatchRaw": true,
+    "derivedSharesMatchCounts": true,
+    "columnCountSums": [
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30
+    ],
+    "columnShareSums": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "cellsMatchDerivedMatrices": true,
+    "countMatrix": [
+      [
+        0,
+        0,
+        5,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        20,
+        0,
+        5,
+        0,
+        0,
+        7,
+        0,
+        1
+      ],
+      [
+        27,
+        9,
+        5,
+        0,
+        12,
+        11,
+        0,
+        17,
+        0,
+        2
+      ],
+      [
+        0,
+        19,
+        0,
+        25,
+        8,
+        19,
+        2,
+        6,
+        0,
+        18
+      ],
+      [
+        0,
+        2,
+        0,
+        5,
+        4,
+        0,
+        24,
+        0,
+        23,
+        8
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        7,
+        1
+      ]
+    ],
+    "shareMatrix": [
+      [
+        0.0,
+        0.0,
+        0.16666666666666666,
+        0.0,
+        0.03333333333333333,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.1,
+        0.0,
+        0.6666666666666666,
+        0.0,
+        0.16666666666666666,
+        0.0,
+        0.0,
+        0.23333333333333334,
+        0.0,
+        0.03333333333333333
+      ],
+      [
+        0.9,
+        0.3,
+        0.16666666666666666,
+        0.0,
+        0.4,
+        0.36666666666666664,
+        0.0,
+        0.5666666666666667,
+        0.0,
+        0.06666666666666667
+      ],
+      [
+        0.0,
+        0.6333333333333333,
+        0.0,
+        0.8333333333333334,
+        0.26666666666666666,
+        0.6333333333333333,
+        0.06666666666666667,
+        0.2,
+        0.0,
+        0.6
+      ],
+      [
+        0.0,
+        0.06666666666666667,
+        0.0,
+        0.16666666666666666,
+        0.13333333333333333,
+        0.0,
+        0.8,
+        0.0,
+        0.7666666666666667,
+        0.26666666666666666
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.13333333333333333,
+        0.0,
+        0.23333333333333334,
+        0.03333333333333333
+      ]
+    ]
+  }
 }

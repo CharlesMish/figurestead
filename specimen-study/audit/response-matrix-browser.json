@@ -1,0 +1,1449 @@
+{
+  "schemaVersion": "figurestead.response-matrix-browser-audit/1",
+  "result": "PASS",
+  "matrix": {
+    "engines": [
+      "chromium",
+      "firefox"
+    ],
+    "widths": [
+      1440,
+      390
+    ],
+    "motionPreferences": [
+      "no-preference",
+      "reduce"
+    ]
+  },
+  "reports": [
+    {
+      "engine": "chromium",
+      "browserVersion": "151.0.7922.34",
+      "playwrightVersion": "1.62.0",
+      "nodeVersion": "v24.14.0",
+      "cases": [
+        {
+          "width": 1440,
+          "reducedMotion": false,
+          "result": "PASS",
+          "findings": [],
+          "structure": {
+            "ready": "true",
+            "viewport": 1440,
+            "expectedWidth": 1440,
+            "horizontalOverflow": 0,
+            "reducedMotionMatches": true,
+            "animatedElements": 0,
+            "sectionOrder": [
+              "wide-title",
+              "scale-title",
+              "comparison-title",
+              "decision-title"
+            ],
+            "headers": [
+              "Headwater",
+              "Riffle",
+              "Deep pool",
+              "Side channel",
+              "Floodplain",
+              "Wet meadow",
+              "Tidal creek",
+              "Mudflat",
+              "Seagrass bed",
+              "Open estuary"
+            ],
+            "rowLabels": [
+              "Very low",
+              "Low",
+              "Moderate",
+              "Elevated",
+              "High",
+              "Very high"
+            ],
+            "rowCount": 6,
+            "cellCount": 60,
+            "rowScopesCorrect": true,
+            "columnScopesCorrect": true,
+            "binDefinitionsPresent": true,
+            "columnShareSums": [
+              1,
+              1,
+              0.9999999999999999,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.9999999999999999
+            ],
+            "columnCountSums": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30
+            ],
+            "allCellTextExact": true,
+            "elevatedFloodplain": {
+              "text": "26.7% · n=8",
+              "count": "8",
+              "share": "0.26666666666666666"
+            },
+            "images": [
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-montage-cell.png",
+                "complete": true,
+                "naturalWidth": 640,
+                "naturalHeight": 416
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-narrow-390.png",
+                "complete": true,
+                "naturalWidth": 390,
+                "naturalHeight": 520
+              },
+              {
+                "src": "../site/assets/evidence-matrix.png",
+                "complete": true,
+                "naturalWidth": 1180,
+                "naturalHeight": 800
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              }
+            ],
+            "tableContained": true,
+            "rawObservationCount": 300,
+            "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix"
+          },
+          "keyboard": {
+            "expected": 9,
+            "reached": 9,
+            "states": [
+              {
+                "text": "Skip to matrix study",
+                "tag": "a",
+                "visibleArea": 9532.875,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Scene JSON",
+                "tag": "a",
+                "visibleArea": 1210.5,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Raw observations",
+                "tag": "a",
+                "visibleArea": 1749.25,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Count matrix",
+                "tag": "a",
+                "visibleArea": 1315.25,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Share matrix",
+                "tag": "a",
+                "visibleArea": 1281,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open vector figure",
+                "tag": "a",
+                "visibleArea": 1192.125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "figurestead.extensions.matrix.categorical_matrix",
+                "tag": "a",
+                "visibleArea": 3178.828125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Accessible count and share table",
+                "tag": "summary",
+                "visibleArea": 3688.78125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open canonical asset",
+                "tag": "a",
+                "visibleArea": 1324.640625,
+                "outline": "solid 3px"
+              }
+            ],
+            "firstIsSkip": true,
+            "allVisible": true,
+            "allOutlined": true
+          }
+        },
+        {
+          "width": 1440,
+          "reducedMotion": true,
+          "result": "PASS",
+          "findings": [],
+          "structure": {
+            "ready": "true",
+            "viewport": 1440,
+            "expectedWidth": 1440,
+            "horizontalOverflow": 0,
+            "reducedMotionMatches": true,
+            "animatedElements": 0,
+            "sectionOrder": [
+              "wide-title",
+              "scale-title",
+              "comparison-title",
+              "decision-title"
+            ],
+            "headers": [
+              "Headwater",
+              "Riffle",
+              "Deep pool",
+              "Side channel",
+              "Floodplain",
+              "Wet meadow",
+              "Tidal creek",
+              "Mudflat",
+              "Seagrass bed",
+              "Open estuary"
+            ],
+            "rowLabels": [
+              "Very low",
+              "Low",
+              "Moderate",
+              "Elevated",
+              "High",
+              "Very high"
+            ],
+            "rowCount": 6,
+            "cellCount": 60,
+            "rowScopesCorrect": true,
+            "columnScopesCorrect": true,
+            "binDefinitionsPresent": true,
+            "columnShareSums": [
+              1,
+              1,
+              0.9999999999999999,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.9999999999999999
+            ],
+            "columnCountSums": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30
+            ],
+            "allCellTextExact": true,
+            "elevatedFloodplain": {
+              "text": "26.7% · n=8",
+              "count": "8",
+              "share": "0.26666666666666666"
+            },
+            "images": [
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-montage-cell.png",
+                "complete": true,
+                "naturalWidth": 640,
+                "naturalHeight": 416
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-narrow-390.png",
+                "complete": true,
+                "naturalWidth": 390,
+                "naturalHeight": 520
+              },
+              {
+                "src": "../site/assets/evidence-matrix.png",
+                "complete": true,
+                "naturalWidth": 1180,
+                "naturalHeight": 800
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              }
+            ],
+            "tableContained": true,
+            "rawObservationCount": 300,
+            "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix"
+          },
+          "keyboard": {
+            "expected": 9,
+            "reached": 9,
+            "states": [
+              {
+                "text": "Skip to matrix study",
+                "tag": "a",
+                "visibleArea": 9532.875,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Scene JSON",
+                "tag": "a",
+                "visibleArea": 1210.5,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Raw observations",
+                "tag": "a",
+                "visibleArea": 1749.25,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Count matrix",
+                "tag": "a",
+                "visibleArea": 1315.25,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Share matrix",
+                "tag": "a",
+                "visibleArea": 1281,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open vector figure",
+                "tag": "a",
+                "visibleArea": 1192.125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "figurestead.extensions.matrix.categorical_matrix",
+                "tag": "a",
+                "visibleArea": 3178.828125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Accessible count and share table",
+                "tag": "summary",
+                "visibleArea": 3688.78125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open canonical asset",
+                "tag": "a",
+                "visibleArea": 1324.640625,
+                "outline": "solid 3px"
+              }
+            ],
+            "firstIsSkip": true,
+            "allVisible": true,
+            "allOutlined": true
+          }
+        },
+        {
+          "width": 390,
+          "reducedMotion": false,
+          "result": "PASS",
+          "findings": [],
+          "structure": {
+            "ready": "true",
+            "viewport": 390,
+            "expectedWidth": 390,
+            "horizontalOverflow": 0,
+            "reducedMotionMatches": true,
+            "animatedElements": 0,
+            "sectionOrder": [
+              "wide-title",
+              "scale-title",
+              "comparison-title",
+              "decision-title"
+            ],
+            "headers": [
+              "Headwater",
+              "Riffle",
+              "Deep pool",
+              "Side channel",
+              "Floodplain",
+              "Wet meadow",
+              "Tidal creek",
+              "Mudflat",
+              "Seagrass bed",
+              "Open estuary"
+            ],
+            "rowLabels": [
+              "Very low",
+              "Low",
+              "Moderate",
+              "Elevated",
+              "High",
+              "Very high"
+            ],
+            "rowCount": 6,
+            "cellCount": 60,
+            "rowScopesCorrect": true,
+            "columnScopesCorrect": true,
+            "binDefinitionsPresent": true,
+            "columnShareSums": [
+              1,
+              1,
+              0.9999999999999999,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.9999999999999999
+            ],
+            "columnCountSums": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30
+            ],
+            "allCellTextExact": true,
+            "elevatedFloodplain": {
+              "text": "26.7% · n=8",
+              "count": "8",
+              "share": "0.26666666666666666"
+            },
+            "images": [
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-montage-cell.png",
+                "complete": true,
+                "naturalWidth": 640,
+                "naturalHeight": 416
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-narrow-390.png",
+                "complete": true,
+                "naturalWidth": 390,
+                "naturalHeight": 520
+              },
+              {
+                "src": "../site/assets/evidence-matrix.png",
+                "complete": true,
+                "naturalWidth": 1180,
+                "naturalHeight": 800
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              }
+            ],
+            "tableContained": true,
+            "rawObservationCount": 300,
+            "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix"
+          },
+          "keyboard": {
+            "expected": 9,
+            "reached": 9,
+            "states": [
+              {
+                "text": "Skip to matrix study",
+                "tag": "a",
+                "visibleArea": 9532.875,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Scene JSON",
+                "tag": "a",
+                "visibleArea": 1210.5,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Raw observations",
+                "tag": "a",
+                "visibleArea": 1749.25,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Count matrix",
+                "tag": "a",
+                "visibleArea": 1315.25,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Share matrix",
+                "tag": "a",
+                "visibleArea": 12386.328125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open vector figure",
+                "tag": "a",
+                "visibleArea": 1192.125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "figurestead.extensions.matrix.categorical_matrix",
+                "tag": "a",
+                "visibleArea": 3178.828125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Accessible count and share table",
+                "tag": "summary",
+                "visibleArea": 3688.78125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Within-habitat response share and exact countResponse bandHeadwaterRiffleDeep poolSide channelFloodplainWet meadowTidal creekMudflatSeagrass bedOpen estuaryVery low (0.30–0.64)0.0% · n=00.0% · n=016.7% · n=50.0% · n=03.3% · n=10.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=0Low (0.65–0.94)10.0% · n=30.0% · n=066.7% · n=200.0% · n=016.7% · n=50.0% · n=00.0% · n=023.3% · n=70.0% · n=03.3% · n=1Moderate (0.95–1.24)90.0% · n=2730.0% · n=916.7% · n=50.0% · n=040.0% · n=1236.7% · n=110.0% · n=056.7% · n=170.0% · n=06.7% · n=2Elevated (1.25–1.54)0.0% · n=063.3% · n=190.0% · n=083.3% · n=2526.7% · n=863.3% · n=196.7% · n=220.0% · n=60.0% · n=060.0% · n=18High (1.55–1.84)0.0% · n=06.7% · n=20.0% · n=016.7% · n=513.3% · n=40.0% · n=080.0% · n=240.0% · n=076.7% · n=2326.7% · n=8Very high (1.85–2.30)0.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=013.3% · n=40.0% · n=023.3% · n=73.3% · n=1",
+                "tag": "div",
+                "visibleArea": 95930,
+                "outline": "auto 1px"
+              }
+            ],
+            "firstIsSkip": true,
+            "allVisible": true,
+            "allOutlined": true
+          }
+        },
+        {
+          "width": 390,
+          "reducedMotion": true,
+          "result": "PASS",
+          "findings": [],
+          "structure": {
+            "ready": "true",
+            "viewport": 390,
+            "expectedWidth": 390,
+            "horizontalOverflow": 0,
+            "reducedMotionMatches": true,
+            "animatedElements": 0,
+            "sectionOrder": [
+              "wide-title",
+              "scale-title",
+              "comparison-title",
+              "decision-title"
+            ],
+            "headers": [
+              "Headwater",
+              "Riffle",
+              "Deep pool",
+              "Side channel",
+              "Floodplain",
+              "Wet meadow",
+              "Tidal creek",
+              "Mudflat",
+              "Seagrass bed",
+              "Open estuary"
+            ],
+            "rowLabels": [
+              "Very low",
+              "Low",
+              "Moderate",
+              "Elevated",
+              "High",
+              "Very high"
+            ],
+            "rowCount": 6,
+            "cellCount": 60,
+            "rowScopesCorrect": true,
+            "columnScopesCorrect": true,
+            "binDefinitionsPresent": true,
+            "columnShareSums": [
+              1,
+              1,
+              0.9999999999999999,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.9999999999999999
+            ],
+            "columnCountSums": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30
+            ],
+            "allCellTextExact": true,
+            "elevatedFloodplain": {
+              "text": "26.7% · n=8",
+              "count": "8",
+              "share": "0.26666666666666666"
+            },
+            "images": [
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-montage-cell.png",
+                "complete": true,
+                "naturalWidth": 640,
+                "naturalHeight": 416
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-narrow-390.png",
+                "complete": true,
+                "naturalWidth": 390,
+                "naturalHeight": 520
+              },
+              {
+                "src": "../site/assets/evidence-matrix.png",
+                "complete": true,
+                "naturalWidth": 1180,
+                "naturalHeight": 800
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              }
+            ],
+            "tableContained": true,
+            "rawObservationCount": 300,
+            "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix"
+          },
+          "keyboard": {
+            "expected": 9,
+            "reached": 9,
+            "states": [
+              {
+                "text": "Skip to matrix study",
+                "tag": "a",
+                "visibleArea": 9532.875,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Scene JSON",
+                "tag": "a",
+                "visibleArea": 1210.5,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Raw observations",
+                "tag": "a",
+                "visibleArea": 1749.25,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Count matrix",
+                "tag": "a",
+                "visibleArea": 1315.25,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Share matrix",
+                "tag": "a",
+                "visibleArea": 12386.328125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open vector figure",
+                "tag": "a",
+                "visibleArea": 1192.125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "figurestead.extensions.matrix.categorical_matrix",
+                "tag": "a",
+                "visibleArea": 3178.828125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Accessible count and share table",
+                "tag": "summary",
+                "visibleArea": 3688.78125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Within-habitat response share and exact countResponse bandHeadwaterRiffleDeep poolSide channelFloodplainWet meadowTidal creekMudflatSeagrass bedOpen estuaryVery low (0.30–0.64)0.0% · n=00.0% · n=016.7% · n=50.0% · n=03.3% · n=10.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=0Low (0.65–0.94)10.0% · n=30.0% · n=066.7% · n=200.0% · n=016.7% · n=50.0% · n=00.0% · n=023.3% · n=70.0% · n=03.3% · n=1Moderate (0.95–1.24)90.0% · n=2730.0% · n=916.7% · n=50.0% · n=040.0% · n=1236.7% · n=110.0% · n=056.7% · n=170.0% · n=06.7% · n=2Elevated (1.25–1.54)0.0% · n=063.3% · n=190.0% · n=083.3% · n=2526.7% · n=863.3% · n=196.7% · n=220.0% · n=60.0% · n=060.0% · n=18High (1.55–1.84)0.0% · n=06.7% · n=20.0% · n=016.7% · n=513.3% · n=40.0% · n=080.0% · n=240.0% · n=076.7% · n=2326.7% · n=8Very high (1.85–2.30)0.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=013.3% · n=40.0% · n=023.3% · n=73.3% · n=1",
+                "tag": "div",
+                "visibleArea": 95930,
+                "outline": "auto 1px"
+              }
+            ],
+            "firstIsSkip": true,
+            "allVisible": true,
+            "allOutlined": true
+          }
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "153.0",
+      "playwrightVersion": "1.62.0",
+      "nodeVersion": "v24.14.0",
+      "cases": [
+        {
+          "width": 1440,
+          "reducedMotion": false,
+          "result": "PASS",
+          "findings": [],
+          "structure": {
+            "ready": "true",
+            "viewport": 1440,
+            "expectedWidth": 1440,
+            "horizontalOverflow": 0,
+            "reducedMotionMatches": true,
+            "animatedElements": 0,
+            "sectionOrder": [
+              "wide-title",
+              "scale-title",
+              "comparison-title",
+              "decision-title"
+            ],
+            "headers": [
+              "Headwater",
+              "Riffle",
+              "Deep pool",
+              "Side channel",
+              "Floodplain",
+              "Wet meadow",
+              "Tidal creek",
+              "Mudflat",
+              "Seagrass bed",
+              "Open estuary"
+            ],
+            "rowLabels": [
+              "Very low",
+              "Low",
+              "Moderate",
+              "Elevated",
+              "High",
+              "Very high"
+            ],
+            "rowCount": 6,
+            "cellCount": 60,
+            "rowScopesCorrect": true,
+            "columnScopesCorrect": true,
+            "binDefinitionsPresent": true,
+            "columnShareSums": [
+              1,
+              1,
+              0.9999999999999999,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.9999999999999999
+            ],
+            "columnCountSums": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30
+            ],
+            "allCellTextExact": true,
+            "elevatedFloodplain": {
+              "text": "26.7% · n=8",
+              "count": "8",
+              "share": "0.26666666666666666"
+            },
+            "images": [
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-montage-cell.png",
+                "complete": true,
+                "naturalWidth": 640,
+                "naturalHeight": 416
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-narrow-390.png",
+                "complete": true,
+                "naturalWidth": 390,
+                "naturalHeight": 520
+              },
+              {
+                "src": "../site/assets/evidence-matrix.png",
+                "complete": true,
+                "naturalWidth": 1180,
+                "naturalHeight": 800
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              }
+            ],
+            "tableContained": true,
+            "rawObservationCount": 300,
+            "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix"
+          },
+          "keyboard": {
+            "expected": 9,
+            "reached": 9,
+            "states": [
+              {
+                "text": "Skip to matrix study",
+                "tag": "a",
+                "visibleArea": 9533.333557128906,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Scene JSON",
+                "tag": "a",
+                "visibleArea": 1285.7666320800781,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Raw observations",
+                "tag": "a",
+                "visibleArea": 1858.1000518798828,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Count matrix",
+                "tag": "a",
+                "visibleArea": 1397.116683959961,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Share matrix",
+                "tag": "a",
+                "visibleArea": 1360.8497924804688,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open vector figure",
+                "tag": "a",
+                "visibleArea": 1407.9000396728516,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "figurestead.extensions.matrix.categorical_matrix",
+                "tag": "a",
+                "visibleArea": 3754.3998413085938,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Accessible count and share table",
+                "tag": "summary",
+                "visibleArea": 3653.37508392334,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open canonical asset",
+                "tag": "a",
+                "visibleArea": 1564.3334655761719,
+                "outline": "solid 3px"
+              }
+            ],
+            "firstIsSkip": true,
+            "allVisible": true,
+            "allOutlined": true
+          }
+        },
+        {
+          "width": 1440,
+          "reducedMotion": true,
+          "result": "PASS",
+          "findings": [],
+          "structure": {
+            "ready": "true",
+            "viewport": 1440,
+            "expectedWidth": 1440,
+            "horizontalOverflow": 0,
+            "reducedMotionMatches": true,
+            "animatedElements": 0,
+            "sectionOrder": [
+              "wide-title",
+              "scale-title",
+              "comparison-title",
+              "decision-title"
+            ],
+            "headers": [
+              "Headwater",
+              "Riffle",
+              "Deep pool",
+              "Side channel",
+              "Floodplain",
+              "Wet meadow",
+              "Tidal creek",
+              "Mudflat",
+              "Seagrass bed",
+              "Open estuary"
+            ],
+            "rowLabels": [
+              "Very low",
+              "Low",
+              "Moderate",
+              "Elevated",
+              "High",
+              "Very high"
+            ],
+            "rowCount": 6,
+            "cellCount": 60,
+            "rowScopesCorrect": true,
+            "columnScopesCorrect": true,
+            "binDefinitionsPresent": true,
+            "columnShareSums": [
+              1,
+              1,
+              0.9999999999999999,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.9999999999999999
+            ],
+            "columnCountSums": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30
+            ],
+            "allCellTextExact": true,
+            "elevatedFloodplain": {
+              "text": "26.7% · n=8",
+              "count": "8",
+              "share": "0.26666666666666666"
+            },
+            "images": [
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-montage-cell.png",
+                "complete": true,
+                "naturalWidth": 640,
+                "naturalHeight": 416
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-narrow-390.png",
+                "complete": true,
+                "naturalWidth": 390,
+                "naturalHeight": 520
+              },
+              {
+                "src": "../site/assets/evidence-matrix.png",
+                "complete": true,
+                "naturalWidth": 1180,
+                "naturalHeight": 800
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              }
+            ],
+            "tableContained": true,
+            "rawObservationCount": 300,
+            "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix"
+          },
+          "keyboard": {
+            "expected": 9,
+            "reached": 9,
+            "states": [
+              {
+                "text": "Skip to matrix study",
+                "tag": "a",
+                "visibleArea": 9533.333557128906,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Scene JSON",
+                "tag": "a",
+                "visibleArea": 1285.7666320800781,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Raw observations",
+                "tag": "a",
+                "visibleArea": 1858.1000518798828,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Count matrix",
+                "tag": "a",
+                "visibleArea": 1397.116683959961,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Share matrix",
+                "tag": "a",
+                "visibleArea": 1360.8497924804688,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open vector figure",
+                "tag": "a",
+                "visibleArea": 1407.9000396728516,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "figurestead.extensions.matrix.categorical_matrix",
+                "tag": "a",
+                "visibleArea": 3754.3998413085938,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Accessible count and share table",
+                "tag": "summary",
+                "visibleArea": 3653.37508392334,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open canonical asset",
+                "tag": "a",
+                "visibleArea": 1564.3334655761719,
+                "outline": "solid 3px"
+              }
+            ],
+            "firstIsSkip": true,
+            "allVisible": true,
+            "allOutlined": true
+          }
+        },
+        {
+          "width": 390,
+          "reducedMotion": false,
+          "result": "PASS",
+          "findings": [],
+          "structure": {
+            "ready": "true",
+            "viewport": 390,
+            "expectedWidth": 390,
+            "horizontalOverflow": 0,
+            "reducedMotionMatches": true,
+            "animatedElements": 0,
+            "sectionOrder": [
+              "wide-title",
+              "scale-title",
+              "comparison-title",
+              "decision-title"
+            ],
+            "headers": [
+              "Headwater",
+              "Riffle",
+              "Deep pool",
+              "Side channel",
+              "Floodplain",
+              "Wet meadow",
+              "Tidal creek",
+              "Mudflat",
+              "Seagrass bed",
+              "Open estuary"
+            ],
+            "rowLabels": [
+              "Very low",
+              "Low",
+              "Moderate",
+              "Elevated",
+              "High",
+              "Very high"
+            ],
+            "rowCount": 6,
+            "cellCount": 60,
+            "rowScopesCorrect": true,
+            "columnScopesCorrect": true,
+            "binDefinitionsPresent": true,
+            "columnShareSums": [
+              1,
+              1,
+              0.9999999999999999,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.9999999999999999
+            ],
+            "columnCountSums": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30
+            ],
+            "allCellTextExact": true,
+            "elevatedFloodplain": {
+              "text": "26.7% · n=8",
+              "count": "8",
+              "share": "0.26666666666666666"
+            },
+            "images": [
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-montage-cell.png",
+                "complete": true,
+                "naturalWidth": 640,
+                "naturalHeight": 416
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-narrow-390.png",
+                "complete": true,
+                "naturalWidth": 390,
+                "naturalHeight": 520
+              },
+              {
+                "src": "../site/assets/evidence-matrix.png",
+                "complete": true,
+                "naturalWidth": 1180,
+                "naturalHeight": 800
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              }
+            ],
+            "tableContained": true,
+            "rawObservationCount": 300,
+            "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix"
+          },
+          "keyboard": {
+            "expected": 9,
+            "reached": 9,
+            "states": [
+              {
+                "text": "Skip to matrix study",
+                "tag": "a",
+                "visibleArea": 9533.333557128906,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Scene JSON",
+                "tag": "a",
+                "visibleArea": 1285.7666320800781,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Raw observations",
+                "tag": "a",
+                "visibleArea": 1858.1000518798828,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Count matrix",
+                "tag": "a",
+                "visibleArea": 1397.116683959961,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Share matrix",
+                "tag": "a",
+                "visibleArea": 12719.233642578125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open vector figure",
+                "tag": "a",
+                "visibleArea": 1407.9000396728516,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "figurestead.extensions.matrix.categorical_matrix",
+                "tag": "a",
+                "visibleArea": 3754.3998413085938,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Accessible count and share table",
+                "tag": "summary",
+                "visibleArea": 3653.37508392334,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Within-habitat response share and exact countResponse bandHeadwaterRiffleDeep poolSide channelFloodplainWet meadowTidal creekMudflatSeagrass bedOpen estuaryVery low (0.30–0.64)0.0% · n=00.0% · n=016.7% · n=50.0% · n=03.3% · n=10.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=0Low (0.65–0.94)10.0% · n=30.0% · n=066.7% · n=200.0% · n=016.7% · n=50.0% · n=00.0% · n=023.3% · n=70.0% · n=03.3% · n=1Moderate (0.95–1.24)90.0% · n=2730.0% · n=916.7% · n=50.0% · n=040.0% · n=1236.7% · n=110.0% · n=056.7% · n=170.0% · n=06.7% · n=2Elevated (1.25–1.54)0.0% · n=063.3% · n=190.0% · n=083.3% · n=2526.7% · n=863.3% · n=196.7% · n=220.0% · n=60.0% · n=060.0% · n=18High (1.55–1.84)0.0% · n=06.7% · n=20.0% · n=016.7% · n=513.3% · n=40.0% · n=080.0% · n=240.0% · n=076.7% · n=2326.7% · n=8Very high (1.85–2.30)0.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=013.3% · n=40.0% · n=023.3% · n=73.3% · n=1",
+                "tag": "div",
+                "visibleArea": 95930,
+                "outline": "auto 1px"
+              }
+            ],
+            "firstIsSkip": true,
+            "allVisible": true,
+            "allOutlined": true
+          }
+        },
+        {
+          "width": 390,
+          "reducedMotion": true,
+          "result": "PASS",
+          "findings": [],
+          "structure": {
+            "ready": "true",
+            "viewport": 390,
+            "expectedWidth": 390,
+            "horizontalOverflow": 0,
+            "reducedMotionMatches": true,
+            "animatedElements": 0,
+            "sectionOrder": [
+              "wide-title",
+              "scale-title",
+              "comparison-title",
+              "decision-title"
+            ],
+            "headers": [
+              "Headwater",
+              "Riffle",
+              "Deep pool",
+              "Side channel",
+              "Floodplain",
+              "Wet meadow",
+              "Tidal creek",
+              "Mudflat",
+              "Seagrass bed",
+              "Open estuary"
+            ],
+            "rowLabels": [
+              "Very low",
+              "Low",
+              "Moderate",
+              "Elevated",
+              "High",
+              "Very high"
+            ],
+            "rowCount": 6,
+            "cellCount": 60,
+            "rowScopesCorrect": true,
+            "columnScopesCorrect": true,
+            "binDefinitionsPresent": true,
+            "columnShareSums": [
+              1,
+              1,
+              0.9999999999999999,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.9999999999999999
+            ],
+            "columnCountSums": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30,
+              30
+            ],
+            "allCellTextExact": true,
+            "elevatedFloodplain": {
+              "text": "26.7% · n=8",
+              "count": "8",
+              "share": "0.26666666666666666"
+            },
+            "images": [
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-montage-cell.png",
+                "complete": true,
+                "naturalWidth": 640,
+                "naturalHeight": 416
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-narrow-390.png",
+                "complete": true,
+                "naturalWidth": 390,
+                "naturalHeight": 520
+              },
+              {
+                "src": "../site/assets/evidence-matrix.png",
+                "complete": true,
+                "naturalWidth": 1180,
+                "naturalHeight": 800
+              },
+              {
+                "src": "evidence/corpus-v0.2/response-matrix/populated-wide.png",
+                "complete": true,
+                "naturalWidth": 1160,
+                "naturalHeight": 760
+              }
+            ],
+            "tableContained": true,
+            "rawObservationCount": 300,
+            "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix"
+          },
+          "keyboard": {
+            "expected": 9,
+            "reached": 9,
+            "states": [
+              {
+                "text": "Skip to matrix study",
+                "tag": "a",
+                "visibleArea": 9533.333557128906,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Scene JSON",
+                "tag": "a",
+                "visibleArea": 1285.7666320800781,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Raw observations",
+                "tag": "a",
+                "visibleArea": 1858.1000518798828,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Count matrix",
+                "tag": "a",
+                "visibleArea": 1397.116683959961,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Share matrix",
+                "tag": "a",
+                "visibleArea": 12719.233642578125,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Open vector figure",
+                "tag": "a",
+                "visibleArea": 1407.9000396728516,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "figurestead.extensions.matrix.categorical_matrix",
+                "tag": "a",
+                "visibleArea": 3754.3998413085938,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Accessible count and share table",
+                "tag": "summary",
+                "visibleArea": 3653.37508392334,
+                "outline": "solid 3px"
+              },
+              {
+                "text": "Within-habitat response share and exact countResponse bandHeadwaterRiffleDeep poolSide channelFloodplainWet meadowTidal creekMudflatSeagrass bedOpen estuaryVery low (0.30–0.64)0.0% · n=00.0% · n=016.7% · n=50.0% · n=03.3% · n=10.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=0Low (0.65–0.94)10.0% · n=30.0% · n=066.7% · n=200.0% · n=016.7% · n=50.0% · n=00.0% · n=023.3% · n=70.0% · n=03.3% · n=1Moderate (0.95–1.24)90.0% · n=2730.0% · n=916.7% · n=50.0% · n=040.0% · n=1236.7% · n=110.0% · n=056.7% · n=170.0% · n=06.7% · n=2Elevated (1.25–1.54)0.0% · n=063.3% · n=190.0% · n=083.3% · n=2526.7% · n=863.3% · n=196.7% · n=220.0% · n=60.0% · n=060.0% · n=18High (1.55–1.84)0.0% · n=06.7% · n=20.0% · n=016.7% · n=513.3% · n=40.0% · n=080.0% · n=240.0% · n=076.7% · n=2326.7% · n=8Very high (1.85–2.30)0.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=00.0% · n=013.3% · n=40.0% · n=023.3% · n=73.3% · n=1",
+                "tag": "div",
+                "visibleArea": 95930,
+                "outline": "auto 1px"
+              }
+            ],
+            "firstIsSkip": true,
+            "allVisible": true,
+            "allOutlined": true
+          }
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "staticEvidence": {
+    "populated-wide.png": {
+      "sha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
+      "bytes": 84544
+    },
+    "populated-wide.svg": {
+      "sha256": "f317fe59827ff233d6f8812135b9407e443b72d6dae7a1256196a9ca6ee38127",
+      "bytes": 142913
+    },
+    "populated-montage-cell.png": {
+      "sha256": "9c46439d9ca787dbcfb8ecad2a222192a0533e1123ae69e017fc5008602d0cdc",
+      "bytes": 74134
+    },
+    "populated-narrow-390.png": {
+      "sha256": "04e512a6b757a4ea6f22dba9624db6aa3cde2cb928021a0d80b3d51667150074",
+      "bytes": 70231
+    }
+  },
+  "sparseReference": {
+    "path": "site/assets/evidence-matrix.png",
+    "sha256": "8595c28cff5a6fb0e67a2d333fc2246fb4df2fd8971b781bfbc225a76d7559b5"
+  },
+  "documentedLimitations": [
+    "At 640 × 416, the provenance note crosses long rotated labels and exact annotations require close inspection.",
+    "At 390 × 520, the existing static renderer clips title/legend text and crowds labels; no compact matrix policy was invented."
+  ],
+  "alternateMontageRequired": false
+}

@@ -15,16 +15,16 @@ const engines = { chromium, firefox };
 const widths = [1440, 390];
 const motionPreferences = ["no-preference", "reduce"];
 const pages = [
-  { key: "lab", path: "index.html", count: 13 },
+  { key: "lab", path: "index.html", count: 14 },
   { key: "montage", path: "at-a-glance.html", count: 8 },
 ];
 const showcaseOrder = [
   "watershed_storm_response", "circadian_phase_shift", "instrument_calibration", "dose_response_plate",
   "treatment_replicates", "paired_seasonal_distributions", "field_sampling_coverage", "reservoir_oxygen_thresholds",
 ];
-const candidateOrder = ["habitat_class_response"];
+const candidateOrder = ["habitat_response_matrix"];
 const stressOrder = [
-  "gene_expression_recovery", "particle_size_relationship", "lab_precision", "migration_monitoring_coverage",
+  "gene_expression_recovery", "particle_size_relationship", "habitat_class_response", "lab_precision", "migration_monitoring_coverage",
 ];
 
 fs.mkdirSync(screenshotsRoot, { recursive: true });
@@ -237,6 +237,12 @@ async function inspect(page) {
       categoricalLayout,
       categoricalAccessibility,
       categoricalSvgConsistency,
+      matrixCandidate: (() => {
+        const figure = document.querySelector('.specimen[data-scene-id="habitat_response_matrix"]');
+        const image = figure?.querySelector("img");
+        const link = figure?.querySelector('a[href="matrix-study.html"]');
+        return figure ? { tier: figure.dataset.tier, renderer: figure.dataset.renderer, imageLoaded: image?.complete && image?.naturalWidth === 1160, studyLinked: Boolean(link) } : null;
+      })(),
     };
   });
   const pixelFingerprints = await page.locator("canvas[data-scene-canvas]").evaluateAll((canvases) => canvases.map((canvas) => {
@@ -263,7 +269,7 @@ function findingsFor(testCase) {
   if (pageKey === "montage") expect(structure.stressInMontage.length === 0, `stress scene entered montage: ${structure.stressInMontage.join(", ")}`);
   expect(structure.immediateDuplicateHeadings.length === 0, "single-panel accessibility companions contain duplicate immediate headings");
   expect(structure.hiddenInteractive.length === 0, "hidden accessibility companion contains focusable controls");
-  expect(structure.hiddenTableCount === structure.sceneCount, "one or more real data-table companions are missing");
+  expect(structure.hiddenTableCount === structure.rendered.length, "one or more rendered-canvas data-table companions are missing");
   expect(structure.canvasAccessibility.every((item) => item.role === "img" && item.labelledBy && item.targetsExist), "canvas accessibility association is incomplete");
   expect(structure.rendered.every((item) => item.state.progress === 1 && !item.state.playing), "a static figure is not settled");
   expect(structure.rendered.every((item) => item.state.reducedMotion === reducedMotion), "reduced-motion state disagrees with the test context");
@@ -275,9 +281,11 @@ function findingsFor(testCase) {
   expect(keyboard.allVisible, "a keyboard target has no visible area or is clipped");
   expect(keyboard.allOutlined, "a keyboard target lacks a visible outline");
   if (pageKey === "lab") {
-    expect(structure.detailsCount === 13 && structure.sourceLinkCount === 26, "lab disclosures do not expose all JSON/CSV sources");
+    expect(structure.detailsCount === 13 && structure.sourceLinkCount === 26, "lab disclosures do not expose all canvas-rendered JSON/CSV sources");
+    expect(structure.matrixCandidate?.tier === "showcase_candidate" && structure.matrixCandidate?.renderer === "categorical_matrix", "response matrix is not the sole static showcase candidate");
+    expect(structure.matrixCandidate?.imageLoaded && structure.matrixCandidate?.studyLinked, "response-matrix evidence or study route is missing");
     const categorical = structure.rendered.find((item) => item.id === "habitat_class_response");
-    expect(categorical?.tier === "showcase_candidate", "categorical fixture tier changed");
+    expect(categorical?.tier === "stress", "strip-summary categorical fixture is not retained as stress evidence");
     expect(categorical?.theme === "slipware", "categorical fixture is not using the first-pass Slipware theme");
     expect(categorical?.seriesCount === 1 && categorical?.observationCount === 90, "categorical fixture is not one semantic series with 90 observations");
     expect(JSON.stringify(categorical?.groupOrder) === JSON.stringify([
@@ -314,7 +322,7 @@ async function captureStandardEvidence(browser, engineName) {
   await ready(page);
   await page.screenshot({ path: path.join(screenshotsRoot, `${engineName}-lab-1440-full.png`), fullPage: true });
   if (engineName === "chromium") {
-    for (const id of [...showcaseOrder, ...candidateOrder, ...stressOrder]) {
+    for (const id of [...showcaseOrder, ...stressOrder]) {
       await page.locator(`canvas[data-scene-canvas="${id}"]`).screenshot({ path: path.join(individualRoot, `${id}.png`) });
     }
   }

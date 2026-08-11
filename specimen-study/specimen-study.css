@@ -37,6 +37,8 @@ a:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-off
 .scene-disclosure .fixture-note{font-family:Georgia,serif;font-size:13px;line-height:1.5}
 .stress-grid .specimen{border-top-color:#6c5c69}
 .candidate-grid .specimen{border-top-color:#8b5a2b}
+.matrix-static img{display:block;width:100%;height:auto;aspect-ratio:116/76;object-fit:contain;background:var(--white);border:1px solid var(--rule)}
+.matrix-study-cta{margin:9px 0 0;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted)}
 footer{min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-top:1px solid var(--rule);color:var(--muted);font-size:10px}
 
 .montage-main{padding-block:30px 26px}

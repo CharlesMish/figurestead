@@ -1,5 +1,5 @@
 {
-  "sceneCount": 13,
+  "sceneCount": 14,
   "tiers": {
     "showcase": [
       "watershed_storm_response",
@@ -12,11 +12,12 @@
       "reservoir_oxygen_thresholds"
     ],
     "showcase_candidate": [
-      "habitat_class_response"
+      "habitat_response_matrix"
     ],
     "stress": [
       "gene_expression_recovery",
       "particle_size_relationship",
+      "habitat_class_response",
       "lab_precision",
       "migration_monitoring_coverage"
     ]
@@ -25,6 +26,7 @@
     "line": 3,
     "scatter": 3,
     "strip_summary": 4,
+    "categorical_matrix": 1,
     "temporal_coverage": 2,
     "temporal_observations": 1
   }

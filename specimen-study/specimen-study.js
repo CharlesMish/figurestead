@@ -20,10 +20,12 @@ const SHOWCASE_ORDER = Object.freeze([
   "field_sampling_coverage",
   "reservoir_oxygen_thresholds",
 ]);
-const CANDIDATE_ORDER = Object.freeze(["habitat_class_response"]);
+const CANDIDATE_ORDER = Object.freeze([]);
+const STATIC_CANDIDATE_ORDER = Object.freeze(["habitat_response_matrix"]);
 const STRESS_ORDER = Object.freeze([
   "gene_expression_recovery",
   "particle_size_relationship",
+  "habitat_class_response",
   "lab_precision",
   "migration_monitoring_coverage",
 ]);
@@ -199,7 +201,7 @@ if (mode === "montage") {
 window.__FIGURESTEAD_SPECIMEN_STUDY__ = Object.freeze({
   corpusVersion: manifest.schemaVersion,
   mode,
-  expectedOrder: mode === "montage" ? SHOWCASE_ORDER : [...SHOWCASE_ORDER, ...CANDIDATE_ORDER, ...STRESS_ORDER],
+  expectedOrder: mode === "montage" ? SHOWCASE_ORDER : [...SHOWCASE_ORDER, ...STATIC_CANDIDATE_ORDER, ...STRESS_ORDER],
   rendered,
   registry,
 });

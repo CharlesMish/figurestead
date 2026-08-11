@@ -177,8 +177,8 @@
       ]
     },
     "v0.2": {
-      "expectedChecksumManifestSha256": "2b29fbc5e9cec41711ff58389462d0b6b572b560671e03dbe5d13da903fc4efb",
-      "fileCount": 26,
+      "expectedChecksumManifestSha256": "bde504eb53ea8701a20e6a32649724f8b3a29ed9ba445322a3df53d66c78a7f7",
+      "fileCount": 30,
       "allMatch": true,
       "files": [
         {
@@ -207,8 +207,14 @@
         },
         {
           "path": "scenes/habitat_class_response.json",
-          "bytes": 8431,
-          "sha256": "3aca5ecd8292ce4fe27a2db7e2af33783612111bfaaaeb802648a7aaca934697",
+          "bytes": 8419,
+          "sha256": "9a2de40edb8fa53c379c3ed4371cfd1645886f858e89ee7733b4c60d951cfb7d",
+          "matches": true
+        },
+        {
+          "path": "scenes/habitat_response_matrix.json",
+          "bytes": 82698,
+          "sha256": "ec554acdb01e16b099157da592e3cd4d181254e7163aca028375c82f7b4a0099",
           "matches": true
         },
         {
@@ -290,6 +296,12 @@
           "matches": true
         },
         {
+          "path": "tables/habitat_response_matrix.csv",
+          "bytes": 15596,
+          "sha256": "3106d4bb5ef45d7cfe64b774170a5bde91c85d36339b21a1358f2171f0970bc2",
+          "matches": true
+        },
+        {
           "path": "tables/instrument_calibration.csv",
           "bytes": 756,
           "sha256": "22f739dd3087242e2b66b4641f1a47129f7e345ca017aad5ca1465a574c40962",
@@ -335,6 +347,18 @@
           "path": "tables/watershed_storm_response.csv",
           "bytes": 552,
           "sha256": "5a05c0813e6eb40fbd2542942a513b0d0b6712e3a00c27ea2a5f9b1a0ce887ab",
+          "matches": true
+        },
+        {
+          "path": "derived/habitat_response_matrix-counts.csv",
+          "bytes": 306,
+          "sha256": "95c20fe05df1ff862d95ec61bc13fe2f049a1bf508f0a17afef35e28cfd5451d",
+          "matches": true
+        },
+        {
+          "path": "derived/habitat_response_matrix-shares.csv",
+          "bytes": 777,
+          "sha256": "68e2a4e20a2133789ab3231fe89785837622c6983fd0f22d5c11fd1f46fdeff4",
           "matches": true
         }
       ]

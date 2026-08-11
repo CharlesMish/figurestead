@@ -2329,7 +2329,7 @@ def categorical_scene():
         },
         "suggestedTheme": {"key": "slipware", "name": "Slipware"},
         "synthetic": True,
-        "tier": "showcase_candidate",
+        "tier": "stress",
         "title": "Response across ten habitat classes",
         "generation": {
             "method": "python_random_gauss_standardized_sample",
@@ -2344,6 +2344,138 @@ def categorical_scene():
 
 
 SCENES["habitat_class_response"] = categorical_scene()
+
+RESPONSE_BANDS = (
+    ("Very low", 0.30, 0.65, "0.30–0.64"),
+    ("Low", 0.65, 0.95, "0.65–0.94"),
+    ("Moderate", 0.95, 1.25, "0.95–1.24"),
+    ("Elevated", 1.25, 1.55, "1.25–1.54"),
+    ("High", 1.55, 1.85, "1.55–1.84"),
+    ("Very high", 1.85, 2.30, "1.85–2.30"),
+)
+
+
+def response_band(value):
+    for index, (label, lower, upper, display) in enumerate(RESPONSE_BANDS):
+        if value >= lower and (value < upper if index < len(RESPONSE_BANDS) - 1 else value <= upper):
+            return label, lower, upper, display
+    raise ValueError(f"response value {value} falls outside the fixed project bins")
+
+
+def matrix_scene():
+    """Build a populated response matrix from seeded observations and fixed bins."""
+    seed = 15401
+    rng = random.Random(seed)
+    observations = []
+    habitat_labels = [name.capitalize() for name, _, _ in CATEGORICAL_GROUPS]
+    for (key, center, spread), label in zip(CATEGORICAL_GROUPS, habitat_labels):
+        for observation_index in range(1, 31):
+            value = round(rng.gauss(center, spread), 4)
+            band_label, lower, upper, display = response_band(value)
+            observations.append({
+                "habitatKey": key.replace(" ", "_"),
+                "habitat": label,
+                "observation": observation_index,
+                "responseIndex": value,
+                "responseBand": band_label,
+                "bandDefinition": display,
+            })
+
+    count_matrix = []
+    share_matrix = []
+    cells = []
+    for band_label, lower, upper, display in RESPONSE_BANDS:
+        count_row = []
+        share_row = []
+        for label in habitat_labels:
+            count = sum(item["habitat"] == label and item["responseBand"] == band_label for item in observations)
+            share = count / 30
+            count_row.append(count)
+            share_row.append(share)
+            cells.append({
+                "x": label,
+                "y": band_label,
+                "value": share,
+                "status": "observed",
+                "label": f"{share:.0%}\nn={count}",
+                "count": count,
+                "share": share,
+                "bandDefinition": display,
+            })
+        count_matrix.append(count_row)
+        share_matrix.append(share_row)
+
+    return {
+        "communicationQuestion": "What does Figurestead's existing Categorical response matrix look like when it has enough real structure to compare, rather than only enough cells to demonstrate that the renderer exists?",
+        "corpusVersion": "0.2",
+        "data": {
+            "xCategories": habitat_labels,
+            "yCategories": [item[0] for item in RESPONSE_BANDS],
+            "cells": cells,
+            "valueScale": {"domain": [0, 1], "label": "Within-habitat response share", "format": "percent"},
+            "statusLabels": {"insufficient": "Insufficient sample", "missing": "No data"},
+        },
+        "rawObservations": observations,
+        "responseBands": [
+            {
+                "label": label,
+                "displayRange": display,
+                "lowerInclusive": lower,
+                "upperExclusive": upper if index < len(RESPONSE_BANDS) - 1 else None,
+                "upperInclusive": upper if index == len(RESPONSE_BANDS) - 1 else None,
+            }
+            for index, (label, lower, upper, display) in enumerate(RESPONSE_BANDS)
+        ],
+        "derived": {
+            "orientation": "rows=response bands; columns=habitat classes",
+            "countMatrix": count_matrix,
+            "shareMatrix": share_matrix,
+        },
+        "notes": [
+            "Thirty seeded Gaussian observations are generated per habitat, rounded to four decimal places, then mechanically assigned to the six fixed project bins.",
+            "Response bands are illustrative project bins, not ecological thresholds or regulatory categories.",
+            "Each populated cell is an observed zero or positive share; no zero has been replaced by a small non-zero fill.",
+        ],
+        "provenance": {
+            "kind": "deterministic_synthetic",
+            "statement": "Deterministic synthetic observations generated for Figurestead renderer and categorical-comparison evaluation. Response bands are illustrative project bins; values are not ecological measurements, validated model outputs, or regulatory thresholds.",
+        },
+        "renderer": "categorical_matrix",
+        "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix",
+        "sceneId": "habitat_response_matrix",
+        "scientificContext": "A synthetic ecological response distribution summarized across habitat classes",
+        "seed": seed,
+        "stressors": [
+            "ten mixed-length column labels",
+            "six fixed response bands",
+            "sixty exact-value cell annotations",
+            "observed zero cells",
+            "compact matrix density",
+        ],
+        "subtitle": "Within-habitat observations summarized into categorical response bands",
+        "suggestedSpec": {
+            "note": "Illustrative project bins; deterministic synthetic observations; n=30 per habitat.",
+            "xLabel": "habitat class",
+            "yLabel": "response band",
+        },
+        "suggestedTheme": {"key": "slipware", "name": "Slipware"},
+        "synthetic": True,
+        "tier": "showcase_candidate",
+        "title": "Response distribution across habitat classes",
+        "generation": {
+            "method": "python_random_gauss",
+            "observationsPerHabitat": 30,
+            "roundDecimalPlaces": 4,
+            "binning": "lower inclusive; upper exclusive except the final upper-inclusive bin",
+            "parameters": [
+                {"habitat": label, "targetCenter": center, "targetSpread": spread}
+                for (_, center, spread), label in zip(CATEGORICAL_GROUPS, habitat_labels)
+            ],
+        },
+    }
+
+
+SCENES["habitat_response_matrix"] = matrix_scene()
 
 def write_json(path, obj):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -2367,6 +2499,12 @@ def rows_for(scene):
     elif r == "temporal_observations":
         headers = ["date","value"]
         rows = list(zip(d["dates"], d["values"]))
+    elif r == "categorical_matrix":
+        headers = ["habitat_key", "habitat", "observation", "response_index", "response_band", "band_definition"]
+        rows = [
+            [item["habitatKey"], item["habitat"], item["observation"], item["responseIndex"], item["responseBand"], item["bandDefinition"]]
+            for item in scene["rawObservations"]
+        ]
     else:
         raise ValueError(r)
     return headers, rows
@@ -2391,8 +2529,18 @@ def main():
         headers, rows = rows_for(scene)
         write_csv(ROOT/"tables"/f"{scene_id}.csv", headers, rows)
 
+    matrix = SCENES["habitat_response_matrix"]
+    habitats = matrix["data"]["xCategories"]
+    bands = matrix["data"]["yCategories"]
+    write_csv(ROOT/"derived"/"habitat_response_matrix-counts.csv", ["response_band", *habitats], [
+        [band, *row] for band, row in zip(bands, matrix["derived"]["countMatrix"])
+    ])
+    write_csv(ROOT/"derived"/"habitat_response_matrix-shares.csv", ["response_band", *habitats], [
+        [band, *row] for band, row in zip(bands, matrix["derived"]["shareMatrix"])
+    ])
+
     checks = {}
-    for folder in ("scenes","tables"):
+    for folder in ("scenes","tables", "derived"):
         for path in sorted((ROOT/folder).glob("*")):
             checks[str(path.relative_to(ROOT))] = {
                 "sha256": sha256(path),

@@ -1,0 +1,301 @@
+habitat_key,habitat,observation,response_index,response_band,band_definition
+headwater,Headwater,1,0.9453,Low,0.65–0.94
+headwater,Headwater,2,1.0892,Moderate,0.95–1.24
+headwater,Headwater,3,1.104,Moderate,0.95–1.24
+headwater,Headwater,4,1.1523,Moderate,0.95–1.24
+headwater,Headwater,5,1.0063,Moderate,0.95–1.24
+headwater,Headwater,6,1.0239,Moderate,0.95–1.24
+headwater,Headwater,7,0.9447,Low,0.65–0.94
+headwater,Headwater,8,1.153,Moderate,0.95–1.24
+headwater,Headwater,9,1.1297,Moderate,0.95–1.24
+headwater,Headwater,10,1.0564,Moderate,0.95–1.24
+headwater,Headwater,11,1.0666,Moderate,0.95–1.24
+headwater,Headwater,12,1.1188,Moderate,0.95–1.24
+headwater,Headwater,13,1.1649,Moderate,0.95–1.24
+headwater,Headwater,14,0.9998,Moderate,0.95–1.24
+headwater,Headwater,15,1.0677,Moderate,0.95–1.24
+headwater,Headwater,16,1.0071,Moderate,0.95–1.24
+headwater,Headwater,17,1.0679,Moderate,0.95–1.24
+headwater,Headwater,18,1.0782,Moderate,0.95–1.24
+headwater,Headwater,19,1.0731,Moderate,0.95–1.24
+headwater,Headwater,20,1.1658,Moderate,0.95–1.24
+headwater,Headwater,21,1.0525,Moderate,0.95–1.24
+headwater,Headwater,22,0.9694,Moderate,0.95–1.24
+headwater,Headwater,23,0.9931,Moderate,0.95–1.24
+headwater,Headwater,24,1.1145,Moderate,0.95–1.24
+headwater,Headwater,25,1.0277,Moderate,0.95–1.24
+headwater,Headwater,26,0.9717,Moderate,0.95–1.24
+headwater,Headwater,27,1.0888,Moderate,0.95–1.24
+headwater,Headwater,28,0.8225,Low,0.65–0.94
+headwater,Headwater,29,1.0307,Moderate,0.95–1.24
+headwater,Headwater,30,0.9852,Moderate,0.95–1.24
+riffle,Riffle,1,1.0263,Moderate,0.95–1.24
+riffle,Riffle,2,1.1817,Moderate,0.95–1.24
+riffle,Riffle,3,1.2716,Elevated,1.25–1.54
+riffle,Riffle,4,1.2999,Elevated,1.25–1.54
+riffle,Riffle,5,1.3205,Elevated,1.25–1.54
+riffle,Riffle,6,1.3768,Elevated,1.25–1.54
+riffle,Riffle,7,1.5056,Elevated,1.25–1.54
+riffle,Riffle,8,1.2183,Moderate,0.95–1.24
+riffle,Riffle,9,1.3992,Elevated,1.25–1.54
+riffle,Riffle,10,1.0957,Moderate,0.95–1.24
+riffle,Riffle,11,1.3939,Elevated,1.25–1.54
+riffle,Riffle,12,1.3127,Elevated,1.25–1.54
+riffle,Riffle,13,1.5462,Elevated,1.25–1.54
+riffle,Riffle,14,1.4332,Elevated,1.25–1.54
+riffle,Riffle,15,1.7083,High,1.55–1.84
+riffle,Riffle,16,1.1866,Moderate,0.95–1.24
+riffle,Riffle,17,1.3102,Elevated,1.25–1.54
+riffle,Riffle,18,1.3844,Elevated,1.25–1.54
+riffle,Riffle,19,1.3398,Elevated,1.25–1.54
+riffle,Riffle,20,1.3448,Elevated,1.25–1.54
+riffle,Riffle,21,1.4646,Elevated,1.25–1.54
+riffle,Riffle,22,1.4864,Elevated,1.25–1.54
+riffle,Riffle,23,1.213,Moderate,0.95–1.24
+riffle,Riffle,24,1.246,Moderate,0.95–1.24
+riffle,Riffle,25,1.1585,Moderate,0.95–1.24
+riffle,Riffle,26,1.3644,Elevated,1.25–1.54
+riffle,Riffle,27,1.3639,Elevated,1.25–1.54
+riffle,Riffle,28,1.3842,Elevated,1.25–1.54
+riffle,Riffle,29,1.085,Moderate,0.95–1.24
+riffle,Riffle,30,1.5763,High,1.55–1.84
+deep_pool,Deep pool,1,0.7844,Low,0.65–0.94
+deep_pool,Deep pool,2,0.4889,Very low,0.30–0.64
+deep_pool,Deep pool,3,0.676,Low,0.65–0.94
+deep_pool,Deep pool,4,1.099,Moderate,0.95–1.24
+deep_pool,Deep pool,5,0.6756,Low,0.65–0.94
+deep_pool,Deep pool,6,0.7587,Low,0.65–0.94
+deep_pool,Deep pool,7,0.7705,Low,0.65–0.94
+deep_pool,Deep pool,8,0.9414,Low,0.65–0.94
+deep_pool,Deep pool,9,0.6201,Very low,0.30–0.64
+deep_pool,Deep pool,10,0.7938,Low,0.65–0.94
+deep_pool,Deep pool,11,0.7203,Low,0.65–0.94
+deep_pool,Deep pool,12,0.695,Low,0.65–0.94
+deep_pool,Deep pool,13,0.8925,Low,0.65–0.94
+deep_pool,Deep pool,14,0.9847,Moderate,0.95–1.24
+deep_pool,Deep pool,15,0.7784,Low,0.65–0.94
+deep_pool,Deep pool,16,1.0273,Moderate,0.95–1.24
+deep_pool,Deep pool,17,0.9709,Moderate,0.95–1.24
+deep_pool,Deep pool,18,0.6132,Very low,0.30–0.64
+deep_pool,Deep pool,19,0.6237,Very low,0.30–0.64
+deep_pool,Deep pool,20,0.699,Low,0.65–0.94
+deep_pool,Deep pool,21,0.7434,Low,0.65–0.94
+deep_pool,Deep pool,22,0.9108,Low,0.65–0.94
+deep_pool,Deep pool,23,0.872,Low,0.65–0.94
+deep_pool,Deep pool,24,0.9316,Low,0.65–0.94
+deep_pool,Deep pool,25,0.8137,Low,0.65–0.94
+deep_pool,Deep pool,26,0.9146,Low,0.65–0.94
+deep_pool,Deep pool,27,0.7666,Low,0.65–0.94
+deep_pool,Deep pool,28,0.673,Low,0.65–0.94
+deep_pool,Deep pool,29,0.6482,Very low,0.30–0.64
+deep_pool,Deep pool,30,1.0313,Moderate,0.95–1.24
+side_channel,Side channel,1,1.4101,Elevated,1.25–1.54
+side_channel,Side channel,2,1.489,Elevated,1.25–1.54
+side_channel,Side channel,3,1.6016,High,1.55–1.84
+side_channel,Side channel,4,1.6442,High,1.55–1.84
+side_channel,Side channel,5,1.7068,High,1.55–1.84
+side_channel,Side channel,6,1.3784,Elevated,1.25–1.54
+side_channel,Side channel,7,1.4666,Elevated,1.25–1.54
+side_channel,Side channel,8,1.4529,Elevated,1.25–1.54
+side_channel,Side channel,9,1.2929,Elevated,1.25–1.54
+side_channel,Side channel,10,1.504,Elevated,1.25–1.54
+side_channel,Side channel,11,1.3694,Elevated,1.25–1.54
+side_channel,Side channel,12,1.5358,Elevated,1.25–1.54
+side_channel,Side channel,13,1.3522,Elevated,1.25–1.54
+side_channel,Side channel,14,1.4799,Elevated,1.25–1.54
+side_channel,Side channel,15,1.5225,Elevated,1.25–1.54
+side_channel,Side channel,16,1.3559,Elevated,1.25–1.54
+side_channel,Side channel,17,1.4838,Elevated,1.25–1.54
+side_channel,Side channel,18,1.379,Elevated,1.25–1.54
+side_channel,Side channel,19,1.5248,Elevated,1.25–1.54
+side_channel,Side channel,20,1.5849,High,1.55–1.84
+side_channel,Side channel,21,1.4977,Elevated,1.25–1.54
+side_channel,Side channel,22,1.3764,Elevated,1.25–1.54
+side_channel,Side channel,23,1.466,Elevated,1.25–1.54
+side_channel,Side channel,24,1.3836,Elevated,1.25–1.54
+side_channel,Side channel,25,1.5285,Elevated,1.25–1.54
+side_channel,Side channel,26,1.4305,Elevated,1.25–1.54
+side_channel,Side channel,27,1.3247,Elevated,1.25–1.54
+side_channel,Side channel,28,1.3497,Elevated,1.25–1.54
+side_channel,Side channel,29,1.4477,Elevated,1.25–1.54
+side_channel,Side channel,30,1.739,High,1.55–1.84
+floodplain,Floodplain,1,1.5148,Elevated,1.25–1.54
+floodplain,Floodplain,2,1.3193,Elevated,1.25–1.54
+floodplain,Floodplain,3,1.0865,Moderate,0.95–1.24
+floodplain,Floodplain,4,1.143,Moderate,0.95–1.24
+floodplain,Floodplain,5,1.2559,Elevated,1.25–1.54
+floodplain,Floodplain,6,1.1302,Moderate,0.95–1.24
+floodplain,Floodplain,7,1.6375,High,1.55–1.84
+floodplain,Floodplain,8,0.8906,Low,0.65–0.94
+floodplain,Floodplain,9,0.9701,Moderate,0.95–1.24
+floodplain,Floodplain,10,0.7478,Low,0.65–0.94
+floodplain,Floodplain,11,0.8609,Low,0.65–0.94
+floodplain,Floodplain,12,1.1691,Moderate,0.95–1.24
+floodplain,Floodplain,13,1.299,Elevated,1.25–1.54
+floodplain,Floodplain,14,0.5914,Very low,0.30–0.64
+floodplain,Floodplain,15,0.9924,Moderate,0.95–1.24
+floodplain,Floodplain,16,1.0456,Moderate,0.95–1.24
+floodplain,Floodplain,17,1.1472,Moderate,0.95–1.24
+floodplain,Floodplain,18,1.2789,Elevated,1.25–1.54
+floodplain,Floodplain,19,1.1361,Moderate,0.95–1.24
+floodplain,Floodplain,20,1.1241,Moderate,0.95–1.24
+floodplain,Floodplain,21,0.8283,Low,0.65–0.94
+floodplain,Floodplain,22,1.3843,Elevated,1.25–1.54
+floodplain,Floodplain,23,1.3722,Elevated,1.25–1.54
+floodplain,Floodplain,24,1.1739,Moderate,0.95–1.24
+floodplain,Floodplain,25,1.696,High,1.55–1.84
+floodplain,Floodplain,26,1.2633,Elevated,1.25–1.54
+floodplain,Floodplain,27,1.2369,Moderate,0.95–1.24
+floodplain,Floodplain,28,1.5614,High,1.55–1.84
+floodplain,Floodplain,29,1.8132,High,1.55–1.84
+floodplain,Floodplain,30,0.7813,Low,0.65–0.94
+wet_meadow,Wet meadow,1,1.2693,Elevated,1.25–1.54
+wet_meadow,Wet meadow,2,1.3723,Elevated,1.25–1.54
+wet_meadow,Wet meadow,3,1.2102,Moderate,0.95–1.24
+wet_meadow,Wet meadow,4,1.3125,Elevated,1.25–1.54
+wet_meadow,Wet meadow,5,1.346,Elevated,1.25–1.54
+wet_meadow,Wet meadow,6,1.3787,Elevated,1.25–1.54
+wet_meadow,Wet meadow,7,1.3508,Elevated,1.25–1.54
+wet_meadow,Wet meadow,8,1.1287,Moderate,0.95–1.24
+wet_meadow,Wet meadow,9,1.3117,Elevated,1.25–1.54
+wet_meadow,Wet meadow,10,1.1776,Moderate,0.95–1.24
+wet_meadow,Wet meadow,11,1.1672,Moderate,0.95–1.24
+wet_meadow,Wet meadow,12,1.3088,Elevated,1.25–1.54
+wet_meadow,Wet meadow,13,1.33,Elevated,1.25–1.54
+wet_meadow,Wet meadow,14,1.2693,Elevated,1.25–1.54
+wet_meadow,Wet meadow,15,1.3422,Elevated,1.25–1.54
+wet_meadow,Wet meadow,16,1.2122,Moderate,0.95–1.24
+wet_meadow,Wet meadow,17,1.3466,Elevated,1.25–1.54
+wet_meadow,Wet meadow,18,1.3314,Elevated,1.25–1.54
+wet_meadow,Wet meadow,19,1.2466,Moderate,0.95–1.24
+wet_meadow,Wet meadow,20,1.2562,Elevated,1.25–1.54
+wet_meadow,Wet meadow,21,1.3285,Elevated,1.25–1.54
+wet_meadow,Wet meadow,22,1.1559,Moderate,0.95–1.24
+wet_meadow,Wet meadow,23,1.1841,Moderate,0.95–1.24
+wet_meadow,Wet meadow,24,1.2357,Moderate,0.95–1.24
+wet_meadow,Wet meadow,25,1.2533,Elevated,1.25–1.54
+wet_meadow,Wet meadow,26,1.263,Elevated,1.25–1.54
+wet_meadow,Wet meadow,27,1.3285,Elevated,1.25–1.54
+wet_meadow,Wet meadow,28,1.299,Elevated,1.25–1.54
+wet_meadow,Wet meadow,29,1.2307,Moderate,0.95–1.24
+wet_meadow,Wet meadow,30,1.1325,Moderate,0.95–1.24
+tidal_creek,Tidal creek,1,1.5988,High,1.55–1.84
+tidal_creek,Tidal creek,2,1.8263,High,1.55–1.84
+tidal_creek,Tidal creek,3,1.7966,High,1.55–1.84
+tidal_creek,Tidal creek,4,2.0272,Very high,1.85–2.30
+tidal_creek,Tidal creek,5,1.7485,High,1.55–1.84
+tidal_creek,Tidal creek,6,1.7498,High,1.55–1.84
+tidal_creek,Tidal creek,7,1.725,High,1.55–1.84
+tidal_creek,Tidal creek,8,1.9488,Very high,1.85–2.30
+tidal_creek,Tidal creek,9,1.7955,High,1.55–1.84
+tidal_creek,Tidal creek,10,1.7307,High,1.55–1.84
+tidal_creek,Tidal creek,11,1.6338,High,1.55–1.84
+tidal_creek,Tidal creek,12,1.6048,High,1.55–1.84
+tidal_creek,Tidal creek,13,1.7763,High,1.55–1.84
+tidal_creek,Tidal creek,14,1.7498,High,1.55–1.84
+tidal_creek,Tidal creek,15,1.5194,Elevated,1.25–1.54
+tidal_creek,Tidal creek,16,1.7087,High,1.55–1.84
+tidal_creek,Tidal creek,17,1.7348,High,1.55–1.84
+tidal_creek,Tidal creek,18,1.8193,High,1.55–1.84
+tidal_creek,Tidal creek,19,1.3927,Elevated,1.25–1.54
+tidal_creek,Tidal creek,20,1.6161,High,1.55–1.84
+tidal_creek,Tidal creek,21,1.8704,Very high,1.85–2.30
+tidal_creek,Tidal creek,22,1.8351,High,1.55–1.84
+tidal_creek,Tidal creek,23,1.8271,High,1.55–1.84
+tidal_creek,Tidal creek,24,1.7296,High,1.55–1.84
+tidal_creek,Tidal creek,25,1.8082,High,1.55–1.84
+tidal_creek,Tidal creek,26,1.9318,Very high,1.85–2.30
+tidal_creek,Tidal creek,27,1.8475,High,1.55–1.84
+tidal_creek,Tidal creek,28,1.6172,High,1.55–1.84
+tidal_creek,Tidal creek,29,1.6504,High,1.55–1.84
+tidal_creek,Tidal creek,30,1.7588,High,1.55–1.84
+mudflat,Mudflat,1,0.9611,Moderate,0.95–1.24
+mudflat,Mudflat,2,0.9011,Low,0.65–0.94
+mudflat,Mudflat,3,1.3114,Elevated,1.25–1.54
+mudflat,Mudflat,4,0.755,Low,0.65–0.94
+mudflat,Mudflat,5,1.1377,Moderate,0.95–1.24
+mudflat,Mudflat,6,1.4101,Elevated,1.25–1.54
+mudflat,Mudflat,7,0.9085,Low,0.65–0.94
+mudflat,Mudflat,8,0.9597,Moderate,0.95–1.24
+mudflat,Mudflat,9,0.9674,Moderate,0.95–1.24
+mudflat,Mudflat,10,1.3756,Elevated,1.25–1.54
+mudflat,Mudflat,11,0.9818,Moderate,0.95–1.24
+mudflat,Mudflat,12,1.129,Moderate,0.95–1.24
+mudflat,Mudflat,13,0.7483,Low,0.65–0.94
+mudflat,Mudflat,14,1.126,Moderate,0.95–1.24
+mudflat,Mudflat,15,1.0385,Moderate,0.95–1.24
+mudflat,Mudflat,16,0.9108,Low,0.65–0.94
+mudflat,Mudflat,17,1.0622,Moderate,0.95–1.24
+mudflat,Mudflat,18,1.1365,Moderate,0.95–1.24
+mudflat,Mudflat,19,1.2452,Moderate,0.95–1.24
+mudflat,Mudflat,20,1.3756,Elevated,1.25–1.54
+mudflat,Mudflat,21,1.1817,Moderate,0.95–1.24
+mudflat,Mudflat,22,0.8563,Low,0.65–0.94
+mudflat,Mudflat,23,0.8416,Low,0.65–0.94
+mudflat,Mudflat,24,1.0722,Moderate,0.95–1.24
+mudflat,Mudflat,25,1.3044,Elevated,1.25–1.54
+mudflat,Mudflat,26,0.9681,Moderate,0.95–1.24
+mudflat,Mudflat,27,0.9631,Moderate,0.95–1.24
+mudflat,Mudflat,28,1.2797,Elevated,1.25–1.54
+mudflat,Mudflat,29,0.9548,Moderate,0.95–1.24
+mudflat,Mudflat,30,0.9658,Moderate,0.95–1.24
+seagrass_bed,Seagrass bed,1,1.8621,Very high,1.85–2.30
+seagrass_bed,Seagrass bed,2,1.9091,Very high,1.85–2.30
+seagrass_bed,Seagrass bed,3,1.7565,High,1.55–1.84
+seagrass_bed,Seagrass bed,4,1.799,High,1.55–1.84
+seagrass_bed,Seagrass bed,5,1.7043,High,1.55–1.84
+seagrass_bed,Seagrass bed,6,1.8047,High,1.55–1.84
+seagrass_bed,Seagrass bed,7,1.6646,High,1.55–1.84
+seagrass_bed,Seagrass bed,8,1.7617,High,1.55–1.84
+seagrass_bed,Seagrass bed,9,1.8654,Very high,1.85–2.30
+seagrass_bed,Seagrass bed,10,1.717,High,1.55–1.84
+seagrass_bed,Seagrass bed,11,1.7891,High,1.55–1.84
+seagrass_bed,Seagrass bed,12,1.8105,High,1.55–1.84
+seagrass_bed,Seagrass bed,13,1.7848,High,1.55–1.84
+seagrass_bed,Seagrass bed,14,1.86,Very high,1.85–2.30
+seagrass_bed,Seagrass bed,15,1.7383,High,1.55–1.84
+seagrass_bed,Seagrass bed,16,1.8565,Very high,1.85–2.30
+seagrass_bed,Seagrass bed,17,1.7786,High,1.55–1.84
+seagrass_bed,Seagrass bed,18,1.7799,High,1.55–1.84
+seagrass_bed,Seagrass bed,19,1.7006,High,1.55–1.84
+seagrass_bed,Seagrass bed,20,1.796,High,1.55–1.84
+seagrass_bed,Seagrass bed,21,1.7184,High,1.55–1.84
+seagrass_bed,Seagrass bed,22,1.8418,High,1.55–1.84
+seagrass_bed,Seagrass bed,23,1.8845,Very high,1.85–2.30
+seagrass_bed,Seagrass bed,24,1.7658,High,1.55–1.84
+seagrass_bed,Seagrass bed,25,1.7804,High,1.55–1.84
+seagrass_bed,Seagrass bed,26,1.8637,Very high,1.85–2.30
+seagrass_bed,Seagrass bed,27,1.8165,High,1.55–1.84
+seagrass_bed,Seagrass bed,28,1.791,High,1.55–1.84
+seagrass_bed,Seagrass bed,29,1.7301,High,1.55–1.84
+seagrass_bed,Seagrass bed,30,1.7739,High,1.55–1.84
+open_estuary,Open estuary,1,1.2657,Elevated,1.25–1.54
+open_estuary,Open estuary,2,1.4394,Elevated,1.25–1.54
+open_estuary,Open estuary,3,1.4015,Elevated,1.25–1.54
+open_estuary,Open estuary,4,1.5221,Elevated,1.25–1.54
+open_estuary,Open estuary,5,1.4793,Elevated,1.25–1.54
+open_estuary,Open estuary,6,1.4667,Elevated,1.25–1.54
+open_estuary,Open estuary,7,1.1326,Moderate,0.95–1.24
+open_estuary,Open estuary,8,1.329,Elevated,1.25–1.54
+open_estuary,Open estuary,9,1.1032,Moderate,0.95–1.24
+open_estuary,Open estuary,10,1.6003,High,1.55–1.84
+open_estuary,Open estuary,11,1.7482,High,1.55–1.84
+open_estuary,Open estuary,12,1.58,High,1.55–1.84
+open_estuary,Open estuary,13,1.309,Elevated,1.25–1.54
+open_estuary,Open estuary,14,2.115,Very high,1.85–2.30
+open_estuary,Open estuary,15,1.4785,Elevated,1.25–1.54
+open_estuary,Open estuary,16,1.3324,Elevated,1.25–1.54
+open_estuary,Open estuary,17,1.3779,Elevated,1.25–1.54
+open_estuary,Open estuary,18,1.3376,Elevated,1.25–1.54
+open_estuary,Open estuary,19,1.5333,Elevated,1.25–1.54
+open_estuary,Open estuary,20,1.2584,Elevated,1.25–1.54
+open_estuary,Open estuary,21,1.6896,High,1.55–1.84
+open_estuary,Open estuary,22,1.4883,Elevated,1.25–1.54
+open_estuary,Open estuary,23,1.6437,High,1.55–1.84
+open_estuary,Open estuary,24,0.7927,Low,0.65–0.94
+open_estuary,Open estuary,25,1.6923,High,1.55–1.84
+open_estuary,Open estuary,26,1.3453,Elevated,1.25–1.54
+open_estuary,Open estuary,27,1.619,High,1.55–1.84
+open_estuary,Open estuary,28,1.3047,Elevated,1.25–1.54
+open_estuary,Open estuary,29,1.4204,Elevated,1.25–1.54
+open_estuary,Open estuary,30,1.6462,High,1.55–1.84

@@ -18,8 +18,12 @@
       "bytes": 3843
     },
     "scenes/habitat_class_response.json": {
-      "sha256": "3aca5ecd8292ce4fe27a2db7e2af33783612111bfaaaeb802648a7aaca934697",
-      "bytes": 8431
+      "sha256": "9a2de40edb8fa53c379c3ed4371cfd1645886f858e89ee7733b4c60d951cfb7d",
+      "bytes": 8419
+    },
+    "scenes/habitat_response_matrix.json": {
+      "sha256": "ec554acdb01e16b099157da592e3cd4d181254e7163aca028375c82f7b4a0099",
+      "bytes": 82698
     },
     "scenes/instrument_calibration.json": {
       "sha256": "cba80d922cab218885af369672529e9cde8411ac5ec7375e843fdecb5c460fe3",
@@ -73,6 +77,10 @@
       "sha256": "4fb17877ee4fdffc5ee3c37a16da63c3659b32d10f5a64cc3ca34549b37562c3",
       "bytes": 2874
     },
+    "tables/habitat_response_matrix.csv": {
+      "sha256": "3106d4bb5ef45d7cfe64b774170a5bde91c85d36339b21a1358f2171f0970bc2",
+      "bytes": 15596
+    },
     "tables/instrument_calibration.csv": {
       "sha256": "22f739dd3087242e2b66b4641f1a47129f7e345ca017aad5ca1465a574c40962",
       "bytes": 756
@@ -104,6 +112,14 @@
     "tables/watershed_storm_response.csv": {
       "sha256": "5a05c0813e6eb40fbd2542942a513b0d0b6712e3a00c27ea2a5f9b1a0ce887ab",
       "bytes": 552
+    },
+    "derived/habitat_response_matrix-counts.csv": {
+      "sha256": "95c20fe05df1ff862d95ec61bc13fe2f049a1bf508f0a17afef35e28cfd5451d",
+      "bytes": 306
+    },
+    "derived/habitat_response_matrix-shares.csv": {
+      "sha256": "68e2a4e20a2133789ab3231fe89785837622c6983fd0f22d5c11fd1f46fdeff4",
+      "bytes": 777
     }
   }
 }

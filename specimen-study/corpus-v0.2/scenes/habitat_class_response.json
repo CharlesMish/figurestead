@@ -337,7 +337,7 @@
     "name": "Slipware"
   },
   "synthetic": true,
-  "tier": "showcase_candidate",
+  "tier": "stress",
   "title": "Response across ten habitat classes",
   "generation": {
     "method": "python_random_gauss_standardized_sample",
