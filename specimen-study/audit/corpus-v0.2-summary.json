@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "figurestead.specimen-study-verification/1",
+  "generatedAt": "2026-08-11T03:48:06.972Z",
+  "result": "PASS",
+  "engines": [
+    {
+      "engine": "chromium",
+      "browserVersion": "151.0.7922.34",
+      "playwrightVersion": "1.62.0",
+      "nodeVersion": "v24.14.0",
+      "executableSha256": "a596b1cfc6353e987fcec8d71a23a28cd6a9e7a6b4e20b908e4c4fcffe51158e",
+      "caseCount": 8,
+      "passCount": 8
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "153.0",
+      "playwrightVersion": "1.62.0",
+      "nodeVersion": "v24.14.0",
+      "executableSha256": "65ecab21ee6aa479836eb27aec213e15295f07ca21b5aa995d45bcaff4d09d7d",
+      "caseCount": 8,
+      "passCount": 8
+    }
+  ],
+  "matrix": {
+    "pages": [
+      "lab",
+      "montage"
+    ],
+    "widths": [
+      1440,
+      390
+    ],
+    "motionPreferences": [
+      "no-preference",
+      "reduce"
+    ]
+  },
+  "evidence": [
+    {
+      "path": "evidence/corpus-v0.2/categorical/chromium-full-specimen-lab-1440.png",
+      "bytes": 54534,
+      "sha256": "17c449da176a1b961b0037bad0e74f8d7c142220755100f4455bd4f647d30815"
+    },
+    {
+      "path": "evidence/corpus-v0.2/categorical/chromium-montage-cell-1920.png",
+      "bytes": 43690,
+      "sha256": "8ae1759d205c1938fad6e1b06e1b51f1a29a2c6e06e43895b8b98e516893c663"
+    },
+    {
+      "path": "evidence/corpus-v0.2/categorical/chromium-narrow-390.png",
+      "bytes": 45525,
+      "sha256": "d0eb4192fcde33fde38421ba8c2aa7ae54c561fcdcf259da0b9400551e30c0d9"
+    },
+    {
+      "path": "evidence/corpus-v0.2/categorical/chromium-normal-wide-1160.png",
+      "bytes": 82132,
+      "sha256": "0bdbe25da29812e0aefccb4e248ac6437e0fb3d40a5e39d647197c4c23fc4bbe"
+    },
+    {
+      "path": "evidence/corpus-v0.2/categorical/firefox-full-specimen-lab-1440.png",
+      "bytes": 61948,
+      "sha256": "50b623ee6d41864c43296c69614f22be24bdd899d8978ff4b9e22f7a03515633"
+    },
+    {
+      "path": "evidence/corpus-v0.2/categorical/firefox-montage-cell-1920.png",
+      "bytes": 48439,
+      "sha256": "530968bdf4d6db5a0fc155108c6ab831958a260ad45efcc486307a314ae28e48"
+    },
+    {
+      "path": "evidence/corpus-v0.2/categorical/firefox-narrow-390.png",
+      "bytes": 51725,
+      "sha256": "b50348697f0383a219c2b7511bdeb71e75bbc66cbfa0320aa84854bfca567ae0"
+    },
+    {
+      "path": "evidence/corpus-v0.2/categorical/firefox-normal-wide-1160.png",
+      "bytes": 93946,
+      "sha256": "8cd17e9838d345edac70a894ad6347e986236c6f2c3932db7a90acfddc7b46f7"
+    },
+    {
+      "path": "evidence/corpus-v0.2/categorical/habitat-class-response-1160.svg",
+      "bytes": 22317,
+      "sha256": "ac3fd37331fdb5bb177a5442613eca0625ae3fff240bc5b7850d5f62e4c3ed13"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/circadian_phase_shift.png",
+      "bytes": 66478,
+      "sha256": "abc805045c8f1bcb237034ac3c6966c148dd01c2fbb919545eacf32007c590ac"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/dose_response_plate.png",
+      "bytes": 34168,
+      "sha256": "10b7bc8d23509748f979bbc1fcb9dbd2196ffc203c39b46202dfd6847eb1c8ce"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/field_sampling_coverage.png",
+      "bytes": 29501,
+      "sha256": "15fba6591fd40a16e427334e4fdec7b57d0e83aa24994f27fd687f73e9625c46"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/gene_expression_recovery.png",
+      "bytes": 67480,
+      "sha256": "7dbf4e5f9ff63d20fd8f00fceb056f9ddacaa921c5125c8e36dc74180df7703a"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/habitat_class_response.png",
+      "bytes": 48434,
+      "sha256": "6ed3f4d21f82e936f3f1636c2206ee1b1076ce262e00554eb8a65f08c032a973"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/instrument_calibration.png",
+      "bytes": 38332,
+      "sha256": "92190be9c6b86b976b9245b20070c5dc7fd7bc4a680abb44083e8803120b997c"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/lab_precision.png",
+      "bytes": 36956,
+      "sha256": "a94a6b78c730995cde872b4ab13b9905d6fbac2faefe9b2dc998edeef3280da3"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/migration_monitoring_coverage.png",
+      "bytes": 27562,
+      "sha256": "108da8cfb0d8e21f6a633e0ba5e0bcdd1c9a9809e48467a0ab586977410b4617"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/paired_seasonal_distributions.png",
+      "bytes": 36964,
+      "sha256": "a56c9a2b2cce81abcd4936eff21f458386e4b41b1412048bde0036d7487594e3"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/particle_size_relationship.png",
+      "bytes": 35122,
+      "sha256": "4dc9d556ef2d9a7256341e011ae40ac5c4f5438cd74f9249f685359596548207"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/reservoir_oxygen_thresholds.png",
+      "bytes": 32506,
+      "sha256": "4caaf6fdc44083f1483585c495271073a1a66a3ad538f6e748b393bceb51c379"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/treatment_replicates.png",
+      "bytes": 34228,
+      "sha256": "d658f3fa1998c0a6260f91886db714909101a4069e92eda97e90245d6de21e4e"
+    },
+    {
+      "path": "evidence/corpus-v0.2/individual/watershed_storm_response.png",
+      "bytes": 78159,
+      "sha256": "4be8dc0356b26a8929e18c342195a56ebedc0934f161dcdc1034c64dfb96a0ec"
+    },
+    {
+      "path": "evidence/corpus-v0.2/screenshots/chromium-lab-1440-full.png",
+      "bytes": 793158,
+      "sha256": "475c93570cb439c4d8c0733c2ae810e8cfc95c44d7d4a18f9031d0c5680b83b3"
+    },
+    {
+      "path": "evidence/corpus-v0.2/screenshots/chromium-lab-390-full.png",
+      "bytes": 642574,
+      "sha256": "e91394fb2d2c05ff40dbbf5fe83f6f21ac2f79b133ec11c148c9ba3d7afee8eb"
+    },
+    {
+      "path": "evidence/corpus-v0.2/screenshots/chromium-montage-1920x1080.png",
+      "bytes": 372952,
+      "sha256": "cdfbfcdf98dfd2f1949f6bea8df6c0b6875e70ca4eb55b1a5f0a543a72f3bef9"
+    },
+    {
+      "path": "evidence/corpus-v0.2/screenshots/chromium-montage-390-full.png",
+      "bytes": 337942,
+      "sha256": "f538f94961bbf6e9073a240b482ccfb67a257a1daccab770d0618b6e34ed45a1"
+    },
+    {
+      "path": "evidence/corpus-v0.2/screenshots/firefox-lab-1440-full.png",
+      "bytes": 928204,
+      "sha256": "ca89ecb62a302d069877160f9f55c5320dd1d062fc0ed28a354f8b3cfaee7a2d"
+    },
+    {
+      "path": "evidence/corpus-v0.2/screenshots/firefox-lab-390-full.png",
+      "bytes": 745190,
+      "sha256": "b180dbd1eda3caaf33f2aceb3a74ca354351354184bdd8ed671a7f327a157e7f"
+    },
+    {
+      "path": "evidence/corpus-v0.2/screenshots/firefox-montage-1920x1080.png",
+      "bytes": 435996,
+      "sha256": "ad820f94a0225acd0fccd7e530867ec502132ad6051bad895691198e5668ccad"
+    },
+    {
+      "path": "evidence/corpus-v0.2/screenshots/firefox-montage-390-full.png",
+      "bytes": 390710,
+      "sha256": "57fe3e2c5d444c2ebb849195ec0c8d29d98224c61003a6723f615e95dc4de3e3"
+    }
+  ],
+  "alternateMontageRequired": false
+}

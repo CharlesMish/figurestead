@@ -20,6 +20,7 @@ const SHOWCASE_ORDER = Object.freeze([
   "field_sampling_coverage",
   "reservoir_oxygen_thresholds",
 ]);
+const CANDIDATE_ORDER = Object.freeze(["habitat_class_response"]);
 const STRESS_ORDER = Object.freeze([
   "gene_expression_recovery",
   "particle_size_relationship",
@@ -71,9 +72,10 @@ const themes = Object.fromEntries(await Promise.all(THEME_KEYS.map(async (key) =
   const pack = await loadThemePack(`../src/figurestead/themes/${key}.json`);
   return [key, resolveTheme(pack, key)];
 })));
-const manifest = await fetchJson("corpus/manifest.json");
+const corpusRoot = "corpus-v0.2";
+const manifest = await fetchJson(`${corpusRoot}/manifest.json`);
 const sceneEntries = Object.fromEntries(manifest.scenes.map((entry) => [entry.sceneId, entry]));
-const scenes = Object.fromEntries(await Promise.all(manifest.scenes.map(async (entry) => [entry.sceneId, await fetchJson(`corpus/${entry.json}`)])));
+const scenes = Object.fromEntries(await Promise.all(manifest.scenes.map(async (entry) => [entry.sceneId, await fetchJson(`${corpusRoot}/${entry.json}`)])));
 
 function contractFor(scene) {
   const panel = {
@@ -157,8 +159,8 @@ function specimen(scene, index, mode) {
       list.append(dt, dd);
     });
     const links = document.createElement("p");
-    const json = document.createElement("a"); json.href = `corpus/${entry.json}`; json.textContent = "Scene JSON";
-    const csv = document.createElement("a"); csv.href = `corpus/${entry.csv}`; csv.textContent = "Flat CSV";
+    const json = document.createElement("a"); json.href = `${corpusRoot}/${entry.json}`; json.textContent = "Scene JSON";
+    const csv = document.createElement("a"); csv.href = `${corpusRoot}/${entry.csv}`; csv.textContent = "Flat CSV";
     links.append(json, " · ", csv);
     const fixture = document.createElement("p");
     fixture.className = "fixture-note";
@@ -179,8 +181,9 @@ function renderInto(grid, order, mode) {
     const instance = createFigurestead(canvas, contract, { autoplay: false, registry });
     instance.setConfig(contract);
     instance.resize();
-    figure.dataset.evidenceFingerprint = evidenceFingerprint(compileTerminalScene(contract, { registry }));
-    rendered.push({ id, scene, contract, instance, canvas });
+    const terminalScene = compileTerminalScene(contract, { registry });
+    figure.dataset.evidenceFingerprint = evidenceFingerprint(terminalScene);
+    rendered.push({ id, scene, contract, terminalScene, instance, canvas });
   });
 }
 
@@ -189,13 +192,14 @@ if (mode === "montage") {
   renderInto(document.querySelector("#montage-grid"), SHOWCASE_ORDER, "montage");
 } else {
   renderInto(document.querySelector("#showcase-grid"), SHOWCASE_ORDER, "lab");
+  renderInto(document.querySelector("#candidate-grid"), CANDIDATE_ORDER, "lab");
   renderInto(document.querySelector("#stress-grid"), STRESS_ORDER, "lab");
 }
 
 window.__FIGURESTEAD_SPECIMEN_STUDY__ = Object.freeze({
   corpusVersion: manifest.schemaVersion,
   mode,
-  expectedOrder: mode === "montage" ? SHOWCASE_ORDER : [...SHOWCASE_ORDER, ...STRESS_ORDER],
+  expectedOrder: mode === "montage" ? SHOWCASE_ORDER : [...SHOWCASE_ORDER, ...CANDIDATE_ORDER, ...STRESS_ORDER],
   rendered,
   registry,
 });

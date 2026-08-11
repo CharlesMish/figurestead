@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "figurestead.specimen-evaluation/2",
+  "corpusVersion": "0.2",
+  "evaluationBasis": "First render in Slipware with the accepted renderer semantics and unchanged theme tokens; evaluated at full lab, exact 1920 montage-cell, 390 CSS px, and 1160 px wide scales.",
+  "ratingVocabulary": ["strong", "usable", "weak at montage scale", "stress-only", "blocked"],
+  "categoricalScene": {
+    "sceneId": "habitat_class_response",
+    "tier": "showcase_candidate",
+    "communication": "strong",
+    "figureQuality": "strong",
+    "themeFit": "strong",
+    "montageSuitability": "usable",
+    "overallMontageClassification": "usable",
+    "notes": "At lab and 1160 px scales all ten full labels, individual observations, and median rules are immediately readable. The exact current montage cell preserves group order, point/median structure, and uniquely recognizable visibly ellipsized labels, but requires more effort than either accepted distribution panel. The 390 px lab presentation uses a taller evidence box; the source and accessibility table retain every full category name.",
+    "alternateThemeRequired": false,
+    "reasonNoAlternateTheme": "Slipware gives sufficient contrast and keeps the evaluation centered on categorical structure; no material theme weakness was reproduced."
+  },
+  "comparison": {
+    "treatment_replicates": {
+      "addsCapability": "The candidate demonstrates twice as many ordered groups, multi-word labels, and a denser categorical axis while retaining one shared observation identity.",
+      "editorialTradeoff": "The extra range is real, but at montage scale it replaces Treatment's immediate five-group read with visibly ellipsized labels and higher inspection effort.",
+      "supersedes": false
+    },
+    "paired_seasonal_distributions": {
+      "addsCapability": "The candidate tests ten positional groups with one semantic series; Seasonal habitat distributions instead tests two semantic series within four groups.",
+      "editorialTradeoff": "The scenes are structurally complementary. The candidate does not replace the within-group comparison that makes Seasonal useful.",
+      "supersedes": false
+    }
+  },
+  "montageDecision": {
+    "originalPreserved": true,
+    "alternateRequired": false,
+    "reason": "The candidate is usable rather than strong at the exact montage-cell scale, so the authorization threshold for an alternate montage was not met."
+  },
+  "discoveredIssue": {
+    "reproduced": true,
+    "scope": "shared internal scientific annotation layout",
+    "before": "At 362 × 218 CSS px, the fixed 120 px plot minimum overrode the measured rotated-label reservation and produced a -60.105 px plot-to-x-tick gap in Chromium (-60.060 px in Firefox).",
+    "fix": "Cap the internal minimum plot height by the height actually available above the measured tick/title/footer bands; no contract, renderer, theme, or typography API changed.",
+    "after": "The original compact boundary and the taller 390 px candidate presentation both have positive plot/tick, tick/title, title/provenance, and y-title/tick gaps in Chromium and Firefox.",
+    "regressionAssertion": "run-specimen-audit.cjs temporarily exercises the original 116:70 compact boundary and fails if plotToXTicks is non-positive."
+  },
+  "accessibility": {
+    "result": "PASS",
+    "observations": 90,
+    "orderedGroups": 10,
+    "observationsPerGroup": 9,
+    "fullNamesPreserved": true,
+    "seriesIdentity": "Synthetic observations",
+    "keyboardAndFocus": "PASS"
+  },
+  "canvasSvgConsistency": {
+    "result": "PASS",
+    "terminalMarkIdsMatch": true,
+    "categoryOrderMatches": true,
+    "fullSvgLabelsPresent": true
+  },
+  "heldBoundary": "No alternate montage was produced. No renderer API, theme token, palette capacity, marker glyph, series-capacity claim, package, release, navigation, or deployment surface was added."
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "figurestead.specimen-corpus-v0.2-technical-verification/1",
+  "result": "PASS",
+  "specimenBrowserAudit": {
+    "command": "NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE specimen-study/audit/run-specimen-audit.cjs",
+    "result": "PASS",
+    "engines": {
+      "chromium": {"version": "151.0.7922.34", "cases": 8, "findings": 0},
+      "firefox": {"version": "153.0", "cases": 8, "findings": 0}
+    },
+    "matrix": "lab and unchanged montage; 1440 and 390 CSS px; normal and reduced motion"
+  },
+  "compactLayoutAudit": {
+    "command": "NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE audit/compact-layout/run-compact-layout-audit.cjs after",
+    "result": "PASS",
+    "note": "Generated accepted-baseline evidence files were restored after the zero-finding run; v0.2-specific evidence is stored separately."
+  },
+  "technicalShowcaseV2Audit": {
+    "command": "FIGURESTEAD_TECHNICAL_URL=http://127.0.0.1:4179/technical-showcase/ NODE_PATH=$FIGURESTEAD_NODE_MODULES $FIGURESTEAD_NODE audit/technical-showcase/run-technical-audit.cjs",
+    "result": "PASS",
+    "engines": {
+      "chromium": {"cases": 4, "findings": 0},
+      "firefox": {"cases": 4, "findings": 0}
+    },
+    "note": "Generated V2 evidence was restored to its accepted byte-identical baseline after the run."
+  },
+  "notRerun": [
+    "Colour Science CVD numerical validation: unrelated to the categorical fixture and unchanged CVD implementation.",
+    "Public R3 browser/network audit: public source and navigation trees are unchanged; preservation checks cover those protected surfaces."
+  ]
+}

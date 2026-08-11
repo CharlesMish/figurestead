@@ -1,0 +1,31 @@
+{
+  "sceneCount": 13,
+  "tiers": {
+    "showcase": [
+      "watershed_storm_response",
+      "circadian_phase_shift",
+      "instrument_calibration",
+      "dose_response_plate",
+      "treatment_replicates",
+      "paired_seasonal_distributions",
+      "field_sampling_coverage",
+      "reservoir_oxygen_thresholds"
+    ],
+    "showcase_candidate": [
+      "habitat_class_response"
+    ],
+    "stress": [
+      "gene_expression_recovery",
+      "particle_size_relationship",
+      "lab_precision",
+      "migration_monitoring_coverage"
+    ]
+  },
+  "rendererCounts": {
+    "line": 3,
+    "scatter": 3,
+    "strip_summary": 4,
+    "temporal_coverage": 2,
+    "temporal_observations": 1
+  }
+}

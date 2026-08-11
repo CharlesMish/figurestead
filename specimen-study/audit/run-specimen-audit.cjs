@@ -6,27 +6,30 @@ const { chromium, firefox } = require("playwright");
 
 const repositoryRoot = path.resolve(__dirname, "../..");
 const studyRoot = path.join(repositoryRoot, "specimen-study");
-const evidenceRoot = path.join(studyRoot, "evidence");
+const evidenceRoot = path.join(studyRoot, "evidence", "corpus-v0.2");
 const screenshotsRoot = path.join(evidenceRoot, "screenshots");
 const individualRoot = path.join(evidenceRoot, "individual");
+const categoricalRoot = path.join(evidenceRoot, "categorical");
 const baseUrl = process.env.FIGURESTEAD_SPECIMEN_URL || "http://127.0.0.1:4179/specimen-study/";
 const engines = { chromium, firefox };
 const widths = [1440, 390];
 const motionPreferences = ["no-preference", "reduce"];
 const pages = [
-  { key: "lab", path: "index.html", count: 12 },
+  { key: "lab", path: "index.html", count: 13 },
   { key: "montage", path: "at-a-glance.html", count: 8 },
 ];
 const showcaseOrder = [
   "watershed_storm_response", "circadian_phase_shift", "instrument_calibration", "dose_response_plate",
   "treatment_replicates", "paired_seasonal_distributions", "field_sampling_coverage", "reservoir_oxygen_thresholds",
 ];
+const candidateOrder = ["habitat_class_response"];
 const stressOrder = [
   "gene_expression_recovery", "particle_size_relationship", "lab_precision", "migration_monitoring_coverage",
 ];
 
 fs.mkdirSync(screenshotsRoot, { recursive: true });
 fs.mkdirSync(individualRoot, { recursive: true });
+fs.mkdirSync(categoricalRoot, { recursive: true });
 
 const sha256 = (value) => crypto.createHash("sha256").update(value).digest("hex");
 const fileHash = (file) => sha256(fs.readFileSync(file));
@@ -43,6 +46,12 @@ function installedFirefoxExecutable() {
 
 async function ready(page) {
   await page.waitForFunction(() => document.documentElement.dataset.specimenReady === "true");
+  await page.evaluate(async () => {
+    await document.fonts?.ready;
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    window.__FIGURESTEAD_SPECIMEN_STUDY__?.rendered.forEach((item) => item.instance.resize());
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
   await page.waitForTimeout(80);
 }
 
@@ -111,7 +120,7 @@ async function keyboardAudit(page, openDetails) {
 }
 
 async function inspect(page) {
-  const structure = await page.evaluate(() => {
+  const structure = await page.evaluate(async () => {
     const study = window.__FIGURESTEAD_SPECIMEN_STUDY__;
     const figures = [...document.querySelectorAll(".specimen")];
     const companions = [...document.querySelectorAll(".figurestead-accessibility")];
@@ -141,8 +150,73 @@ async function inspect(page) {
       glyphCount: item.contract.style.glyphs.length,
       lineStyleCount: item.contract.style.lineStyles.length,
       seriesCount: item.scene.renderer === "line" ? item.scene.data.series.length : new Set(item.scene.data.series || []).size,
+      observationCount: item.scene.data.values?.length ?? item.scene.data.x?.length ?? item.scene.data.dates?.length ?? null,
+      groupOrder: item.scene.data.groups ?? null,
       provenanceKind: item.scene.provenance.kind,
     }));
+    const categoricalItem = study.rendered.find((item) => item.id === "habitat_class_response");
+    const categoricalFigure = document.querySelector('.specimen[data-scene-id="habitat_class_response"]');
+    const categoricalCompanion = categoricalFigure?.querySelector(".figurestead-accessibility");
+    const categoricalRows = categoricalCompanion ? [...categoricalCompanion.querySelectorAll("tbody tr")] : [];
+    const categoricalAccessibility = categoricalCompanion ? {
+      description: categoricalCompanion.textContent.trim(),
+      rowCount: categoricalRows.length,
+      groupCounts: Object.fromEntries([...new Set(categoricalRows.map((row) => row.cells[0]?.textContent.trim()))].map((group) => [
+        group, categoricalRows.filter((row) => row.cells[0]?.textContent.trim() === group).length,
+      ])),
+      seriesLabels: [...new Set(categoricalRows.map((row) => row.cells[2]?.textContent.trim()))],
+    } : null;
+    const categoricalLayout = categoricalItem ? (() => {
+      const resolved = categoricalItem.instance.getResolvedScene();
+      const panel = resolved.panels[0];
+      const context = categoricalItem.canvas.getContext("2d");
+      context.save();
+      context.font = `${panel.layout.font.axis}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
+      const slot = panel.axes.x.step();
+      const labelMetrics = panel.axes.xTicks.map((tick) => ({
+        label: tick.label,
+        width: context.measureText(tick.label).width,
+        fitWidth: slot * (panel.layout.text.rotateX ? 1.75 : 0.92),
+      }));
+      context.restore();
+      const centers = panel.marks.filter((mark) => mark.kind === "point").map((mark) => ({
+        group: mark.group, x: mark.geometry.cx, y: mark.geometry.cy,
+      }));
+      const originalAspectRatio = categoricalItem.canvas.style.aspectRatio;
+      categoricalItem.canvas.style.aspectRatio = "116 / 70";
+      categoricalItem.instance.resize();
+      const compactBoundaryPanel = categoricalItem.instance.getResolvedScene().panels[0];
+      const compactBoundary = {
+        width: categoricalItem.instance.getResolvedScene().width,
+        height: categoricalItem.instance.getResolvedScene().height,
+        annotationGaps: compactBoundaryPanel.layout.annotationBounds.gaps,
+      };
+      if (originalAspectRatio) categoricalItem.canvas.style.aspectRatio = originalAspectRatio;
+      else categoricalItem.canvas.style.removeProperty("aspect-ratio");
+      categoricalItem.instance.resize();
+      return {
+        width: resolved.width, height: resolved.height,
+        rotateX: panel.layout.text.rotateX,
+        annotationBounds: panel.layout.annotationBounds,
+        labels: labelMetrics.map((metric) => ({ ...metric, wouldEllipsize: metric.width > metric.fitWidth })),
+        categoryCenters: Object.fromEntries(panel.axes.xTicks.map((tick) => [tick.label, panel.axes.x(tick.value) + panel.axes.x.bandwidth() / 2])),
+        pointCentersMatchGroups: centers.every((point) => Math.abs(point.x - (panel.axes.x(point.group) + panel.axes.x.bandwidth() / 2 + (panel.marks.find((mark) => mark.kind === "point" && mark.group === point.group && mark.geometry.cx === point.x)?.xOffset ?? 0) * slot)) < 0.001),
+        compactBoundary,
+      };
+    })() : null;
+    const categoricalSvgConsistency = categoricalItem ? await (async () => {
+      const { exportFigureSvg } = await import("/web/src/index.js");
+      const svg = exportFigureSvg(categoricalItem.contract, { width: 1160, height: 700, registry: study.registry });
+      const documentNode = new DOMParser().parseFromString(svg, "image/svg+xml");
+      const svgMarkIds = [...documentNode.querySelectorAll("[data-mark-id]")].map((mark) => mark.getAttribute("data-mark-id")).sort();
+      const sceneMarkIds = categoricalItem.terminalScene.panels[0].marks.map((mark) => mark.id).sort();
+      return {
+        categoryOrder: documentNode.querySelector('[data-panel-id="habitat_class_response"]')?.getAttribute("data-x-category-order"),
+        fingerprint: documentNode.documentElement.getAttribute("data-evidence-fingerprint"),
+        markIdsMatch: JSON.stringify(svgMarkIds) === JSON.stringify(sceneMarkIds),
+        fullLabelsPresent: categoricalItem.scene.data.groups.every((group) => svg.includes(`>${group}</text>`)),
+      };
+    })() : null;
     return {
       mode: study.mode,
       innerWidth,
@@ -160,6 +234,9 @@ async function inspect(page) {
       sourceLinkCount: document.querySelectorAll('.scene-disclosure a[href$=".json"],.scene-disclosure a[href$=".csv"]').length,
       ready: document.documentElement.dataset.specimenReady,
       mediaReduced: matchMedia("(prefers-reduced-motion: reduce)").matches,
+      categoricalLayout,
+      categoricalAccessibility,
+      categoricalSvgConsistency,
     };
   });
   const pixelFingerprints = await page.locator("canvas[data-scene-canvas]").evaluateAll((canvases) => canvases.map((canvas) => {
@@ -176,7 +253,7 @@ function findingsFor(testCase) {
   const findings = [];
   const { pageKey, width, reducedMotion, structure, keyboard, runtimeErrors } = testCase;
   const expect = (condition, message) => { if (!condition) findings.push(message); };
-  const expectedOrder = pageKey === "montage" ? showcaseOrder : [...showcaseOrder, ...stressOrder];
+  const expectedOrder = pageKey === "montage" ? showcaseOrder : [...showcaseOrder, ...candidateOrder, ...stressOrder];
   expect(runtimeErrors.length === 0, `runtime/console errors: ${runtimeErrors.join(" | ")}`);
   expect(structure.ready === "true", "study readiness signal missing");
   expect(structure.innerWidth === width, `viewport is ${structure.innerWidth}, expected ${width}`);
@@ -198,7 +275,30 @@ function findingsFor(testCase) {
   expect(keyboard.allVisible, "a keyboard target has no visible area or is clipped");
   expect(keyboard.allOutlined, "a keyboard target lacks a visible outline");
   if (pageKey === "lab") {
-    expect(structure.detailsCount === 12 && structure.sourceLinkCount === 24, "lab disclosures do not expose all JSON/CSV sources");
+    expect(structure.detailsCount === 13 && structure.sourceLinkCount === 26, "lab disclosures do not expose all JSON/CSV sources");
+    const categorical = structure.rendered.find((item) => item.id === "habitat_class_response");
+    expect(categorical?.tier === "showcase_candidate", "categorical fixture tier changed");
+    expect(categorical?.theme === "slipware", "categorical fixture is not using the first-pass Slipware theme");
+    expect(categorical?.seriesCount === 1 && categorical?.observationCount === 90, "categorical fixture is not one semantic series with 90 observations");
+    expect(JSON.stringify(categorical?.groupOrder) === JSON.stringify([
+      "headwater", "riffle", "deep pool", "side channel", "floodplain",
+      "wet meadow", "tidal creek", "mudflat", "seagrass bed", "open estuary",
+    ]), "categorical fixture full-name group order changed");
+    expect(structure.categoricalLayout?.rotateX === true, "dense categorical labels did not enter the measured rotated-label layout");
+    expect(structure.categoricalLayout?.annotationBounds?.gaps?.plotToXTicks > 0, "categorical plot and x ticks overlap");
+    expect(structure.categoricalLayout?.annotationBounds?.gaps?.xTicksToTitle > 0, "categorical x ticks and x title overlap");
+    expect(structure.categoricalLayout?.annotationBounds?.gaps?.xTitleToProvenance > 0, "categorical x title and provenance overlap");
+    expect(structure.categoricalLayout?.annotationBounds?.gaps?.yTitleToTicks > 0, "categorical y title and ticks overlap");
+    expect(structure.categoricalLayout?.pointCentersMatchGroups, "categorical observations are not centered on their assigned groups");
+    expect(structure.categoricalLayout?.compactBoundary?.annotationGaps?.plotToXTicks > 0, "categorical compact-boundary regression: plot and rotated ticks overlap");
+    expect(structure.categoricalAccessibility?.rowCount === 90, "categorical accessibility table does not expose 90 observations");
+    expect(Object.keys(structure.categoricalAccessibility?.groupCounts ?? {}).length === 10
+      && Object.values(structure.categoricalAccessibility?.groupCounts ?? {}).every((count) => count === 9), "categorical accessibility grouping is incorrect");
+    expect(structure.categoricalAccessibility?.seriesLabels?.length === 1
+      && structure.categoricalAccessibility.seriesLabels[0] === "Synthetic observations", "categorical accessibility series identity is incorrect");
+    expect(structure.categoricalSvgConsistency?.markIdsMatch, "categorical Canvas/SVG terminal mark identities diverge");
+    expect(structure.categoricalSvgConsistency?.fullLabelsPresent, "categorical SVG does not preserve the full category labels");
+    expect(structure.categoricalSvgConsistency?.categoryOrder === categorical.groupOrder.join("|"), "categorical SVG order diverges from the Canvas contract");
     const gene = structure.rendered.find((item) => item.id === "gene_expression_recovery");
     const precision = structure.rendered.find((item) => item.id === "lab_precision");
     expect(gene?.seriesCount === 6 && gene?.glyphCount === 4, "six-series line stress boundary changed");
@@ -214,7 +314,7 @@ async function captureStandardEvidence(browser, engineName) {
   await ready(page);
   await page.screenshot({ path: path.join(screenshotsRoot, `${engineName}-lab-1440-full.png`), fullPage: true });
   if (engineName === "chromium") {
-    for (const id of [...showcaseOrder, ...stressOrder]) {
+    for (const id of [...showcaseOrder, ...candidateOrder, ...stressOrder]) {
       await page.locator(`canvas[data-scene-canvas="${id}"]`).screenshot({ path: path.join(individualRoot, `${id}.png`) });
     }
   }
@@ -240,6 +340,62 @@ async function captureStandardEvidence(browser, engineName) {
   await ready(montageNarrowPage);
   await montageNarrowPage.screenshot({ path: path.join(screenshotsRoot, `${engineName}-montage-390-full.png`), fullPage: true });
   await montageNarrow.close();
+
+  const categoricalLab = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: "no-preference" });
+  const categoricalLabPage = await categoricalLab.newPage();
+  await categoricalLabPage.goto(`${baseUrl}index.html`, { waitUntil: "load" });
+  await ready(categoricalLabPage);
+  const categoricalFigure = categoricalLabPage.locator('.specimen[data-scene-id="habitat_class_response"]');
+  await categoricalFigure.screenshot({ path: path.join(categoricalRoot, `${engineName}-full-specimen-lab-1440.png`) });
+  await categoricalLab.close();
+
+  const categoricalNarrow = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "no-preference" });
+  const categoricalNarrowPage = await categoricalNarrow.newPage();
+  await categoricalNarrowPage.goto(`${baseUrl}index.html`, { waitUntil: "load" });
+  await ready(categoricalNarrowPage);
+  await categoricalNarrowPage.locator('.specimen[data-scene-id="habitat_class_response"]').screenshot({ path: path.join(categoricalRoot, `${engineName}-narrow-390.png`) });
+  await categoricalNarrow.close();
+
+  const categoricalWide = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: "no-preference" });
+  const categoricalWidePage = await categoricalWide.newPage();
+  await categoricalWidePage.goto(`${baseUrl}index.html`, { waitUntil: "load" });
+  await ready(categoricalWidePage);
+  await categoricalWidePage.evaluate(() => {
+    const figure = document.querySelector('.specimen[data-scene-id="habitat_class_response"]');
+    const grid = figure.parentElement;
+    grid.style.display = "block"; grid.style.width = "1160px"; figure.style.width = "1160px";
+    window.__FIGURESTEAD_SPECIMEN_STUDY__.rendered.find((item) => item.id === "habitat_class_response").instance.resize();
+  });
+  await categoricalWidePage.waitForTimeout(100);
+  await categoricalWidePage.locator('.specimen[data-scene-id="habitat_class_response"]').screenshot({ path: path.join(categoricalRoot, `${engineName}-normal-wide-1160.png`) });
+  if (engineName === "chromium") {
+    const svg = await categoricalWidePage.evaluate(async () => {
+      const { exportFigureSvg } = await import("/web/src/index.js");
+      const study = window.__FIGURESTEAD_SPECIMEN_STUDY__;
+      const item = study.rendered.find((entry) => entry.id === "habitat_class_response");
+      return exportFigureSvg(item.contract, { width: 1160, height: 700, registry: study.registry });
+    });
+    fs.writeFileSync(path.join(categoricalRoot, "habitat-class-response-1160.svg"), `${svg}\n`);
+  }
+  await categoricalWide.close();
+
+  const categoricalMontage = await browser.newContext({ viewport: { width: 1920, height: 1080 }, reducedMotion: "no-preference" });
+  const categoricalMontagePage = await categoricalMontage.newPage();
+  await categoricalMontagePage.goto(`${baseUrl}index.html`, { waitUntil: "load" });
+  await ready(categoricalMontagePage);
+  await categoricalMontagePage.evaluate(() => {
+    const cellWidth = (Math.min(1840, innerWidth - 72) - 17 * 3) / 4;
+    const figure = document.querySelector('.specimen[data-scene-id="habitat_class_response"]');
+    const canvas = figure.querySelector("canvas");
+    const grid = figure.parentElement;
+    grid.style.display = "block"; grid.style.width = `${cellWidth}px`; figure.style.width = `${cellWidth}px`;
+    canvas.style.aspectRatio = "16 / 10.4";
+    figure.querySelector("details").hidden = true;
+    window.__FIGURESTEAD_SPECIMEN_STUDY__.rendered.find((item) => item.id === "habitat_class_response").instance.resize();
+  });
+  await categoricalMontagePage.waitForTimeout(100);
+  await categoricalMontagePage.locator('.specimen[data-scene-id="habitat_class_response"] canvas').screenshot({ path: path.join(categoricalRoot, `${engineName}-montage-cell-1920.png`) });
+  await categoricalMontage.close();
 }
 
 async function runEngine(engineName, browserType) {
@@ -307,7 +463,8 @@ async function runEngine(engineName, browserType) {
   const reports = [];
   for (const [name, browserType] of Object.entries(engines)) reports.push(await runEngine(name, browserType));
   const evidenceFiles = [...fs.readdirSync(screenshotsRoot).map((name) => path.join(screenshotsRoot, name)),
-    ...fs.readdirSync(individualRoot).map((name) => path.join(individualRoot, name))];
+    ...fs.readdirSync(individualRoot).map((name) => path.join(individualRoot, name)),
+    ...fs.readdirSync(categoricalRoot).map((name) => path.join(categoricalRoot, name))];
   const summary = {
     schemaVersion: "figurestead.specimen-study-verification/1",
     generatedAt: new Date().toISOString(),
@@ -323,7 +480,7 @@ async function runEngine(engineName, browserType) {
     })),
     alternateMontageRequired: false,
   };
-  fs.writeFileSync(path.join(studyRoot, "audit", "summary.json"), `${JSON.stringify(summary, null, 2)}\n`);
+  fs.writeFileSync(path.join(studyRoot, "audit", "corpus-v0.2-summary.json"), `${JSON.stringify(summary, null, 2)}\n`);
   console.log(JSON.stringify(summary, null, 2));
   if (summary.result !== "PASS") process.exitCode = 1;
 })().catch((error) => { console.error(error); process.exitCode = 1; });

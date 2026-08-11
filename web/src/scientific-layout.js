@@ -85,7 +85,9 @@ export function refineScientificLayout(source, panel, axes, options = {}) {
     bottom: cursorBottom,
   };
   const requestedPlotBottom = xTicks.top - gaps.plotTick;
-  layout.plot.bottom = Math.max(layout.plot.top + 120, requestedPlotBottom);
+  const availablePlotHeight = Math.max(0, requestedPlotBottom - layout.plot.top);
+  const minimumPlotHeight = Math.min(120, availablePlotHeight);
+  layout.plot.bottom = Math.max(layout.plot.top + minimumPlotHeight, requestedPlotBottom);
 
   const yTitleThickness = yTitleMetric?.height ?? 0;
   const requestedPlotLeft = rect.left + gaps.outer + yTitleThickness
