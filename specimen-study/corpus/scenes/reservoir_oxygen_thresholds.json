@@ -1,0 +1,131 @@
+{
+  "communicationQuestion": "Can contextual bands aid interpretation of sparse observations without being mistaken for regulatory thresholds or continuous data?",
+  "corpusVersion": "0.1",
+  "data": {
+    "dates": [
+      "2024-01-15",
+      "2024-02-04",
+      "2024-02-24",
+      "2024-03-15",
+      "2024-03-27",
+      "2024-04-16",
+      "2024-05-06",
+      "2024-05-26",
+      "2024-06-07",
+      "2024-06-27",
+      "2024-07-17",
+      "2024-08-06",
+      "2024-08-18",
+      "2024-09-07",
+      "2024-09-27",
+      "2024-10-17",
+      "2024-10-29",
+      "2024-11-18",
+      "2024-12-08",
+      "2024-12-28",
+      "2025-01-09",
+      "2025-01-29",
+      "2025-02-18",
+      "2025-03-10",
+      "2025-03-22",
+      "2025-04-11",
+      "2025-05-01",
+      "2025-05-21"
+    ],
+    "referenceBands": [
+      {
+        "from": 0.0,
+        "label": "low band",
+        "status": "provisional_project_constant",
+        "to": 4.0,
+        "type": "reference_band"
+      },
+      {
+        "from": 4.0,
+        "label": "watch band",
+        "status": "provisional_project_constant",
+        "to": 6.0,
+        "type": "reference_band"
+      },
+      {
+        "from": 6.0,
+        "label": "upper band",
+        "status": "provisional_project_constant",
+        "to": 10.5,
+        "type": "reference_band"
+      }
+    ],
+    "site": "Reservoir station R1",
+    "values": [
+      10.1652,
+      10.0278,
+      9.8029,
+      8.2847,
+      8.6332,
+      8.1438,
+      6.4716,
+      5.6301,
+      4.8769,
+      2.8481,
+      2.9144,
+      4.5753,
+      4.7954,
+      5.6487,
+      6.3809,
+      6.4258,
+      7.6366,
+      8.4572,
+      9.4884,
+      9.7558,
+      8.5208,
+      9.6829,
+      9.3878,
+      9.3191,
+      8.0339,
+      7.5824,
+      6.6041,
+      5.948
+    ]
+  },
+  "notes": [],
+  "provenance": {
+    "kind": "deterministic_synthetic",
+    "statement": "Illustrative synthetic data generated for Figurestead renderer/theme evaluation; not observations, not a validated physical model, and not suitable for scientific inference."
+  },
+  "renderer": "temporal_observations",
+  "sceneId": "reservoir_oxygen_thresholds",
+  "scientificContext": "Water-quality-style threshold context",
+  "seed": 13331,
+  "stressors": [
+    "sparse dates",
+    "reference bands",
+    "threshold crossings",
+    "seasonality",
+    "explicit provisional status"
+  ],
+  "subtitle": "Synthetic observations against explicitly provisional project bands",
+  "suggestedScales": {
+    "xScale": {
+      "type": "time"
+    },
+    "yScale": {
+      "domain": [
+        0,
+        10.5
+      ],
+      "type": "linear"
+    }
+  },
+  "suggestedSpec": {
+    "note": "Synthetic observations. Reference bands are provisional project constants, not regulatory thresholds.",
+    "xLabel": "sample date",
+    "yLabel": "dissolved oxygen (illustrative mg/L)"
+  },
+  "suggestedTheme": {
+    "key": "registration_ink",
+    "name": "Registration Ink"
+  },
+  "synthetic": true,
+  "tier": "showcase",
+  "title": "Sparse reservoir oxygen observations"
+}

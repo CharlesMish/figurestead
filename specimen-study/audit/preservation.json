@@ -1,0 +1,174 @@
+{
+  "schemaVersion": "figurestead.specimen-preservation/1",
+  "result": "PASS",
+  "baselineCommit": "dfd60073fa911153451e8764744e3b15f2ee388b",
+  "publicR3": {
+    "expectedSiteTree": "c65d33a1a72ce18b8a756ac007f9117e6336f28d",
+    "baselineSiteTree": "c65d33a1a72ce18b8a756ac007f9117e6336f28d",
+    "unchanged": true
+  },
+  "technicalShowcaseV2": {
+    "expectedTree": "d14516a981cf4ed8bd0a9e9c756e3076086e92e3",
+    "baselineTree": "d14516a981cf4ed8bd0a9e9c756e3076086e92e3",
+    "unchanged": true
+  },
+  "protectedPathChanges": [],
+  "corpus": {
+    "expectedChecksumManifestSha256": "e7e09637911cec3e02fbb0fa6a9658af5ae3df9e95b153060d03edd098069d2c",
+    "fileCount": 24,
+    "allMatch": true,
+    "files": [
+      {
+        "path": "scenes/circadian_phase_shift.json",
+        "bytes": 3866,
+        "sha256": "70fdab806577fab36b7e20cb643e014bef3e4f2a279bb3573e576b83e12be091",
+        "matches": true
+      },
+      {
+        "path": "scenes/dose_response_plate.json",
+        "bytes": 3333,
+        "sha256": "3c25b22a4103308b4183bd6b7c4395061e2a6c0fbbdc772fccd6ae3928e1f54b",
+        "matches": true
+      },
+      {
+        "path": "scenes/field_sampling_coverage.json",
+        "bytes": 6184,
+        "sha256": "2ac18b15f7bc2c3a4f8176ff0ab1b8b38f417f07fc1aa738474f1037d94a2474",
+        "matches": true
+      },
+      {
+        "path": "scenes/gene_expression_recovery.json",
+        "bytes": 3843,
+        "sha256": "1e25797d255281f58c0150fc45974d2b9d18f9242a168e8ba80cd9fd668cd52f",
+        "matches": true
+      },
+      {
+        "path": "scenes/instrument_calibration.json",
+        "bytes": 3248,
+        "sha256": "cba80d922cab218885af369672529e9cde8411ac5ec7375e843fdecb5c460fe3",
+        "matches": true
+      },
+      {
+        "path": "scenes/lab_precision.json",
+        "bytes": 4339,
+        "sha256": "d2e3e5624c12cc3ccccb47fdd98bcd622883a5802b7018198463341e271b80ee",
+        "matches": true
+      },
+      {
+        "path": "scenes/migration_monitoring_coverage.json",
+        "bytes": 6607,
+        "sha256": "2331170fb73a4f02e4cc1aedc45451d77b2818d68e36d7ea1ebbf8b2e8e81ab7",
+        "matches": true
+      },
+      {
+        "path": "scenes/paired_seasonal_distributions.json",
+        "bytes": 4758,
+        "sha256": "e5133d0c7e9a4cd207fc552294f337b9c7497a631d993be6b5a8e7f0f2d25d44",
+        "matches": true
+      },
+      {
+        "path": "scenes/particle_size_relationship.json",
+        "bytes": 3282,
+        "sha256": "ce31d23a10953a301b1f3065b98ec1837fef827b93f1e59f4b723d23f73ea7e0",
+        "matches": true
+      },
+      {
+        "path": "scenes/reservoir_oxygen_thresholds.json",
+        "bytes": 3021,
+        "sha256": "a29d84b7b7b946d2f05ca5251ec9a22ecc656c7ca9f6f0d59e52b65eab58b20e",
+        "matches": true
+      },
+      {
+        "path": "scenes/treatment_replicates.json",
+        "bytes": 3878,
+        "sha256": "dfd17fff5f1674705bc53888ee83012284cef08aa0b0452346047c11667eebab",
+        "matches": true
+      },
+      {
+        "path": "scenes/watershed_storm_response.json",
+        "bytes": 3706,
+        "sha256": "a8e00434fd014f00c0e63c1eddf1d56963b96e821264eee6a7f45d2999701509",
+        "matches": true
+      },
+      {
+        "path": "tables/circadian_phase_shift.csv",
+        "bytes": 813,
+        "sha256": "4482b03577500fa3157195ae1334939ebc26de87188722be032e75d7a34f460a",
+        "matches": true
+      },
+      {
+        "path": "tables/dose_response_plate.csv",
+        "bytes": 730,
+        "sha256": "3e0765ad7571cdfff7d5ae581616c61cb78d5dc2f5d32639a24a86dae48e48a0",
+        "matches": true
+      },
+      {
+        "path": "tables/field_sampling_coverage.csv",
+        "bytes": 2141,
+        "sha256": "2fefa229d098081e502dc649583c9122cba4deffee1b1e68d719e4234e8db35a",
+        "matches": true
+      },
+      {
+        "path": "tables/gene_expression_recovery.csv",
+        "bytes": 699,
+        "sha256": "e7c07ef6a4148b4ad667279c7da5d43ae2a22dec4942247342ca908c1a4a3ffe",
+        "matches": true
+      },
+      {
+        "path": "tables/instrument_calibration.csv",
+        "bytes": 756,
+        "sha256": "22f739dd3087242e2b66b4641f1a47129f7e345ca017aad5ca1465a574c40962",
+        "matches": true
+      },
+      {
+        "path": "tables/lab_precision.csv",
+        "bytes": 1177,
+        "sha256": "ca5fd86ebbb480942a6522a4d477af86156185e3c88d1e7af324cc5b49e49759",
+        "matches": true
+      },
+      {
+        "path": "tables/migration_monitoring_coverage.csv",
+        "bytes": 2426,
+        "sha256": "d350221cb8e22d529049ad98f7405030b7fe21011877e33ae0fd2f2b551e8f9f",
+        "matches": true
+      },
+      {
+        "path": "tables/paired_seasonal_distributions.csv",
+        "bytes": 1583,
+        "sha256": "0201d317ea5bb43d9e39ae59bf2ecaf9be54510da1ddf603873e367ff25a3608",
+        "matches": true
+      },
+      {
+        "path": "tables/particle_size_relationship.csv",
+        "bytes": 834,
+        "sha256": "233a3743a397ca8d6f82ea5a44e458bc2c86607a200e01ad3d3f1ce04a277343",
+        "matches": true
+      },
+      {
+        "path": "tables/reservoir_oxygen_thresholds.csv",
+        "bytes": 545,
+        "sha256": "dfca582ba4cb55c502e9c046fb1c922b7e0a9373f959f3ee321b65c039da3672",
+        "matches": true
+      },
+      {
+        "path": "tables/treatment_replicates.csv",
+        "bytes": 1057,
+        "sha256": "09953a5eaf2439372e21f16ebd7d28fa40381ab0617ed103710a87eaa347fbf9",
+        "matches": true
+      },
+      {
+        "path": "tables/watershed_storm_response.csv",
+        "bytes": 552,
+        "sha256": "5a05c0813e6eb40fbd2542942a513b0d0b6712e3a00c27ea2a5f9b1a0ce887ab",
+        "matches": true
+      }
+    ]
+  },
+  "packetHygiene": {
+    "trackedOsArtifacts": [],
+    "absoluteCachePathLeaks": []
+  },
+  "deploymentInvoked": false,
+  "navigationChanged": false,
+  "packageOrReleaseChanged": false
+}
