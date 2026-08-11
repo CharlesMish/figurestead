@@ -13,6 +13,7 @@ This is a **local, undeployed design and renderer-evaluation study**. The scenes
 - `specimen-evaluation.json` — qualitative communication, figure-quality, theme-fit, and montage-suitability findings.
 - `evidence/` — Chromium and Firefox full-lab, montage, narrow, and standardized individual captures.
 - `audit/summary.json` — machine-readable responsive, accessibility, determinism, and preservation gates.
+- `evidence/layout-hardening/` — compact-canvas before/after bounds, screenshots, DPR2 evidence, V2 check, and paper/SVG export evidence.
 
 ## Method
 
@@ -33,6 +34,16 @@ The lab preserves two important semantic limits:
 - `lab_precision` has six point-only identities, so it cannot demonstrate universal six-way hue-independent point identity.
 
 No fifth glyph was added. That remains a separately authorized product decision.
+
+## Compact annotation layout hardening
+
+The follow-up renderer pass replaces unrelated fixed annotation offsets with a
+measured internal layout pass. It reserves only the bands that are present and
+re-resolves scales against the resulting plot rectangle. The scientific font
+sizes, corpus inputs, themes, marks, series styles, and public contract are
+unchanged. See `../audit/compact-layout/README.md` and
+`evidence/layout-hardening/after/bounds.json` for the before/after geometry and
+acceptance assertions.
 
 ## Verification
 

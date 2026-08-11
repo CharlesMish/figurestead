@@ -13,6 +13,15 @@ BASELINE = "dfd60073fa911153451e8764744e3b15f2ee388b"
 PUBLIC_SITE_TREE = "c65d33a1a72ce18b8a756ac007f9117e6336f28d"
 V2_TREE = "d14516a981cf4ed8bd0a9e9c756e3076086e92e3"
 PROTECTED_PATHS = ["site", "technical-showcase", "web", "src", ".github", "pyproject.toml", "release"]
+AUTHORIZED_CORE_LAYOUT_PATHS = {
+    "web/src/canvas-scene.js",
+    "web/src/create-matrix-plot.js",
+    "web/src/extensions/temporal/shared.js",
+    "web/src/marks.js",
+    "web/src/resolved-scene.js",
+    "web/src/scientific-layout.js",
+    "web/src/svg-export.js",
+}
 
 
 def sha256(payload: bytes) -> str:
@@ -39,6 +48,22 @@ def main() -> int:
         })
 
     protected_changes = git(repository, "diff", "--name-only", BASELINE, "--", *PROTECTED_PATHS).splitlines()
+    untracked_protected = git(repository, "ls-files", "--others", "--exclude-standard", "--", *PROTECTED_PATHS).splitlines()
+    untracked_protected = [
+        path for path in untracked_protected
+        if Path(path).name not in {".DS_Store", "Thumbs.db", "desktop.ini"}
+        and not Path(path).name.startswith("._")
+        and "__pycache__" not in Path(path).parts
+        and Path(path).suffix != ".pyc"
+    ]
+    protected_changes = sorted(set(protected_changes + untracked_protected))
+    unexpected_protected_changes = sorted(set(protected_changes) - AUTHORIZED_CORE_LAYOUT_PATHS)
+    authorized_core_changes = sorted(set(protected_changes) & AUTHORIZED_CORE_LAYOUT_PATHS)
+    theme_changes = git(repository, "diff", "--name-only", BASELINE, "--", "src/figurestead/themes").splitlines()
+    package_release_changes = git(
+        repository, "diff", "--name-only", BASELINE, "--",
+        "pyproject.toml", "web/package.json", ".github", "release",
+    ).splitlines()
     tracked_os_artifacts = [
         path for path in git(repository, "ls-files").splitlines()
         if Path(path).name in {".DS_Store", "Thumbs.db", "desktop.ini"} or Path(path).name.startswith("._")
@@ -66,7 +91,13 @@ def main() -> int:
             "baselineTree": git(repository, "rev-parse", f"{BASELINE}:technical-showcase"),
             "unchanged": not any(path == "technical-showcase" or path.startswith("technical-showcase/") for path in protected_changes),
         },
-        "protectedPathChanges": protected_changes,
+        "authorizedCoreLayoutChanges": authorized_core_changes,
+        "unexpectedProtectedPathChanges": unexpected_protected_changes,
+        "themes": {
+            "baselineTree": git(repository, "rev-parse", f"{BASELINE}:src/figurestead/themes"),
+            "changedPaths": theme_changes,
+            "byteIdentical": not theme_changes,
+        },
         "corpus": {
             "expectedChecksumManifestSha256": sha256((corpus / "expected-checksums.json").read_bytes()),
             "fileCount": len(corpus_files),
@@ -79,12 +110,16 @@ def main() -> int:
         },
         "deploymentInvoked": False,
         "navigationChanged": False,
-        "packageOrReleaseChanged": False,
+        "packageOrReleaseChanged": bool(package_release_changes),
+        "packageOrReleaseChangedPaths": package_release_changes,
     }
     checks = [
         report["publicR3"]["baselineSiteTree"] == PUBLIC_SITE_TREE,
         report["technicalShowcaseV2"]["baselineTree"] == V2_TREE,
-        not protected_changes,
+        set(authorized_core_changes) == AUTHORIZED_CORE_LAYOUT_PATHS,
+        not unexpected_protected_changes,
+        report["themes"]["byteIdentical"],
+        not package_release_changes,
         report["corpus"]["allMatch"],
         not tracked_os_artifacts,
         not path_leaks,

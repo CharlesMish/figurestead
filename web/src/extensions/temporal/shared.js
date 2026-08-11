@@ -151,7 +151,7 @@ export function drawTemporalAxes(context, { contract, layout, scales, plot = lay
   context.fillStyle = contract.theme.secondary; context.font = `${layout.font.axis}px ${FONT_STACK}`;
   if (showX) {
     context.textAlign = "center"; context.textBaseline = "top";
-    scales.xTicks.forEach((value) => context.fillText(formatTimeTick(value, scales.xDomain), scales.x(value), plot.bottom + 9 * layout.scale));
+    scales.xTicks.forEach((value) => context.fillText(formatTimeTick(value, scales.xDomain), scales.x(value), layout.text?.xTickY ?? plot.bottom + 9 * layout.scale));
   }
   if (showY) {
     context.textAlign = "right"; context.textBaseline = "middle";

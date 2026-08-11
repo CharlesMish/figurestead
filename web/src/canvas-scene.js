@@ -57,12 +57,13 @@ function drawAxes(context, panel, theme) {
   context.lineWidth = Math.max(0.6, 0.85 * layout.scale);
   context.strokeStyle = theme.spine; context.beginPath(); context.moveTo(plot.left, plot.top); context.lineTo(plot.left, plot.bottom); context.lineTo(plot.right, plot.bottom); context.stroke();
   const xSlot = axes.x.step?.() ?? Math.max(40, (plot.right - plot.left) / Math.max(1, axes.xTicks.length));
-  const rotateX = axes.xType === "band" && axes.xTicks.some((tick) => context.measureText(tick.label).width > xSlot * 0.92);
+  const rotateX = layout.text?.rotateX ?? (axes.xType === "band" && axes.xTicks.some((tick) => context.measureText(tick.label).width > xSlot * 0.92));
   context.textAlign = rotateX ? "right" : "center"; context.textBaseline = "top";
   axes.xTicks.forEach((tick) => {
     const x = tickPosition(axes.x, tick), label = fitLabel(context, tick.label, rotateX ? xSlot * 1.75 : xSlot * 0.92);
-    if (rotateX) { context.save(); context.translate(x, plot.bottom + 7 * layout.scale); context.rotate(-Math.PI / 4); context.fillText(label, 0, 0); context.restore(); }
-    else context.fillText(label, x, plot.bottom + 7 * layout.scale);
+    const y = layout.text?.xTickY ?? plot.bottom + 7 * layout.scale;
+    if (rotateX) { context.save(); context.translate(x, y); context.rotate(-Math.PI / 4); context.fillText(label, 0, 0); context.restore(); }
+    else context.fillText(label, x, y);
   });
   context.textAlign = "right"; context.textBaseline = "middle";
   axes.yTicks.forEach((tick) => context.fillText(fitLabel(context, tick.label, Math.max(26, plot.left - layout.rect.left - 12 * layout.scale)), plot.left - 7 * layout.scale, tickPosition(axes.y, tick)));

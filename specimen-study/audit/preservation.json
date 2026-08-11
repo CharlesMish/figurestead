@@ -12,7 +12,21 @@
     "baselineTree": "d14516a981cf4ed8bd0a9e9c756e3076086e92e3",
     "unchanged": true
   },
-  "protectedPathChanges": [],
+  "authorizedCoreLayoutChanges": [
+    "web/src/canvas-scene.js",
+    "web/src/create-matrix-plot.js",
+    "web/src/extensions/temporal/shared.js",
+    "web/src/marks.js",
+    "web/src/resolved-scene.js",
+    "web/src/scientific-layout.js",
+    "web/src/svg-export.js"
+  ],
+  "unexpectedProtectedPathChanges": [],
+  "themes": {
+    "baselineTree": "32845eba3c773815fc1c7cc46bb26ee3753c59ba",
+    "changedPaths": [],
+    "byteIdentical": true
+  },
   "corpus": {
     "expectedChecksumManifestSha256": "e7e09637911cec3e02fbb0fa6a9658af5ae3df9e95b153060d03edd098069d2c",
     "fileCount": 24,
@@ -170,5 +184,6 @@
   },
   "deploymentInvoked": false,
   "navigationChanged": false,
-  "packageOrReleaseChanged": false
+  "packageOrReleaseChanged": false,
+  "packageOrReleaseChangedPaths": []
 }
