@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "figurestead.social-preview-audit/1",
+  "result": "PASS",
+  "baselineCommit": "88ee3f93f2799764f74cad5cb547f9d2383c464c",
+  "checks": {
+    "baselineAUnchanged": true,
+    "allAcceptedReadmeAssetsUnchanged": true,
+    "threeAlternatesPresent": true,
+    "allCandidates1280x640Rgb": true,
+    "candidateHashesMatchManifest": true,
+    "fullAcceptedEvidenceFramesOnly": true,
+    "contactSheetPresent": true,
+    "smallPreviewStripPresent": true,
+    "protectedSurfacesUnchanged": true,
+    "noLocalPathLeaks": true,
+    "noTrackedOsArtifacts": true,
+    "reviewOnlyFlags": true,
+    "recommendationRecorded": true
+  },
+  "acceptedAssets": {
+    "docs/assets/readme/figurestead-at-a-glance.png": {
+      "expectedSha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6",
+      "actualSha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6",
+      "matches": true
+    },
+    "docs/assets/readme/populated-categorical-response-matrix.png": {
+      "expectedSha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
+      "actualSha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
+      "matches": true
+    },
+    "docs/assets/readme/github-social-preview-candidate.png": {
+      "expectedSha256": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e",
+      "actualSha256": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e",
+      "matches": true
+    }
+  },
+  "candidates": {
+    "B": {
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 169237,
+      "sha256": "ddc623444a172570b215881c1ca8e959ccd9e1d5969d7d74d61038ba6b3d5ae5",
+      "manifestMatches": true,
+      "fullAcceptedFramesOnly": true
+    },
+    "C": {
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 219889,
+      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece",
+      "manifestMatches": true,
+      "fullAcceptedFramesOnly": true
+    },
+    "D": {
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 140607,
+      "sha256": "6b9e380c6e14a2a5daf14cbb8c1c76d43e033338987e4ef7ffaf849812c4644f",
+      "manifestMatches": true,
+      "fullAcceptedFramesOnly": true
+    }
+  },
+  "protectedPaths": [
+    "README.md",
+    "docs/assets/readme",
+    "docs/readme-review",
+    "site",
+    "technical-showcase",
+    "src",
+    "web",
+    "specimen-study",
+    "examples",
+    "pyproject.toml",
+    "release",
+    ".github",
+    "VERSIONING.md"
+  ],
+  "protectedChanges": [],
+  "localPathLeaks": [],
+  "trackedOsArtifacts": [],
+  "deploymentInvoked": false,
+  "ownerGithubSettingsChanged": false
+}
