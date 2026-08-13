@@ -4,8 +4,10 @@ import { resolveTerminalScene } from "./resolved-scene.js";
 import { composeResolvedScene } from "./composition.js";
 import { partitionPanelMarks, plotClipRect } from "./render-layers.js";
 import { resolveExportSize } from "./physical-export.js";
+import { validateThemeColors } from "./schema.js";
 
-const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[char]));
+const xmlValue = (value) => String(value).replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/gu, "\uFFFD");
+const esc = (value) => xmlValue(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[char]));
 const attrs = (value) => Object.entries(value).filter(([, item]) => item != null).map(([key, item]) => `${key}="${esc(item)}"`).join(" ");
 const FONT = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
 
@@ -212,12 +214,13 @@ function panelSvg(panel, theme, profile, namespace) {
 
 export function resolvedSceneToSvg(resolved, options = {}) {
   const composed = resolved.schemaVersion === "figurestead.composed-scene/1" ? resolved : composeResolvedScene(resolved);
+  validateThemeColors(composed.theme, "scene.theme");
   const scene = options.sourceScene, namespace = svgNamespace(composed, scene, options);
   const exportSize = options.exportSize ?? resolveExportSize({ ...options, width: composed.width, height: composed.height });
   const title = composed.spec.title, description = [composed.spec.description || composed.spec.subtitle || "Scientific figure", composed.spec.note, ...composed.panels.flatMap((panel) => panel.notes ?? [])].filter(Boolean).join(" ");
   const titleId = `${namespace}-title`, descId = `${namespace}-desc`;
   const header = composed.layout.header ? `<text ${attrs({ x: composed.layout.header.left, y: composed.layout.header.titleY, fill: composed.theme.mode === "paper" ? composed.theme.label : composed.theme.primary, "font-size": composed.layout.font.title })}>${esc(title)}</text>` : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect width="100%" height="100%" fill="${composed.theme.field}"/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace)).join("")}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect ${attrs({ width: "100%", height: "100%", fill: composed.theme.field })}/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace)).join("")}</svg>`;
 }
 
 export function sceneToSvg(scene, options = {}) {
