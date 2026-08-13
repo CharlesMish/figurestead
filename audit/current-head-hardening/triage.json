@@ -1,0 +1,338 @@
+{
+  "schema": "figurestead.current-head-hardening-triage/1",
+  "historicalBaseline": "9ea5a9b80842c23476e810026c1330aa88db163b",
+  "auditedImplementationHead": "c07b7683ddf2c37a22b59bac1c8e3deb8649366d",
+  "branch": "docs/social-preview-promotion",
+  "method": "Historical findings were independently re-run against current HEAD and treated as hypotheses, not current authority.",
+  "summary": {
+    "CLOSED_BY_LATER_WORK": 2,
+    "STILL_REPRODUCES": 12,
+    "PARTIALLY_CLOSED": 6,
+    "NO_LONGER_APPLICABLE": 0,
+    "NEEDS_MAINTAINER_DECISION": 2,
+    "NOT_REPRODUCED": 0
+  },
+  "socialPreview": {
+    "selection": "C",
+    "canonicalPath": "docs/assets/readme/github-social-preview.png",
+    "sourcePath": "docs/social-preview-study/candidate-c-lead-plus-pair.png",
+    "dimensions": [1280, 640],
+    "mode": "RGB",
+    "bytes": 219889,
+    "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece",
+    "sourceAndCanonicalBytesIdentical": true,
+    "readmeMontageRemainsCandidateA": true,
+    "githubSettingsChanged": false
+  },
+  "findings": [
+    {
+      "id": "P0-1",
+      "title": "SVG serialization boundary",
+      "status": "CLOSED_BY_LATER_WORK",
+      "severity": "P0 before correction",
+      "paths": ["web/src/schema.js", "web/src/svg-export.js", "web/test/svg-serialization-cases.mjs", "audit/current-head-hardening/test_svg_serialization.py"],
+      "reproduction": "Pass an inert quote-terminated color followed by <g data-proof=\"inert\"> through exportFigureSvg, exportFigureArtifacts, sceneToSvg, and resolvedSceneToSvg.",
+      "observedBefore": "All four paths serialized one extra proof element.",
+      "observedAfter": "All malformed colors are rejected as non-canonical #RRGGBB values; text is sanitized and XML-escaped; parsed structure remains fixed.",
+      "regression": "audit/current-head-hardening/test_svg_serialization.py parses XML produced by web/test/svg-serialization-cases.mjs and covers all four public paths.",
+      "closedBy": "c07b7683ddf2c37a22b59bac1c8e3deb8649366d"
+    },
+    {
+      "id": "P0-2",
+      "title": "Functional tests and PR CI",
+      "status": "PARTIALLY_CLOSED",
+      "severity": "P0 historical; current release-process risk",
+      "paths": ["audit/", "specimen-study/audit/", "docs/readme-review/", "docs/social-preview-study/", ".github/workflows/"],
+      "reproduction": "Inventory committed audit commands and workflow triggers; run python3 -m unittest discover -v and npm test in web/.",
+      "observed": "Substantial regression machinery exists, but no workflow has a pull_request trigger; unittest discovers zero tests and npm has no test script.",
+      "regression": "No repository-defined required PR correctness check.",
+      "futureWork": "Required correctness floor / PR CI using today's explicit audits, nonzero case-count assertions, and check-only browser output."
+    },
+    {
+      "id": "P0-3",
+      "title": "npm release workflow preflight",
+      "status": "STILL_REPRODUCES",
+      "severity": "Release blocker for the next npm version",
+      "paths": [".github/workflows/publish-npm.yml", "web/package.json", "release/npm/"],
+      "reproduction": "Resolve VERSION from web/package.json and check the workflow's expected release/npm/$VERSION manifest, tarball, and release/npm/README.md paths.",
+      "observed": "The workflow is manually dispatchable, but release/npm/ is absent, including release/npm/0.9.0-alpha.1/SHA256SUMS.txt and dist/figurestead-web-0.9.0-alpha.1.tgz.",
+      "regression": "No non-publishing preflight test exists.",
+      "futureWork": "Make dispatch unavailable until a candidate exists or restore a documented digest-bound candidate acceptance path."
+    },
+    {
+      "id": "P1-1",
+      "title": "Portable-contract parity",
+      "status": "PARTIALLY_CLOSED",
+      "severity": "P1 correctness and cross-runtime contract risk",
+      "paths": ["src/figurestead/schema.py", "web/src/schema.js", "web/src/resolver.js"],
+      "reproduction": "Construct contracts with numeric title/series key, fps=0, negative marker size, scale padding 9, non-array annotations, and non-canonical colors in both runtimes.",
+      "observed": "Colors are now strict and path-aware. Python retains numeric title/key and fails fps=0 with ZeroDivisionError; browser rejects numeric title/key but accepts fps=0, negative marker size, padding 9, and coerces non-array annotations.",
+      "regression": "Only the SVG color boundary has a committed regression.",
+      "futureWork": "A bounded cross-runtime validation-policy package documenting strict/coercive behavior and adding path-aware parity fixtures."
+    },
+    {
+      "id": "P1-2",
+      "title": "Semantic IDs and duplicate panels",
+      "status": "STILL_REPRODUCES",
+      "severity": "P1 identity/accessibility ambiguity",
+      "paths": ["web/src/semantic-id.js", "web/src/renderers/line.js", "src/figurestead/scene.py", "src/figurestead/schema.py"],
+      "reproduction": "Render series keys 'a b' and 'a-b', then inspect full mark IDs; separately create duplicate panel IDs in both contract paths.",
+      "observed": "The browser produces duplicate line/point and line/segment IDs for the collision pair; Python uses the same lossy stems. Both runtimes accept duplicate panel IDs.",
+      "regression": "No collision/uniqueness regression test exists.",
+      "futureWork": "A separately reviewed compatibility decision for stable escaping and duplicate-ID rejection, followed by migration tests."
+    },
+    {
+      "id": "P1-3",
+      "title": "Core Python plotting input behavior",
+      "status": "STILL_REPRODUCES",
+      "severity": "P1 public-API correctness",
+      "paths": ["src/figurestead/plots.py", "src/figurestead/core.py"],
+      "reproduction": "Call histogram with flat [1,2,3]; use two datasets/series with one label; pass incomplete and duplicate strip order; exercise non-finite inputs while counting open figures.",
+      "observed": "Flat histogram raises TypeError after figure allocation; label cardinality silently truncates line/histogram data; incomplete order raises raw KeyError after allocation; duplicate order and many non-finite inputs are accepted inconsistently.",
+      "regression": "No committed headless input-validation suite covers these cases.",
+      "futureWork": "Define input/cardinality/order/finite rules, validate before allocation, and add headless regressions for all five direct plot functions."
+    },
+    {
+      "id": "P1-4",
+      "title": "Declared empty strip groups",
+      "status": "NEEDS_MAINTAINER_DECISION",
+      "severity": "P1 terminal-geometry correctness",
+      "paths": ["web/src/renderers/strip.js", "src/figurestead/scene.py"],
+      "reproduction": "Declare an ordered strip group with no observations and inspect summary marks and SVG output.",
+      "observed": "The browser emits an unused-group median of NaN, a non-finite terminal mark, and NaN SVG geometry; Python/browser policy is not defined.",
+      "regression": "No empty-category policy test exists.",
+      "futureWork": "Maintainer must decide whether empty declared categories are invalid, omitted, or rendered with an explicit empty-state semantic."
+    },
+    {
+      "id": "P1-5",
+      "title": "Scene-contract identity",
+      "status": "NEEDS_MAINTAINER_DECISION",
+      "severity": "P1 schema/interchange ambiguity",
+      "paths": ["src/figurestead/scene.py", "web/src/scene.js"],
+      "reproduction": "Compile equivalent portable contracts in Python and browser and compare objects labelled figurestead.scene/1.",
+      "observed": "Both use figurestead.scene/1 for materially different schemas; Python strip scene compilation still has zero marks.",
+      "regression": "No cross-runtime scene-schema conformance gate exists.",
+      "futureWork": "Product decision on whether scenes are runtime-internal or a versioned interchange contract; do not redesign under this audit."
+    },
+    {
+      "id": "P1-6",
+      "title": "Large-array extent",
+      "status": "STILL_REPRODUCES",
+      "severity": "P1 bounded correctness failure",
+      "paths": ["web/src/renderers/utils.js"],
+      "reproduction": "Call extent() with a bounded array of 200,000 finite numbers.",
+      "observed": "Math.min(...values)/Math.max(...values) raises RangeError: Maximum call stack size exceeded.",
+      "regression": "No large-array extent test exists.",
+      "futureWork": "Replace spread extrema with an iterative finite scan and add bounded size/edge-case tests."
+    },
+    {
+      "id": "P1-7",
+      "title": "First success and landing pages",
+      "status": "PARTIALLY_CLOSED",
+      "severity": "P1 discoverability",
+      "paths": ["README.md", "examples/python_first_success.py", "examples/browser-first-success/", "web/README.md"],
+      "reproduction": "Follow exact root README Python/browser links and execute both; inspect the npm-packed README source.",
+      "observed": "Both exact first-success examples run successfully. web/README.md remains a short boundary note without first success.",
+      "regression": "README audit covers root story and links, not npm landing first success.",
+      "futureWork": "A small npm landing-documentation package synchronized to the accepted root quickstart."
+    },
+    {
+      "id": "P1-8",
+      "title": "Runtime and extension feature boundary",
+      "status": "PARTIALLY_CLOSED",
+      "severity": "P1 expectation-setting",
+      "paths": ["README.md", "web/src/index.js", "web/src/extensions/temporal.js", "src/figurestead/extensions/", "specimen-study/"],
+      "reproduction": "Inventory direct Python plots, portable builders, browser root registry, extension exports, and specimen wording.",
+      "observed": "README/specimen wording now truthfully discloses asymmetry, including Python-only matrix work. No complete feature matrix exists and categorical browser definitions remain absent.",
+      "regression": "Study audits protect current disclosure but do not enforce a repository-wide feature matrix.",
+      "futureWork": "Document a generated current feature matrix; do not add browser renderers in this package."
+    },
+    {
+      "id": "P1-9",
+      "title": "Contributor, support, and security paths",
+      "status": "STILL_REPRODUCES",
+      "severity": "P1 project-operability gap",
+      "paths": ["README.md", "pyproject.toml", ".github/"],
+      "reproduction": "Search tracked files for CONTRIBUTING, AGENTS, SECURITY, SUPPORT, changelog, issue/PR templates, and inspect CLI discoverability.",
+      "observed": "None of the governance/support files or templates exists; four Python CLIs remain largely undiscovered.",
+      "regression": "No repository-policy documentation check exists.",
+      "futureWork": "A documentation-only maintainer path package covering support/security/reporting, contribution setup, and CLI index."
+    },
+    {
+      "id": "P2-1",
+      "title": "Dependency policy",
+      "status": "STILL_REPRODUCES",
+      "severity": "P2 maintenance/supply-chain policy gap",
+      "paths": ["pyproject.toml", ".github/workflows/"],
+      "reproduction": "Inspect dependency floors and workflow coverage for advisory scans and minimum/latest matrices.",
+      "observed": "Broad minimums remain with no committed advisory/minimum-version policy, scan workflow, or minimum/latest matrix; no vulnerability is inferred from this fact alone.",
+      "regression": "No dependency-policy gate exists.",
+      "futureWork": "Define supported floors, add minimum/latest test environments and an advisory scan with explicit response policy."
+    },
+    {
+      "id": "P2-2",
+      "title": "npm provenance and candidate identity",
+      "status": "PARTIALLY_CLOSED",
+      "severity": "P2 release evidence gap",
+      "paths": [".github/workflows/publish-npm.yml", "release/npm/"],
+      "reproduction": "Inspect the workflow, retained candidate tree, public registry metadata, and packed package.json.",
+      "observed": "Workflow uses GitHub OIDC with supported Node/npm and does not disable provenance. Registry exposes a signature but no dist.attestations; no retained digest-bound candidate exists. Public tarball SHA-256 is 7b3e756c5193d53205925060a5005340a8e57a62550a720253a67391787ebe6a and has no local absolute paths.",
+      "regression": "No candidate-to-registry identity gate can run because the retained candidate is absent.",
+      "futureWork": "Restore candidate retention/preflight, then verify digest and provenance metadata without publishing."
+    },
+    {
+      "id": "P2-3",
+      "title": "Version synchronization",
+      "status": "STILL_REPRODUCES",
+      "severity": "P2 release-consistency risk",
+      "paths": ["pyproject.toml", "web/package.json", "src/figurestead/__init__.py", "web/src/index.js", ".github/workflows/"],
+      "reproduction": "Inventory version spellings across manifests, runtime constants, docs, site, workflows, and retained release paths.",
+      "observed": "Current Python and SemVer spellings are coherent, but no single mechanical check covers all public/release locations.",
+      "regression": "No repository-wide version synchronization check exists.",
+      "futureWork": "Add a read-only version consistency validator with explicit PEP 440/SemVer mapping."
+    },
+    {
+      "id": "P2-4",
+      "title": "Frozen-site acceptance model",
+      "status": "PARTIALLY_CLOSED",
+      "severity": "P2 stewardship/documentation gap",
+      "paths": ["site/README.md", "site/WEB_ASSET_MANIFEST.json", ".github/workflows/deploy-pages.yml"],
+      "reproduction": "Inspect current R3 asset manifests, deploy validator, and site stewardship documentation.",
+      "observed": "R3 added strong canonical/derivative evidence and deploy validation. site/README.md still does not describe full generation, review, acceptance, rollback, and ownership.",
+      "regression": "Deploy validator checks artifacts, not stewardship process completeness.",
+      "futureWork": "Documentation-only frozen-site lifecycle and rollback ownership guide."
+    },
+    {
+      "id": "P2-5",
+      "title": "Public-site asset cost",
+      "status": "CLOSED_BY_LATER_WORK",
+      "severity": "P2 historical delivery cost",
+      "paths": ["site/WEB_ASSET_MANIFEST.json", "site/index.html", "site/evidence/index.html"],
+      "reproduction": "Read R3 manifest and verify derivative routes, srcset/lazy delivery, and canonical links.",
+      "observed": "R3 retains 69,380,331 canonical bytes and serves 2,127,517 lossless bytes, a 96.934% saving, with responsive derivatives and canonical inspection routes.",
+      "regression": "Pages deploy validator and R3 asset manifest cover this boundary.",
+      "closedBy": "Accepted public-site R3 hardening"
+    },
+    {
+      "id": "P2-6",
+      "title": "Compatibility and package metadata",
+      "status": "STILL_REPRODUCES",
+      "severity": "P2 packaging/expectation gap",
+      "paths": ["web/package.json", "pyproject.toml"],
+      "reproduction": "Inspect engine/support declarations, Python metadata, and tested-version evidence.",
+      "observed": "npm declares Node >=24 <25; Python lacks authors, classifiers, and keywords; no declared-versus-tested support matrix exists.",
+      "regression": "No compatibility metadata validator exists.",
+      "futureWork": "Define tested support, align engine/runtime declarations, and complete package metadata without changing release versions."
+    },
+    {
+      "id": "P2-7",
+      "title": "Static-site defense and failure resilience",
+      "status": "STILL_REPRODUCES",
+      "severity": "P2 defense-in-depth/resilience",
+      "paths": ["site/index.html", "site/evidence/index.html", "site/app.js"],
+      "reproduction": "Inspect document security metadata and the top-level public-alpha-set fetch failure path.",
+      "observed": "Overview/Atlas have no CSP or referrer policy; site/app.js throws at module top level when public-alpha-set.json fails.",
+      "regression": "Current R3 checks do not inject this asset failure or require security metadata.",
+      "futureWork": "A separate accepted-R3 resilience/security-header review; this turn deliberately leaves the baseline untouched."
+    },
+    {
+      "id": "P2-8",
+      "title": "Accessibility annotation text",
+      "status": "STILL_REPRODUCES",
+      "severity": "P2 assistive-description defect",
+      "paths": ["web/src/accessibility.js"],
+      "reproduction": "Render an evidence-bound/focus-bound anchorId annotation and inspect the generated hidden companion text.",
+      "observed": "The real DOM contains: Focus annotation: Evidence-bound peak at x undefined, y undefined.",
+      "regression": "V2 companion tests cover hidden focus and headings, not this annotation-description path.",
+      "futureWork": "Resolve anchor references before prose generation and add DOM assertions for evidence-bound and coordinate-bound annotations."
+    },
+    {
+      "id": "P2-9",
+      "title": "Configuration transactionality",
+      "status": "STILL_REPRODUCES",
+      "severity": "P2 controller-state consistency",
+      "paths": ["web/src/controller.js", "web/src/schema.js"],
+      "reproduction": "Render a valid line contract, call setConfig({panels: []}), catch the error, and compare renderer/controller/companion state.",
+      "observed": "The rejected update changes controller renderers from ['line'] to [] while the prior accessibility companion remains attached.",
+      "regression": "No failed-update rollback regression exists.",
+      "futureWork": "Validate/resolve replacement configuration before mutating controller, playback, renderer, or companion state; assert atomic rollback."
+    },
+    {
+      "id": "P2-10",
+      "title": "Consumer types and formatting boundary",
+      "status": "STILL_REPRODUCES",
+      "severity": "P2 consumer/developer-experience gap",
+      "paths": ["web/package.json", "pyproject.toml", "src/", "web/src/", "site/"],
+      "reproduction": "Search the shipped packages for .d.ts and py.typed; inspect formatter/lint configuration and count source/site lines over 240 characters.",
+      "observed": "No .d.ts or py.typed is shipped, no formatting boundary is configured, and the inspected source/site set contains 103 lines over 240 characters.",
+      "regression": "No type-presence or formatting gate exists.",
+      "futureWork": "Add consumer type artifacts and a narrowly scoped formatting policy in separate reviewable changes."
+    }
+  ],
+  "verification": {
+    "svgRegression": {"command": "python3 audit/current-head-hardening/test_svg_serialization.py", "result": "3 tests, PASS"},
+    "javascriptSyntax": {"command": "find web/src -name '*.js' -print0 | xargs -0 -n1 node --check", "result": "PASS"},
+    "v2Browser": {"command": "FIGURESTEAD_ROOT=<temporary-HEAD-copy> node audit/technical-showcase/run-technical-audit.cjs", "result": "Chromium 4/4 and Firefox 4/4, 0 findings, PASS"},
+    "compactLayout": {"command": "FIGURESTEAD_ROOT=<temporary-HEAD-copy> node audit/compact-layout/run-compact-layout-audit.cjs", "result": "Chromium and Firefox PASS, including 89 mm/183 mm SVG exports"},
+    "specimen": {"command": "FIGURESTEAD_ROOT=<temporary-HEAD-copy> node specimen-study/audit/run-specimen-audit.cjs", "result": "Chromium 8/8 and Firefox 8/8, PASS"},
+    "responseMatrix": {"command": "FIGURESTEAD_ROOT=<temporary-HEAD-copy> node specimen-study/audit/run-response-matrix-audit.cjs", "result": "Chromium 4/4 and Firefox 4/4, PASS"},
+    "cvd": {"command": "python3 audit/technical-showcase/validate-cvd-reference.py", "result": "PASS at 1e-12 tolerance; max absolute delta 5.55e-17; Python 3.13.13, Node v24.19.0, colour-science 0.4.7"},
+    "standardPythonDiscovery": {"command": "python3 -m unittest discover -v", "result": "exit 5, Ran 0 tests"},
+    "standardNpmTest": {"command": "npm test", "workingDirectory": "web", "result": "exit 1, Missing script: test"}
+  },
+  "preservation": {
+    "normalSvg": {
+      "exportFigureSvg": {"bytes": 4140, "sha256": "a1b3bf0c3dc31bb8346151bd17b95c05ccca81fd75abbfe45f832a50a6f75f63"},
+      "exportFigureArtifacts.svg": {"bytes": 4140, "sha256": "a1b3bf0c3dc31bb8346151bd17b95c05ccca81fd75abbfe45f832a50a6f75f63"},
+      "sceneToSvg": {"bytes": 4140, "sha256": "a1b3bf0c3dc31bb8346151bd17b95c05ccca81fd75abbfe45f832a50a6f75f63"},
+      "resolvedSceneToSvg": {"bytes": 4095, "sha256": "f34f50f4e8ef6368352d33b87b3d9a13c24bd85694fa18362dcd34ec167cb5f5"}
+    },
+    "v1AcceptedAnchor": "2f0403348e9b2e18e120d47b5fedb3f24062a978e0a02b2af8e7c62a28a553a7",
+    "publicR3Tree": "c65d33a1a72ce18b8a756ac007f9117e6336f28d",
+    "paperAssets": {
+      "89mm": {"canonicalBytes": 3129058, "canonicalSha256": "5bf4f27843a5ce6dfe4d53bee3fc4460ca165b4d88f0eb98e32f1cd0800b4253", "servedBytes": 118114, "servedSha256": "26d11213cd7009833b6cc0ce9f2534a3642eb1f0905e60743f0a8043a915ca37", "decodedPixelSha256": "bf8559e20981bf23ca922e86a0a83a282d626e3c94301533a11a1a2409bf1ba2"},
+      "183mm": {"canonicalBytes": 12277833, "canonicalSha256": "867e9514fb8ac9519f8e3239210463806e7ee2fb67726f3add05b23514fd5143", "servedBytes": 266057, "servedSha256": "de09a7dce37bb16fc33ffa41b60641f6cc5132be0bae81a05d0c44461bfd4a74", "decodedPixelSha256": "100b3874224fa4635d9ed54e57c0ec63d6e10e1c226bc61795940ebc1fe29215"},
+      "decodedPixelsIdentical": true,
+      "combinedReductionPercent": 97.506
+    }
+  },
+  "ci": {
+    "pullRequestWorkflowPresent": false,
+    "failsOnZeroRelevantTests": false,
+    "representedByCommittedAudits": ["Python", "browser Chromium/Firefox", "cross-runtime", "release/package", "public site", "accessibility", "motion", "paper", "CVD"],
+    "recommendedJobs": ["core/cross-runtime", "browser evidence in check-only mode", "packed package and frozen-site validation"]
+  },
+  "npmRelease": {
+    "currentVersion": "0.9.0-alpha.1",
+    "manualDispatchCanSatisfyPreflight": false,
+    "missingExpectedPaths": ["release/npm/README.md", "release/npm/0.9.0-alpha.1/SHA256SUMS.txt", "release/npm/0.9.0-alpha.1/dist/figurestead-web-0.9.0-alpha.1.tgz"],
+    "publicTarballSha256": "7b3e756c5193d53205925060a5005340a8e57a62550a720253a67391787ebe6a",
+    "publicTarballContainsAbsoluteLocalPaths": false,
+    "registrySignaturePresent": true,
+    "registryDistAttestationsPresent": false
+  },
+  "runtimeBoundary": {
+    "pythonDirect": ["line", "scatter", "strip", "histogram", "heatmap"],
+    "pythonPortableCore": ["line", "scatter", "strip"],
+    "browserRootCore": ["line", "scatter", "strip"],
+    "browserExtensions": ["temporal coverage", "temporal observations"],
+    "pythonOnlyOrUnpaired": ["categorical bars", "categorical matrix", "interval", "paired", "reference"],
+    "sharedSceneIdentifierHasSharedSchema": false
+  },
+  "recommendedNextPackages": [
+    "Required correctness floor / PR CI",
+    "npm candidate preflight containment",
+    "Core Python input validation"
+  ],
+  "heldDecisions": ["semantic ID encoding", "figurestead.scene/1 interchange boundary", "empty-category policy", "possible broader runtime feature parity"],
+  "scope": {
+    "packageVersionsChanged": false,
+    "themesChanged": false,
+    "corpusDataChanged": false,
+    "releaseArtifactsChanged": false,
+    "deployed": false,
+    "githubSettingsChanged": false,
+    "publicR3Changed": false,
+    "acceptedV2PresentationChanged": false
+  }
+}
