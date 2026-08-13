@@ -19,9 +19,11 @@ ACCEPTED_ASSETS = {
     "docs/assets/readme/populated-categorical-response-matrix.png": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
     "docs/assets/readme/github-social-preview-candidate.png": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e",
 }
+SELECTED_ASSET = ROOT / "docs" / "assets" / "readme" / "github-social-preview.png"
+SELECTED_SHA256 = "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
 PROTECTED = [
     "README.md",
-    "docs/assets/readme",
+    *ACCEPTED_ASSETS,
     "docs/readme-review",
     "site",
     "technical-showcase",
@@ -71,6 +73,18 @@ def main() -> int:
             "fullAcceptedFramesOnly": placements_valid,
         }
 
+    with Image.open(SELECTED_ASSET) as selected:
+        selected_dimensions = list(selected.size)
+        selected_mode = selected.mode
+    selected_results = {
+        "path": SELECTED_ASSET.relative_to(ROOT).as_posix(),
+        "dimensions": selected_dimensions,
+        "mode": selected_mode,
+        "bytes": SELECTED_ASSET.stat().st_size,
+        "sha256": sha256(SELECTED_ASSET),
+        "matchesCandidateC": SELECTED_ASSET.read_bytes() == (STUDY / "candidate-c-lead-plus-pair.png").read_bytes(),
+    }
+
     protected_changes = git("diff", "--name-only", BASELINE, "--", *PROTECTED).splitlines()
     tracked_artifacts = [
         path for path in git("ls-files").splitlines()
@@ -99,6 +113,18 @@ def main() -> int:
         "noTrackedOsArtifacts": not tracked_artifacts,
         "reviewOnlyFlags": manifest["acceptedAssetsModified"] is False and manifest["scientificFigureContentModified"] is False,
         "recommendationRecorded": manifest["recommendation"] == "candidate C",
+        "selectionRecorded": (
+            manifest["selection"]["candidate"] == "C"
+            and manifest["selection"]["canonicalAsset"]["path"] == selected_results["path"]
+            and manifest["selection"]["githubSettingsChanged"] is False
+        ),
+        "selectedAssetCanonical": (
+            selected_results["dimensions"] == [1280, 640]
+            and selected_results["mode"] == "RGB"
+            and selected_results["sha256"] == SELECTED_SHA256
+            and selected_results["matchesCandidateC"]
+        ),
+        "readmeMontageUnchanged": accepted_results["docs/assets/readme/figurestead-at-a-glance.png"]["matches"],
     }
     report = {
         "schemaVersion": "figurestead.social-preview-audit/1",
@@ -107,6 +133,7 @@ def main() -> int:
         "checks": checks,
         "acceptedAssets": accepted_results,
         "candidates": candidate_results,
+        "selectedAsset": selected_results,
         "protectedPaths": PROTECTED,
         "protectedChanges": protected_changes,
         "localPathLeaks": local_leaks,

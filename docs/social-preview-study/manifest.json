@@ -7,7 +7,7 @@
   ],
   "environment": {
     "python": "3.12.13",
-    "pillow": "12.2.0"
+    "pillow": "12.3.0"
   },
   "fonts": {
     "wordmark": {
@@ -265,5 +265,43 @@
   "acceptedAssetsModified": false,
   "scientificFigureContentModified": false,
   "recommendation": "candidate C",
-  "recommendationReason": "It best follows the governing rule at 25% delivery size: Figurestead remains unmistakable, the lead scientific figure stays meaningfully inspectable, and two supporting families add range without collapsing into a miniature gallery."
+  "recommendationReason": "It best follows the governing rule at 25% delivery size: Figurestead remains unmistakable, the lead scientific figure stays meaningfully inspectable, and two supporting families add range without collapsing into a miniature gallery.",
+  "selection": {
+    "status": "owner-selected",
+    "candidate": "C",
+    "source": {
+      "path": "docs/social-preview-study/candidate-c-lead-plus-pair.png",
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 219889,
+      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
+    },
+    "canonicalAsset": {
+      "path": "docs/assets/readme/github-social-preview.png",
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 219889,
+      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
+    },
+    "byteIdenticalToSource": true,
+    "readmeMontage": {
+      "path": "docs/assets/readme/figurestead-at-a-glance.png",
+      "dimensions": [
+        1920,
+        960
+      ],
+      "mode": "RGB",
+      "bytes": 375121,
+      "sha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6"
+    },
+    "readmeMontageUnchanged": true,
+    "githubSettingsChanged": false,
+    "ownerAction": "Configure docs/assets/readme/github-social-preview.png manually in GitHub repository settings."
+  }
 }

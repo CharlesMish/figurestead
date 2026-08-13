@@ -7,6 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 import platform
+import shutil
 
 from PIL import Image, ImageDraw, ImageFont, __version__ as pillow_version
 
@@ -14,6 +15,7 @@ from PIL import Image, ImageDraw, ImageFont, __version__ as pillow_version
 ROOT = Path(__file__).resolve().parents[2]
 STUDY = ROOT / "docs" / "social-preview-study"
 BASELINE = ROOT / "docs" / "assets" / "readme" / "github-social-preview-candidate.png"
+SELECTED = ROOT / "docs" / "assets" / "readme" / "github-social-preview.png"
 EVIDENCE = ROOT / "specimen-study" / "evidence" / "corpus-v0.2" / "individual"
 SOURCES = {
     "watershed": EVIDENCE / "watershed_storm_response.png",
@@ -193,6 +195,7 @@ def main() -> int:
     path_b, placements_b = candidate_b()
     path_c, placements_c = candidate_c()
     path_d, placements_d = candidate_d()
+    shutil.copyfile(path_c, SELECTED)
     comparison_paths = [
         ("A · accepted baseline", BASELINE),
         ("B · four-family identity rail", path_b),
@@ -236,6 +239,17 @@ def main() -> int:
         "scientificFigureContentModified": False,
         "recommendation": "candidate C",
         "recommendationReason": "It best follows the governing rule at 25% delivery size: Figurestead remains unmistakable, the lead scientific figure stays meaningfully inspectable, and two supporting families add range without collapsing into a miniature gallery.",
+        "selection": {
+            "status": "owner-selected",
+            "candidate": "C",
+            "source": image_record(path_c),
+            "canonicalAsset": image_record(SELECTED),
+            "byteIdenticalToSource": SELECTED.read_bytes() == path_c.read_bytes(),
+            "readmeMontage": image_record(ROOT / "docs" / "assets" / "readme" / "figurestead-at-a-glance.png"),
+            "readmeMontageUnchanged": True,
+            "githubSettingsChanged": False,
+            "ownerAction": "Configure docs/assets/readme/github-social-preview.png manually in GitHub repository settings.",
+        },
     }
     (STUDY / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(manifest, indent=2))
