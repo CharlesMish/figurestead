@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "figurestead.technical-showcase-local-verification-summary/2",
+  "generatedAt": "2026-08-10T14:19:25.629Z",
+  "baseUrl": "http://127.0.0.1:4177/technical-showcase/",
+  "deployed": false,
+  "publicNavigationChanged": false,
+  "engines": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "caseCount": 4,
+      "findingCount": 0
+    },
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "caseCount": 4,
+      "findingCount": 0
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Figurestead populated response matrix · local study</title>
+  <meta name="description" content="A local, undeployed study of Figurestead's existing categorical-matrix renderer with a populated 10 by 6 synthetic fixture.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="matrix-study/matrix-study.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to matrix study</a>
+  <header class="masthead page-width">
+    <p class="wordmark">Figurestead</p>
+    <p class="status">Response matrix study · local · undeployed</p>
+  </header>
+  <main id="main">
+    <header class="intro page-width">
+      <p class="kicker">Corpus correction</p>
+      <div>
+        <h1>A matrix with<br>comparative work to do.</h1>
+        <p class="dek">Three hundred deterministic synthetic observations become a 10 × 6 field of within-habitat response shares. This is the existing categorical-matrix renderer—not a new heatmap or browser API.</p>
+        <p class="intro-links"><a href="corpus-v0.2/scenes/habitat_response_matrix.json">Scene JSON</a> · <a href="corpus-v0.2/tables/habitat_response_matrix.csv">Raw observations</a> · <a href="corpus-v0.2/derived/habitat_response_matrix-counts.csv">Count matrix</a> · <a href="corpus-v0.2/derived/habitat_response_matrix-shares.csv">Share matrix</a></p>
+      </div>
+    </header>
+
+    <section class="study-section page-width" aria-labelledby="wide-title">
+      <header class="section-heading"><p>01</p><div><h2 id="wide-title">Inspection size</h2><p>Slipware · 10 habitat columns · 6 project-defined response bands · 60 observed cells, including truthful zeros.</p></div></header>
+      <figure class="hero-figure">
+        <img src="evidence/corpus-v0.2/response-matrix/populated-wide.png" width="1160" height="760" alt="Populated categorical response matrix with ten habitat columns and six response-band rows; each cell shows a rounded percentage and exact count." aria-describedby="matrix-figure-description">
+        <figcaption><a href="evidence/corpus-v0.2/response-matrix/populated-wide.svg">Open vector figure</a> · rendered by <a href="../src/figurestead/extensions/matrix/renderer.py">figurestead.extensions.matrix.categorical_matrix</a></figcaption>
+      </figure>
+      <p id="matrix-figure-description" class="figure-description">Deep pool concentrates in the Low band; Headwater concentrates in Moderate; Riffle, Side channel, Wet meadow, and Open estuary concentrate in Elevated; Tidal creek and Seagrass bed concentrate in High and Very high. Floodplain and Mudflat spread across more bands than nearby-center comparisons.</p>
+      <details class="data-disclosure" open>
+        <summary>Accessible count and share table</summary>
+        <p id="table-method">Rows are project-defined response bands; columns are habitats. Percentages are within-habitat shares calculated from exactly 30 observations per column.</p>
+        <div class="table-scroll"><table id="matrix-table" aria-describedby="table-method"><caption>Within-habitat response share and exact count</caption></table></div>
+      </details>
+    </section>
+
+    <section class="study-section page-width" aria-labelledby="scale-title">
+      <header class="section-heading"><p>02</p><div><h2 id="scale-title">Compact behavior, recorded honestly</h2><p>The renderer has no documented annotation-density or responsive matrix policy. These are direct renders at the requested boundaries, not redesigned compact variants.</p></div></header>
+      <div class="scale-grid">
+        <figure><div class="montage-frame"><img src="evidence/corpus-v0.2/response-matrix/populated-montage-cell.png" width="640" height="416" alt="The populated matrix rendered at the accepted montage-cell figure dimensions."></div><figcaption><strong>Montage cell · 640 × 416.</strong> The field remains recognizable, but the provenance note crosses the long rotated labels and exact annotations demand close inspection.</figcaption></figure>
+        <figure><div class="narrow-frame"><img src="evidence/corpus-v0.2/response-matrix/populated-narrow-390.png" width="390" height="520" alt="The populated matrix rendered at 390 pixels wide, showing clipped title and legend text and crowded labels."></div><figcaption><strong>Narrow diagnostic · 390 × 520.</strong> Structure survives, but title, legend, provenance, and labels do not produce a scientifically sensible narrow presentation.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="study-section page-width" aria-labelledby="comparison-title">
+      <header class="section-heading"><p>03</p><div><h2 id="comparison-title">Sparse reference / populated field</h2><p>The public reference establishes cell states; the populated fixture asks whether the renderer’s character survives a real field of comparisons.</p></div></header>
+      <div class="comparison-grid">
+        <figure><img src="../site/assets/evidence-matrix.png" width="1180" height="800" alt="Existing sparse two-by-two categorical response matrix reference."><figcaption><strong>Sparse reference.</strong> Four large cells make exact state distinctions immediate. <a href="../site/assets/evidence-matrix.png">Open canonical asset</a></figcaption></figure>
+        <figure><img src="evidence/corpus-v0.2/response-matrix/populated-wide.png" width="1160" height="760" alt="New populated ten-by-six categorical response matrix."><figcaption><strong>Populated field.</strong> Distribution shapes remain apparent at inspection size, while exact-text density becomes the limiting compact factor.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="study-section decision page-width" aria-labelledby="decision-title">
+      <header class="section-heading"><p>04</p><div><h2 id="decision-title">Montage decision: usable, not strong</h2><p>The populated matrix broadens the visual-family story at wide inspection size, but it does not clear the authorization threshold for an alternate montage. The accepted eight-panel montage remains unchanged.</p></div></header>
+      <p class="limitation"><strong>Held product question.</strong> A compact annotation/label policy could make dense matrices more montage-ready, but defining one would be a renderer feature and design decision outside this pass.</p>
+    </section>
+  </main>
+  <footer class="page-width"><p>Deterministic synthetic observations · illustrative project bins</p><p>Public R3, accepted V2, packages, releases, and deployment remain untouched</p></footer>
+  <script type="module" src="matrix-study/matrix-study.js"></script>
+</body>
+</html>

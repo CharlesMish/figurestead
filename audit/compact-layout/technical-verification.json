@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "figurestead.compact-layout-v2-verification/1",
+  "sourceAudit": "audit/technical-showcase/run-technical-audit.cjs",
+  "baseUrl": "http://127.0.0.1:4179/technical-showcase/",
+  "generatedAt": "2026-08-11T02:48:19.737Z",
+  "result": "PASS",
+  "engines": {
+    "chromium": { "cases": 4, "findings": 0, "browserVersion": "151.0.7922.34" },
+    "firefox": { "cases": 4, "findings": 0, "browserVersion": "153.0" }
+  },
+  "matrix": { "widths": [390, 1440], "motionPreferences": ["no-preference", "reduce"] },
+  "terminalNormalizedFingerprint": "fnv1a32-c46d7647",
+  "terminalPixelFingerprints": {
+    "chromium": { "390": "fnv1a32-56554363@362x196", "1440": "fnv1a32-2eab9509@992x538" },
+    "firefox": { "390": "fnv1a32-950968b4@362x196", "1440": "fnv1a32-28d1d4b1@992x538" }
+  },
+  "invariance": "Static, restrained, and expressive terminal normalized evidence and rendered pixels were identical within every engine/viewport/motion-preference case.",
+  "acceptedV2SourceChanged": false,
+  "deployed": false,
+  "publicNavigationChanged": false
+}

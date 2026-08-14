@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "figurestead.response-matrix-render/1",
+  "result": "PASS",
+  "renderer": "figurestead.extensions.matrix.categorical_matrix",
+  "rendererSourceSha256": "6a846d46fff1c2d5cb004df60c45ea3fb8145c92fd9bfc4605b7df27380975cf",
+  "sceneSha256": "ec554acdb01e16b099157da592e3cd4d181254e7163aca028375c82f7b4a0099",
+  "theme": {
+    "key": "slipware",
+    "tokensChanged": false
+  },
+  "environment": {
+    "python": "3.13.13",
+    "matplotlib": "3.11.1"
+  },
+  "contract": {
+    "columns": 10,
+    "rows": 6,
+    "cells": 60,
+    "valueDomain": [
+      0.0,
+      1.0
+    ]
+  },
+  "outputs": {
+    "populated-wide.png": {
+      "sha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
+      "bytes": 84544,
+      "pixels": [
+        1160,
+        760
+      ]
+    },
+    "populated-wide.svg": {
+      "sha256": "f317fe59827ff233d6f8812135b9407e443b72d6dae7a1256196a9ca6ee38127",
+      "bytes": 142913,
+      "pixels": [
+        1160,
+        760
+      ]
+    },
+    "populated-montage-cell.png": {
+      "sha256": "9c46439d9ca787dbcfb8ecad2a222192a0533e1123ae69e017fc5008602d0cdc",
+      "bytes": 74134,
+      "pixels": [
+        640,
+        416
+      ]
+    },
+    "populated-narrow-390.png": {
+      "sha256": "04e512a6b757a4ea6f22dba9624db6aa3cde2cb928021a0d80b3d51667150074",
+      "bytes": 70231,
+      "pixels": [
+        390,
+        520
+      ]
+    }
+  }
+}

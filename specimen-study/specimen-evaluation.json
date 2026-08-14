@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "figurestead.specimen-evaluation/1",
+  "corpusVersion": "0.1",
+  "evaluationBasis": "First render in each scene's suggested existing theme; no data, token, renderer, or theme tuning.",
+  "ratingVocabulary": ["strong", "usable", "weak at montage scale", "stress-only", "blocked"],
+  "montageDecision": {
+    "composition": "4 × 2 at the 1920 × 1080 wide target; one column at 390 px",
+    "alternateRequired": false,
+    "reason": "All eight required showcase scenes remain distinguishable in the wide figure-dominant sheet. The 390 px rendering is retained as a diagnostic rather than treated as an equivalent inspection scale."
+  },
+  "scenes": [
+    {
+      "sceneId": "watershed_storm_response",
+      "tier": "showcase",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "strong",
+      "montageSuitability": "strong",
+      "notes": "Five peak timings and recovery curves remain distinct; the fifth line identity is recovered by dash rather than a new glyph. The long title tightens at 390 px."
+    },
+    {
+      "sceneId": "circadian_phase_shift",
+      "tier": "showcase",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "strong",
+      "montageSuitability": "strong",
+      "notes": "Crossings and phase offsets read immediately. The four-series legend is dense but remains useful at the wide target."
+    },
+    {
+      "sceneId": "instrument_calibration",
+      "tier": "showcase",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "strong",
+      "montageSuitability": "strong",
+      "notes": "Small offsets remain visible around the shared descriptive fit without overwhelming the relationship."
+    },
+    {
+      "sceneId": "dose_response_plate",
+      "tier": "showcase",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "usable",
+      "montageSuitability": "strong",
+      "notes": "The five saturating families and plateau separation are clear without a fitted curve; the light field becomes delicate at narrow scale."
+    },
+    {
+      "sceneId": "treatment_replicates",
+      "tier": "showcase",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "strong",
+      "montageSuitability": "strong",
+      "notes": "Ordered centers and unequal spreads survive reduction; observations remain primary over the median rules."
+    },
+    {
+      "sceneId": "paired_seasonal_distributions",
+      "tier": "showcase",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "usable",
+      "montageSuitability": "strong",
+      "notes": "Seasonal shifts and within-season series comparisons both remain inspectable; legend density increases at 390 px."
+    },
+    {
+      "sceneId": "field_sampling_coverage",
+      "tier": "showcase",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "strong",
+      "montageSuitability": "weak at montage scale",
+      "notes": "Exact visits and missing station-years are strong at lab scale. Dense rug marks become a texture in the 4 × 2 sheet, so detailed claims should route to the individual rendering."
+    },
+    {
+      "sceneId": "reservoir_oxygen_thresholds",
+      "tier": "showcase",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "strong",
+      "montageSuitability": "usable",
+      "notes": "Sparse observations and seasonal threshold crossings are visible; provisional band labels need the individual scale for exact reading."
+    },
+    {
+      "sceneId": "gene_expression_recovery",
+      "tier": "stress",
+      "communication": "usable",
+      "figureQuality": "usable",
+      "themeFit": "strong",
+      "montageSuitability": "stress-only",
+      "notes": "Signed zero crossings and convergence render, but six line identities depend on the existing dash recovery after the four-glyph cycle."
+    },
+    {
+      "sceneId": "particle_size_relationship",
+      "tier": "stress",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "strong",
+      "montageSuitability": "stress-only",
+      "notes": "Heteroscedasticity and the leverage observation remain visible, making this a useful regression fixture rather than a primary range claim."
+    },
+    {
+      "sceneId": "lab_precision",
+      "tier": "stress",
+      "communication": "usable",
+      "figureQuality": "usable",
+      "themeFit": "strong",
+      "montageSuitability": "stress-only",
+      "notes": "Precision differences are readable through spread, but six point-only series repeat the four-glyph vocabulary and therefore cannot support a universal hue-independent identity claim."
+    },
+    {
+      "sceneId": "migration_monitoring_coverage",
+      "tier": "stress",
+      "communication": "strong",
+      "figureQuality": "strong",
+      "themeFit": "strong",
+      "montageSuitability": "stress-only",
+      "notes": "Seasonal clusters and the station-specific gap are visible at lab scale; dense rugs are intentionally excluded from the primary montage."
+    }
+  ],
+  "heldBoundary": "A fifth default marker glyph remains a separate product-semantic decision. This study does not expand MARKER_TYPES, GLYPH_CYCLE, renderer semantics, or the public marker API."
+}

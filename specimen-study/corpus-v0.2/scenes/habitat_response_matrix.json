@@ -1,0 +1,3329 @@
+{
+  "communicationQuestion": "What does Figurestead's existing Categorical response matrix look like when it has enough real structure to compare, rather than only enough cells to demonstrate that the renderer exists?",
+  "corpusVersion": "0.2",
+  "data": {
+    "xCategories": [
+      "Headwater",
+      "Riffle",
+      "Deep pool",
+      "Side channel",
+      "Floodplain",
+      "Wet meadow",
+      "Tidal creek",
+      "Mudflat",
+      "Seagrass bed",
+      "Open estuary"
+    ],
+    "yCategories": [
+      "Very low",
+      "Low",
+      "Moderate",
+      "Elevated",
+      "High",
+      "Very high"
+    ],
+    "cells": [
+      {
+        "x": "Headwater",
+        "y": "Very low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Riffle",
+        "y": "Very low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Deep pool",
+        "y": "Very low",
+        "value": 0.16666666666666666,
+        "status": "observed",
+        "label": "17%\nn=5",
+        "count": 5,
+        "share": 0.16666666666666666,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Side channel",
+        "y": "Very low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Floodplain",
+        "y": "Very low",
+        "value": 0.03333333333333333,
+        "status": "observed",
+        "label": "3%\nn=1",
+        "count": 1,
+        "share": 0.03333333333333333,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Wet meadow",
+        "y": "Very low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Tidal creek",
+        "y": "Very low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Mudflat",
+        "y": "Very low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Seagrass bed",
+        "y": "Very low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Open estuary",
+        "y": "Very low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.30–0.64"
+      },
+      {
+        "x": "Headwater",
+        "y": "Low",
+        "value": 0.1,
+        "status": "observed",
+        "label": "10%\nn=3",
+        "count": 3,
+        "share": 0.1,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Riffle",
+        "y": "Low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Deep pool",
+        "y": "Low",
+        "value": 0.6666666666666666,
+        "status": "observed",
+        "label": "67%\nn=20",
+        "count": 20,
+        "share": 0.6666666666666666,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Side channel",
+        "y": "Low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Floodplain",
+        "y": "Low",
+        "value": 0.16666666666666666,
+        "status": "observed",
+        "label": "17%\nn=5",
+        "count": 5,
+        "share": 0.16666666666666666,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Wet meadow",
+        "y": "Low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Tidal creek",
+        "y": "Low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Mudflat",
+        "y": "Low",
+        "value": 0.23333333333333334,
+        "status": "observed",
+        "label": "23%\nn=7",
+        "count": 7,
+        "share": 0.23333333333333334,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Seagrass bed",
+        "y": "Low",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Open estuary",
+        "y": "Low",
+        "value": 0.03333333333333333,
+        "status": "observed",
+        "label": "3%\nn=1",
+        "count": 1,
+        "share": 0.03333333333333333,
+        "bandDefinition": "0.65–0.94"
+      },
+      {
+        "x": "Headwater",
+        "y": "Moderate",
+        "value": 0.9,
+        "status": "observed",
+        "label": "90%\nn=27",
+        "count": 27,
+        "share": 0.9,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Riffle",
+        "y": "Moderate",
+        "value": 0.3,
+        "status": "observed",
+        "label": "30%\nn=9",
+        "count": 9,
+        "share": 0.3,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Deep pool",
+        "y": "Moderate",
+        "value": 0.16666666666666666,
+        "status": "observed",
+        "label": "17%\nn=5",
+        "count": 5,
+        "share": 0.16666666666666666,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Side channel",
+        "y": "Moderate",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Floodplain",
+        "y": "Moderate",
+        "value": 0.4,
+        "status": "observed",
+        "label": "40%\nn=12",
+        "count": 12,
+        "share": 0.4,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Wet meadow",
+        "y": "Moderate",
+        "value": 0.36666666666666664,
+        "status": "observed",
+        "label": "37%\nn=11",
+        "count": 11,
+        "share": 0.36666666666666664,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Tidal creek",
+        "y": "Moderate",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Mudflat",
+        "y": "Moderate",
+        "value": 0.5666666666666667,
+        "status": "observed",
+        "label": "57%\nn=17",
+        "count": 17,
+        "share": 0.5666666666666667,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Seagrass bed",
+        "y": "Moderate",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Open estuary",
+        "y": "Moderate",
+        "value": 0.06666666666666667,
+        "status": "observed",
+        "label": "7%\nn=2",
+        "count": 2,
+        "share": 0.06666666666666667,
+        "bandDefinition": "0.95–1.24"
+      },
+      {
+        "x": "Headwater",
+        "y": "Elevated",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Riffle",
+        "y": "Elevated",
+        "value": 0.6333333333333333,
+        "status": "observed",
+        "label": "63%\nn=19",
+        "count": 19,
+        "share": 0.6333333333333333,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Deep pool",
+        "y": "Elevated",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Side channel",
+        "y": "Elevated",
+        "value": 0.8333333333333334,
+        "status": "observed",
+        "label": "83%\nn=25",
+        "count": 25,
+        "share": 0.8333333333333334,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Floodplain",
+        "y": "Elevated",
+        "value": 0.26666666666666666,
+        "status": "observed",
+        "label": "27%\nn=8",
+        "count": 8,
+        "share": 0.26666666666666666,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Wet meadow",
+        "y": "Elevated",
+        "value": 0.6333333333333333,
+        "status": "observed",
+        "label": "63%\nn=19",
+        "count": 19,
+        "share": 0.6333333333333333,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Tidal creek",
+        "y": "Elevated",
+        "value": 0.06666666666666667,
+        "status": "observed",
+        "label": "7%\nn=2",
+        "count": 2,
+        "share": 0.06666666666666667,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Mudflat",
+        "y": "Elevated",
+        "value": 0.2,
+        "status": "observed",
+        "label": "20%\nn=6",
+        "count": 6,
+        "share": 0.2,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Seagrass bed",
+        "y": "Elevated",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Open estuary",
+        "y": "Elevated",
+        "value": 0.6,
+        "status": "observed",
+        "label": "60%\nn=18",
+        "count": 18,
+        "share": 0.6,
+        "bandDefinition": "1.25–1.54"
+      },
+      {
+        "x": "Headwater",
+        "y": "High",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Riffle",
+        "y": "High",
+        "value": 0.06666666666666667,
+        "status": "observed",
+        "label": "7%\nn=2",
+        "count": 2,
+        "share": 0.06666666666666667,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Deep pool",
+        "y": "High",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Side channel",
+        "y": "High",
+        "value": 0.16666666666666666,
+        "status": "observed",
+        "label": "17%\nn=5",
+        "count": 5,
+        "share": 0.16666666666666666,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Floodplain",
+        "y": "High",
+        "value": 0.13333333333333333,
+        "status": "observed",
+        "label": "13%\nn=4",
+        "count": 4,
+        "share": 0.13333333333333333,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Wet meadow",
+        "y": "High",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Tidal creek",
+        "y": "High",
+        "value": 0.8,
+        "status": "observed",
+        "label": "80%\nn=24",
+        "count": 24,
+        "share": 0.8,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Mudflat",
+        "y": "High",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Seagrass bed",
+        "y": "High",
+        "value": 0.7666666666666667,
+        "status": "observed",
+        "label": "77%\nn=23",
+        "count": 23,
+        "share": 0.7666666666666667,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Open estuary",
+        "y": "High",
+        "value": 0.26666666666666666,
+        "status": "observed",
+        "label": "27%\nn=8",
+        "count": 8,
+        "share": 0.26666666666666666,
+        "bandDefinition": "1.55–1.84"
+      },
+      {
+        "x": "Headwater",
+        "y": "Very high",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Riffle",
+        "y": "Very high",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Deep pool",
+        "y": "Very high",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Side channel",
+        "y": "Very high",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Floodplain",
+        "y": "Very high",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Wet meadow",
+        "y": "Very high",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Tidal creek",
+        "y": "Very high",
+        "value": 0.13333333333333333,
+        "status": "observed",
+        "label": "13%\nn=4",
+        "count": 4,
+        "share": 0.13333333333333333,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Mudflat",
+        "y": "Very high",
+        "value": 0.0,
+        "status": "observed",
+        "label": "0%\nn=0",
+        "count": 0,
+        "share": 0.0,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Seagrass bed",
+        "y": "Very high",
+        "value": 0.23333333333333334,
+        "status": "observed",
+        "label": "23%\nn=7",
+        "count": 7,
+        "share": 0.23333333333333334,
+        "bandDefinition": "1.85–2.30"
+      },
+      {
+        "x": "Open estuary",
+        "y": "Very high",
+        "value": 0.03333333333333333,
+        "status": "observed",
+        "label": "3%\nn=1",
+        "count": 1,
+        "share": 0.03333333333333333,
+        "bandDefinition": "1.85–2.30"
+      }
+    ],
+    "valueScale": {
+      "domain": [
+        0,
+        1
+      ],
+      "label": "Within-habitat response share",
+      "format": "percent"
+    },
+    "statusLabels": {
+      "insufficient": "Insufficient sample",
+      "missing": "No data"
+    }
+  },
+  "rawObservations": [
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 1,
+      "responseIndex": 0.9453,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 2,
+      "responseIndex": 1.0892,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 3,
+      "responseIndex": 1.104,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 4,
+      "responseIndex": 1.1523,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 5,
+      "responseIndex": 1.0063,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 6,
+      "responseIndex": 1.0239,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 7,
+      "responseIndex": 0.9447,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 8,
+      "responseIndex": 1.153,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 9,
+      "responseIndex": 1.1297,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 10,
+      "responseIndex": 1.0564,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 11,
+      "responseIndex": 1.0666,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 12,
+      "responseIndex": 1.1188,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 13,
+      "responseIndex": 1.1649,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 14,
+      "responseIndex": 0.9998,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 15,
+      "responseIndex": 1.0677,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 16,
+      "responseIndex": 1.0071,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 17,
+      "responseIndex": 1.0679,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 18,
+      "responseIndex": 1.0782,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 19,
+      "responseIndex": 1.0731,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 20,
+      "responseIndex": 1.1658,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 21,
+      "responseIndex": 1.0525,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 22,
+      "responseIndex": 0.9694,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 23,
+      "responseIndex": 0.9931,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 24,
+      "responseIndex": 1.1145,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 25,
+      "responseIndex": 1.0277,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 26,
+      "responseIndex": 0.9717,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 27,
+      "responseIndex": 1.0888,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 28,
+      "responseIndex": 0.8225,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 29,
+      "responseIndex": 1.0307,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "headwater",
+      "habitat": "Headwater",
+      "observation": 30,
+      "responseIndex": 0.9852,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 1,
+      "responseIndex": 1.0263,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 2,
+      "responseIndex": 1.1817,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 3,
+      "responseIndex": 1.2716,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 4,
+      "responseIndex": 1.2999,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 5,
+      "responseIndex": 1.3205,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 6,
+      "responseIndex": 1.3768,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 7,
+      "responseIndex": 1.5056,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 8,
+      "responseIndex": 1.2183,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 9,
+      "responseIndex": 1.3992,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 10,
+      "responseIndex": 1.0957,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 11,
+      "responseIndex": 1.3939,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 12,
+      "responseIndex": 1.3127,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 13,
+      "responseIndex": 1.5462,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 14,
+      "responseIndex": 1.4332,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 15,
+      "responseIndex": 1.7083,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 16,
+      "responseIndex": 1.1866,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 17,
+      "responseIndex": 1.3102,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 18,
+      "responseIndex": 1.3844,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 19,
+      "responseIndex": 1.3398,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 20,
+      "responseIndex": 1.3448,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 21,
+      "responseIndex": 1.4646,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 22,
+      "responseIndex": 1.4864,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 23,
+      "responseIndex": 1.213,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 24,
+      "responseIndex": 1.246,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 25,
+      "responseIndex": 1.1585,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 26,
+      "responseIndex": 1.3644,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 27,
+      "responseIndex": 1.3639,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 28,
+      "responseIndex": 1.3842,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 29,
+      "responseIndex": 1.085,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "riffle",
+      "habitat": "Riffle",
+      "observation": 30,
+      "responseIndex": 1.5763,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 1,
+      "responseIndex": 0.7844,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 2,
+      "responseIndex": 0.4889,
+      "responseBand": "Very low",
+      "bandDefinition": "0.30–0.64"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 3,
+      "responseIndex": 0.676,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 4,
+      "responseIndex": 1.099,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 5,
+      "responseIndex": 0.6756,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 6,
+      "responseIndex": 0.7587,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 7,
+      "responseIndex": 0.7705,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 8,
+      "responseIndex": 0.9414,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 9,
+      "responseIndex": 0.6201,
+      "responseBand": "Very low",
+      "bandDefinition": "0.30–0.64"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 10,
+      "responseIndex": 0.7938,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 11,
+      "responseIndex": 0.7203,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 12,
+      "responseIndex": 0.695,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 13,
+      "responseIndex": 0.8925,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 14,
+      "responseIndex": 0.9847,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 15,
+      "responseIndex": 0.7784,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 16,
+      "responseIndex": 1.0273,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 17,
+      "responseIndex": 0.9709,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 18,
+      "responseIndex": 0.6132,
+      "responseBand": "Very low",
+      "bandDefinition": "0.30–0.64"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 19,
+      "responseIndex": 0.6237,
+      "responseBand": "Very low",
+      "bandDefinition": "0.30–0.64"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 20,
+      "responseIndex": 0.699,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 21,
+      "responseIndex": 0.7434,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 22,
+      "responseIndex": 0.9108,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 23,
+      "responseIndex": 0.872,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 24,
+      "responseIndex": 0.9316,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 25,
+      "responseIndex": 0.8137,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 26,
+      "responseIndex": 0.9146,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 27,
+      "responseIndex": 0.7666,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 28,
+      "responseIndex": 0.673,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 29,
+      "responseIndex": 0.6482,
+      "responseBand": "Very low",
+      "bandDefinition": "0.30–0.64"
+    },
+    {
+      "habitatKey": "deep_pool",
+      "habitat": "Deep pool",
+      "observation": 30,
+      "responseIndex": 1.0313,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 1,
+      "responseIndex": 1.4101,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 2,
+      "responseIndex": 1.489,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 3,
+      "responseIndex": 1.6016,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 4,
+      "responseIndex": 1.6442,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 5,
+      "responseIndex": 1.7068,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 6,
+      "responseIndex": 1.3784,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 7,
+      "responseIndex": 1.4666,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 8,
+      "responseIndex": 1.4529,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 9,
+      "responseIndex": 1.2929,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 10,
+      "responseIndex": 1.504,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 11,
+      "responseIndex": 1.3694,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 12,
+      "responseIndex": 1.5358,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 13,
+      "responseIndex": 1.3522,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 14,
+      "responseIndex": 1.4799,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 15,
+      "responseIndex": 1.5225,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 16,
+      "responseIndex": 1.3559,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 17,
+      "responseIndex": 1.4838,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 18,
+      "responseIndex": 1.379,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 19,
+      "responseIndex": 1.5248,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 20,
+      "responseIndex": 1.5849,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 21,
+      "responseIndex": 1.4977,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 22,
+      "responseIndex": 1.3764,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 23,
+      "responseIndex": 1.466,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 24,
+      "responseIndex": 1.3836,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 25,
+      "responseIndex": 1.5285,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 26,
+      "responseIndex": 1.4305,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 27,
+      "responseIndex": 1.3247,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 28,
+      "responseIndex": 1.3497,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 29,
+      "responseIndex": 1.4477,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "side_channel",
+      "habitat": "Side channel",
+      "observation": 30,
+      "responseIndex": 1.739,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 1,
+      "responseIndex": 1.5148,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 2,
+      "responseIndex": 1.3193,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 3,
+      "responseIndex": 1.0865,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 4,
+      "responseIndex": 1.143,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 5,
+      "responseIndex": 1.2559,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 6,
+      "responseIndex": 1.1302,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 7,
+      "responseIndex": 1.6375,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 8,
+      "responseIndex": 0.8906,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 9,
+      "responseIndex": 0.9701,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 10,
+      "responseIndex": 0.7478,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 11,
+      "responseIndex": 0.8609,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 12,
+      "responseIndex": 1.1691,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 13,
+      "responseIndex": 1.299,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 14,
+      "responseIndex": 0.5914,
+      "responseBand": "Very low",
+      "bandDefinition": "0.30–0.64"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 15,
+      "responseIndex": 0.9924,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 16,
+      "responseIndex": 1.0456,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 17,
+      "responseIndex": 1.1472,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 18,
+      "responseIndex": 1.2789,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 19,
+      "responseIndex": 1.1361,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 20,
+      "responseIndex": 1.1241,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 21,
+      "responseIndex": 0.8283,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 22,
+      "responseIndex": 1.3843,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 23,
+      "responseIndex": 1.3722,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 24,
+      "responseIndex": 1.1739,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 25,
+      "responseIndex": 1.696,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 26,
+      "responseIndex": 1.2633,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 27,
+      "responseIndex": 1.2369,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 28,
+      "responseIndex": 1.5614,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 29,
+      "responseIndex": 1.8132,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "floodplain",
+      "habitat": "Floodplain",
+      "observation": 30,
+      "responseIndex": 0.7813,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 1,
+      "responseIndex": 1.2693,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 2,
+      "responseIndex": 1.3723,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 3,
+      "responseIndex": 1.2102,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 4,
+      "responseIndex": 1.3125,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 5,
+      "responseIndex": 1.346,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 6,
+      "responseIndex": 1.3787,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 7,
+      "responseIndex": 1.3508,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 8,
+      "responseIndex": 1.1287,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 9,
+      "responseIndex": 1.3117,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 10,
+      "responseIndex": 1.1776,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 11,
+      "responseIndex": 1.1672,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 12,
+      "responseIndex": 1.3088,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 13,
+      "responseIndex": 1.33,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 14,
+      "responseIndex": 1.2693,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 15,
+      "responseIndex": 1.3422,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 16,
+      "responseIndex": 1.2122,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 17,
+      "responseIndex": 1.3466,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 18,
+      "responseIndex": 1.3314,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 19,
+      "responseIndex": 1.2466,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 20,
+      "responseIndex": 1.2562,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 21,
+      "responseIndex": 1.3285,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 22,
+      "responseIndex": 1.1559,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 23,
+      "responseIndex": 1.1841,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 24,
+      "responseIndex": 1.2357,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 25,
+      "responseIndex": 1.2533,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 26,
+      "responseIndex": 1.263,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 27,
+      "responseIndex": 1.3285,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 28,
+      "responseIndex": 1.299,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 29,
+      "responseIndex": 1.2307,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "wet_meadow",
+      "habitat": "Wet meadow",
+      "observation": 30,
+      "responseIndex": 1.1325,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 1,
+      "responseIndex": 1.5988,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 2,
+      "responseIndex": 1.8263,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 3,
+      "responseIndex": 1.7966,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 4,
+      "responseIndex": 2.0272,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 5,
+      "responseIndex": 1.7485,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 6,
+      "responseIndex": 1.7498,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 7,
+      "responseIndex": 1.725,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 8,
+      "responseIndex": 1.9488,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 9,
+      "responseIndex": 1.7955,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 10,
+      "responseIndex": 1.7307,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 11,
+      "responseIndex": 1.6338,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 12,
+      "responseIndex": 1.6048,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 13,
+      "responseIndex": 1.7763,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 14,
+      "responseIndex": 1.7498,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 15,
+      "responseIndex": 1.5194,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 16,
+      "responseIndex": 1.7087,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 17,
+      "responseIndex": 1.7348,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 18,
+      "responseIndex": 1.8193,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 19,
+      "responseIndex": 1.3927,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 20,
+      "responseIndex": 1.6161,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 21,
+      "responseIndex": 1.8704,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 22,
+      "responseIndex": 1.8351,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 23,
+      "responseIndex": 1.8271,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 24,
+      "responseIndex": 1.7296,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 25,
+      "responseIndex": 1.8082,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 26,
+      "responseIndex": 1.9318,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 27,
+      "responseIndex": 1.8475,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 28,
+      "responseIndex": 1.6172,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 29,
+      "responseIndex": 1.6504,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "tidal_creek",
+      "habitat": "Tidal creek",
+      "observation": 30,
+      "responseIndex": 1.7588,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 1,
+      "responseIndex": 0.9611,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 2,
+      "responseIndex": 0.9011,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 3,
+      "responseIndex": 1.3114,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 4,
+      "responseIndex": 0.755,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 5,
+      "responseIndex": 1.1377,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 6,
+      "responseIndex": 1.4101,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 7,
+      "responseIndex": 0.9085,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 8,
+      "responseIndex": 0.9597,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 9,
+      "responseIndex": 0.9674,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 10,
+      "responseIndex": 1.3756,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 11,
+      "responseIndex": 0.9818,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 12,
+      "responseIndex": 1.129,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 13,
+      "responseIndex": 0.7483,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 14,
+      "responseIndex": 1.126,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 15,
+      "responseIndex": 1.0385,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 16,
+      "responseIndex": 0.9108,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 17,
+      "responseIndex": 1.0622,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 18,
+      "responseIndex": 1.1365,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 19,
+      "responseIndex": 1.2452,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 20,
+      "responseIndex": 1.3756,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 21,
+      "responseIndex": 1.1817,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 22,
+      "responseIndex": 0.8563,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 23,
+      "responseIndex": 0.8416,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 24,
+      "responseIndex": 1.0722,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 25,
+      "responseIndex": 1.3044,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 26,
+      "responseIndex": 0.9681,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 27,
+      "responseIndex": 0.9631,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 28,
+      "responseIndex": 1.2797,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 29,
+      "responseIndex": 0.9548,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "mudflat",
+      "habitat": "Mudflat",
+      "observation": 30,
+      "responseIndex": 0.9658,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 1,
+      "responseIndex": 1.8621,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 2,
+      "responseIndex": 1.9091,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 3,
+      "responseIndex": 1.7565,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 4,
+      "responseIndex": 1.799,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 5,
+      "responseIndex": 1.7043,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 6,
+      "responseIndex": 1.8047,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 7,
+      "responseIndex": 1.6646,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 8,
+      "responseIndex": 1.7617,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 9,
+      "responseIndex": 1.8654,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 10,
+      "responseIndex": 1.717,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 11,
+      "responseIndex": 1.7891,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 12,
+      "responseIndex": 1.8105,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 13,
+      "responseIndex": 1.7848,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 14,
+      "responseIndex": 1.86,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 15,
+      "responseIndex": 1.7383,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 16,
+      "responseIndex": 1.8565,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 17,
+      "responseIndex": 1.7786,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 18,
+      "responseIndex": 1.7799,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 19,
+      "responseIndex": 1.7006,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 20,
+      "responseIndex": 1.796,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 21,
+      "responseIndex": 1.7184,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 22,
+      "responseIndex": 1.8418,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 23,
+      "responseIndex": 1.8845,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 24,
+      "responseIndex": 1.7658,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 25,
+      "responseIndex": 1.7804,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 26,
+      "responseIndex": 1.8637,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 27,
+      "responseIndex": 1.8165,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 28,
+      "responseIndex": 1.791,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 29,
+      "responseIndex": 1.7301,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "seagrass_bed",
+      "habitat": "Seagrass bed",
+      "observation": 30,
+      "responseIndex": 1.7739,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 1,
+      "responseIndex": 1.2657,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 2,
+      "responseIndex": 1.4394,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 3,
+      "responseIndex": 1.4015,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 4,
+      "responseIndex": 1.5221,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 5,
+      "responseIndex": 1.4793,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 6,
+      "responseIndex": 1.4667,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 7,
+      "responseIndex": 1.1326,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 8,
+      "responseIndex": 1.329,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 9,
+      "responseIndex": 1.1032,
+      "responseBand": "Moderate",
+      "bandDefinition": "0.95–1.24"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 10,
+      "responseIndex": 1.6003,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 11,
+      "responseIndex": 1.7482,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 12,
+      "responseIndex": 1.58,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 13,
+      "responseIndex": 1.309,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 14,
+      "responseIndex": 2.115,
+      "responseBand": "Very high",
+      "bandDefinition": "1.85–2.30"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 15,
+      "responseIndex": 1.4785,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 16,
+      "responseIndex": 1.3324,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 17,
+      "responseIndex": 1.3779,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 18,
+      "responseIndex": 1.3376,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 19,
+      "responseIndex": 1.5333,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 20,
+      "responseIndex": 1.2584,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 21,
+      "responseIndex": 1.6896,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 22,
+      "responseIndex": 1.4883,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 23,
+      "responseIndex": 1.6437,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 24,
+      "responseIndex": 0.7927,
+      "responseBand": "Low",
+      "bandDefinition": "0.65–0.94"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 25,
+      "responseIndex": 1.6923,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 26,
+      "responseIndex": 1.3453,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 27,
+      "responseIndex": 1.619,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 28,
+      "responseIndex": 1.3047,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 29,
+      "responseIndex": 1.4204,
+      "responseBand": "Elevated",
+      "bandDefinition": "1.25–1.54"
+    },
+    {
+      "habitatKey": "open_estuary",
+      "habitat": "Open estuary",
+      "observation": 30,
+      "responseIndex": 1.6462,
+      "responseBand": "High",
+      "bandDefinition": "1.55–1.84"
+    }
+  ],
+  "responseBands": [
+    {
+      "label": "Very low",
+      "displayRange": "0.30–0.64",
+      "lowerInclusive": 0.3,
+      "upperExclusive": 0.65,
+      "upperInclusive": null
+    },
+    {
+      "label": "Low",
+      "displayRange": "0.65–0.94",
+      "lowerInclusive": 0.65,
+      "upperExclusive": 0.95,
+      "upperInclusive": null
+    },
+    {
+      "label": "Moderate",
+      "displayRange": "0.95–1.24",
+      "lowerInclusive": 0.95,
+      "upperExclusive": 1.25,
+      "upperInclusive": null
+    },
+    {
+      "label": "Elevated",
+      "displayRange": "1.25–1.54",
+      "lowerInclusive": 1.25,
+      "upperExclusive": 1.55,
+      "upperInclusive": null
+    },
+    {
+      "label": "High",
+      "displayRange": "1.55–1.84",
+      "lowerInclusive": 1.55,
+      "upperExclusive": 1.85,
+      "upperInclusive": null
+    },
+    {
+      "label": "Very high",
+      "displayRange": "1.85–2.30",
+      "lowerInclusive": 1.85,
+      "upperExclusive": null,
+      "upperInclusive": 2.3
+    }
+  ],
+  "derived": {
+    "orientation": "rows=response bands; columns=habitat classes",
+    "countMatrix": [
+      [
+        0,
+        0,
+        5,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        20,
+        0,
+        5,
+        0,
+        0,
+        7,
+        0,
+        1
+      ],
+      [
+        27,
+        9,
+        5,
+        0,
+        12,
+        11,
+        0,
+        17,
+        0,
+        2
+      ],
+      [
+        0,
+        19,
+        0,
+        25,
+        8,
+        19,
+        2,
+        6,
+        0,
+        18
+      ],
+      [
+        0,
+        2,
+        0,
+        5,
+        4,
+        0,
+        24,
+        0,
+        23,
+        8
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        7,
+        1
+      ]
+    ],
+    "shareMatrix": [
+      [
+        0.0,
+        0.0,
+        0.16666666666666666,
+        0.0,
+        0.03333333333333333,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.1,
+        0.0,
+        0.6666666666666666,
+        0.0,
+        0.16666666666666666,
+        0.0,
+        0.0,
+        0.23333333333333334,
+        0.0,
+        0.03333333333333333
+      ],
+      [
+        0.9,
+        0.3,
+        0.16666666666666666,
+        0.0,
+        0.4,
+        0.36666666666666664,
+        0.0,
+        0.5666666666666667,
+        0.0,
+        0.06666666666666667
+      ],
+      [
+        0.0,
+        0.6333333333333333,
+        0.0,
+        0.8333333333333334,
+        0.26666666666666666,
+        0.6333333333333333,
+        0.06666666666666667,
+        0.2,
+        0.0,
+        0.6
+      ],
+      [
+        0.0,
+        0.06666666666666667,
+        0.0,
+        0.16666666666666666,
+        0.13333333333333333,
+        0.0,
+        0.8,
+        0.0,
+        0.7666666666666667,
+        0.26666666666666666
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.13333333333333333,
+        0.0,
+        0.23333333333333334,
+        0.03333333333333333
+      ]
+    ]
+  },
+  "notes": [
+    "Thirty seeded Gaussian observations are generated per habitat, rounded to four decimal places, then mechanically assigned to the six fixed project bins.",
+    "Response bands are illustrative project bins, not ecological thresholds or regulatory categories.",
+    "Each populated cell is an observed zero or positive share; no zero has been replaced by a small non-zero fill."
+  ],
+  "provenance": {
+    "kind": "deterministic_synthetic",
+    "statement": "Deterministic synthetic observations generated for Figurestead renderer and categorical-comparison evaluation. Response bands are illustrative project bins; values are not ecological measurements, validated model outputs, or regulatory thresholds."
+  },
+  "renderer": "categorical_matrix",
+  "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix",
+  "sceneId": "habitat_response_matrix",
+  "scientificContext": "A synthetic ecological response distribution summarized across habitat classes",
+  "seed": 15401,
+  "stressors": [
+    "ten mixed-length column labels",
+    "six fixed response bands",
+    "sixty exact-value cell annotations",
+    "observed zero cells",
+    "compact matrix density"
+  ],
+  "subtitle": "Within-habitat observations summarized into categorical response bands",
+  "suggestedSpec": {
+    "note": "Illustrative project bins; deterministic synthetic observations; n=30 per habitat.",
+    "xLabel": "habitat class",
+    "yLabel": "response band"
+  },
+  "suggestedTheme": {
+    "key": "slipware",
+    "name": "Slipware"
+  },
+  "synthetic": true,
+  "tier": "showcase_candidate",
+  "title": "Response distribution across habitat classes",
+  "generation": {
+    "method": "python_random_gauss",
+    "observationsPerHabitat": 30,
+    "roundDecimalPlaces": 4,
+    "binning": "lower inclusive; upper exclusive except the final upper-inclusive bin",
+    "parameters": [
+      {
+        "habitat": "Headwater",
+        "targetCenter": 1.05,
+        "targetSpread": 0.08
+      },
+      {
+        "habitat": "Riffle",
+        "targetCenter": 1.34,
+        "targetSpread": 0.13
+      },
+      {
+        "habitat": "Deep pool",
+        "targetCenter": 0.82,
+        "targetSpread": 0.17
+      },
+      {
+        "habitat": "Side channel",
+        "targetCenter": 1.48,
+        "targetSpread": 0.11
+      },
+      {
+        "habitat": "Floodplain",
+        "targetCenter": 1.23,
+        "targetSpread": 0.22
+      },
+      {
+        "habitat": "Wet meadow",
+        "targetCenter": 1.25,
+        "targetSpread": 0.07
+      },
+      {
+        "habitat": "Tidal creek",
+        "targetCenter": 1.72,
+        "targetSpread": 0.15
+      },
+      {
+        "habitat": "Mudflat",
+        "targetCenter": 1.03,
+        "targetSpread": 0.2
+      },
+      {
+        "habitat": "Seagrass bed",
+        "targetCenter": 1.78,
+        "targetSpread": 0.08
+      },
+      {
+        "habitat": "Open estuary",
+        "targetCenter": 1.43,
+        "targetSpread": 0.18
+      }
+    ]
+  }
+}

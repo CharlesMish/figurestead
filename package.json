@@ -1,0 +1,18 @@
+{
+  "name": "figurestead-repository-checks",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Pinned local tooling for Figurestead repository correctness checks; not a publishable package.",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "test": "npm run test:core",
+    "test:core": "node web/test/core-smoke.mjs && python3 audit/current-head-hardening/test_svg_serialization.py",
+    "test:browser-first-success": "node ci/check-browser-first-success.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.0"
+  }
+}

@@ -27,10 +27,18 @@ export function createFigurestead(canvas, input, options = {}) {
     atmosphere = contract.view.ambient === "matrix" ? prepareAtmosphere(contract.motion) : [];
   };
   const layoutFactory = (width, height) => deriveFigureLayout(width, height, contract);
+  const measuredText = (text, fontSize) => {
+    surface.context.save();
+    surface.context.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace`;
+    const value = surface.context.measureText(String(text));
+    surface.context.restore();
+    return { width: value.width, ascent: value.actualBoundingBoxAscent, descent: value.actualBoundingBoxDescent };
+  };
+  const resolve = () => resolveTerminalScene(scene, { width: surface.layout.width, height: surface.layout.height, measureText: measuredText });
   const resize = () => {
     if (destroyed) return;
     surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
-    resolvedScene = resolveTerminalScene(scene, { width: surface.layout.width, height: surface.layout.height });
+    resolvedScene = resolve();
     composedScene = composeResolvedScene(resolvedScene);
     if (clock) draw(clock.progress);
   };
@@ -52,7 +60,7 @@ export function createFigurestead(canvas, input, options = {}) {
   };
 
   prepare(); surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
-  resolvedScene = resolveTerminalScene(scene, { width: surface.layout.width, height: surface.layout.height });
+  resolvedScene = resolve();
   composedScene = composeResolvedScene(resolvedScene);
   clock = new AnimationClock({ durationMs: contract.motion.durationMs, draw, onState: options.onState });
   companion = createAccessibilityCompanion(canvas, contract, registry, options.accessibility);
@@ -71,7 +79,7 @@ export function createFigurestead(canvas, input, options = {}) {
   const replace = (next) => {
     clock.pause(); contract = next; prepare(); clock.durationMs = contract.motion.durationMs;
     surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
-    resolvedScene = resolveTerminalScene(scene, { width: surface.layout.width, height: surface.layout.height });
+    resolvedScene = resolve();
     composedScene = composeResolvedScene(resolvedScene);
     companion.destroy(); companion = createAccessibilityCompanion(canvas, contract, registry, options.accessibility); clock.settle();
   };

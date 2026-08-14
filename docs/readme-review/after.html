@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../../"><title>Figurestead README after</title><style>
+  :root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#fff;color:#1f2328;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.markdown-body{max-width:1012px;margin:0 auto;padding:40px 32px 72px}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #d0d7de}.markdown-body h1{font-size:2em}.markdown-body h2{margin-top:24px;font-size:1.5em}.markdown-body h3{margin-top:24px;font-size:1.25em}.markdown-body a{color:#0969da;text-decoration:none}.markdown-body img{max-width:100%;height:auto;background:#fff}.markdown-body pre{overflow:auto;padding:16px;border-radius:6px;background:#f6f8fa}.markdown-body code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:85%}.markdown-body :not(pre)>code{padding:.2em .4em;border-radius:6px;background:#afb8c133}.markdown-body blockquote{margin:0;padding:0 1em;color:#59636e;border-left:.25em solid #d0d7de}.markdown-body li+li{margin-top:.25em}@media(max-width:544px){.markdown-body{padding:24px 16px 48px}.markdown-body h1{font-size:1.75em}.markdown-body h2{font-size:1.35em}}
+</style></head><body><main class="markdown-body" data-readme-variant="after"><h1>Figurestead</h1>
+<p>Figurestead is an experimental scientific figure system with Python and framework-free browser surfaces. It shares figure-contract and theme semantics across runtimes while keeping scientific output deterministic and inspectable.</p>
+<p>Current public alpha: Python <code>figurestead==0.9.0a1</code> and browser <code>@figurestead/web@0.9.0-alpha.1</code>.</p>
+<h2>Start here</h2>
+<h3>Python</h3>
+<pre><code class="language-bash">python -m pip install &quot;figurestead==0.9.0a1&quot;
+</code></pre>
+<pre><code class="language-python">from figurestead import line
+
+figure, axes = line([0, 1, 2], [[0, 1, 0]])
+figure.savefig(&quot;figurestead-first-success.png&quot;, dpi=150)
+</code></pre>
+<p><a href="examples/python-first-success.py">Open the exact Python example</a>.</p>
+<h3>Browser</h3>
+<pre><code class="language-bash">npm install @figurestead/web@0.9.0-alpha.1
+</code></pre>
+<p>The package exports <code>createFigurestead</code>; rendering requires a complete normalized figure contract. The repository includes one with every identifier defined. From a checkout:</p>
+<pre><code class="language-bash">python3 -m http.server 4173
+</code></pre>
+<p>Open <a href="http://127.0.0.1:4173/examples/browser-first-success/">http://127.0.0.1:4173/examples/browser-first-success/</a>. <a href="examples/browser-first-success/">Inspect the exact browser example and its inline contract</a>.</p>
+<p>Python and browser surfaces share normalized figure-contract vocabulary and selected theme definitions. Each surface renders through its own implementation; shared semantics do not imply pixel-identical output.</p>
+<h2>Figurestead at a glance</h2>
+<p><a href="docs/assets/readme/figurestead-at-a-glance.png"><img src="docs/assets/readme/figurestead-at-a-glance.png" alt="Eight deterministic synthetic Figurestead specimens spanning line, scatter, distribution, and temporal figure families"></a></p>
+<p>The montage spans temporal response, periodic series, calibration and nonlinear relationships, distributions, grouped distributions, exact temporal coverage, and sparse observations. These are deterministic synthetic design and renderer-evaluation fixtures—not scientific measurements or findings.</p>
+<h2>Beyond the montage</h2>
+<p><a href="docs/assets/readme/populated-categorical-response-matrix.png"><img src="docs/assets/readme/populated-categorical-response-matrix.png" alt="Populated categorical response matrix with habitat columns, response-band rows, sequential fills, percentages, and exact counts"></a></p>
+<p>The populated categorical response matrix preserves ten habitat columns and six response-band rows. Fill encodes bounded within-habitat share while each cell retains its percentage and exact count. The fixture is deterministic and synthetic; its project-defined bands are not ecological or regulatory thresholds. <a href="specimen-study/matrix-study.html">Inspect the source scene, raw observations, and derived matrices</a>.</p>
+<h2>Python and browser</h2>
+<p>Figurestead&#39;s two surfaces share a normalized contract vocabulary, selected theme definitions, and evidence-oriented conventions. They do not promise identical pixels or identical renderer coverage.</p>
+<ul>
+<li>Python provides the compact plotting API used by the first-success example and the existing categorical-matrix extension shown above.</li>
+<li>The framework-free browser package provides its accepted core renderer registry plus the temporal extension at <code>@figurestead/web/extensions/temporal</code>.</li>
+<li>The populated categorical matrix is currently Python-rendered; this README does not imply a browser categorical-matrix renderer exists.</li>
+</ul>
+<h2>Evidence and documentation</h2>
+<ul>
+<li><a href="https://charlesmish.github.io/figurestead/">Public overview</a></li>
+<li><a href="https://charlesmish.github.io/figurestead/evidence/">Evidence Atlas</a></li>
+<li><a href="examples/python-first-success.py">Python first-success example</a></li>
+<li><a href="examples/browser-first-success/">Browser first-success example</a></li>
+<li><a href="specimen-study/README.md">Deterministic specimen corpus and local visual lab</a></li>
+<li><a href="technical-showcase/reviewer-packet/README.md">Technical-showcase reviewer packet</a> — repository-local and undeployed</li>
+</ul>
+<h2>Status and limits</h2>
+<p>Figurestead is an experimental public alpha, not a mature universal plotting library.</p>
+<ul>
+<li>The three-series and five-series color-led recommendations are project-authored usage guidance. Higher-series evidence relies on redundant marker and dash channels where those channels exist.</li>
+<li>Digital paper evidence records a 6.372 pt minimum label against Figurestead&#39;s internal 6 pt project floor; it is not physical-printer certification or an external typographic standard.</li>
+<li>Color-vision-deficiency plates are simulations with documented model limits, not medical or universal-accessibility certification.</li>
+<li>Renderer coverage differs between Python and browser runtimes, and all specimens shown here are deterministic synthetic evaluation fixtures.</li>
+</ul>
+<p>Figurestead is MIT licensed. See <a href="VERSIONING.md">versioning</a>, <a href="THIRD_PARTY_NOTICES.md">third-party notices</a>, and <a href="TRADEMARKS.md">trademarks</a>.</p>
+</main></body></html>

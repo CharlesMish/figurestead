@@ -1,0 +1,7 @@
+response_band,Headwater,Riffle,Deep pool,Side channel,Floodplain,Wet meadow,Tidal creek,Mudflat,Seagrass bed,Open estuary
+Very low,0,0,5,0,1,0,0,0,0,0
+Low,3,0,20,0,5,0,0,7,0,1
+Moderate,27,9,5,0,12,11,0,17,0,2
+Elevated,0,19,0,25,8,19,2,6,0,18
+High,0,2,0,5,4,0,24,0,23,8
+Very high,0,0,0,0,0,0,4,0,7,1

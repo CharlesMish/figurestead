@@ -1,0 +1,233 @@
+{
+  "schemaVersion": "figurestead.specimen-corpus/0.1",
+  "name": "Figurestead Specimen Corpus v0.1",
+  "status": "design-input; not public scientific evidence",
+  "created": "2026-08-10",
+  "sceneCount": 12,
+  "showcaseCount": 8,
+  "stressCount": 4,
+  "supportedRendererTargets": [
+    "line",
+    "scatter",
+    "strip_summary",
+    "temporal_coverage",
+    "temporal_observations"
+  ],
+  "sourcePolicy": {
+    "allSynthetic": true,
+    "externalDatasetsIncluded": false,
+    "reason": "v0.1 isolates renderer/theme/composition evaluation from licensing, provenance, and domain-validity questions. A separately sourced real-data scene can be added after the corpus composition is proven."
+  },
+  "sceneTiers": {
+    "showcase": "Eligible for a public specimen montage if the rendered result passes editorial/accessibility review.",
+    "stress": "Intentionally probes a known edge or denser condition. Do not surface as a product claim merely because it renders."
+  },
+  "scenes": [
+    {
+      "sceneId": "watershed_storm_response",
+      "tier": "showcase",
+      "renderer": "line",
+      "seed": 2409,
+      "title": "Storm response across five watershed sites",
+      "theme": "slipware",
+      "json": "scenes/watershed_storm_response.json",
+      "csv": "tables/watershed_storm_response.csv",
+      "stressors": [
+        "five-series density",
+        "peak timing differences",
+        "curve overlap",
+        "marker/dash redundancy"
+      ],
+      "question": "Can five semantic site identities remain readable through different peak timings and partially overlapping recovery curves?"
+    },
+    {
+      "sceneId": "circadian_phase_shift",
+      "tier": "showcase",
+      "renderer": "line",
+      "seed": 3112,
+      "title": "Circadian phase shift",
+      "theme": "deep_observatory_sage_core",
+      "json": "scenes/circadian_phase_shift.json",
+      "csv": "tables/circadian_phase_shift.csv",
+      "stressors": [
+        "curve crossings",
+        "near-overlap",
+        "periodic shape",
+        "four-series identity"
+      ],
+      "question": "Can phase shifts, crossings, and a damped waveform remain distinguishable without turning the figure into a color legend exercise?"
+    },
+    {
+      "sceneId": "gene_expression_recovery",
+      "tier": "stress",
+      "renderer": "line",
+      "seed": 4217,
+      "title": "Signed recovery after perturbation",
+      "theme": "ultraviolet_laboratory",
+      "json": "scenes/gene_expression_recovery.json",
+      "csv": "tables/gene_expression_recovery.csv",
+      "stressors": [
+        "six-series load",
+        "signed values",
+        "zero crossings",
+        "convergence",
+        "dash-cycle dependence"
+      ],
+      "question": "Can the renderer preserve zero crossings and six identities when several trajectories converge toward baseline?"
+    },
+    {
+      "sceneId": "instrument_calibration",
+      "tier": "showcase",
+      "renderer": "scatter",
+      "seed": 5309,
+      "title": "Instrument calibration agreement",
+      "theme": "registration_ink",
+      "json": "scenes/instrument_calibration.json",
+      "csv": "tables/instrument_calibration.csv",
+      "stressors": [
+        "grouped scatter",
+        "small offsets",
+        "shared trend",
+        "moderate overplotting"
+      ],
+      "question": "Can small between-instrument offsets remain visible without obscuring the shared linear relationship?"
+    },
+    {
+      "sceneId": "dose_response_plate",
+      "tier": "showcase",
+      "renderer": "scatter",
+      "seed": 6143,
+      "title": "Dose-response plate",
+      "theme": "lavender_fog_notebook",
+      "json": "scenes/dose_response_plate.json",
+      "csv": "tables/dose_response_plate.csv",
+      "stressors": [
+        "five-series point cloud",
+        "nonlinearity",
+        "plateau separation",
+        "dense upper range"
+      ],
+      "question": "Can five saturating response families be compared without implying a linear model?"
+    },
+    {
+      "sceneId": "particle_size_relationship",
+      "tier": "stress",
+      "renderer": "scatter",
+      "seed": 7041,
+      "title": "Particle size and settling response",
+      "theme": "midnight_transit_signal_slate",
+      "json": "scenes/particle_size_relationship.json",
+      "csv": "tables/particle_size_relationship.csv",
+      "stressors": [
+        "heteroscedasticity",
+        "uneven spacing",
+        "high-leverage point",
+        "three series"
+      ],
+      "question": "Does the figure make heteroscedasticity and one high-leverage observation visible rather than smoothing them away?"
+    },
+    {
+      "sceneId": "treatment_replicates",
+      "tier": "showcase",
+      "renderer": "strip_summary",
+      "seed": 8119,
+      "title": "Treatment response distributions",
+      "theme": "slipware",
+      "json": "scenes/treatment_replicates.json",
+      "csv": "tables/treatment_replicates.csv",
+      "stressors": [
+        "five groups",
+        "unequal spread",
+        "ordered conditions",
+        "median overlay"
+      ],
+      "question": "Can center and spread be read together without letting the median summary erase the individual observations?"
+    },
+    {
+      "sceneId": "lab_precision",
+      "tier": "stress",
+      "renderer": "strip_summary",
+      "seed": 9097,
+      "title": "Inter-laboratory precision",
+      "theme": "ultraviolet_laboratory",
+      "json": "scenes/lab_precision.json",
+      "csv": "tables/lab_precision.csv",
+      "stressors": [
+        "six point-series identities",
+        "similar medians",
+        "variance contrast",
+        "point-only glyph-cycle stress"
+      ],
+      "question": "Can a point-only distribution figure communicate precision differences when the centers are almost identical?"
+    },
+    {
+      "sceneId": "paired_seasonal_distributions",
+      "tier": "showcase",
+      "renderer": "strip_summary",
+      "seed": 10061,
+      "title": "Seasonal habitat distributions",
+      "theme": "lavender_fog_notebook",
+      "json": "scenes/paired_seasonal_distributions.json",
+      "csv": "tables/paired_seasonal_distributions.csv",
+      "stressors": [
+        "two series within each group",
+        "seasonal shift",
+        "within-group overlap",
+        "median overlay"
+      ],
+      "question": "Can two semantic series remain comparable inside each categorical group while seasonal shifts remain obvious?"
+    },
+    {
+      "sceneId": "field_sampling_coverage",
+      "tier": "showcase",
+      "renderer": "temporal_coverage",
+      "seed": 11173,
+      "title": "Field sampling coverage, 2020–2024",
+      "theme": "deep_observatory_sage_core",
+      "json": "scenes/field_sampling_coverage.json",
+      "csv": "tables/field_sampling_coverage.csv",
+      "stressors": [
+        "five-year span",
+        "irregular sparse visits",
+        "missing station-years",
+        "six ordered sites"
+      ],
+      "question": "Can exact visits and missing station-years be shown without visually implying continuous coverage?"
+    },
+    {
+      "sceneId": "migration_monitoring_coverage",
+      "tier": "stress",
+      "renderer": "temporal_coverage",
+      "seed": 12239,
+      "title": "Seasonal monitoring windows",
+      "theme": "midnight_transit_signal_slate",
+      "json": "scenes/migration_monitoring_coverage.json",
+      "csv": "tables/migration_monitoring_coverage.csv",
+      "stressors": [
+        "seasonal clusters",
+        "long unsampled intervals",
+        "station-specific gap",
+        "dense rug marks"
+      ],
+      "question": "Does a coverage renderer make clustered sampling seasons and a station-specific gap visible without suggesting year-round effort?"
+    },
+    {
+      "sceneId": "reservoir_oxygen_thresholds",
+      "tier": "showcase",
+      "renderer": "temporal_observations",
+      "seed": 13331,
+      "title": "Sparse reservoir oxygen observations",
+      "theme": "registration_ink",
+      "json": "scenes/reservoir_oxygen_thresholds.json",
+      "csv": "tables/reservoir_oxygen_thresholds.csv",
+      "stressors": [
+        "sparse dates",
+        "reference bands",
+        "threshold crossings",
+        "seasonality",
+        "explicit provisional status"
+      ],
+      "question": "Can contextual bands aid interpretation of sparse observations without being mistaken for regulatory thresholds or continuous data?"
+    }
+  ]
+}

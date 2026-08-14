@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "figurestead.specimen-evaluation/3",
+  "corpusVersion": "0.2",
+  "evaluationBasis": "The populated fixture was rendered in Slipware through the unchanged figurestead.extensions.matrix.categorical_matrix Python extension at 1160 × 760, 640 × 416, and 390 × 520 pixels. The local study page was separately verified at 1440 and 390 CSS px in Chromium and Firefox, normal and reduced motion.",
+  "rendererAuthority": {
+    "key": "categorical_matrix",
+    "implementation": "src/figurestead/extensions/matrix/renderer.py",
+    "callable": "figurestead.extensions.matrix.categorical_matrix",
+    "contract": "xCategories / yCategories / cells / valueScale / statusLabels",
+    "publicReference": "site/assets/evidence-matrix.png",
+    "browserStatus": "The browser runtime contains terminal geometry support but no registered categorical-matrix implementation. The study therefore uses the existing Python renderer plus a study-local image/table adapter; no browser renderer or public API was added."
+  },
+  "ratingVocabulary": ["strong", "usable", "weak at montage scale", "stress-only", "blocked"],
+  "responseMatrixScene": {
+    "sceneId": "habitat_response_matrix",
+    "tier": "showcase_candidate",
+    "seed": 15401,
+    "rawObservations": 300,
+    "observationsPerHabitat": 30,
+    "habitatColumns": 10,
+    "responseBandRows": 6,
+    "cells": 60,
+    "communicationAtInspectionSize": "strong",
+    "figureQualityAtInspectionSize": "strong",
+    "themeFit": "strong",
+    "montageSuitability": "usable",
+    "narrowSuitability": "blocked without a future compact matrix policy",
+    "overallMontageClassification": "usable",
+    "alternateThemeRequired": false,
+    "reasonNoAlternateTheme": "Slipware's existing bounded sequential treatment preserves the distribution patterns and annotation contrast at inspection size; no theme weakness was reproduced."
+  },
+  "sparsePopulatedComparison": {
+    "sparseReference": "Four large cells make observed, diagonal/context, zero, and missing states immediately distinguishable.",
+    "populatedResult": "The renderer's rectangular field and sequential-fill character survive at 10 × 6. At inspection size the vertical distribution patterns are comparative rather than decorative, while exact-text density—not fill legibility—becomes the compact limitation.",
+    "answer": "The populated matrix demonstrates materially more comparative work than the sparse reference, but it is primarily an inspection-size success."
+  },
+  "montageDecision": {
+    "originalPreserved": true,
+    "alternateRequired": false,
+    "preferredReplacementIfFuturePolicySucceeds": "treatment_replicates",
+    "reason": "At 640 × 416 the field remains recognizable, but the provenance note crosses long rotated labels and exact annotations require close inspection. The candidate is usable rather than strong, so no alternate montage was produced."
+  },
+  "narrowFinding": {
+    "width": 390,
+    "result": "documented limitation",
+    "finding": "The existing static renderer clips title and legend text and crowds the rotated labels/provenance at 390 × 520. The containing study page itself reflows without document-level overflow and keeps the full data table accessible.",
+    "held": "A scientifically sensible compact annotation/label policy would be a renderer feature and design decision, so it was not invented in this pass."
+  },
+  "accessibility": {
+    "result": "PASS",
+    "structure": "A real table with ten scoped column headers and six scoped row headers.",
+    "binDefinitionsAssociated": true,
+    "exactCountsAndShares": true,
+    "exampleLookup": "Floodplain / Elevated = 26.7% · n=8",
+    "keyboardAndVisibleFocus": "PASS after the study page was corrected to scroll newly focused offscreen targets into view."
+  },
+  "determinism": {
+    "observationGeneration": "PASS",
+    "binMembership": "PASS; every observation belongs to exactly one fixed bin",
+    "countColumns": "PASS; every habitat sums to 30",
+    "shareColumns": "PASS; every habitat sums mathematically to 1.0 before display rounding (browser audit tolerance 1e-12 for binary floating representation)",
+    "cellText": "PASS; cell count/share/value/label fields match the recomputed matrices",
+    "renderOutputs": "PASS; PNG and SVG outputs are byte-stable in the recorded environment"
+  },
+  "retainedStripFixture": {
+    "sceneId": "habitat_class_response",
+    "tier": "stress",
+    "reason": "Retained as useful categorical-axis density evidence, but explicitly not treated as the response-matrix answer or a montage candidate."
+  },
+  "bugsAndBoundaries": {
+    "rendererSemanticBugFound": false,
+    "studyPageFocusBug": "Fixed with visible focus scrolling and regression-tested in both engines.",
+    "studySvgDeterminism": "Fixed by giving the study export a stable Matplotlib SVG hash salt; no renderer source changed.",
+    "heldProductIssue": "Compact matrix annotation, label, title, legend, and provenance policy."
+  },
+  "heldBoundary": "No alternate montage was produced. No renderer implementation, renderer API, theme token, palette, marker glyph, package, release, navigation, or deployment surface was added or changed."
+}

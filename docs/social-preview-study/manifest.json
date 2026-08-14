@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "figurestead.social-preview-study/1",
+  "result": "PASS",
+  "canvas": [
+    1280,
+    640
+  ],
+  "environment": {
+    "python": "3.12.13",
+    "pillow": "12.3.0"
+  },
+  "fonts": {
+    "wordmark": {
+      "familyFile": "Georgia Bold.ttf",
+      "sha256": "1cfa9abd55be746c798c22ef4eba88fce82257934897404be2dae53ed0a4142a"
+    },
+    "sans": {
+      "familyFile": "Arial.ttf",
+      "sha256": "525979822591a3447cfc49d943d6f7683508e25543407871c0ed8fed05fd2bd9"
+    },
+    "sans-bold": {
+      "familyFile": "Arial Bold.ttf",
+      "sha256": "d72db21f9242aedd6b917d8549ad5921766b24d5f8d0becfda2ff4c620b3c2e0"
+    },
+    "mono": {
+      "familyFile": "Andale Mono.ttf",
+      "sha256": "ca436a8f07f6699107542ebe19dcc9478f12aa666927699e9fa10115e7d2ee95"
+    }
+  },
+  "candidates": {
+    "A": {
+      "path": "docs/assets/readme/github-social-preview-candidate.png",
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 301881,
+      "sha256": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e",
+      "role": "accepted baseline; unchanged",
+      "rationale": "The complete eight-panel montage communicates maximum range, but individual figures become texture at small link-preview sizes."
+    },
+    "B": {
+      "path": "docs/social-preview-study/candidate-b-four-family-rail.png",
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 169237,
+      "sha256": "ddc623444a172570b215881c1ca8e959ccd9e1d5969d7d74d61038ba6b3d5ae5",
+      "placements": [
+        {
+          "sourceKey": "watershed",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
+          "sourceSha256": "4be8dc0356b26a8929e18c342195a56ebedc0934f161dcdc1034c64dfb96a0ec",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            365,
+            35,
+            430,
+            260
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        },
+        {
+          "sourceKey": "circadian",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/circadian_phase_shift.png",
+          "sourceSha256": "abc805045c8f1bcb237034ac3c6966c148dd01c2fbb919545eacf32007c590ac",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            819,
+            35,
+            430,
+            260
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        },
+        {
+          "sourceKey": "calibration",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/instrument_calibration.png",
+          "sourceSha256": "92190be9c6b86b976b9245b20070c5dc7fd7bc4a680abb44083e8803120b997c",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            365,
+            345,
+            430,
+            260
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        },
+        {
+          "sourceKey": "coverage",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/field_sampling_coverage.png",
+          "sourceSha256": "15fba6591fd40a16e427334e4fdec7b57d0e83aa24994f27fd687f73e9625c46",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            819,
+            345,
+            430,
+            260
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        }
+      ],
+      "rationale": "A strong identity rail and four equal, larger frames balance immediate project recognition with line, periodic, scatter, and temporal-coverage variety."
+    },
+    "C": {
+      "path": "docs/social-preview-study/candidate-c-lead-plus-pair.png",
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 219889,
+      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece",
+      "placements": [
+        {
+          "sourceKey": "watershed",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
+          "sourceSha256": "4be8dc0356b26a8929e18c342195a56ebedc0934f161dcdc1034c64dfb96a0ec",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            20,
+            120,
+            826,
+            500
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        },
+        {
+          "sourceKey": "circadian",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/circadian_phase_shift.png",
+          "sourceSha256": "abc805045c8f1bcb237034ac3c6966c148dd01c2fbb919545eacf32007c590ac",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            858,
+            120,
+            401,
+            243
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        },
+        {
+          "sourceKey": "seasonal",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/paired_seasonal_distributions.png",
+          "sourceSha256": "a56c9a2b2cce81abcd4936eff21f458386e4b41b1412048bde0036d7487594e3",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            858,
+            377,
+            401,
+            243
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        }
+      ],
+      "rationale": "A dominant watershed figure preserves the montage's editorial energy while two supporting frames add dark-theme and distribution range without returning to an eight-panel grid."
+    },
+    "D": {
+      "path": "docs/social-preview-study/candidate-d-two-figure-focus.png",
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 140607,
+      "sha256": "6b9e380c6e14a2a5daf14cbb8c1c76d43e033338987e4ef7ffaf849812c4644f",
+      "placements": [
+        {
+          "sourceKey": "watershed",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
+          "sourceSha256": "4be8dc0356b26a8929e18c342195a56ebedc0934f161dcdc1034c64dfb96a0ec",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            28,
+            145,
+            604,
+            366
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        },
+        {
+          "sourceKey": "coverage",
+          "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/field_sampling_coverage.png",
+          "sourceSha256": "15fba6591fd40a16e427334e4fdec7b57d0e83aa24994f27fd687f73e9625c46",
+          "sourceCrop": [
+            0,
+            0,
+            674,
+            408
+          ],
+          "destinationBox": [
+            648,
+            145,
+            604,
+            366
+          ],
+          "transform": "proportional Lanczos scaling; full accepted frame retained"
+        }
+      ],
+      "rationale": "Two large temporal figures maximize small-size legibility and scientific seriousness, trading away some renderer-family variety."
+    }
+  },
+  "comparison": {
+    "path": "docs/social-preview-study/comparison-contact-sheet.png",
+    "dimensions": [
+      1420,
+      850
+    ],
+    "mode": "RGB",
+    "bytes": 376124,
+    "sha256": "e8bd0e9969a89d428c3abe31f1fdfd32496d14f7f17d07284ec542c726d226bb"
+  },
+  "smallPreviewComparison": {
+    "path": "docs/social-preview-study/small-preview-strip.png",
+    "dimensions": [
+      1400,
+      250
+    ],
+    "mode": "RGB",
+    "bytes": 145170,
+    "sha256": "86a43a60b75866647a07a39df1aaa33ccc8bcce896f55c5213368090f82e4a3c"
+  },
+  "acceptedAssetsModified": false,
+  "scientificFigureContentModified": false,
+  "recommendation": "candidate C",
+  "recommendationReason": "It best follows the governing rule at 25% delivery size: Figurestead remains unmistakable, the lead scientific figure stays meaningfully inspectable, and two supporting families add range without collapsing into a miniature gallery.",
+  "selection": {
+    "status": "owner-selected",
+    "candidate": "C",
+    "source": {
+      "path": "docs/social-preview-study/candidate-c-lead-plus-pair.png",
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 219889,
+      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
+    },
+    "canonicalAsset": {
+      "path": "docs/assets/readme/github-social-preview.png",
+      "dimensions": [
+        1280,
+        640
+      ],
+      "mode": "RGB",
+      "bytes": 219889,
+      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
+    },
+    "byteIdenticalToSource": true,
+    "readmeMontage": {
+      "path": "docs/assets/readme/figurestead-at-a-glance.png",
+      "dimensions": [
+        1920,
+        960
+      ],
+      "mode": "RGB",
+      "bytes": 375121,
+      "sha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6"
+    },
+    "readmeMontageUnchanged": true,
+    "githubSettingsChanged": false,
+    "ownerAction": "Configure docs/assets/readme/github-social-preview.png manually in GitHub repository settings."
+  }
+}

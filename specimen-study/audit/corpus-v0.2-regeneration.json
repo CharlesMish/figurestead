@@ -1,0 +1,350 @@
+{
+  "schemaVersion": "figurestead.specimen-corpus-regeneration/1",
+  "result": "PASS",
+  "corpusVersion": "0.2",
+  "sceneCount": 14,
+  "tableCount": 14,
+  "seed": 15401,
+  "samplingMethod": "python_random_gauss_standardized_sample",
+  "observationCount": 90,
+  "categoryOrder": [
+    "headwater",
+    "riffle",
+    "deep pool",
+    "side channel",
+    "floodplain",
+    "wet meadow",
+    "tidal creek",
+    "mudflat",
+    "seagrass bed",
+    "open estuary"
+  ],
+  "regenerationByteStable": true,
+  "originalV01GeneratedFilesUnchanged": true,
+  "originalV01GeneratedFileCount": 24,
+  "v02GeneratedFileCount": 30,
+  "newFiles": {
+    "scene": {
+      "path": "corpus-v0.2/scenes/habitat_class_response.json",
+      "bytes": 8419,
+      "sha256": "9a2de40edb8fa53c379c3ed4371cfd1645886f858e89ee7733b4c60d951cfb7d"
+    },
+    "table": {
+      "path": "corpus-v0.2/tables/habitat_class_response.csv",
+      "bytes": 2874,
+      "sha256": "4fb17877ee4fdffc5ee3c37a16da63c3659b32d10f5a64cc3ca34549b37562c3"
+    }
+  },
+  "statistics": [
+    {
+      "group": "headwater",
+      "count": 9,
+      "targetCenter": 1.05,
+      "mean": 1.05,
+      "median": 1.0772,
+      "targetSpread": 0.08,
+      "sampleStandardDeviation": 0.08,
+      "minimum": 0.9383,
+      "maximum": 1.1385
+    },
+    {
+      "group": "riffle",
+      "count": 9,
+      "targetCenter": 1.34,
+      "mean": 1.34,
+      "median": 1.3347,
+      "targetSpread": 0.13,
+      "sampleStandardDeviation": 0.13,
+      "minimum": 1.1606,
+      "maximum": 1.5842
+    },
+    {
+      "group": "deep pool",
+      "count": 9,
+      "targetCenter": 0.82,
+      "mean": 0.82,
+      "median": 0.8244,
+      "targetSpread": 0.17,
+      "sampleStandardDeviation": 0.17,
+      "minimum": 0.6139,
+      "maximum": 1.1118
+    },
+    {
+      "group": "side channel",
+      "count": 9,
+      "targetCenter": 1.48,
+      "mean": 1.48,
+      "median": 1.5201,
+      "targetSpread": 0.11,
+      "sampleStandardDeviation": 0.11,
+      "minimum": 1.2805,
+      "maximum": 1.6038
+    },
+    {
+      "group": "floodplain",
+      "count": 9,
+      "targetCenter": 1.23,
+      "mean": 1.23,
+      "median": 1.2272,
+      "targetSpread": 0.22,
+      "sampleStandardDeviation": 0.22,
+      "minimum": 0.8582,
+      "maximum": 1.6031
+    },
+    {
+      "group": "wet meadow",
+      "count": 9,
+      "targetCenter": 1.25,
+      "mean": 1.25,
+      "median": 1.2561,
+      "targetSpread": 0.07,
+      "sampleStandardDeviation": 0.07,
+      "minimum": 1.1536,
+      "maximum": 1.3542
+    },
+    {
+      "group": "tidal creek",
+      "count": 9,
+      "targetCenter": 1.72,
+      "mean": 1.72,
+      "median": 1.7463,
+      "targetSpread": 0.15,
+      "sampleStandardDeviation": 0.15,
+      "minimum": 1.5335,
+      "maximum": 1.9924
+    },
+    {
+      "group": "mudflat",
+      "count": 9,
+      "targetCenter": 1.03,
+      "mean": 1.03,
+      "median": 0.9931,
+      "targetSpread": 0.2,
+      "sampleStandardDeviation": 0.2,
+      "minimum": 0.8059,
+      "maximum": 1.4526
+    },
+    {
+      "group": "seagrass bed",
+      "count": 9,
+      "targetCenter": 1.78,
+      "mean": 1.78,
+      "median": 1.7616,
+      "targetSpread": 0.08,
+      "sampleStandardDeviation": 0.08,
+      "minimum": 1.6784,
+      "maximum": 1.8871
+    },
+    {
+      "group": "open estuary",
+      "count": 9,
+      "targetCenter": 1.43,
+      "mean": 1.43,
+      "median": 1.4754,
+      "targetSpread": 0.18,
+      "sampleStandardDeviation": 0.18,
+      "minimum": 1.1561,
+      "maximum": 1.7027
+    }
+  ],
+  "responseMatrix": {
+    "scenePath": "corpus-v0.2/scenes/habitat_response_matrix.json",
+    "sceneSha256": "ec554acdb01e16b099157da592e3cd4d181254e7163aca028375c82f7b4a0099",
+    "rawTablePath": "corpus-v0.2/tables/habitat_response_matrix.csv",
+    "rawTableSha256": "3106d4bb5ef45d7cfe64b774170a5bde91c85d36339b21a1358f2171f0970bc2",
+    "seed": 15401,
+    "renderer": "categorical_matrix",
+    "rendererAuthority": "figurestead.extensions.matrix.categorical_matrix",
+    "observationCount": 300,
+    "habitatCount": 10,
+    "responseBandCount": 6,
+    "observationsPerHabitat": {
+      "Headwater": 30,
+      "Riffle": 30,
+      "Deep pool": 30,
+      "Side channel": 30,
+      "Floodplain": 30,
+      "Wet meadow": 30,
+      "Tidal creek": 30,
+      "Mudflat": 30,
+      "Seagrass bed": 30,
+      "Open estuary": 30
+    },
+    "binMembershipExact": true,
+    "derivedCountsMatchRaw": true,
+    "derivedSharesMatchCounts": true,
+    "columnCountSums": [
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30
+    ],
+    "columnShareSums": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "cellsMatchDerivedMatrices": true,
+    "countMatrix": [
+      [
+        0,
+        0,
+        5,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        20,
+        0,
+        5,
+        0,
+        0,
+        7,
+        0,
+        1
+      ],
+      [
+        27,
+        9,
+        5,
+        0,
+        12,
+        11,
+        0,
+        17,
+        0,
+        2
+      ],
+      [
+        0,
+        19,
+        0,
+        25,
+        8,
+        19,
+        2,
+        6,
+        0,
+        18
+      ],
+      [
+        0,
+        2,
+        0,
+        5,
+        4,
+        0,
+        24,
+        0,
+        23,
+        8
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        7,
+        1
+      ]
+    ],
+    "shareMatrix": [
+      [
+        0.0,
+        0.0,
+        0.16666666666666666,
+        0.0,
+        0.03333333333333333,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.1,
+        0.0,
+        0.6666666666666666,
+        0.0,
+        0.16666666666666666,
+        0.0,
+        0.0,
+        0.23333333333333334,
+        0.0,
+        0.03333333333333333
+      ],
+      [
+        0.9,
+        0.3,
+        0.16666666666666666,
+        0.0,
+        0.4,
+        0.36666666666666664,
+        0.0,
+        0.5666666666666667,
+        0.0,
+        0.06666666666666667
+      ],
+      [
+        0.0,
+        0.6333333333333333,
+        0.0,
+        0.8333333333333334,
+        0.26666666666666666,
+        0.6333333333333333,
+        0.06666666666666667,
+        0.2,
+        0.0,
+        0.6
+      ],
+      [
+        0.0,
+        0.06666666666666667,
+        0.0,
+        0.16666666666666666,
+        0.13333333333333333,
+        0.0,
+        0.8,
+        0.0,
+        0.7666666666666667,
+        0.26666666666666666
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.13333333333333333,
+        0.0,
+        0.23333333333333334,
+        0.03333333333333333
+      ]
+    ]
+  }
+}

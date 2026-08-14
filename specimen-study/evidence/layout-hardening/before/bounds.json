@@ -1,0 +1,1801 @@
+{
+  "schemaVersion": "figurestead.compact-layout-evidence/1",
+  "mode": "before",
+  "verification": null,
+  "footerOptionality": null,
+  "paperExports": null,
+  "captures": [
+    {
+      "engine": "chromium",
+      "pageName": "index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "documentState": {
+        "width": 1440,
+        "height": 1000,
+        "horizontalOverflow": 0
+      },
+      "screenshot": "specimen-study/evidence/layout-hardening/before/specimen-lab-1440.png",
+      "screenshotSha256": "4c578b87242290b178ae16df7f9090ab1a08c9b28153ff774247846ae34517db",
+      "bounds": {
+        "watershed_storm_response": {
+          "sceneId": "watershed_storm_response",
+          "renderer": "line",
+          "canvas": {
+            "cssWidth": 674,
+            "cssHeight": 406.71875,
+            "backingWidth": 674,
+            "backingHeight": 407,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 9,
+            "legend": 8.5,
+            "signature": 7.5
+          },
+          "regions": {
+            "plot": {
+              "left": 55.942,
+              "right": 650.41,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "xTicks": {
+              "left": 55.942,
+              "top": 352.7859375,
+              "right": 650.41,
+              "bottom": 359.57109375
+            },
+            "xTitle": {
+              "left": 282.73605859375,
+              "right": 423.61594140625,
+              "top": 396.2408900669643,
+              "bottom": 403.2325892857143
+            },
+            "provenance": {
+              "left": 55.942,
+              "right": 259.134138671875,
+              "top": 391.0205078125,
+              "bottom": 398.330078125
+            },
+            "yTicks": {
+              "left": 46.456355468750004,
+              "right": 51.874812500000004,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "yTitle": {
+              "left": 6.972321428571428,
+              "right": 15.682282366071428,
+              "top": 72,
+              "bottom": 348.71875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 4.067187499999989,
+            "xTicksToTitle": 36.66979631696432,
+            "xTitleToProvenance": -12.212081473214312,
+            "yTitleToTicks": 30.774073102678578,
+            "yTicksToPlot": 4.067187499999996
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 164500.441875,
+          "providedAnnotationBounds": null
+        },
+        "circadian_phase_shift": {
+          "sceneId": "circadian_phase_shift",
+          "renderer": "line",
+          "canvas": {
+            "cssWidth": 674,
+            "cssHeight": 406.71875,
+            "backingWidth": 674,
+            "backingHeight": 407,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 9,
+            "legend": 8.5,
+            "signature": 7.5
+          },
+          "regions": {
+            "plot": {
+              "left": 55.942,
+              "right": 650.41,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "xTicks": {
+              "left": 55.942,
+              "top": 352.7859375,
+              "right": 650.41,
+              "bottom": 359.59306640625
+            },
+            "xTitle": {
+              "left": 342.3390859375,
+              "right": 364.0129140625,
+              "top": 396.2672572544643,
+              "bottom": 403.2325892857143
+            },
+            "provenance": {
+              "left": 55.942,
+              "right": 259.134138671875,
+              "top": 391.0205078125,
+              "bottom": 398.330078125
+            },
+            "yTicks": {
+              "left": 35.619441406250004,
+              "right": 51.874812500000004,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "yTitle": {
+              "left": 6.972321428571428,
+              "right": 15.708649553571428,
+              "top": 72,
+              "bottom": 348.71875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 4.067187499999989,
+            "xTicksToTitle": 36.67419084821432,
+            "xTitleToProvenance": -12.212081473214312,
+            "yTitleToTicks": 19.910791852678578,
+            "yTicksToPlot": 4.067187499999996
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 164500.441875,
+          "providedAnnotationBounds": null
+        },
+        "instrument_calibration": {
+          "sceneId": "instrument_calibration",
+          "renderer": "scatter",
+          "canvas": {
+            "cssWidth": 674,
+            "cssHeight": 406.71875,
+            "backingWidth": 674,
+            "backingHeight": 407,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 9,
+            "legend": 8.5,
+            "signature": 7.5
+          },
+          "regions": {
+            "plot": {
+              "left": 55.942,
+              "right": 650.41,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "xTicks": {
+              "left": 55.942,
+              "top": 352.7859375,
+              "right": 650.41,
+              "bottom": 359.57109375
+            },
+            "xTitle": {
+              "left": 290.863744140625,
+              "right": 415.488255859375,
+              "top": 396.2672572544643,
+              "bottom": 403.2325892857143
+            },
+            "provenance": {
+              "left": 55.942,
+              "right": 259.134138671875,
+              "top": 391.0205078125,
+              "bottom": 398.330078125
+            },
+            "yTicks": {
+              "left": 35.619441406250004,
+              "right": 51.874812500000004,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "yTitle": {
+              "left": 6.972321428571428,
+              "right": 16.174469866071426,
+              "top": 72,
+              "bottom": 348.71875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 4.067187499999989,
+            "xTicksToTitle": 36.69616350446432,
+            "xTitleToProvenance": -12.212081473214312,
+            "yTitleToTicks": 19.444971540178578,
+            "yTicksToPlot": 4.067187499999996
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 164500.441875,
+          "providedAnnotationBounds": null
+        },
+        "dose_response_plate": {
+          "sceneId": "dose_response_plate",
+          "renderer": "scatter",
+          "canvas": {
+            "cssWidth": 674,
+            "cssHeight": 406.71875,
+            "backingWidth": 674,
+            "backingHeight": 407,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 9,
+            "legend": 8.5,
+            "signature": 7.5
+          },
+          "regions": {
+            "plot": {
+              "left": 55.942,
+              "right": 650.41,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "xTicks": {
+              "left": 55.942,
+              "top": 352.7859375,
+              "right": 650.41,
+              "bottom": 359.57109375
+            },
+            "xTitle": {
+              "left": 266.4806875,
+              "right": 439.8713125,
+              "top": 394.0304408482143,
+              "bottom": 403.2325892857143
+            },
+            "provenance": {
+              "left": 55.942,
+              "right": 259.134138671875,
+              "top": 391.0205078125,
+              "bottom": 398.330078125
+            },
+            "yTicks": {
+              "left": 35.619441406250004,
+              "right": 51.874812500000004,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "yTitle": {
+              "left": 6.972321428571428,
+              "right": 15.708649553571428,
+              "top": 72,
+              "bottom": 348.71875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 4.067187499999989,
+            "xTicksToTitle": 34.45934709821432,
+            "xTitleToProvenance": -12.212081473214312,
+            "yTitleToTicks": 19.910791852678578,
+            "yTicksToPlot": 4.067187499999996
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 164500.441875,
+          "providedAnnotationBounds": null
+        },
+        "treatment_replicates": {
+          "sceneId": "treatment_replicates",
+          "renderer": "strip_summary",
+          "canvas": {
+            "cssWidth": 674,
+            "cssHeight": 406.71875,
+            "backingWidth": 674,
+            "backingHeight": 407,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 9,
+            "legend": 8.5,
+            "signature": 7.5
+          },
+          "regions": {
+            "plot": {
+              "left": 55.942,
+              "right": 650.41,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "xTicks": {
+              "left": 55.942,
+              "top": 352.7859375,
+              "right": 650.41,
+              "bottom": 361.557421875
+            },
+            "xTitle": {
+              "left": 328.792943359375,
+              "right": 377.559056640625,
+              "top": 396.2672572544643,
+              "bottom": 403.2325892857143
+            },
+            "provenance": {
+              "left": 55.942,
+              "right": 259.134138671875,
+              "top": 391.0205078125,
+              "bottom": 398.330078125
+            },
+            "yTicks": {
+              "left": 35.619441406250004,
+              "right": 51.874812500000004,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "yTitle": {
+              "left": 6.972321428571428,
+              "right": 15.682282366071428,
+              "top": 72,
+              "bottom": 348.71875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 4.067187499999989,
+            "xTicksToTitle": 34.70983537946432,
+            "xTitleToProvenance": -12.212081473214312,
+            "yTitleToTicks": 19.937159040178578,
+            "yTicksToPlot": 4.067187499999996
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 164500.441875,
+          "providedAnnotationBounds": null
+        },
+        "paired_seasonal_distributions": {
+          "sceneId": "paired_seasonal_distributions",
+          "renderer": "strip_summary",
+          "canvas": {
+            "cssWidth": 674,
+            "cssHeight": 406.71875,
+            "backingWidth": 674,
+            "backingHeight": 407,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 9,
+            "legend": 8.5,
+            "signature": 7.5
+          },
+          "regions": {
+            "plot": {
+              "left": 55.942,
+              "right": 650.41,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "xTicks": {
+              "left": 55.942,
+              "top": 352.7859375,
+              "right": 650.41,
+              "bottom": 361.53544921875
+            },
+            "xTitle": {
+              "left": 336.92062890625,
+              "right": 369.43137109375,
+              "top": 398.0646205357143,
+              "bottom": 403.2325892857143
+            },
+            "provenance": {
+              "left": 55.942,
+              "right": 259.134138671875,
+              "top": 391.0205078125,
+              "bottom": 398.330078125
+            },
+            "yTicks": {
+              "left": 35.619441406250004,
+              "right": 51.874812500000004,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "yTitle": {
+              "left": 6.972321428571428,
+              "right": 15.726227678571428,
+              "top": 72,
+              "bottom": 348.71875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 4.067187499999989,
+            "xTicksToTitle": 36.52917131696432,
+            "xTitleToProvenance": -12.212081473214312,
+            "yTitleToTicks": 19.893213727678578,
+            "yTicksToPlot": 4.067187499999996
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 164500.441875,
+          "providedAnnotationBounds": null
+        },
+        "field_sampling_coverage": {
+          "sceneId": "field_sampling_coverage",
+          "renderer": "temporal_coverage",
+          "canvas": {
+            "cssWidth": 674,
+            "cssHeight": 406.71875,
+            "backingWidth": 674,
+            "backingHeight": 407,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 9,
+            "legend": 8.5,
+            "signature": 7.5
+          },
+          "regions": {
+            "plot": {
+              "left": 55.942,
+              "right": 650.41,
+              "top": 107.8892857142857,
+              "bottom": 348.71875
+            },
+            "xTicks": {
+              "left": 55.942,
+              "top": 352.7859375,
+              "right": 650.41,
+              "bottom": 359.59306640625
+            },
+            "xTitle": {
+              "left": 323.374486328125,
+              "right": 382.977513671875,
+              "top": 394.4962611607143,
+              "bottom": 403.2325892857143
+            },
+            "provenance": {
+              "left": 55.942,
+              "right": 259.134138671875,
+              "top": 391.0205078125,
+              "bottom": 398.330078125
+            },
+            "yTicks": {
+              "left": 41.037898437500004,
+              "right": 51.874812500000004,
+              "top": 107.8892857142857,
+              "bottom": 348.71875
+            },
+            "yTitle": {
+              "left": 6.972321428571428,
+              "right": 15.721833147321428,
+              "top": 107.8892857142857,
+              "bottom": 348.71875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 4.067187499999989,
+            "xTicksToTitle": 34.90319475446432,
+            "xTitleToProvenance": -12.212081473214312,
+            "yTitleToTicks": 25.316065290178578,
+            "yTicksToPlot": 4.067187499999996
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 143165.409975,
+          "providedAnnotationBounds": null
+        },
+        "reservoir_oxygen_thresholds": {
+          "sceneId": "reservoir_oxygen_thresholds",
+          "renderer": "temporal_observations",
+          "canvas": {
+            "cssWidth": 674,
+            "cssHeight": 406.71875,
+            "backingWidth": 674,
+            "backingHeight": 407,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 9,
+            "legend": 8.5,
+            "signature": 7.5
+          },
+          "regions": {
+            "plot": {
+              "left": 55.942,
+              "right": 650.41,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "xTicks": {
+              "left": 55.942,
+              "top": 352.7859375,
+              "right": 650.41,
+              "bottom": 359.77763671875
+            },
+            "xTitle": {
+              "left": 323.374486328125,
+              "right": 382.977513671875,
+              "top": 394.4962611607143,
+              "bottom": 403.2325892857143
+            },
+            "provenance": {
+              "left": 55.942,
+              "right": 259.134138671875,
+              "top": 391.0205078125,
+              "bottom": 398.330078125
+            },
+            "yTicks": {
+              "left": 41.037898437500004,
+              "right": 51.874812500000004,
+              "top": 72,
+              "bottom": 348.71875
+            },
+            "yTitle": {
+              "left": 6.972321428571428,
+              "right": 16.174469866071426,
+              "top": 72,
+              "bottom": 348.71875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 4.067187499999989,
+            "xTicksToTitle": 34.71862444196432,
+            "xTitleToProvenance": -12.212081473214312,
+            "yTitleToTicks": 24.863428571428578,
+            "yTicksToPlot": 4.067187499999996
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 164500.441875,
+          "providedAnnotationBounds": null
+        }
+      }
+    },
+    {
+      "engine": "chromium",
+      "pageName": "at-a-glance.html",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "deviceScaleFactor": 1,
+      "documentState": {
+        "width": 1920,
+        "height": 1080,
+        "horizontalOverflow": 0
+      },
+      "screenshot": "specimen-study/evidence/layout-hardening/before/montage-1920x1080.png",
+      "screenshotSha256": "78a4183deefb5c2aa55700896ae9fb65b73098a27234081724a512ca3599ed5f",
+      "bounds": {
+        "watershed_storm_response": {
+          "sceneId": "watershed_storm_response",
+          "renderer": "line",
+          "canvas": {
+            "cssWidth": 447.25,
+            "cssHeight": 290.703125,
+            "backingWidth": 447,
+            "backingHeight": 291,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 425.25,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 236.553125,
+              "right": 425.25,
+              "bottom": 244.0921875
+            },
+            "xTitle": {
+              "left": 161.3583984375,
+              "right": 317.8916015625,
+              "top": 279.6345703125,
+              "bottom": 287.403125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 274.625,
+              "bottom": 282.421875
+            },
+            "yTicks": {
+              "left": 44.1294921875,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.277734375,
+              "top": 72,
+              "bottom": 232.703125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 35.542382812499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 27.851757812499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 304.8750600814832,
+            "yTitleTicks": 0
+          },
+          "plotArea": 59661.03515625,
+          "providedAnnotationBounds": null
+        },
+        "circadian_phase_shift": {
+          "sceneId": "circadian_phase_shift",
+          "renderer": "line",
+          "canvas": {
+            "cssWidth": 447.25,
+            "cssHeight": 290.703125,
+            "backingWidth": 447,
+            "backingHeight": 291,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 425.25,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 236.553125,
+              "right": 425.25,
+              "bottom": 244.1166015625
+            },
+            "xTitle": {
+              "left": 227.583984375,
+              "right": 251.666015625,
+              "top": 279.6638671875,
+              "bottom": 287.403125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 274.625,
+              "bottom": 282.421875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.30703125,
+              "top": 72,
+              "bottom": 232.703125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 35.547265624999994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.781445312499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 66.41843032836941,
+            "yTitleTicks": 0
+          },
+          "plotArea": 59661.03515625,
+          "providedAnnotationBounds": null
+        },
+        "instrument_calibration": {
+          "sceneId": "instrument_calibration",
+          "renderer": "scatter",
+          "canvas": {
+            "cssWidth": 447.25,
+            "cssHeight": 290.703125,
+            "backingWidth": 447,
+            "backingHeight": 291,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 425.25,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 236.553125,
+              "right": 425.25,
+              "bottom": 244.0921875
+            },
+            "xTitle": {
+              "left": 170.38916015625,
+              "right": 308.86083984375,
+              "top": 279.6638671875,
+              "bottom": 287.403125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 274.625,
+              "bottom": 282.421875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.824609375,
+              "top": 72,
+              "bottom": 232.703125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 35.571679687499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.263867187499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 276.7636599540722,
+            "yTitleTicks": 0
+          },
+          "plotArea": 59661.03515625,
+          "providedAnnotationBounds": null
+        },
+        "dose_response_plate": {
+          "sceneId": "dose_response_plate",
+          "renderer": "scatter",
+          "canvas": {
+            "cssWidth": 447.25,
+            "cssHeight": 290.703125,
+            "backingWidth": 447,
+            "backingHeight": 291,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 425.25,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 236.553125,
+              "right": 425.25,
+              "bottom": 244.0921875
+            },
+            "xTitle": {
+              "left": 143.296875,
+              "right": 335.953125,
+              "top": 277.178515625,
+              "bottom": 287.403125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 274.625,
+              "bottom": 282.421875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.30703125,
+              "top": 72,
+              "bottom": 232.703125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 33.086328124999994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.781445312499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 668.2210922241226,
+            "yTitleTicks": 0
+          },
+          "plotArea": 59661.03515625,
+          "providedAnnotationBounds": null
+        },
+        "treatment_replicates": {
+          "sceneId": "treatment_replicates",
+          "renderer": "strip_summary",
+          "canvas": {
+            "cssWidth": 447.25,
+            "cssHeight": 290.703125,
+            "backingWidth": 447,
+            "backingHeight": 291,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 425.25,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 236.553125,
+              "right": 425.25,
+              "bottom": 246.29921875
+            },
+            "xTitle": {
+              "left": 212.53271484375,
+              "right": 266.71728515625,
+              "top": 279.6638671875,
+              "bottom": 287.403125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 274.625,
+              "bottom": 282.421875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.277734375,
+              "top": 72,
+              "bottom": 232.703125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 33.364648437499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.810742187499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 149.4414682388312,
+            "yTitleTicks": 0
+          },
+          "plotArea": 59661.03515625,
+          "providedAnnotationBounds": null
+        },
+        "paired_seasonal_distributions": {
+          "sceneId": "paired_seasonal_distributions",
+          "renderer": "strip_summary",
+          "canvas": {
+            "cssWidth": 447.25,
+            "cssHeight": 290.703125,
+            "backingWidth": 447,
+            "backingHeight": 291,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 425.25,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 236.553125,
+              "right": 425.25,
+              "bottom": 246.2748046875
+            },
+            "xTitle": {
+              "left": 221.5634765625,
+              "right": 257.6865234375,
+              "top": 281.6609375,
+              "bottom": 287.403125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 274.625,
+              "bottom": 282.421875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.3265625,
+              "top": 72,
+              "bottom": 232.703125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 35.386132812499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.761914062499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 27.487380981445725,
+            "yTitleTicks": 0
+          },
+          "plotArea": 59661.03515625,
+          "providedAnnotationBounds": null
+        },
+        "field_sampling_coverage": {
+          "sceneId": "field_sampling_coverage",
+          "renderer": "temporal_coverage",
+          "canvas": {
+            "cssWidth": 447.25,
+            "cssHeight": 290.703125,
+            "backingWidth": 447,
+            "backingHeight": 291,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 425.25,
+              "top": 106.4,
+              "bottom": 232.703125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 236.553125,
+              "right": 425.25,
+              "bottom": 244.1166015625
+            },
+            "xTitle": {
+              "left": 206.51220703125,
+              "right": 272.73779296875,
+              "top": 277.69609375,
+              "bottom": 287.403125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 274.625,
+              "bottom": 282.421875
+            },
+            "yTicks": {
+              "left": 38.108984375,
+              "right": 50.15,
+              "top": 106.4,
+              "bottom": 232.703125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.3216796875,
+              "top": 106.4,
+              "bottom": 232.703125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 33.579492187499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 21.787304687499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 303.5183773040779,
+            "yTitleTicks": 0
+          },
+          "plotArea": 46890.03515625,
+          "providedAnnotationBounds": null
+        },
+        "reservoir_oxygen_thresholds": {
+          "sceneId": "reservoir_oxygen_thresholds",
+          "renderer": "temporal_observations",
+          "canvas": {
+            "cssWidth": 447.25,
+            "cssHeight": 290.703125,
+            "backingWidth": 447,
+            "backingHeight": 291,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 425.25,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 236.553125,
+              "right": 425.25,
+              "bottom": 244.3216796875
+            },
+            "xTitle": {
+              "left": 206.51220703125,
+              "right": 272.73779296875,
+              "top": 277.69609375,
+              "bottom": 287.403125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 274.625,
+              "bottom": 282.421875
+            },
+            "yTicks": {
+              "left": 38.108984375,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 232.703125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.824609375,
+              "top": 72,
+              "bottom": 232.703125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 33.374414062499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 21.284374999999997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 303.5183773040779,
+            "yTitleTicks": 0
+          },
+          "plotArea": 59661.03515625,
+          "providedAnnotationBounds": null
+        }
+      }
+    },
+    {
+      "engine": "chromium",
+      "pageName": "at-a-glance.html",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 1,
+      "documentState": {
+        "width": 390,
+        "height": 844,
+        "horizontalOverflow": 0
+      },
+      "screenshot": "specimen-study/evidence/layout-hardening/before/montage-390.png",
+      "screenshotSha256": "9875c7a1dd6a71b6622e08b7309e12dcc0b860432ddc91c58f56d1fcc26fbe20",
+      "bounds": {
+        "watershed_storm_response": {
+          "sceneId": "watershed_storm_response",
+          "renderer": "line",
+          "canvas": {
+            "cssWidth": 362,
+            "cssHeight": 242.078125,
+            "backingWidth": 362,
+            "backingHeight": 242,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 340,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 187.928125,
+              "right": 340,
+              "bottom": 195.4671875
+            },
+            "xTitle": {
+              "left": 118.7333984375,
+              "right": 275.2666015625,
+              "top": 231.0095703125,
+              "bottom": 238.778125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 226,
+              "bottom": 233.796875
+            },
+            "yTicks": {
+              "left": 44.1294921875,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.277734375,
+              "top": 72,
+              "bottom": 184.078125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 35.542382812499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 27.851757812499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 423.68392238617116,
+            "yTitleTicks": 0
+          },
+          "plotArea": 32054.34375,
+          "providedAnnotationBounds": null
+        },
+        "circadian_phase_shift": {
+          "sceneId": "circadian_phase_shift",
+          "renderer": "line",
+          "canvas": {
+            "cssWidth": 362,
+            "cssHeight": 242.078125,
+            "backingWidth": 362,
+            "backingHeight": 242,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 340,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 187.928125,
+              "right": 340,
+              "bottom": 195.4916015625
+            },
+            "xTitle": {
+              "left": 184.958984375,
+              "right": 209.041015625,
+              "top": 231.0388671875,
+              "bottom": 238.778125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 226,
+              "bottom": 233.796875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.30703125,
+              "top": 72,
+              "bottom": 184.078125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 35.547265624999994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.781445312499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 66.41843032836941,
+            "yTitleTicks": 0
+          },
+          "plotArea": 32054.34375,
+          "providedAnnotationBounds": null
+        },
+        "instrument_calibration": {
+          "sceneId": "instrument_calibration",
+          "renderer": "scatter",
+          "canvas": {
+            "cssWidth": 362,
+            "cssHeight": 242.078125,
+            "backingWidth": 362,
+            "backingHeight": 242,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 340,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 187.928125,
+              "right": 340,
+              "bottom": 195.4671875
+            },
+            "xTitle": {
+              "left": 127.76416015625,
+              "right": 266.23583984375,
+              "top": 231.0388671875,
+              "bottom": 238.778125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 226,
+              "bottom": 233.796875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.824609375,
+              "top": 72,
+              "bottom": 184.078125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 35.571679687499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.263867187499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 381.90597438812415,
+            "yTitleTicks": 0
+          },
+          "plotArea": 32054.34375,
+          "providedAnnotationBounds": null
+        },
+        "dose_response_plate": {
+          "sceneId": "dose_response_plate",
+          "renderer": "scatter",
+          "canvas": {
+            "cssWidth": 362,
+            "cssHeight": 242.078125,
+            "backingWidth": 362,
+            "backingHeight": 242,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 340,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 187.928125,
+              "right": 340,
+              "bottom": 195.4671875
+            },
+            "xTitle": {
+              "left": 100.671875,
+              "right": 293.328125,
+              "top": 228.553515625,
+              "bottom": 238.778125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 226,
+              "bottom": 233.796875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.30703125,
+              "top": 72,
+              "bottom": 184.078125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 33.086328124999994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.781445312499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 891.719285583498,
+            "yTitleTicks": 0
+          },
+          "plotArea": 32054.34375,
+          "providedAnnotationBounds": null
+        },
+        "treatment_replicates": {
+          "sceneId": "treatment_replicates",
+          "renderer": "strip_summary",
+          "canvas": {
+            "cssWidth": 362,
+            "cssHeight": 242.078125,
+            "backingWidth": 362,
+            "backingHeight": 242,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 340,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 187.928125,
+              "right": 340,
+              "bottom": 197.67421875
+            },
+            "xTitle": {
+              "left": 169.90771484375,
+              "right": 224.09228515625,
+              "top": 231.0388671875,
+              "bottom": 238.778125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 226,
+              "bottom": 233.796875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.277734375,
+              "top": 72,
+              "bottom": 184.078125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 33.364648437499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.810742187499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 149.4414682388312,
+            "yTitleTicks": 0
+          },
+          "plotArea": 32054.34375,
+          "providedAnnotationBounds": null
+        },
+        "paired_seasonal_distributions": {
+          "sceneId": "paired_seasonal_distributions",
+          "renderer": "strip_summary",
+          "canvas": {
+            "cssWidth": 362,
+            "cssHeight": 242.078125,
+            "backingWidth": 362,
+            "backingHeight": 242,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 340,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 187.928125,
+              "right": 340,
+              "bottom": 197.6498046875
+            },
+            "xTitle": {
+              "left": 178.9384765625,
+              "right": 215.0615234375,
+              "top": 233.0359375,
+              "bottom": 238.778125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 226,
+              "bottom": 233.796875
+            },
+            "yTicks": {
+              "left": 32.0884765625,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.3265625,
+              "top": 72,
+              "bottom": 184.078125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 35.386132812499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 15.761914062499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 27.487380981445725,
+            "yTitleTicks": 0
+          },
+          "plotArea": 32054.34375,
+          "providedAnnotationBounds": null
+        },
+        "field_sampling_coverage": {
+          "sceneId": "field_sampling_coverage",
+          "renderer": "temporal_coverage",
+          "canvas": {
+            "cssWidth": 362,
+            "cssHeight": 242.078125,
+            "backingWidth": 362,
+            "backingHeight": 242,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 340,
+              "top": 104.65718749999999,
+              "bottom": 184.078125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 187.928125,
+              "right": 340,
+              "bottom": 195.4916015625
+            },
+            "xTitle": {
+              "left": 163.88720703125,
+              "right": 230.11279296875,
+              "top": 229.07109375,
+              "bottom": 238.778125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 226,
+              "bottom": 233.796875
+            },
+            "yTicks": {
+              "left": 38.108984375,
+              "right": 50.15,
+              "top": 104.65718749999999,
+              "bottom": 184.078125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.3216796875,
+              "top": 104.65718749999999,
+              "bottom": 184.078125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 33.579492187499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 21.787304687499997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 312.9676322937019,
+            "yTitleTicks": 0
+          },
+          "plotArea": 22714.388125,
+          "providedAnnotationBounds": null
+        },
+        "reservoir_oxygen_thresholds": {
+          "sceneId": "reservoir_oxygen_thresholds",
+          "renderer": "temporal_observations",
+          "canvas": {
+            "cssWidth": 362,
+            "cssHeight": 242.078125,
+            "backingWidth": 362,
+            "backingHeight": 242,
+            "dpr": 1
+          },
+          "font": {
+            "title": 13,
+            "subtitle": 9,
+            "axis": 10,
+            "legend": 9.5,
+            "signature": 8
+          },
+          "regions": {
+            "plot": {
+              "left": 54,
+              "right": 340,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "xTicks": {
+              "left": 54,
+              "top": 187.928125,
+              "right": 340,
+              "bottom": 195.6966796875
+            },
+            "xTitle": {
+              "left": 163.88720703125,
+              "right": 230.11279296875,
+              "top": 229.07109375,
+              "bottom": 238.778125
+            },
+            "provenance": {
+              "left": 54,
+              "right": 270.73828125,
+              "top": 226,
+              "bottom": 233.796875
+            },
+            "yTicks": {
+              "left": 38.108984375,
+              "right": 50.15,
+              "top": 72,
+              "bottom": 184.078125
+            },
+            "yTitle": {
+              "left": 6.6000000000000005,
+              "right": 16.824609375,
+              "top": 72,
+              "bottom": 184.078125
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 3.8499999999999943,
+            "xTicksToTitle": 33.374414062499994,
+            "xTitleToProvenance": -12.778124999999989,
+            "yTitleToTicks": 21.284374999999997,
+            "yTicksToPlot": 3.8500000000000014
+          },
+          "intersections": {
+            "xTitleProvenance": 312.9676322937019,
+            "yTitleTicks": 0
+          },
+          "plotArea": 32054.34375,
+          "providedAnnotationBounds": null
+        }
+      }
+    },
+    {
+      "engine": "chromium",
+      "pageName": "technical-showcase",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "screenshot": "specimen-study/evidence/layout-hardening/before/v2-normal-figure.png",
+      "screenshotSha256": "c2fdc4bc79bc2fbbcaebe54d052e74bda87b655fbc77b2154584498d18591b84",
+      "bounds": {
+        "v2_motion": {
+          "sceneId": "v2_motion",
+          "renderer": "line",
+          "canvas": {
+            "cssWidth": 992,
+            "cssHeight": 538.03125,
+            "backingWidth": 992,
+            "backingHeight": 538,
+            "dpr": 1
+          },
+          "font": {
+            "title": 14.603705357142857,
+            "subtitle": 9.607700892857144,
+            "axis": 9.223392857142859,
+            "legend": 8.839084821428571,
+            "signature": 7.686160714285714
+          },
+          "regions": {
+            "plot": {
+              "left": 82.336,
+              "right": 811.2429464285714,
+              "top": 82.8568125,
+              "bottom": 464.32096875
+            },
+            "xTicks": {
+              "left": 82.336,
+              "top": 469.70128125,
+              "right": 811.2429464285714,
+              "bottom": 476.65229767608645
+            },
+            "xTitle": {
+              "left": 374.6277300502232,
+              "right": 518.9512163783481,
+              "top": 526.256945424761,
+              "bottom": 533.4195535714285
+            },
+            "provenance": {
+              "left": 82.336,
+              "right": 188.68222192382814,
+              "top": 522.196249961853,
+              "bottom": 529.6812505722046
+            },
+            "yTicks": {
+              "left": 71.4047841796875,
+              "right": 76.9556875,
+              "top": 82.8568125,
+              "bottom": 464.32096875
+            },
+            "yTitle": {
+              "left": 9.223392857142859,
+              "right": 18.14626540047782,
+              "top": 82.8568125,
+              "bottom": 464.32096875
+            }
+          },
+          "gaps": {
+            "plotToXTicks": 5.380312500000002,
+            "xTicksToTitle": 49.60464774867461,
+            "xTitleToProvenance": -11.22330360957551,
+            "yTitleToTicks": 53.25851877920968,
+            "yTicksToPlot": 5.380312500000002
+          },
+          "intersections": {
+            "xTitleProvenance": 0,
+            "yTitleTicks": 0
+          },
+          "plotArea": 278051.87330413895,
+          "providedAnnotationBounds": null
+        }
+      }
+    }
+  ]
+}

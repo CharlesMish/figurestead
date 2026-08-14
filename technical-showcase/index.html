@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Figurestead — local V2 Technical Showcase</title>
+  <meta name="description" content="A local-only technical-density study of Figurestead scientific figures.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="technical-showcase.css?v=3-review-closure">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to technical showcase</a>
+  <header class="masthead wrap">
+    <p class="wordmark">Figurestead</p>
+    <p class="prototype-status">V2 technical study · local only · not deployed</p>
+  </header>
+
+  <main id="main">
+    <header class="intro wrap">
+      <p class="eyebrow">Technical showcase</p>
+      <div>
+        <h1>A figure system under scientific load.</h1>
+        <p class="product-definition">Figurestead is an experimental scientific-figure system for Python and the browser, built around normalized evidence contracts, multiple renderer families, semantic motion, and publication-aware output.</p>
+        <p class="lede">One deterministic synthetic watershed study tests what happens when the evidence becomes meaningfully denser.</p>
+      </div>
+    </header>
+
+    <section class="study wrap" id="evidence-motion">
+      <header class="study-heading">
+        <p class="index">01</p>
+        <div>
+          <h2>Evidence in motion</h2>
+          <p>Five monitoring sites and eighteen storm-response intervals exercise shared semantic identity and order, with redundant marker and dash channels where each renderer provides them.</p>
+        </div>
+      </header>
+      <div class="motion-layout">
+        <aside class="apparatus" aria-label="Motion study apparatus">
+          <p class="apparatus-label">Synthetic context</p>
+          <p>Standardized turbidity response after a modeled rainfall pulse across five watershed sites. Values are deterministic and synthetic.</p>
+          <fieldset>
+            <legend>Motion treatment</legend>
+            <label><input type="radio" name="motion-recipe" value="static"> Static</label>
+            <label><input type="radio" name="motion-recipe" value="restrained" checked> Restrained</label>
+            <label><input type="radio" name="motion-recipe" value="expressive"> Expressive</label>
+          </fieldset>
+          <button class="primary-action" type="button" id="motion-action">Play restrained motion</button>
+          <p class="motion-status" id="motion-status" role="status" aria-live="polite">Restrained terminal figure ready.</p>
+          <p class="terminal-proof" id="terminal-proof">Checking terminal evidence…</p>
+        </aside>
+        <figure class="hero-figure">
+          <canvas id="motion-canvas" width="1180" height="640" aria-label="Synthetic five-site watershed storm-response line figure"></canvas>
+          <figcaption><strong>Synthetic storm response</strong><span>5 sites · 18 intervals · shared normalized contract</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="study wrap" id="technical-report">
+      <header class="study-heading">
+        <p class="index">02</p>
+        <div>
+          <h2>One coherent synthetic report</h2>
+          <p>Four existing renderer families describe the same five-site watershed system as a compact scientific plate.</p>
+        </div>
+      </header>
+      <div class="report-key" role="group" aria-labelledby="report-key-title">
+        <p id="report-key-title">Shared site identity and order</p>
+        <div class="report-key-items" role="list" id="report-key-items"></div>
+      </div>
+      <div class="report-grid">
+        <article class="report-panel">
+          <header><p class="panel-index">A · temporal response</p><button type="button" class="local-motion" id="report-line-action">Play point-to-line motion</button></header>
+          <canvas id="report-line-canvas" width="760" height="520" aria-label="Synthetic five-site storm-response line panel"></canvas>
+          <p>Five site responses resolve by observation before connecting through time.</p>
+        </article>
+        <article class="report-panel">
+          <header><p class="panel-index">B · relationship</p></header>
+          <canvas id="report-scatter-canvas" width="760" height="520" aria-label="Synthetic rainfall and turbidity grouped-scatter panel"></canvas>
+          <p>Event rainfall and peak turbidity retain site identity around one shared fitted relationship.</p>
+        </article>
+        <article class="report-panel">
+          <header><p class="panel-index">C · distribution</p></header>
+          <canvas id="report-strip-canvas" width="760" height="520" aria-label="Synthetic nitrate distribution and median strip-summary panel"></canvas>
+          <p>Replicate nitrate samples and site medians show distributional structure beyond a single estimate.</p>
+        </article>
+        <article class="report-panel">
+          <header><p class="panel-index">D · sampling coverage</p><button type="button" class="local-motion" id="report-coverage-action">Play coverage reveal</button></header>
+          <canvas id="report-coverage-canvas" width="760" height="520" aria-label="Synthetic temporal sampling coverage panel"></canvas>
+          <p>Exact sampling dates precede annual distinct-site summaries; gaps remain visible.</p>
+        </article>
+      </div>
+      <p class="report-note">All four panels use deterministic synthetic values and the same Headwater → Estuary order. The key is resolved from the line contract: color plus marker, with the fifth line identity recovered by dash. Point-only families do not claim universal five-way hue-independent glyph identity. No new renderer or product API is introduced.</p>
+    </section>
+
+    <section class="study wrap" id="perceptual-stress">
+      <header class="study-heading">
+        <p class="index">03</p>
+        <div>
+          <h2 id="cvd-title">Perceptual stress, simulated</h2>
+          <p>The same terminal five-site figure is reviewed with Machado severity-1 anomaly matrices while marker and dash identity remains unchanged.</p>
+        </div>
+      </header>
+      <div class="cvd-grid" role="group" aria-labelledby="cvd-title">
+        <figure><canvas id="cvd-original" width="760" height="460" aria-label="Original synthetic five-site watershed figure"></canvas><figcaption><strong>Original rendering</strong><span>Foundation palette + redundant encoding</span></figcaption></figure>
+        <figure><canvas id="cvd-protanomaly" width="760" height="460" role="img" aria-label="Machado severity-1 protanomaly simulation of the same synthetic watershed figure"></canvas><figcaption><strong>Severity-1 protanomaly simulation</strong><span>Machado model</span></figcaption></figure>
+        <figure><canvas id="cvd-deuteranomaly" width="760" height="460" role="img" aria-label="Machado severity-1 deuteranomaly simulation of the same synthetic watershed figure"></canvas><figcaption><strong>Severity-1 deuteranomaly simulation</strong><span>Machado model</span></figcaption></figure>
+        <figure><canvas id="cvd-tritanomaly-approximation" width="760" height="460" role="img" aria-label="Machado severity-1 tritanomaly approximation of the same synthetic watershed figure"></canvas><figcaption><strong>Severity-1 tritanomaly approximation</strong><span>Machado model</span></figcaption></figure>
+      </div>
+      <div class="method-note">
+        <p><strong>Method.</strong> Machado, Oliveira &amp; Fernandes’ severity-1 matrices in linear-light sRGB: decode sRGB → apply 3×3 matrix → clamp → encode sRGB. A narrow matrix-and-vector gate checks the browser assumptions against Colour Science’s reference matrices.</p>
+        <p><strong>Limits.</strong> These simulations support perceptual review, not medical or accessibility certification, and not testing with people. The referenced tritanomaly result is explicitly treated as an approximation. The public Atlas remains the broader non-color evidence.</p>
+        <p class="source-links"><a href="https://doi.org/10.1109/TVCG.2009.113">Machado et al. 2009</a> · <a href="https://colour.readthedocs.io/en/latest/generated/colour.matrix_cvd_Machado2009.html">Colour Science reference implementation</a></p>
+      </div>
+    </section>
+
+    <section class="study paper-study wrap" id="paper-size">
+      <header class="study-heading">
+        <p class="index">04</p>
+        <div>
+          <h2 id="paper-title">Paper, at the size it will live</h2>
+          <p>The 89 mm and 183 mm digital outputs retain their true relative dimensions inside a tighter comparison.</p>
+        </div>
+      </header>
+      <div class="paper-layout">
+        <aside class="apparatus paper-apparatus">
+          <p class="apparatus-label">Measured digital typography</p>
+          <p><strong>6.372 pt</strong> minimum label against the Figurestead 6 pt project floor.</p>
+          <p>This is digital paper evidence, not physical printer certification.</p>
+        </aside>
+        <div class="paper-pair" role="group" aria-labelledby="paper-title">
+          <figure><a class="paper-image-link" href="../site/assets/evidence-paper-89mm.png" aria-label="Open canonical full-resolution 89 millimetre paper evidence"><img src="../site/assets/web/evidence-paper-89mm.png" width="1051" height="744" loading="lazy" decoding="async" alt="Registration Ink 89 millimetre single-column digital paper output"></a><figcaption>89 mm · single column · canonical PNG</figcaption></figure>
+          <figure><a class="paper-image-link" href="../site/assets/evidence-paper-183mm.png" aria-label="Open canonical full-resolution 183 millimetre paper evidence"><img src="../site/assets/web/evidence-paper-183mm.png" width="2161" height="1420" loading="lazy" decoding="async" alt="Registration Ink 183 millimetre double-column digital paper output"></a><figcaption>183 mm · double column · canonical PNG</figcaption></figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap"><p>Figurestead V2 Technical Showcase · local comparison candidate</p><p>Deterministic synthetic evidence · no public navigation · not deployed</p></footer>
+  <script type="module" src="technical-showcase.js?v=3-review-closure"></script>
+</body>
+</html>

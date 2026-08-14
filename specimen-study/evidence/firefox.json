@@ -1,0 +1,4459 @@
+{
+  "schemaVersion": "figurestead.specimen-browser-audit/1",
+  "engine": "firefox",
+  "playwrightVersion": "1.62.0",
+  "browserVersion": "153.0",
+  "nodeVersion": "v24.14.0",
+  "executableSha256": "65ecab21ee6aa479836eb27aec213e15295f07ca21b5aa995d45bcaff4d09d7d",
+  "cases": [
+    {
+      "pageKey": "lab",
+      "width": 1440,
+      "reducedMotion": false,
+      "runtimeErrors": [],
+      "structure": {
+        "mode": "lab",
+        "innerWidth": 1440,
+        "clientWidth": 1440,
+        "horizontalOverflow": 0,
+        "order": [
+          "watershed_storm_response",
+          "circadian_phase_shift",
+          "instrument_calibration",
+          "dose_response_plate",
+          "treatment_replicates",
+          "paired_seasonal_distributions",
+          "field_sampling_coverage",
+          "reservoir_oxygen_thresholds",
+          "gene_expression_recovery",
+          "particle_size_relationship",
+          "lab_precision",
+          "migration_monitoring_coverage"
+        ],
+        "sceneCount": 12,
+        "stressInMontage": [
+          "gene_expression_recovery",
+          "particle_size_relationship",
+          "lab_precision",
+          "migration_monitoring_coverage"
+        ],
+        "immediateDuplicateHeadings": [],
+        "hiddenInteractive": [],
+        "hiddenTableCount": 12,
+        "canvasAccessibility": [
+          {
+            "sceneId": "watershed_storm_response",
+            "role": "img",
+            "labelledBy": "figurestead-l89no5z1ncm-title figurestead-l89no5z1ncm-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "circadian_phase_shift",
+            "role": "img",
+            "labelledBy": "figurestead-flxlxz9r24f-title figurestead-flxlxz9r24f-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "instrument_calibration",
+            "role": "img",
+            "labelledBy": "figurestead-a8khb5mikpp-title figurestead-a8khb5mikpp-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "dose_response_plate",
+            "role": "img",
+            "labelledBy": "figurestead-b2hliuq9bs-title figurestead-b2hliuq9bs-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "treatment_replicates",
+            "role": "img",
+            "labelledBy": "figurestead-6f5o5txeilk-title figurestead-6f5o5txeilk-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "paired_seasonal_distributions",
+            "role": "img",
+            "labelledBy": "figurestead-b7qfxhjjawv-title figurestead-b7qfxhjjawv-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "field_sampling_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-7jsbzoa60lr-title figurestead-7jsbzoa60lr-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "reservoir_oxygen_thresholds",
+            "role": "img",
+            "labelledBy": "figurestead-4668li5orok-title figurestead-4668li5orok-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "gene_expression_recovery",
+            "role": "img",
+            "labelledBy": "figurestead-gtpw81njlsb-title figurestead-gtpw81njlsb-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "particle_size_relationship",
+            "role": "img",
+            "labelledBy": "figurestead-qgjvdi6uuk-title figurestead-qgjvdi6uuk-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "lab_precision",
+            "role": "img",
+            "labelledBy": "figurestead-buvhpl8lixb-title figurestead-buvhpl8lixb-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "migration_monitoring_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-w6zddvrw8eh-title figurestead-w6zddvrw8eh-description",
+            "targetsExist": true
+          }
+        ],
+        "rendered": [
+          {
+            "id": "watershed_storm_response",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "slipware",
+            "seed": 2409,
+            "fingerprint": "fnv1a32-6e66ac0e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "circadian_phase_shift",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "deep_observatory_sage_core",
+            "seed": 3112,
+            "fingerprint": "fnv1a32-00d5a3c5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "instrument_calibration",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "registration_ink",
+            "seed": 5309,
+            "fingerprint": "fnv1a32-8562cee5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "dose_response_plate",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "lavender_fog_notebook",
+            "seed": 6143,
+            "fingerprint": "fnv1a32-280b339d",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "treatment_replicates",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 8119,
+            "fingerprint": "fnv1a32-a8d8128e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "paired_seasonal_distributions",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "lavender_fog_notebook",
+            "seed": 10061,
+            "fingerprint": "fnv1a32-af792465",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 2,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "field_sampling_coverage",
+            "tier": "showcase",
+            "renderer": "temporal_coverage",
+            "theme": "deep_observatory_sage_core",
+            "seed": 11173,
+            "fingerprint": "fnv1a32-9577903b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "reservoir_oxygen_thresholds",
+            "tier": "showcase",
+            "renderer": "temporal_observations",
+            "theme": "registration_ink",
+            "seed": 13331,
+            "fingerprint": "fnv1a32-6b02f3ca",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_observations"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "gene_expression_recovery",
+            "tier": "stress",
+            "renderer": "line",
+            "theme": "ultraviolet_laboratory",
+            "seed": 4217,
+            "fingerprint": "fnv1a32-951e566f",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 6,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "particle_size_relationship",
+            "tier": "stress",
+            "renderer": "scatter",
+            "theme": "midnight_transit_signal_slate",
+            "seed": 7041,
+            "fingerprint": "fnv1a32-dc072080",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 3,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "lab_precision",
+            "tier": "stress",
+            "renderer": "strip_summary",
+            "theme": "ultraviolet_laboratory",
+            "seed": 9097,
+            "fingerprint": "fnv1a32-93d46739",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 6,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "migration_monitoring_coverage",
+            "tier": "stress",
+            "renderer": "temporal_coverage",
+            "theme": "midnight_transit_signal_slate",
+            "seed": 12239,
+            "fingerprint": "fnv1a32-c8c8ee56",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          }
+        ],
+        "detailsCount": 12,
+        "sourceLinkCount": 24,
+        "ready": "true",
+        "mediaReduced": false,
+        "pixelHashes": {
+          "watershed_storm_response": "fnv1a32-2f020afe@674x407",
+          "circadian_phase_shift": "fnv1a32-c441267d@674x407",
+          "instrument_calibration": "fnv1a32-2194267c@674x407",
+          "dose_response_plate": "fnv1a32-5f9800bc@674x407",
+          "treatment_replicates": "fnv1a32-fa38f421@674x407",
+          "paired_seasonal_distributions": "fnv1a32-60acf563@674x407",
+          "field_sampling_coverage": "fnv1a32-1e08c7ef@674x407",
+          "reservoir_oxygen_thresholds": "fnv1a32-6ebbc729@674x407",
+          "gene_expression_recovery": "fnv1a32-2c421664@674x407",
+          "particle_size_relationship": "fnv1a32-a12a408d@674x407",
+          "lab_precision": "fnv1a32-25fe90fa@674x407",
+          "migration_monitoring_coverage": "fnv1a32-d89d234b@674x407"
+        }
+      },
+      "keyboard": {
+        "expectedCount": 39,
+        "reachedCount": 39,
+        "sequence": [
+          {
+            "tag": "a",
+            "text": "Skip to specimen lab",
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9464.722664811881,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Open the eight-figure montage",
+            "href": "at-a-glance.html",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 3227.1665802001953,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Read corpus provenance",
+            "href": "corpus/README.md",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2581.733367919922,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/watershed_storm_response.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/watershed_storm_response.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/circadian_phase_shift.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/circadian_phase_shift.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/instrument_calibration.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/instrument_calibration.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/dose_response_plate.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/dose_response_plate.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/treatment_replicates.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/treatment_replicates.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/paired_seasonal_distributions.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/paired_seasonal_distributions.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/field_sampling_coverage.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/field_sampling_coverage.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/reservoir_oxygen_thresholds.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/reservoir_oxygen_thresholds.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/gene_expression_recovery.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/gene_expression_recovery.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/particle_size_relationship.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/particle_size_relationship.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/lab_precision.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/lab_precision.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/migration_monitoring_coverage.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/migration_monitoring_coverage.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          }
+        ],
+        "allVisible": true,
+        "allOutlined": true
+      },
+      "findings": [],
+      "result": "PASS"
+    },
+    {
+      "pageKey": "lab",
+      "width": 1440,
+      "reducedMotion": true,
+      "runtimeErrors": [],
+      "structure": {
+        "mode": "lab",
+        "innerWidth": 1440,
+        "clientWidth": 1440,
+        "horizontalOverflow": 0,
+        "order": [
+          "watershed_storm_response",
+          "circadian_phase_shift",
+          "instrument_calibration",
+          "dose_response_plate",
+          "treatment_replicates",
+          "paired_seasonal_distributions",
+          "field_sampling_coverage",
+          "reservoir_oxygen_thresholds",
+          "gene_expression_recovery",
+          "particle_size_relationship",
+          "lab_precision",
+          "migration_monitoring_coverage"
+        ],
+        "sceneCount": 12,
+        "stressInMontage": [
+          "gene_expression_recovery",
+          "particle_size_relationship",
+          "lab_precision",
+          "migration_monitoring_coverage"
+        ],
+        "immediateDuplicateHeadings": [],
+        "hiddenInteractive": [],
+        "hiddenTableCount": 12,
+        "canvasAccessibility": [
+          {
+            "sceneId": "watershed_storm_response",
+            "role": "img",
+            "labelledBy": "figurestead-n150lqd0w98-title figurestead-n150lqd0w98-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "circadian_phase_shift",
+            "role": "img",
+            "labelledBy": "figurestead-zr7iwxurzl9-title figurestead-zr7iwxurzl9-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "instrument_calibration",
+            "role": "img",
+            "labelledBy": "figurestead-jljsjmxv02-title figurestead-jljsjmxv02-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "dose_response_plate",
+            "role": "img",
+            "labelledBy": "figurestead-qpg4gkzrit-title figurestead-qpg4gkzrit-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "treatment_replicates",
+            "role": "img",
+            "labelledBy": "figurestead-i60i9k3b7l7-title figurestead-i60i9k3b7l7-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "paired_seasonal_distributions",
+            "role": "img",
+            "labelledBy": "figurestead-af1cr7hvghg-title figurestead-af1cr7hvghg-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "field_sampling_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-jpuspez0h1r-title figurestead-jpuspez0h1r-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "reservoir_oxygen_thresholds",
+            "role": "img",
+            "labelledBy": "figurestead-pvymxstn9al-title figurestead-pvymxstn9al-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "gene_expression_recovery",
+            "role": "img",
+            "labelledBy": "figurestead-p2r0bk65o7-title figurestead-p2r0bk65o7-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "particle_size_relationship",
+            "role": "img",
+            "labelledBy": "figurestead-cg0hi4py8qw-title figurestead-cg0hi4py8qw-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "lab_precision",
+            "role": "img",
+            "labelledBy": "figurestead-cgbzwezpq26-title figurestead-cgbzwezpq26-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "migration_monitoring_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-a72ojqzeo54-title figurestead-a72ojqzeo54-description",
+            "targetsExist": true
+          }
+        ],
+        "rendered": [
+          {
+            "id": "watershed_storm_response",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "slipware",
+            "seed": 2409,
+            "fingerprint": "fnv1a32-6e66ac0e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "circadian_phase_shift",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "deep_observatory_sage_core",
+            "seed": 3112,
+            "fingerprint": "fnv1a32-00d5a3c5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "instrument_calibration",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "registration_ink",
+            "seed": 5309,
+            "fingerprint": "fnv1a32-8562cee5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "dose_response_plate",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "lavender_fog_notebook",
+            "seed": 6143,
+            "fingerprint": "fnv1a32-280b339d",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "treatment_replicates",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 8119,
+            "fingerprint": "fnv1a32-a8d8128e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "paired_seasonal_distributions",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "lavender_fog_notebook",
+            "seed": 10061,
+            "fingerprint": "fnv1a32-af792465",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 2,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "field_sampling_coverage",
+            "tier": "showcase",
+            "renderer": "temporal_coverage",
+            "theme": "deep_observatory_sage_core",
+            "seed": 11173,
+            "fingerprint": "fnv1a32-9577903b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "reservoir_oxygen_thresholds",
+            "tier": "showcase",
+            "renderer": "temporal_observations",
+            "theme": "registration_ink",
+            "seed": 13331,
+            "fingerprint": "fnv1a32-6b02f3ca",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_observations"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "gene_expression_recovery",
+            "tier": "stress",
+            "renderer": "line",
+            "theme": "ultraviolet_laboratory",
+            "seed": 4217,
+            "fingerprint": "fnv1a32-951e566f",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 6,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "particle_size_relationship",
+            "tier": "stress",
+            "renderer": "scatter",
+            "theme": "midnight_transit_signal_slate",
+            "seed": 7041,
+            "fingerprint": "fnv1a32-dc072080",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 3,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "lab_precision",
+            "tier": "stress",
+            "renderer": "strip_summary",
+            "theme": "ultraviolet_laboratory",
+            "seed": 9097,
+            "fingerprint": "fnv1a32-93d46739",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 6,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "migration_monitoring_coverage",
+            "tier": "stress",
+            "renderer": "temporal_coverage",
+            "theme": "midnight_transit_signal_slate",
+            "seed": 12239,
+            "fingerprint": "fnv1a32-c8c8ee56",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          }
+        ],
+        "detailsCount": 12,
+        "sourceLinkCount": 24,
+        "ready": "true",
+        "mediaReduced": true,
+        "pixelHashes": {
+          "watershed_storm_response": "fnv1a32-2f020afe@674x407",
+          "circadian_phase_shift": "fnv1a32-c441267d@674x407",
+          "instrument_calibration": "fnv1a32-2194267c@674x407",
+          "dose_response_plate": "fnv1a32-5f9800bc@674x407",
+          "treatment_replicates": "fnv1a32-fa38f421@674x407",
+          "paired_seasonal_distributions": "fnv1a32-60acf563@674x407",
+          "field_sampling_coverage": "fnv1a32-1e08c7ef@674x407",
+          "reservoir_oxygen_thresholds": "fnv1a32-6ebbc729@674x407",
+          "gene_expression_recovery": "fnv1a32-2c421664@674x407",
+          "particle_size_relationship": "fnv1a32-a12a408d@674x407",
+          "lab_precision": "fnv1a32-25fe90fa@674x407",
+          "migration_monitoring_coverage": "fnv1a32-d89d234b@674x407"
+        }
+      },
+      "keyboard": {
+        "expectedCount": 39,
+        "reachedCount": 39,
+        "sequence": [
+          {
+            "tag": "a",
+            "text": "Skip to specimen lab",
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9464.722664811881,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Open the eight-figure montage",
+            "href": "at-a-glance.html",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 3227.1665802001953,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Read corpus provenance",
+            "href": "corpus/README.md",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2581.733367919922,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/watershed_storm_response.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/watershed_storm_response.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/circadian_phase_shift.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/circadian_phase_shift.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/instrument_calibration.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/instrument_calibration.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/dose_response_plate.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/dose_response_plate.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/treatment_replicates.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/treatment_replicates.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/paired_seasonal_distributions.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/paired_seasonal_distributions.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/field_sampling_coverage.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/field_sampling_coverage.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/reservoir_oxygen_thresholds.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/reservoir_oxygen_thresholds.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/gene_expression_recovery.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/gene_expression_recovery.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/particle_size_relationship.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/particle_size_relationship.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/lab_precision.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/lab_precision.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/migration_monitoring_coverage.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/migration_monitoring_coverage.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          }
+        ],
+        "allVisible": true,
+        "allOutlined": true
+      },
+      "findings": [],
+      "result": "PASS"
+    },
+    {
+      "pageKey": "lab",
+      "width": 390,
+      "reducedMotion": false,
+      "runtimeErrors": [],
+      "structure": {
+        "mode": "lab",
+        "innerWidth": 390,
+        "clientWidth": 390,
+        "horizontalOverflow": 0,
+        "order": [
+          "watershed_storm_response",
+          "circadian_phase_shift",
+          "instrument_calibration",
+          "dose_response_plate",
+          "treatment_replicates",
+          "paired_seasonal_distributions",
+          "field_sampling_coverage",
+          "reservoir_oxygen_thresholds",
+          "gene_expression_recovery",
+          "particle_size_relationship",
+          "lab_precision",
+          "migration_monitoring_coverage"
+        ],
+        "sceneCount": 12,
+        "stressInMontage": [
+          "gene_expression_recovery",
+          "particle_size_relationship",
+          "lab_precision",
+          "migration_monitoring_coverage"
+        ],
+        "immediateDuplicateHeadings": [],
+        "hiddenInteractive": [],
+        "hiddenTableCount": 12,
+        "canvasAccessibility": [
+          {
+            "sceneId": "watershed_storm_response",
+            "role": "img",
+            "labelledBy": "figurestead-rrs98p7choa-title figurestead-rrs98p7choa-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "circadian_phase_shift",
+            "role": "img",
+            "labelledBy": "figurestead-cjhrxcb3lrm-title figurestead-cjhrxcb3lrm-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "instrument_calibration",
+            "role": "img",
+            "labelledBy": "figurestead-fw87dfftux-title figurestead-fw87dfftux-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "dose_response_plate",
+            "role": "img",
+            "labelledBy": "figurestead-w3kpbcbt9y-title figurestead-w3kpbcbt9y-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "treatment_replicates",
+            "role": "img",
+            "labelledBy": "figurestead-00v3nxj70rkpc-title figurestead-00v3nxj70rkpc-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "paired_seasonal_distributions",
+            "role": "img",
+            "labelledBy": "figurestead-ivsve88r8e-title figurestead-ivsve88r8e-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "field_sampling_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-xuszap1kzh8-title figurestead-xuszap1kzh8-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "reservoir_oxygen_thresholds",
+            "role": "img",
+            "labelledBy": "figurestead-r2tbhp94tlj-title figurestead-r2tbhp94tlj-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "gene_expression_recovery",
+            "role": "img",
+            "labelledBy": "figurestead-wgo2083wykl-title figurestead-wgo2083wykl-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "particle_size_relationship",
+            "role": "img",
+            "labelledBy": "figurestead-6tknudvja4-title figurestead-6tknudvja4-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "lab_precision",
+            "role": "img",
+            "labelledBy": "figurestead-s7wbpq2l2cl-title figurestead-s7wbpq2l2cl-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "migration_monitoring_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-8ypxrlzoco5-title figurestead-8ypxrlzoco5-description",
+            "targetsExist": true
+          }
+        ],
+        "rendered": [
+          {
+            "id": "watershed_storm_response",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "slipware",
+            "seed": 2409,
+            "fingerprint": "fnv1a32-6e66ac0e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "circadian_phase_shift",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "deep_observatory_sage_core",
+            "seed": 3112,
+            "fingerprint": "fnv1a32-00d5a3c5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "instrument_calibration",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "registration_ink",
+            "seed": 5309,
+            "fingerprint": "fnv1a32-8562cee5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "dose_response_plate",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "lavender_fog_notebook",
+            "seed": 6143,
+            "fingerprint": "fnv1a32-280b339d",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "treatment_replicates",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 8119,
+            "fingerprint": "fnv1a32-a8d8128e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "paired_seasonal_distributions",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "lavender_fog_notebook",
+            "seed": 10061,
+            "fingerprint": "fnv1a32-af792465",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 2,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "field_sampling_coverage",
+            "tier": "showcase",
+            "renderer": "temporal_coverage",
+            "theme": "deep_observatory_sage_core",
+            "seed": 11173,
+            "fingerprint": "fnv1a32-9577903b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "reservoir_oxygen_thresholds",
+            "tier": "showcase",
+            "renderer": "temporal_observations",
+            "theme": "registration_ink",
+            "seed": 13331,
+            "fingerprint": "fnv1a32-6b02f3ca",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_observations"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "gene_expression_recovery",
+            "tier": "stress",
+            "renderer": "line",
+            "theme": "ultraviolet_laboratory",
+            "seed": 4217,
+            "fingerprint": "fnv1a32-951e566f",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 6,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "particle_size_relationship",
+            "tier": "stress",
+            "renderer": "scatter",
+            "theme": "midnight_transit_signal_slate",
+            "seed": 7041,
+            "fingerprint": "fnv1a32-dc072080",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 3,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "lab_precision",
+            "tier": "stress",
+            "renderer": "strip_summary",
+            "theme": "ultraviolet_laboratory",
+            "seed": 9097,
+            "fingerprint": "fnv1a32-93d46739",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 6,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "migration_monitoring_coverage",
+            "tier": "stress",
+            "renderer": "temporal_coverage",
+            "theme": "midnight_transit_signal_slate",
+            "seed": 12239,
+            "fingerprint": "fnv1a32-c8c8ee56",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          }
+        ],
+        "detailsCount": 12,
+        "sourceLinkCount": 24,
+        "ready": "true",
+        "mediaReduced": false,
+        "pixelHashes": {
+          "watershed_storm_response": "fnv1a32-acb03532@362x218",
+          "circadian_phase_shift": "fnv1a32-c71f9315@362x218",
+          "instrument_calibration": "fnv1a32-7ec0ba5b@362x218",
+          "dose_response_plate": "fnv1a32-4a996376@362x218",
+          "treatment_replicates": "fnv1a32-64ef29e0@362x218",
+          "paired_seasonal_distributions": "fnv1a32-b3a1c0a0@362x218",
+          "field_sampling_coverage": "fnv1a32-9c0d2321@362x218",
+          "reservoir_oxygen_thresholds": "fnv1a32-a505cfb8@362x218",
+          "gene_expression_recovery": "fnv1a32-31c2162e@362x218",
+          "particle_size_relationship": "fnv1a32-e5b85ebd@362x218",
+          "lab_precision": "fnv1a32-e106fc5b@362x218",
+          "migration_monitoring_coverage": "fnv1a32-fc132d24@362x218"
+        }
+      },
+      "keyboard": {
+        "expectedCount": 39,
+        "reachedCount": 39,
+        "sequence": [
+          {
+            "tag": "a",
+            "text": "Skip to specimen lab",
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9464.722664811881,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Open the eight-figure montage",
+            "href": "at-a-glance.html",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 3227.1665802001953,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Read corpus provenance",
+            "href": "corpus/README.md",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2581.733367919922,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/watershed_storm_response.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/watershed_storm_response.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/circadian_phase_shift.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/circadian_phase_shift.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/instrument_calibration.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/instrument_calibration.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/dose_response_plate.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/dose_response_plate.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/treatment_replicates.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/treatment_replicates.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/paired_seasonal_distributions.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/paired_seasonal_distributions.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/field_sampling_coverage.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/field_sampling_coverage.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/reservoir_oxygen_thresholds.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/reservoir_oxygen_thresholds.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/gene_expression_recovery.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/gene_expression_recovery.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/particle_size_relationship.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/particle_size_relationship.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/lab_precision.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/lab_precision.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/migration_monitoring_coverage.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/migration_monitoring_coverage.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          }
+        ],
+        "allVisible": true,
+        "allOutlined": true
+      },
+      "findings": [],
+      "result": "PASS"
+    },
+    {
+      "pageKey": "lab",
+      "width": 390,
+      "reducedMotion": true,
+      "runtimeErrors": [],
+      "structure": {
+        "mode": "lab",
+        "innerWidth": 390,
+        "clientWidth": 390,
+        "horizontalOverflow": 0,
+        "order": [
+          "watershed_storm_response",
+          "circadian_phase_shift",
+          "instrument_calibration",
+          "dose_response_plate",
+          "treatment_replicates",
+          "paired_seasonal_distributions",
+          "field_sampling_coverage",
+          "reservoir_oxygen_thresholds",
+          "gene_expression_recovery",
+          "particle_size_relationship",
+          "lab_precision",
+          "migration_monitoring_coverage"
+        ],
+        "sceneCount": 12,
+        "stressInMontage": [
+          "gene_expression_recovery",
+          "particle_size_relationship",
+          "lab_precision",
+          "migration_monitoring_coverage"
+        ],
+        "immediateDuplicateHeadings": [],
+        "hiddenInteractive": [],
+        "hiddenTableCount": 12,
+        "canvasAccessibility": [
+          {
+            "sceneId": "watershed_storm_response",
+            "role": "img",
+            "labelledBy": "figurestead-hqjpn5piksh-title figurestead-hqjpn5piksh-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "circadian_phase_shift",
+            "role": "img",
+            "labelledBy": "figurestead-rkgw3m63irc-title figurestead-rkgw3m63irc-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "instrument_calibration",
+            "role": "img",
+            "labelledBy": "figurestead-qqhonokzcrn-title figurestead-qqhonokzcrn-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "dose_response_plate",
+            "role": "img",
+            "labelledBy": "figurestead-sivzkd3ulod-title figurestead-sivzkd3ulod-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "treatment_replicates",
+            "role": "img",
+            "labelledBy": "figurestead-2khorsfnikf-title figurestead-2khorsfnikf-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "paired_seasonal_distributions",
+            "role": "img",
+            "labelledBy": "figurestead-bak7yvmwq0l-title figurestead-bak7yvmwq0l-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "field_sampling_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-fkakwwttcm-title figurestead-fkakwwttcm-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "reservoir_oxygen_thresholds",
+            "role": "img",
+            "labelledBy": "figurestead-3y2ulup6brq-title figurestead-3y2ulup6brq-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "gene_expression_recovery",
+            "role": "img",
+            "labelledBy": "figurestead-c1v9lnjlhf-title figurestead-c1v9lnjlhf-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "particle_size_relationship",
+            "role": "img",
+            "labelledBy": "figurestead-0babcfeg95yu-title figurestead-0babcfeg95yu-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "lab_precision",
+            "role": "img",
+            "labelledBy": "figurestead-lay8jj6rass-title figurestead-lay8jj6rass-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "migration_monitoring_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-ieo5zu18fad-title figurestead-ieo5zu18fad-description",
+            "targetsExist": true
+          }
+        ],
+        "rendered": [
+          {
+            "id": "watershed_storm_response",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "slipware",
+            "seed": 2409,
+            "fingerprint": "fnv1a32-6e66ac0e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "circadian_phase_shift",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "deep_observatory_sage_core",
+            "seed": 3112,
+            "fingerprint": "fnv1a32-00d5a3c5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "instrument_calibration",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "registration_ink",
+            "seed": 5309,
+            "fingerprint": "fnv1a32-8562cee5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "dose_response_plate",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "lavender_fog_notebook",
+            "seed": 6143,
+            "fingerprint": "fnv1a32-280b339d",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "treatment_replicates",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 8119,
+            "fingerprint": "fnv1a32-a8d8128e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "paired_seasonal_distributions",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "lavender_fog_notebook",
+            "seed": 10061,
+            "fingerprint": "fnv1a32-af792465",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 2,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "field_sampling_coverage",
+            "tier": "showcase",
+            "renderer": "temporal_coverage",
+            "theme": "deep_observatory_sage_core",
+            "seed": 11173,
+            "fingerprint": "fnv1a32-9577903b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "reservoir_oxygen_thresholds",
+            "tier": "showcase",
+            "renderer": "temporal_observations",
+            "theme": "registration_ink",
+            "seed": 13331,
+            "fingerprint": "fnv1a32-6b02f3ca",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_observations"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "gene_expression_recovery",
+            "tier": "stress",
+            "renderer": "line",
+            "theme": "ultraviolet_laboratory",
+            "seed": 4217,
+            "fingerprint": "fnv1a32-951e566f",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 6,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "particle_size_relationship",
+            "tier": "stress",
+            "renderer": "scatter",
+            "theme": "midnight_transit_signal_slate",
+            "seed": 7041,
+            "fingerprint": "fnv1a32-dc072080",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 3,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "lab_precision",
+            "tier": "stress",
+            "renderer": "strip_summary",
+            "theme": "ultraviolet_laboratory",
+            "seed": 9097,
+            "fingerprint": "fnv1a32-93d46739",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 6,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "migration_monitoring_coverage",
+            "tier": "stress",
+            "renderer": "temporal_coverage",
+            "theme": "midnight_transit_signal_slate",
+            "seed": 12239,
+            "fingerprint": "fnv1a32-c8c8ee56",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          }
+        ],
+        "detailsCount": 12,
+        "sourceLinkCount": 24,
+        "ready": "true",
+        "mediaReduced": true,
+        "pixelHashes": {
+          "watershed_storm_response": "fnv1a32-acb03532@362x218",
+          "circadian_phase_shift": "fnv1a32-c71f9315@362x218",
+          "instrument_calibration": "fnv1a32-7ec0ba5b@362x218",
+          "dose_response_plate": "fnv1a32-4a996376@362x218",
+          "treatment_replicates": "fnv1a32-64ef29e0@362x218",
+          "paired_seasonal_distributions": "fnv1a32-b3a1c0a0@362x218",
+          "field_sampling_coverage": "fnv1a32-9c0d2321@362x218",
+          "reservoir_oxygen_thresholds": "fnv1a32-a505cfb8@362x218",
+          "gene_expression_recovery": "fnv1a32-31c2162e@362x218",
+          "particle_size_relationship": "fnv1a32-e5b85ebd@362x218",
+          "lab_precision": "fnv1a32-e106fc5b@362x218",
+          "migration_monitoring_coverage": "fnv1a32-fc132d24@362x218"
+        }
+      },
+      "keyboard": {
+        "expectedCount": 39,
+        "reachedCount": 39,
+        "sequence": [
+          {
+            "tag": "a",
+            "text": "Skip to specimen lab",
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 9464.722664811881,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Open the eight-figure montage",
+            "href": "at-a-glance.html",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 3227.1665802001953,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Read corpus provenance",
+            "href": "corpus/README.md",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2581.733367919922,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/watershed_storm_response.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/watershed_storm_response.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/circadian_phase_shift.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/circadian_phase_shift.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/instrument_calibration.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/instrument_calibration.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/dose_response_plate.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/dose_response_plate.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/treatment_replicates.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/treatment_replicates.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/paired_seasonal_distributions.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/paired_seasonal_distributions.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/field_sampling_coverage.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/field_sampling_coverage.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/reservoir_oxygen_thresholds.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/reservoir_oxygen_thresholds.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/gene_expression_recovery.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/gene_expression_recovery.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9862365722656,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/particle_size_relationship.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/particle_size_relationship.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/lab_precision.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/lab_precision.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "summary",
+            "text": "Scene brief and source",
+            "href": null,
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2527.9886054992676,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Scene JSON",
+            "href": "corpus/scenes/migration_monitoring_coverage.json",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 926.3334045410156,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Flat CSV",
+            "href": "corpus/tables/migration_monitoring_coverage.csv",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 741.0666809082031,
+            "clippedAncestors": []
+          }
+        ],
+        "allVisible": true,
+        "allOutlined": true
+      },
+      "findings": [],
+      "result": "PASS"
+    },
+    {
+      "pageKey": "montage",
+      "width": 1440,
+      "reducedMotion": false,
+      "runtimeErrors": [],
+      "structure": {
+        "mode": "montage",
+        "innerWidth": 1440,
+        "clientWidth": 1440,
+        "horizontalOverflow": 0,
+        "order": [
+          "watershed_storm_response",
+          "circadian_phase_shift",
+          "instrument_calibration",
+          "dose_response_plate",
+          "treatment_replicates",
+          "paired_seasonal_distributions",
+          "field_sampling_coverage",
+          "reservoir_oxygen_thresholds"
+        ],
+        "sceneCount": 8,
+        "stressInMontage": [],
+        "immediateDuplicateHeadings": [],
+        "hiddenInteractive": [],
+        "hiddenTableCount": 8,
+        "canvasAccessibility": [
+          {
+            "sceneId": "watershed_storm_response",
+            "role": "img",
+            "labelledBy": "figurestead-pvbblxx9mz-title figurestead-pvbblxx9mz-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "circadian_phase_shift",
+            "role": "img",
+            "labelledBy": "figurestead-t8tlod3cds-title figurestead-t8tlod3cds-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "instrument_calibration",
+            "role": "img",
+            "labelledBy": "figurestead-luwmdamp7or-title figurestead-luwmdamp7or-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "dose_response_plate",
+            "role": "img",
+            "labelledBy": "figurestead-x6tc18lbdlq-title figurestead-x6tc18lbdlq-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "treatment_replicates",
+            "role": "img",
+            "labelledBy": "figurestead-pswwk6rzn1-title figurestead-pswwk6rzn1-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "paired_seasonal_distributions",
+            "role": "img",
+            "labelledBy": "figurestead-b32m510lfg8-title figurestead-b32m510lfg8-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "field_sampling_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-zi8t89z1v3q-title figurestead-zi8t89z1v3q-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "reservoir_oxygen_thresholds",
+            "role": "img",
+            "labelledBy": "figurestead-24andlmvimz-title figurestead-24andlmvimz-description",
+            "targetsExist": true
+          }
+        ],
+        "rendered": [
+          {
+            "id": "watershed_storm_response",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "slipware",
+            "seed": 2409,
+            "fingerprint": "fnv1a32-6e66ac0e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "circadian_phase_shift",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "deep_observatory_sage_core",
+            "seed": 3112,
+            "fingerprint": "fnv1a32-00d5a3c5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "instrument_calibration",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "registration_ink",
+            "seed": 5309,
+            "fingerprint": "fnv1a32-8562cee5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "dose_response_plate",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "lavender_fog_notebook",
+            "seed": 6143,
+            "fingerprint": "fnv1a32-280b339d",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "treatment_replicates",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 8119,
+            "fingerprint": "fnv1a32-a8d8128e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "paired_seasonal_distributions",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "lavender_fog_notebook",
+            "seed": 10061,
+            "fingerprint": "fnv1a32-af792465",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 2,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "field_sampling_coverage",
+            "tier": "showcase",
+            "renderer": "temporal_coverage",
+            "theme": "deep_observatory_sage_core",
+            "seed": 11173,
+            "fingerprint": "fnv1a32-9577903b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "reservoir_oxygen_thresholds",
+            "tier": "showcase",
+            "renderer": "temporal_observations",
+            "theme": "registration_ink",
+            "seed": 13331,
+            "fingerprint": "fnv1a32-6b02f3ca",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_observations"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          }
+        ],
+        "detailsCount": 0,
+        "sourceLinkCount": 0,
+        "ready": "true",
+        "mediaReduced": false,
+        "pixelHashes": {
+          "watershed_storm_response": "fnv1a32-5b5f5a9e@329x214",
+          "circadian_phase_shift": "fnv1a32-2cd0b3fc@329x214",
+          "instrument_calibration": "fnv1a32-ce2ba6b0@329x214",
+          "dose_response_plate": "fnv1a32-585f7e20@329x214",
+          "treatment_replicates": "fnv1a32-71e5efb8@329x214",
+          "paired_seasonal_distributions": "fnv1a32-57a02a04@329x214",
+          "field_sampling_coverage": "fnv1a32-01960f35@329x214",
+          "reservoir_oxygen_thresholds": "fnv1a32-55767df4@329x214"
+        }
+      },
+      "keyboard": {
+        "expectedCount": 2,
+        "reachedCount": 2,
+        "sequence": [
+          {
+            "tag": "a",
+            "text": "Skip to montage",
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 7360.6418380737305,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Open the full specimen lab",
+            "href": "index.html",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2802.4501037597656,
+            "clippedAncestors": []
+          }
+        ],
+        "allVisible": true,
+        "allOutlined": true
+      },
+      "findings": [],
+      "result": "PASS"
+    },
+    {
+      "pageKey": "montage",
+      "width": 1440,
+      "reducedMotion": true,
+      "runtimeErrors": [],
+      "structure": {
+        "mode": "montage",
+        "innerWidth": 1440,
+        "clientWidth": 1440,
+        "horizontalOverflow": 0,
+        "order": [
+          "watershed_storm_response",
+          "circadian_phase_shift",
+          "instrument_calibration",
+          "dose_response_plate",
+          "treatment_replicates",
+          "paired_seasonal_distributions",
+          "field_sampling_coverage",
+          "reservoir_oxygen_thresholds"
+        ],
+        "sceneCount": 8,
+        "stressInMontage": [],
+        "immediateDuplicateHeadings": [],
+        "hiddenInteractive": [],
+        "hiddenTableCount": 8,
+        "canvasAccessibility": [
+          {
+            "sceneId": "watershed_storm_response",
+            "role": "img",
+            "labelledBy": "figurestead-uj92xtiria8-title figurestead-uj92xtiria8-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "circadian_phase_shift",
+            "role": "img",
+            "labelledBy": "figurestead-6uyvzi0q57-title figurestead-6uyvzi0q57-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "instrument_calibration",
+            "role": "img",
+            "labelledBy": "figurestead-56jxsb2rf9d-title figurestead-56jxsb2rf9d-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "dose_response_plate",
+            "role": "img",
+            "labelledBy": "figurestead-0m6fdrx79c8-title figurestead-0m6fdrx79c8-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "treatment_replicates",
+            "role": "img",
+            "labelledBy": "figurestead-shs8nrlio6-title figurestead-shs8nrlio6-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "paired_seasonal_distributions",
+            "role": "img",
+            "labelledBy": "figurestead-k6s72h3f9uq-title figurestead-k6s72h3f9uq-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "field_sampling_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-i3svri1ubng-title figurestead-i3svri1ubng-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "reservoir_oxygen_thresholds",
+            "role": "img",
+            "labelledBy": "figurestead-acnytrd4fn6-title figurestead-acnytrd4fn6-description",
+            "targetsExist": true
+          }
+        ],
+        "rendered": [
+          {
+            "id": "watershed_storm_response",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "slipware",
+            "seed": 2409,
+            "fingerprint": "fnv1a32-6e66ac0e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "circadian_phase_shift",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "deep_observatory_sage_core",
+            "seed": 3112,
+            "fingerprint": "fnv1a32-00d5a3c5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "instrument_calibration",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "registration_ink",
+            "seed": 5309,
+            "fingerprint": "fnv1a32-8562cee5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "dose_response_plate",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "lavender_fog_notebook",
+            "seed": 6143,
+            "fingerprint": "fnv1a32-280b339d",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "treatment_replicates",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 8119,
+            "fingerprint": "fnv1a32-a8d8128e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "paired_seasonal_distributions",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "lavender_fog_notebook",
+            "seed": 10061,
+            "fingerprint": "fnv1a32-af792465",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 2,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "field_sampling_coverage",
+            "tier": "showcase",
+            "renderer": "temporal_coverage",
+            "theme": "deep_observatory_sage_core",
+            "seed": 11173,
+            "fingerprint": "fnv1a32-9577903b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "reservoir_oxygen_thresholds",
+            "tier": "showcase",
+            "renderer": "temporal_observations",
+            "theme": "registration_ink",
+            "seed": 13331,
+            "fingerprint": "fnv1a32-6b02f3ca",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_observations"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          }
+        ],
+        "detailsCount": 0,
+        "sourceLinkCount": 0,
+        "ready": "true",
+        "mediaReduced": true,
+        "pixelHashes": {
+          "watershed_storm_response": "fnv1a32-5b5f5a9e@329x214",
+          "circadian_phase_shift": "fnv1a32-2cd0b3fc@329x214",
+          "instrument_calibration": "fnv1a32-ce2ba6b0@329x214",
+          "dose_response_plate": "fnv1a32-585f7e20@329x214",
+          "treatment_replicates": "fnv1a32-71e5efb8@329x214",
+          "paired_seasonal_distributions": "fnv1a32-57a02a04@329x214",
+          "field_sampling_coverage": "fnv1a32-01960f35@329x214",
+          "reservoir_oxygen_thresholds": "fnv1a32-55767df4@329x214"
+        }
+      },
+      "keyboard": {
+        "expectedCount": 2,
+        "reachedCount": 2,
+        "sequence": [
+          {
+            "tag": "a",
+            "text": "Skip to montage",
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 7360.6418380737305,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Open the full specimen lab",
+            "href": "index.html",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 2802.4501037597656,
+            "clippedAncestors": []
+          }
+        ],
+        "allVisible": true,
+        "allOutlined": true
+      },
+      "findings": [],
+      "result": "PASS"
+    },
+    {
+      "pageKey": "montage",
+      "width": 390,
+      "reducedMotion": false,
+      "runtimeErrors": [],
+      "structure": {
+        "mode": "montage",
+        "innerWidth": 390,
+        "clientWidth": 390,
+        "horizontalOverflow": 0,
+        "order": [
+          "watershed_storm_response",
+          "circadian_phase_shift",
+          "instrument_calibration",
+          "dose_response_plate",
+          "treatment_replicates",
+          "paired_seasonal_distributions",
+          "field_sampling_coverage",
+          "reservoir_oxygen_thresholds"
+        ],
+        "sceneCount": 8,
+        "stressInMontage": [],
+        "immediateDuplicateHeadings": [],
+        "hiddenInteractive": [],
+        "hiddenTableCount": 8,
+        "canvasAccessibility": [
+          {
+            "sceneId": "watershed_storm_response",
+            "role": "img",
+            "labelledBy": "figurestead-lizxfn1uuwl-title figurestead-lizxfn1uuwl-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "circadian_phase_shift",
+            "role": "img",
+            "labelledBy": "figurestead-a501packdqa-title figurestead-a501packdqa-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "instrument_calibration",
+            "role": "img",
+            "labelledBy": "figurestead-sfoa3hf7sy-title figurestead-sfoa3hf7sy-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "dose_response_plate",
+            "role": "img",
+            "labelledBy": "figurestead-a9fufrtpw9-title figurestead-a9fufrtpw9-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "treatment_replicates",
+            "role": "img",
+            "labelledBy": "figurestead-d92a54atq5g-title figurestead-d92a54atq5g-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "paired_seasonal_distributions",
+            "role": "img",
+            "labelledBy": "figurestead-uhzupqnrce-title figurestead-uhzupqnrce-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "field_sampling_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-v7j40ao1qrn-title figurestead-v7j40ao1qrn-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "reservoir_oxygen_thresholds",
+            "role": "img",
+            "labelledBy": "figurestead-rda8lcnv92a-title figurestead-rda8lcnv92a-description",
+            "targetsExist": true
+          }
+        ],
+        "rendered": [
+          {
+            "id": "watershed_storm_response",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "slipware",
+            "seed": 2409,
+            "fingerprint": "fnv1a32-6e66ac0e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "circadian_phase_shift",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "deep_observatory_sage_core",
+            "seed": 3112,
+            "fingerprint": "fnv1a32-00d5a3c5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "instrument_calibration",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "registration_ink",
+            "seed": 5309,
+            "fingerprint": "fnv1a32-8562cee5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "dose_response_plate",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "lavender_fog_notebook",
+            "seed": 6143,
+            "fingerprint": "fnv1a32-280b339d",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "treatment_replicates",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 8119,
+            "fingerprint": "fnv1a32-a8d8128e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "paired_seasonal_distributions",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "lavender_fog_notebook",
+            "seed": 10061,
+            "fingerprint": "fnv1a32-af792465",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 2,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "field_sampling_coverage",
+            "tier": "showcase",
+            "renderer": "temporal_coverage",
+            "theme": "deep_observatory_sage_core",
+            "seed": 11173,
+            "fingerprint": "fnv1a32-9577903b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "reservoir_oxygen_thresholds",
+            "tier": "showcase",
+            "renderer": "temporal_observations",
+            "theme": "registration_ink",
+            "seed": 13331,
+            "fingerprint": "fnv1a32-6b02f3ca",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": false,
+              "renderers": [
+                "temporal_observations"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          }
+        ],
+        "detailsCount": 0,
+        "sourceLinkCount": 0,
+        "ready": "true",
+        "mediaReduced": false,
+        "pixelHashes": {
+          "watershed_storm_response": "fnv1a32-90a41e6a@362x242",
+          "circadian_phase_shift": "fnv1a32-cf8c0564@362x242",
+          "instrument_calibration": "fnv1a32-b7bef710@362x242",
+          "dose_response_plate": "fnv1a32-16a27c1e@362x242",
+          "treatment_replicates": "fnv1a32-4574c358@362x242",
+          "paired_seasonal_distributions": "fnv1a32-ecea6f16@362x242",
+          "field_sampling_coverage": "fnv1a32-a2ff9009@362x242",
+          "reservoir_oxygen_thresholds": "fnv1a32-2147bae3@362x242"
+        }
+      },
+      "keyboard": {
+        "expectedCount": 2,
+        "reachedCount": 2,
+        "sequence": [
+          {
+            "tag": "a",
+            "text": "Skip to montage",
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 7360.6418380737305,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Open the full specimen lab",
+            "href": "index.html",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 11644.394888170063,
+            "clippedAncestors": []
+          }
+        ],
+        "allVisible": true,
+        "allOutlined": true
+      },
+      "findings": [],
+      "result": "PASS"
+    },
+    {
+      "pageKey": "montage",
+      "width": 390,
+      "reducedMotion": true,
+      "runtimeErrors": [],
+      "structure": {
+        "mode": "montage",
+        "innerWidth": 390,
+        "clientWidth": 390,
+        "horizontalOverflow": 0,
+        "order": [
+          "watershed_storm_response",
+          "circadian_phase_shift",
+          "instrument_calibration",
+          "dose_response_plate",
+          "treatment_replicates",
+          "paired_seasonal_distributions",
+          "field_sampling_coverage",
+          "reservoir_oxygen_thresholds"
+        ],
+        "sceneCount": 8,
+        "stressInMontage": [],
+        "immediateDuplicateHeadings": [],
+        "hiddenInteractive": [],
+        "hiddenTableCount": 8,
+        "canvasAccessibility": [
+          {
+            "sceneId": "watershed_storm_response",
+            "role": "img",
+            "labelledBy": "figurestead-oqjrtuir0ar-title figurestead-oqjrtuir0ar-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "circadian_phase_shift",
+            "role": "img",
+            "labelledBy": "figurestead-0w7hpk7ge1x-title figurestead-0w7hpk7ge1x-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "instrument_calibration",
+            "role": "img",
+            "labelledBy": "figurestead-p3z8aoqqqoq-title figurestead-p3z8aoqqqoq-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "dose_response_plate",
+            "role": "img",
+            "labelledBy": "figurestead-9sxmwngz3hg-title figurestead-9sxmwngz3hg-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "treatment_replicates",
+            "role": "img",
+            "labelledBy": "figurestead-rskzaoblgss-title figurestead-rskzaoblgss-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "paired_seasonal_distributions",
+            "role": "img",
+            "labelledBy": "figurestead-wbh5xcv6tt-title figurestead-wbh5xcv6tt-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "field_sampling_coverage",
+            "role": "img",
+            "labelledBy": "figurestead-nx4cvbmgm68-title figurestead-nx4cvbmgm68-description",
+            "targetsExist": true
+          },
+          {
+            "sceneId": "reservoir_oxygen_thresholds",
+            "role": "img",
+            "labelledBy": "figurestead-tqzy8irbl8-title figurestead-tqzy8irbl8-description",
+            "targetsExist": true
+          }
+        ],
+        "rendered": [
+          {
+            "id": "watershed_storm_response",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "slipware",
+            "seed": 2409,
+            "fingerprint": "fnv1a32-6e66ac0e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "circadian_phase_shift",
+            "tier": "showcase",
+            "renderer": "line",
+            "theme": "deep_observatory_sage_core",
+            "seed": 3112,
+            "fingerprint": "fnv1a32-00d5a3c5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "line"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "instrument_calibration",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "registration_ink",
+            "seed": 5309,
+            "fingerprint": "fnv1a32-8562cee5",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 4,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "dose_response_plate",
+            "tier": "showcase",
+            "renderer": "scatter",
+            "theme": "lavender_fog_notebook",
+            "seed": 6143,
+            "fingerprint": "fnv1a32-280b339d",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "scatter"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "treatment_replicates",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "slipware",
+            "seed": 8119,
+            "fingerprint": "fnv1a32-a8d8128e",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 5,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "paired_seasonal_distributions",
+            "tier": "showcase",
+            "renderer": "strip_summary",
+            "theme": "lavender_fog_notebook",
+            "seed": 10061,
+            "fingerprint": "fnv1a32-af792465",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "strip_summary"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 2,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "field_sampling_coverage",
+            "tier": "showcase",
+            "renderer": "temporal_coverage",
+            "theme": "deep_observatory_sage_core",
+            "seed": 11173,
+            "fingerprint": "fnv1a32-9577903b",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_coverage"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          },
+          {
+            "id": "reservoir_oxygen_thresholds",
+            "tier": "showcase",
+            "renderer": "temporal_observations",
+            "theme": "registration_ink",
+            "seed": 13331,
+            "fingerprint": "fnv1a32-6b02f3ca",
+            "state": {
+              "progress": 1,
+              "playing": false,
+              "reducedMotion": true,
+              "renderers": [
+                "temporal_observations"
+              ],
+              "sceneVersion": "figurestead.scene/1",
+              "resolvedSceneVersion": "figurestead.resolved-scene/1",
+              "composedSceneVersion": "figurestead.composed-scene/1",
+              "profile": "atlas",
+              "destroyed": false
+            },
+            "glyphCount": 4,
+            "lineStyleCount": 4,
+            "seriesCount": 0,
+            "provenanceKind": "deterministic_synthetic"
+          }
+        ],
+        "detailsCount": 0,
+        "sourceLinkCount": 0,
+        "ready": "true",
+        "mediaReduced": true,
+        "pixelHashes": {
+          "watershed_storm_response": "fnv1a32-90a41e6a@362x242",
+          "circadian_phase_shift": "fnv1a32-cf8c0564@362x242",
+          "instrument_calibration": "fnv1a32-b7bef710@362x242",
+          "dose_response_plate": "fnv1a32-16a27c1e@362x242",
+          "treatment_replicates": "fnv1a32-4574c358@362x242",
+          "paired_seasonal_distributions": "fnv1a32-ecea6f16@362x242",
+          "field_sampling_coverage": "fnv1a32-a2ff9009@362x242",
+          "reservoir_oxygen_thresholds": "fnv1a32-2147bae3@362x242"
+        }
+      },
+      "keyboard": {
+        "expectedCount": 2,
+        "reachedCount": 2,
+        "sequence": [
+          {
+            "tag": "a",
+            "text": "Skip to montage",
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 7360.6418380737305,
+            "clippedAncestors": []
+          },
+          {
+            "tag": "a",
+            "text": "Open the full specimen lab",
+            "href": "index.html",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "visibleArea": 11644.394888170063,
+            "clippedAncestors": []
+          }
+        ],
+        "allVisible": true,
+        "allOutlined": true
+      },
+      "findings": [],
+      "result": "PASS"
+    }
+  ],
+  "result": "PASS"
+}

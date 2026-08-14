@@ -4,8 +4,10 @@ import { resolveTerminalScene } from "./resolved-scene.js";
 import { composeResolvedScene } from "./composition.js";
 import { partitionPanelMarks, plotClipRect } from "./render-layers.js";
 import { resolveExportSize } from "./physical-export.js";
+import { validateThemeColors } from "./schema.js";
 
-const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[char]));
+const xmlValue = (value) => String(value).replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/gu, "\uFFFD");
+const esc = (value) => xmlValue(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[char]));
 const attrs = (value) => Object.entries(value).filter(([, item]) => item != null).map(([key, item]) => `${key}="${esc(item)}"`).join(" ");
 const FONT = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
 
@@ -145,11 +147,11 @@ function panelSurface(panel, theme) {
 function axes(panel, theme) {
   const plot = panel.axes.plot ?? panel.layout.plot, { font } = panel.layout, pieces = [`<path ${attrs({ d: `M ${plot.left} ${plot.top} L ${plot.left} ${plot.bottom} L ${plot.right} ${plot.bottom}`, fill: "none", stroke: theme.spine })}/>`];
   const slot = panel.axes.x.step?.() ?? Math.max(40, (plot.right - plot.left) / Math.max(1, panel.axes.xTicks.length));
-  const rotate = panel.axes.xType === "band" && panel.axes.xTicks.some((tick) => String(tick.label).length * font.axis * 0.62 > slot * 0.92);
-  panel.axes.xTicks.forEach((tick) => { const x = tickPosition(panel.axes.x, tick), y = plot.bottom + 16 * panel.layout.scale; pieces.push(`<text ${attrs({ x, y, fill: theme.secondary, "font-size": font.axis, "text-anchor": rotate ? "end" : "middle", transform: rotate ? `rotate(-45 ${x} ${y})` : null })}>${esc(tick.label)}</text>`); });
+  const rotate = panel.layout.text?.rotateX ?? (panel.axes.xType === "band" && panel.axes.xTicks.some((tick) => String(tick.label).length * font.axis * 0.62 > slot * 0.92));
+  panel.axes.xTicks.forEach((tick) => { const x = tickPosition(panel.axes.x, tick), y = panel.layout.text?.xTickBaselineY ?? plot.bottom + 16 * panel.layout.scale; pieces.push(`<text ${attrs({ x, y, fill: theme.secondary, "font-size": font.axis, "text-anchor": rotate ? "end" : "middle", transform: rotate ? `rotate(-45 ${x} ${y})` : null })}>${esc(tick.label)}</text>`); });
   panel.axes.yTicks.forEach((tick) => pieces.push(`<text ${attrs({ x: plot.left - 7 * panel.layout.scale, y: tickPosition(panel.axes.y, tick), fill: theme.secondary, "font-size": font.axis, "text-anchor": "end", "dominant-baseline": "middle" })}>${esc(tick.label)}</text>`));
-  if (panel.spec.xLabel) pieces.push(`<text ${attrs({ x: (plot.left + plot.right) / 2, y: panel.layout.rect.bottom - 6 * panel.layout.scale, fill: theme.label, "font-size": font.axis, "text-anchor": "middle" })}>${esc(panel.spec.xLabel)}</text>`);
-  if (panel.spec.yLabel) pieces.push(`<text ${attrs({ x: panel.layout.rect.left + 12 * panel.layout.scale, y: (plot.top + plot.bottom) / 2, fill: theme.label, "font-size": font.axis, transform: `rotate(-90 ${panel.layout.rect.left + 12 * panel.layout.scale} ${(plot.top + plot.bottom) / 2})`, "text-anchor": "middle" })}>${esc(panel.spec.yLabel)}</text>`);
+  if (panel.spec.xLabel) pieces.push(`<text ${attrs({ x: (plot.left + plot.right) / 2, y: panel.layout.text?.xLabelBaselineY ?? panel.layout.rect.bottom - 6 * panel.layout.scale, fill: theme.label, "font-size": font.axis, "text-anchor": "middle" })}>${esc(panel.spec.xLabel)}</text>`);
+  if (panel.spec.yLabel) { const x = panel.layout.text?.yLabelX ?? panel.layout.rect.left + 12 * panel.layout.scale; pieces.push(`<text ${attrs({ x, y: (plot.top + plot.bottom) / 2, fill: theme.label, "font-size": font.axis, transform: `rotate(-90 ${x} ${(plot.top + plot.bottom) / 2})`, "text-anchor": "middle", "dominant-baseline": "hanging" })}>${esc(panel.spec.yLabel)}</text>`); }
   return pieces.join("");
 }
 
@@ -212,12 +214,13 @@ function panelSvg(panel, theme, profile, namespace) {
 
 export function resolvedSceneToSvg(resolved, options = {}) {
   const composed = resolved.schemaVersion === "figurestead.composed-scene/1" ? resolved : composeResolvedScene(resolved);
+  validateThemeColors(composed.theme, "scene.theme");
   const scene = options.sourceScene, namespace = svgNamespace(composed, scene, options);
   const exportSize = options.exportSize ?? resolveExportSize({ ...options, width: composed.width, height: composed.height });
   const title = composed.spec.title, description = [composed.spec.description || composed.spec.subtitle || "Scientific figure", composed.spec.note, ...composed.panels.flatMap((panel) => panel.notes ?? [])].filter(Boolean).join(" ");
   const titleId = `${namespace}-title`, descId = `${namespace}-desc`;
   const header = composed.layout.header ? `<text ${attrs({ x: composed.layout.header.left, y: composed.layout.header.titleY, fill: composed.theme.mode === "paper" ? composed.theme.label : composed.theme.primary, "font-size": composed.layout.font.title })}>${esc(title)}</text>` : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect width="100%" height="100%" fill="${composed.theme.field}"/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace)).join("")}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect ${attrs({ width: "100%", height: "100%", fill: composed.theme.field })}/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace)).join("")}</svg>`;
 }
 
 export function sceneToSvg(scene, options = {}) {

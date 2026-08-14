@@ -116,9 +116,9 @@ export function drawAxes(context, { config, layout, scales, xTicks, yTicks, xCat
   context.textAlign = "center";
   context.textBaseline = "top";
   if (xCategories) {
-    xCategories.forEach((label, index) => context.fillText(label, scales.x(index), plot.bottom + 10 * layout.scale));
+    xCategories.forEach((label, index) => context.fillText(label, scales.x(index), layout.text?.xTickY ?? plot.bottom + 10 * layout.scale));
   } else {
-    xTicks.forEach((value) => context.fillText(formatTick(value), scales.x(value), plot.bottom + 10 * layout.scale));
+    xTicks.forEach((value) => context.fillText(formatTick(value), scales.x(value), layout.text?.xTickY ?? plot.bottom + 10 * layout.scale));
   }
 
   if (spec.xLabel) {

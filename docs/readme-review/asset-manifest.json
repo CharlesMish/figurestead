@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "figurestead.readme-assets/1",
+  "result": "PASS",
+  "environment": {
+    "python": "3.12.13",
+    "pillow": "12.2.0"
+  },
+  "assets": {
+    "figurestead-at-a-glance": {
+      "source": {
+        "path": "specimen-study/evidence/corpus-v0.2/screenshots/chromium-montage-1920x1080.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mode": "RGB",
+        "bytes": 372952,
+        "sha256": "cdfbfcdf98dfd2f1949f6bea8df6c0b6875e70ca4eb55b1a5f0a543a72f3bef9"
+      },
+      "derivative": {
+        "path": "docs/assets/readme/figurestead-at-a-glance.png",
+        "dimensions": [
+          1920,
+          960
+        ],
+        "mode": "RGB",
+        "bytes": 375121,
+        "sha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6"
+      },
+      "transform": {
+        "type": "lossless-crop-and-png-optimization",
+        "cropBox": [
+          0,
+          64,
+          1920,
+          1024
+        ]
+      },
+      "decodedCropPixelsIdentical": true,
+      "reason": "Removes study-only masthead chrome while preserving the accepted eight-panel composition."
+    },
+    "populated-categorical-response-matrix": {
+      "source": {
+        "path": "specimen-study/evidence/corpus-v0.2/response-matrix/populated-wide.png",
+        "dimensions": [
+          1160,
+          760
+        ],
+        "mode": "RGBA",
+        "bytes": 84544,
+        "sha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c"
+      },
+      "derivative": {
+        "path": "docs/assets/readme/populated-categorical-response-matrix.png",
+        "dimensions": [
+          1160,
+          760
+        ],
+        "mode": "RGBA",
+        "bytes": 84544,
+        "sha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c"
+      },
+      "transform": {
+        "type": "byte-identical-reuse"
+      },
+      "decodedPixelsIdentical": true
+    },
+    "github-social-preview-candidate": {
+      "source": {
+        "path": "docs/assets/readme/figurestead-at-a-glance.png",
+        "dimensions": [
+          1920,
+          960
+        ],
+        "mode": "RGB",
+        "bytes": 375121,
+        "sha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6"
+      },
+      "derivative": {
+        "path": "docs/assets/readme/github-social-preview-candidate.png",
+        "dimensions": [
+          1280,
+          640
+        ],
+        "mode": "RGB",
+        "bytes": 301881,
+        "sha256": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e"
+      },
+      "transform": {
+        "type": "lanczos-resize",
+        "dimensions": [
+          1280,
+          640
+        ]
+      },
+      "decodedPixelsIdentical": false,
+      "ownerActionRequired": true
+    }
+  }
+}

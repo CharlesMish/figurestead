@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-08-10T14:13:42.198910+00:00",
+  "gate": "Machado severity-1 matrix and sample-vector assumption check",
+  "result": "pass",
+  "threshold": 1e-12,
+  "maximum_absolute_delta": 5.551115123125783e-17,
+  "agreement": {
+    "criterion": "maximum absolute delta at or below the declared threshold",
+    "observed_order_of_magnitude": "10^-17",
+    "interpretation": "Floating-point last-bit deltas are environment-dependent; the tolerance result, not an exact delta, is the acceptance evidence."
+  },
+  "environment": {
+    "python": "3.13.13",
+    "node": "v24.14.0",
+    "colour_science": "0.4.7"
+  },
+  "matrix_maximum_absolute_delta": {
+    "protanomaly": 0.0,
+    "deuteranomaly": 0.0,
+    "tritanomalyApproximation": 0.0
+  },
+  "sample_vector_maximum_absolute_delta": {
+    "protanomaly": 5.551115123125783e-17,
+    "deuteranomaly": 5.551115123125783e-17,
+    "tritanomalyApproximation": 0.0
+  },
+  "reference": {
+    "implementation": "colour-science matrix_cvd_Machado2009",
+    "model": "Machado, Oliveira & Fernandes (2009)",
+    "severity": 1.0,
+    "working_space": "linear-light sRGB with standard sRGB transfer functions",
+    "scope": "Colour Science supplies the reference matrices; this gate compares matrices and sample vectors under the browser pipeline's stated sRGB assumptions. It is not a methodologically independent perceptual validation.",
+    "tritan_note": "The reference implementation treats the severity-1 tritanomaly-model result as an approximation."
+  },
+  "reference_matrices": {
+    "protanomaly": [
+      [
+        0.152286,
+        1.052583,
+        -0.204868
+      ],
+      [
+        0.114503,
+        0.786281,
+        0.099216
+      ],
+      [
+        -0.003882,
+        -0.048116,
+        1.051998
+      ]
+    ],
+    "deuteranomaly": [
+      [
+        0.367322,
+        0.860646,
+        -0.227968
+      ],
+      [
+        0.280085,
+        0.672501,
+        0.047413
+      ],
+      [
+        -0.01182,
+        0.04294,
+        0.968881
+      ]
+    ],
+    "tritanomalyApproximation": [
+      [
+        1.255528,
+        -0.076749,
+        -0.178779
+      ],
+      [
+        -0.078411,
+        0.930809,
+        0.147602
+      ],
+      [
+        0.004733,
+        0.691367,
+        0.3039
+      ]
+    ]
+  },
+  "sample_count": 8,
+  "all_values_finite": true
+}

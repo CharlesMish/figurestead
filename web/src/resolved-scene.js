@@ -1,4 +1,5 @@
 import { deriveFigureLayout } from "./figure-layout.js";
+import { refineScientificLayout } from "./scientific-layout.js";
 import { markMotionState } from "./motion-plan.js";
 import { monotoneSegmentControls } from "./renderers/line.js";
 import { bandScale, formatTick, formatTimeTick, linearScale, timeScale, ticks, timeTicks } from "./scales.js";
@@ -213,8 +214,12 @@ export function resolveTerminalScene(scene, options = {}) {
   const width = options.width ?? 960, height = options.height ?? 600;
   const layout = deriveFigureLayout(width, height, { panels: scene.panels, layout: scene.layout, theme: scene.theme, spec: scene.spec });
   const panels = scene.panels.map((panel, index) => {
-    const resolvedLayout = panelLayout(layout.panels[index], panel);
+    let resolvedLayout = panelLayout(layout.panels[index], panel);
     let axes = resolveAxes(panel, resolvedLayout), marks, plots = null;
+    for (let pass = 0; pass < 2; pass += 1) {
+      resolvedLayout = refineScientificLayout(resolvedLayout, panel, axes, { measureText: options.measureText, themeMode: scene.theme.mode });
+      axes = resolveAxes(panel, resolvedLayout);
+    }
     const radius = Math.max(3.2, Math.sqrt(scene.profile.markerSize) * 0.62 * resolvedLayout.scale) * (panel.presentation?.markerScale ?? 1);
     if (panel.renderer === "line") marks = lineGeometry(panel, axes, radius);
     else if (panel.renderer === "scatter") marks = scatterGeometry(panel, axes, radius);

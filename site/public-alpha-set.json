@@ -25,12 +25,12 @@
     },
     {
       "group": "foundation",
-      "guidance": "light five-series flagship",
+      "guidance": "light five-series foundation",
       "image": "assets/card-slipware.png",
       "key": "slipware",
       "name": "Slipware",
       "recommendedColorLedSeries": 5,
-      "role": "Light five-series flagship",
+      "role": "Light five-series foundation",
       "series": [
         "#1B4C8A",
         "#143F33",

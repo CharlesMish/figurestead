@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "figurestead.technical-showcase-preservation/1",
+  "result": "PASS",
+  "paperAssets": [
+    {
+      "width": "89mm",
+      "canonical": {
+        "path": "assets/evidence-paper-89mm.png",
+        "bytes": 3129058,
+        "sha256": "5bf4f27843a5ce6dfe4d53bee3fc4460ca165b4d88f0eb98e32f1cd0800b4253"
+      },
+      "servedDerivative": {
+        "path": "assets/web/evidence-paper-89mm.png",
+        "bytes": 118114,
+        "sha256": "26d11213cd7009833b6cc0ce9f2534a3642eb1f0905e60743f0a8043a915ca37"
+      },
+      "decodedPixelSha256": "bf8559e20981bf23ca922e86a0a83a282d626e3c94301533a11a1a2409bf1ba2",
+      "decodedPixelsIdentical": true,
+      "compressionSavingPercent": 96.225
+    },
+    {
+      "width": "183mm",
+      "canonical": {
+        "path": "assets/evidence-paper-183mm.png",
+        "bytes": 12277833,
+        "sha256": "867e9514fb8ac9519f8e3239210463806e7ee2fb67726f3add05b23514fd5143"
+      },
+      "servedDerivative": {
+        "path": "assets/web/evidence-paper-183mm.png",
+        "bytes": 266057,
+        "sha256": "de09a7dce37bb16fc33ffa41b60641f6cc5132be0bae81a05d0c44461bfd4a74"
+      },
+      "decodedPixelSha256": "100b3874224fa4635d9ed54e57c0ec63d6e10e1c226bc61795940ebc1fe29215",
+      "decodedPixelsIdentical": true,
+      "compressionSavingPercent": 97.833
+    }
+  ],
+  "paperTotals": {
+    "canonicalBytes": 15406891,
+    "servedDerivativeBytes": 384171,
+    "compressionSavingPercent": 97.506
+  },
+  "v1": {
+    "acceptedAnchor": "2f0403348e9b2e18e120d47b5fedb3f24062a978e0a02b2af8e7c62a28a553a7",
+    "currentAcceptedAggregate": "2f0403348e9b2e18e120d47b5fedb3f24062a978e0a02b2af8e7c62a28a553a7",
+    "acceptedAnchorMatch": true,
+    "acceptedManifestFileCount": 62,
+    "cleanManifestAggregate": "84df88d77db95da7d6555796ca3cb5399d382f3933ccf535bc82ba77385625c5",
+    "cleanManifestFileCount": 60,
+    "osArtifactsExcludedFromNewEvidence": 2
+  },
+  "publicR3": {
+    "baselineCommit": "a2cb55c7813c9ba7040aba58099e6dc626ae5846",
+    "baselineSiteTree": "c65d33a1a72ce18b8a756ac007f9117e6336f28d",
+    "expectedSiteTree": "c65d33a1a72ce18b8a756ac007f9117e6336f28d",
+    "changedPaths": [],
+    "unchanged": true,
+    "deploymentInvoked": false,
+    "navigationChanged": false
+  },
+  "packetHygiene": {
+    "absoluteMachinePathLeaks": [],
+    "trackedOsArtifacts": []
+  }
+}

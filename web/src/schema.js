@@ -29,6 +29,14 @@ export function requiredString(value, path) {
   }
 }
 
+const CANONICAL_COLOR = /^#[0-9a-fA-F]{6}$/;
+
+export function requiredColor(value, path) {
+  if (typeof value !== "string" || !CANONICAL_COLOR.test(value)) {
+    throw new FiguresteadConfigError("must be a canonical #RRGGBB color", path);
+  }
+}
+
 export function numberArray(value, path, { allowEmpty = false } = {}) {
   if (!Array.isArray(value) || (!allowEmpty && value.length === 0)) {
     throw new FiguresteadConfigError("must be a non-empty numeric array", path);
@@ -62,19 +70,25 @@ function timelineWindow(value, path) {
   }
 }
 
+export function validateThemeColors(theme, path = "config.theme") {
+  requiredObject(theme, path);
+  ["field", "panel", "grid", "spine", "label", "secondary", "faint", "primary", "summaryCore", "warm"]
+    .forEach((key) => requiredColor(theme[key], `${path}.${key}`));
+  if (!Array.isArray(theme.series) || !theme.series.length) {
+    throw new FiguresteadConfigError("must be a non-empty color array", `${path}.series`);
+  }
+  theme.series.forEach((color, index) => requiredColor(color, `${path}.series[${index}]`));
+  for (const key of ["primaryEdge", "summaryEdge"]) if (theme[key] != null) requiredColor(theme[key], `${path}.${key}`);
+  if (theme.seriesEdges != null) {
+    if (!Array.isArray(theme.seriesEdges) || theme.seriesEdges.length !== theme.series.length) throw new FiguresteadConfigError(`must contain exactly ${theme.series.length} colors`, `${path}.seriesEdges`);
+    theme.seriesEdges.forEach((color, index) => requiredColor(color, `${path}.seriesEdges[${index}]`));
+  }
+}
+
 function validateTheme(theme) {
   requiredObject(theme, "config.theme");
-  ["key", "name", "field", "panel", "grid", "spine", "label", "secondary", "faint", "primary", "summaryCore", "warm"]
-    .forEach((key) => requiredString(theme[key], `config.theme.${key}`));
-  if (!Array.isArray(theme.series) || !theme.series.length) {
-    throw new FiguresteadConfigError("must be a non-empty color array", "config.theme.series");
-  }
-  theme.series.forEach((color, index) => requiredString(color, `config.theme.series[${index}]`));
-  for (const key of ["primaryEdge", "summaryEdge"]) if (theme[key] != null) requiredString(theme[key], `config.theme.${key}`);
-  if (theme.seriesEdges != null) {
-    if (!Array.isArray(theme.seriesEdges) || theme.seriesEdges.length !== theme.series.length) throw new FiguresteadConfigError(`must contain exactly ${theme.series.length} colors`, "config.theme.seriesEdges");
-    theme.seriesEdges.forEach((color, index) => requiredString(color, `config.theme.seriesEdges[${index}]`));
-  }
+  ["key", "name"].forEach((key) => requiredString(theme[key], `config.theme.${key}`));
+  validateThemeColors(theme);
 }
 
 function validateProfile(profile) {

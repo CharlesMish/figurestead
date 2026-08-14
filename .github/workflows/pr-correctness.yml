@@ -1,0 +1,251 @@
+name: Figurestead required correctness floor
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: figurestead-correctness-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core-python:
+    name: Core Python / ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/figurestead-matplotlib
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12", "3.14"]
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install source package
+        run: python -m pip install .
+
+      - name: Compile and import shipped Python package
+        run: |
+          set -euo pipefail
+          python -m compileall -q src/figurestead
+          python -c 'import figurestead; assert len(figurestead.available_plots()) == 5'
+
+      - name: Execute exact Python first success
+        run: |
+          set -euo pipefail
+          output="$RUNNER_TEMP/python-first-success"
+          mkdir -p "$output"
+          cd "$output"
+          python "$GITHUB_WORKSPACE/examples/python-first-success.py"
+          test -s figurestead-first-success.png
+
+      - name: Verify deterministic specimen corpus
+        env:
+          FIGURESTEAD_AUDIT_OUTPUT_ROOT: ${{ runner.temp }}/corpus-audit
+        run: python specimen-study/audit/verify-corpus-v0.2.py
+
+  core-web:
+    name: Core browser and SVG contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node 24.17.0
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24.17.0
+          cache: npm
+
+      - name: Set up Python 3.12 for XML regression
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned repository tooling
+        run: npm ci --ignore-scripts
+
+      - name: Syntax-check every shipped browser module
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -d '' files < <(find web/src -name '*.js' -print0)
+          test "${#files[@]}" -gt 0
+          for file in "${files[@]}"; do node --check "$file"; done
+          printf 'syntax-checked %s shipped modules\n' "${#files[@]}"
+
+      - name: Run explicit core and SVG suites
+        run: npm test
+
+  browser-integration:
+    name: Browser evidence / Chromium + Firefox
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FIGURESTEAD_AUDIT_MODE: check
+      FIGURESTEAD_AUDIT_OUTPUT_ROOT: /tmp/figurestead-browser-audits
+      FIGURESTEAD_BASE_URL: http://127.0.0.1:4179/
+      FIGURESTEAD_TECHNICAL_URL: http://127.0.0.1:4179/technical-showcase/
+      FIGURESTEAD_LAYOUT_URL: http://127.0.0.1:4179/
+      FIGURESTEAD_SPECIMEN_URL: http://127.0.0.1:4179/specimen-study/
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node 24.17.0
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24.17.0
+          cache: npm
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install pinned browser and CVD tooling
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium firefox
+          python -m pip install colour-science==0.4.7 numpy==2.5.2
+
+      - name: Start one local audit server
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4179 --bind 127.0.0.1 >"$RUNNER_TEMP/figurestead-http.log" 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/figurestead-http.pid"
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4179/examples/browser-first-success/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+
+      - name: Execute exact browser first success
+        run: npm run test:browser-first-success
+
+      - name: Verify V2 terminal, accessibility, motion, and paper boundaries
+        run: node audit/technical-showcase/run-technical-audit.cjs
+
+      - name: Verify compact scientific layout
+        run: node audit/compact-layout/run-compact-layout-audit.cjs after
+
+      - name: Verify specimen rendering
+        run: node specimen-study/audit/run-specimen-audit.cjs
+
+      - name: Verify populated response matrix
+        run: node specimen-study/audit/run-response-matrix-audit.cjs
+
+      - name: Verify CVD numerical assumptions
+        run: >-
+          python audit/technical-showcase/validate-cvd-reference.py
+          "$(command -v node)"
+          audit/technical-showcase/cvd-vectors.mjs
+          "$FIGURESTEAD_AUDIT_OUTPUT_ROOT/cvd-reference-validation.json"
+
+      - name: Confirm check-only audits did not rewrite accepted evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code
+          test -z "$(git status --porcelain --untracked-files=all)"
+
+      - name: Stop local audit server
+        if: always()
+        run: |
+          if test -f "$RUNNER_TEMP/figurestead-http.pid"; then kill "$(cat "$RUNNER_TEMP/figurestead-http.pid")" || true; fi
+
+  package-and-site:
+    name: Packed artifacts and frozen R3 site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/figurestead-matplotlib
+    steps:
+      - name: Check out source and tag authority
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Set up Node 24.17.0
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24.17.0
+          cache: npm
+
+      - name: Build and smoke the Python wheel and sdist
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install build==1.3.0
+          python -m build --outdir "$RUNNER_TEMP/python-dist"
+          mapfile -t wheels < <(find "$RUNNER_TEMP/python-dist" -maxdepth 1 -name '*.whl' -type f)
+          mapfile -t sdists < <(find "$RUNNER_TEMP/python-dist" -maxdepth 1 -name '*.tar.gz' -type f)
+          test "${#wheels[@]}" -eq 1
+          test "${#sdists[@]}" -eq 1
+          python -m venv "$RUNNER_TEMP/python-packed-venv"
+          "$RUNNER_TEMP/python-packed-venv/bin/python" -m pip install "${wheels[0]}"
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/python-packed-venv/bin/python" "$GITHUB_WORKSPACE/ci/python-package-smoke.py"
+
+      - name: Pack, install, and smoke the npm artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/npm-dist" "$RUNNER_TEMP/npm-consumer"
+          packed="$(npm pack ./web --pack-destination "$RUNNER_TEMP/npm-dist")"
+          test "$packed" = "figurestead-web-0.9.0-alpha.1.tgz"
+          cd "$RUNNER_TEMP/npm-consumer"
+          npm init --yes >/dev/null
+          npm install --ignore-scripts "$RUNNER_TEMP/npm-dist/$packed"
+          cp "$GITHUB_WORKSPACE/ci/npm-package-smoke.mjs" .
+          node npm-package-smoke.mjs
+
+      - name: Verify accepted frozen-site bytes and derivative pixels
+        run: python audit/public-site/validate-assets.py
+
+      - name: Verify accepted tree and README-asset preservation anchors
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD:site)" = "c65d33a1a72ce18b8a756ac007f9117e6336f28d"
+          test "$(git rev-parse HEAD:technical-showcase)" = "d14516a981cf4ed8bd0a9e9c756e3076086e92e3"
+          echo "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece  docs/assets/readme/github-social-preview.png" | sha256sum --check -
+          echo "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6  docs/assets/readme/figurestead-at-a-glance.png" | sha256sum --check -
+          echo "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c  docs/assets/readme/populated-categorical-response-matrix.png" | sha256sum --check -
+
+      - name: Confirm package/site checks did not alter tracked source or evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code
+          test -z "$(git status --porcelain --untracked-files=all)"
