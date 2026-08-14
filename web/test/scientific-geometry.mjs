@@ -49,6 +49,39 @@ function assertDomainError(source, axis, registry = CORE_REGISTRY) {
   );
 }
 
+function scatterContract(x, y, options = {}) {
+  return makeContract({
+    renderer: "scatter",
+    data: { x, y, series: Array(x.length).fill("s"), seriesLabels: { s: "S" }, summary: "linear_fit" },
+    ...options,
+  });
+}
+
+function summaryMark(source) {
+  const { terminal, resolved } = stages(source);
+  const terminalMark = terminal.panels[0].marks.find((mark) => mark.kind === "summary-line");
+  const resolvedMark = resolved.panels[0].marks.find((mark) => mark.kind === "summary-line");
+  assert.ok(terminalMark, "terminal linear-fit mark is missing");
+  assert.ok(resolvedMark?.geometry, "resolved linear-fit geometry is missing");
+  return { terminalMark, resolvedMark };
+}
+
+function assertApprox(actual, expected, message) {
+  assert.ok(Math.abs(actual - expected) <= 1e-12, `${message}: expected ${expected}, received ${actual}`);
+}
+
+function assertFit(source, expectedSlope, expectedIntercept) {
+  const { terminalMark, resolvedMark } = summaryMark(source);
+  assertApprox(terminalMark.slope, expectedSlope, "terminal slope");
+  assertApprox(terminalMark.intercept, expectedIntercept, "terminal intercept");
+  assert.equal(resolvedMark.slope, terminalMark.slope);
+  assert.equal(resolvedMark.intercept, terminalMark.intercept);
+  const svg = exportFigureSvg(source, { width: 640, height: 480 });
+  const element = svg.match(/<path[^>]*data-mark-id="panel\/summary\/linear-fit"[^>]*\/>/)?.[0];
+  assert.ok(element, "SVG linear-fit path is missing");
+  assert.match(element, new RegExp(`\\bd="M ${resolvedMark.geometry.x1} ${resolvedMark.geometry.y1} L ${resolvedMark.geometry.x2} ${resolvedMark.geometry.y2}"`));
+}
+
 const cases = [];
 const test = (name, run) => cases.push({ name, run });
 
@@ -119,6 +152,42 @@ test("temporal extension retains its established authored-domain behavior", () =
   assertDomain(source, [Date.parse("2026-01-01T00:00:00Z"), Date.parse("2026-01-10T00:00:00Z")], [0, 10], registry);
 });
 
+test("linear fit rejects one observation at the summary path", () => {
+  assert.throws(
+    () => validateContract(scatterContract([1], [5])),
+    (error) => error.name === "FiguresteadConfigError" && error.path === "config.panels[0].data.summary" && error.message.includes("at least two finite observations"),
+  );
+});
+test("linear fit rejects constant x at the summary path", () => {
+  assert.throws(
+    () => validateContract(scatterContract([1, 1, 1], [1, 2, 3])),
+    (error) => error.name === "FiguresteadConfigError" && error.path === "config.panels[0].data.summary" && error.message.includes("at least two distinct finite x values"),
+  );
+});
+test("linear fit rejects non-finite x at its exact input path", () => {
+  assert.throws(
+    () => validateContract(scatterContract([0, Number.POSITIVE_INFINITY], [1, 2])),
+    (error) => error.name === "FiguresteadConfigError" && error.path === "config.panels[0].data.x[1]",
+  );
+});
+test("linear fit rejects non-finite y at its exact input path", () => {
+  assert.throws(
+    () => validateContract(scatterContract([0, 1], [1, Number.NaN])),
+    (error) => error.name === "FiguresteadConfigError" && error.path === "config.panels[0].data.y[1]",
+  );
+});
+test("linear fit accepts two distinct observations", () => assertFit(scatterContract([0, 2], [1, 5]), 2, 1));
+test("linear fit accepts three exact observations", () => assertFit(scatterContract([0, 1, 2], [1, 3, 5]), 2, 1));
+test("linear fit preserves a real horizontal relation when x varies", () => assertFit(scatterContract([0, 1, 2], [5, 5, 5]), 0, 5));
+test("linear fit returns stable coefficients for noisy observations", () => assertFit(scatterContract([0, 1, 2, 3], [1.1, 2.9, 5.2, 6.8]), 1.94, 1.09));
+test("accepted instrument calibration fixture retains authored domains and fit", () => {
+  const fixture = JSON.parse(fs.readFileSync("specimen-study/corpus-v0.2/scenes/instrument_calibration.json", "utf8"));
+  const source = scatterContract(fixture.data.x, fixture.data.y, fixture.suggestedScales);
+  const panel = assertDomain(source, [-3, 93], [-5, 100]);
+  assert.equal(panel.marks.filter((mark) => mark.kind === "point").length, 40);
+  assertFit(source, 0.9926296212121212, 0.5321095454545386);
+});
+
 let executedCaseCount = 0;
 for (const { name, run } of cases) {
   try {
@@ -129,6 +198,6 @@ for (const { name, run } of cases) {
     throw error;
   }
 }
-assert.equal(cases.length, 18, "expected exactly 18 scientific-geometry domain cases");
-assert.equal(executedCaseCount, 18, "expected all scientific-geometry domain cases to execute");
-console.log(JSON.stringify({ suite: "scientific-geometry", domainCaseCount: 18, expectedCaseCount: 18, executedCaseCount, result: "PASS" }));
+assert.equal(cases.length, 27, "expected exactly 27 scientific-geometry cases");
+assert.equal(executedCaseCount, 27, "expected all scientific-geometry cases to execute");
+console.log(JSON.stringify({ suite: "scientific-geometry", domainCaseCount: 18, linearFitCaseCount: 9, expectedCaseCount: 27, executedCaseCount, result: "PASS" }));
