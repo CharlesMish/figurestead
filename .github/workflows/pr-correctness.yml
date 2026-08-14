@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 12
     env:
       MPLBACKEND: Agg
-      MPLCONFIGDIR: ${{ runner.temp }}/matplotlib
+      MPLCONFIGDIR: /tmp/figurestead-matplotlib
     strategy:
       fail-fast: false
       matrix:
@@ -102,7 +102,7 @@ jobs:
     timeout-minutes: 25
     env:
       FIGURESTEAD_AUDIT_MODE: check
-      FIGURESTEAD_AUDIT_OUTPUT_ROOT: ${{ runner.temp }}/figurestead-browser-audits
+      FIGURESTEAD_AUDIT_OUTPUT_ROOT: /tmp/figurestead-browser-audits
       FIGURESTEAD_BASE_URL: http://127.0.0.1:4179/
       FIGURESTEAD_TECHNICAL_URL: http://127.0.0.1:4179/technical-showcase/
       FIGURESTEAD_LAYOUT_URL: http://127.0.0.1:4179/
@@ -182,7 +182,7 @@ jobs:
     timeout-minutes: 15
     env:
       MPLBACKEND: Agg
-      MPLCONFIGDIR: ${{ runner.temp }}/matplotlib
+      MPLCONFIGDIR: /tmp/figurestead-matplotlib
     steps:
       - name: Check out source and tag authority
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
