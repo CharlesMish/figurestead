@@ -57,8 +57,8 @@ async function measuredBounds(page, sceneId, globalName = "__FIGURESTEAD_SPECIME
     const metric = (text, fontSize) => {
       context.save(); context.font = `${fontSize}px ${FONT_STACK}`;
       const value = context.measureText(String(text)); context.restore();
-      const ascent = value.actualBoundingBoxAscent || fontSize * 0.78;
-      const descent = value.actualBoundingBoxDescent || fontSize * 0.22;
+      const ascent = value.actualBoundingBoxAscent ?? fontSize * 0.78;
+      const descent = value.actualBoundingBoxDescent ?? fontSize * 0.22;
       return { width: value.width, ascent, descent, height: ascent + descent };
     };
     const union = (boxes) => boxes.reduce((result, box) => result == null ? box : ({
