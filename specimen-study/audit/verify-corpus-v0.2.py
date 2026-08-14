@@ -140,6 +140,7 @@ def main() -> int:
             "derivedSharesMatchCounts": share_matrix == recomputed_shares,
             "columnCountSums": [sum(row[column] for row in count_matrix) for column in range(len(habitats))],
             "columnShareSums": [sum(row[column] for row in share_matrix) for column in range(len(habitats))],
+            "columnShareSumTolerance": 1e-12,
             "cellsMatchDerivedMatrices": cells_exact,
             "countMatrix": count_matrix,
             "shareMatrix": share_matrix,
@@ -165,7 +166,10 @@ def main() -> int:
         report["responseMatrix"]["derivedCountsMatchRaw"],
         report["responseMatrix"]["derivedSharesMatchCounts"],
         report["responseMatrix"]["columnCountSums"] == [30] * 10,
-        report["responseMatrix"]["columnShareSums"] == [1.0] * 10,
+        all(
+            abs(value - 1.0) <= report["responseMatrix"]["columnShareSumTolerance"]
+            for value in report["responseMatrix"]["columnShareSums"]
+        ),
         report["responseMatrix"]["cellsMatchDerivedMatrices"],
     ]
     report["expectedCheckCount"] = 21
