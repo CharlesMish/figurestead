@@ -8,7 +8,10 @@ const mode = process.argv[2];
 if (!new Set(["before", "after"]).has(mode)) throw new Error("usage: run-compact-layout-audit.cjs before|after");
 
 const repository = path.resolve(__dirname, "../..");
-const evidenceRoot = path.join(repository, "specimen-study", "evidence", "layout-hardening", mode);
+const auditOutputRoot = process.env.FIGURESTEAD_AUDIT_OUTPUT_ROOT;
+const evidenceRoot = auditOutputRoot
+  ? path.join(path.resolve(auditOutputRoot), "compact-layout", mode)
+  : path.join(repository, "specimen-study", "evidence", "layout-hardening", mode);
 const baseUrl = process.env.FIGURESTEAD_LAYOUT_URL || "http://127.0.0.1:4179/";
 const representative = [
   "watershed_storm_response", "circadian_phase_shift", "instrument_calibration", "dose_response_plate", "treatment_replicates",
@@ -270,7 +273,9 @@ function verifyAfter(captures, paperExports, footerOptionality) {
     } finally { await browser.close(); }
   }
   const verification = mode === "after" ? verifyAfter(captures, paperExports, footerOptionality) : null;
-  const report = { schemaVersion: "figurestead.compact-layout-evidence/1", mode, verification, footerOptionality, paperExports, captures };
+  const expectedCaptureCount = mode === "after" ? 9 : 4;
+  if (captures.length !== expectedCaptureCount) throw new Error(`expected ${expectedCaptureCount} compact-layout captures, executed ${captures.length}`);
+  const report = { schemaVersion: "figurestead.compact-layout-evidence/1", mode, expectedCaptureCount, executedCaptureCount: captures.length, verification, footerOptionality, paperExports, captures };
   fs.writeFileSync(path.join(evidenceRoot, "bounds.json"), `${JSON.stringify(report, null, 2)}\n`);
   console.log(JSON.stringify({ mode, evidenceRoot: path.relative(repository, evidenceRoot), captures: captures.map((item) => ({ pageName: item.pageName, screenshot: item.screenshot })) }, null, 2));
 })().catch((error) => { console.error(error); process.exitCode = 1; });

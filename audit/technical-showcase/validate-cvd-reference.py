@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from colour.blindness import matrix_cvd_Machado2009
+import numpy
 
 
 def srgb_to_linear(value: float) -> float:
@@ -81,6 +82,7 @@ def main() -> int:
             "python": sys.version.split()[0],
             "node": subprocess.check_output([node_path, "--version"], text=True).strip(),
             "colour_science": importlib.metadata.version("colour-science"),
+            "numpy": numpy.__version__,
         },
         "matrix_maximum_absolute_delta": matrix_deltas,
         "sample_vector_maximum_absolute_delta": vector_deltas,

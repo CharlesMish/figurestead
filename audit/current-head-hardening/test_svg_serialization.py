@@ -66,4 +66,8 @@ class SvgSerializationRegression(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(SvgSerializationRegression)
+    result = unittest.TextTestRunner(verbosity=2).run(suite)
+    if result.testsRun != 3:
+        raise SystemExit(f"expected exactly 3 SVG regression cases, ran {result.testsRun}")
+    raise SystemExit(0 if result.wasSuccessful() else 1)

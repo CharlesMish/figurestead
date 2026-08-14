@@ -6,7 +6,11 @@ const { chromium, firefox } = require("playwright");
 
 const repositoryRoot = path.resolve(__dirname, "../..");
 const studyRoot = path.join(repositoryRoot, "specimen-study");
-const evidenceRoot = path.join(studyRoot, "evidence", "corpus-v0.2");
+const checkOnly = process.env.FIGURESTEAD_AUDIT_MODE === "check";
+const auditOutputRoot = process.env.FIGURESTEAD_AUDIT_OUTPUT_ROOT;
+const evidenceRoot = auditOutputRoot
+  ? path.join(path.resolve(auditOutputRoot), "specimen-study")
+  : path.join(studyRoot, "evidence", "corpus-v0.2");
 const screenshotsRoot = path.join(evidenceRoot, "screenshots");
 const individualRoot = path.join(evidenceRoot, "individual");
 const categoricalRoot = path.join(evidenceRoot, "categorical");
@@ -458,7 +462,7 @@ async function runEngine(engineName, browserType) {
         }
       }
     }
-    await captureStandardEvidence(browser, engineName);
+    if (!checkOnly) await captureStandardEvidence(browser, engineName);
   } finally {
     await browser.close();
   }
@@ -476,19 +480,25 @@ async function runEngine(engineName, browserType) {
   const summary = {
     schemaVersion: "figurestead.specimen-study-verification/1",
     generatedAt: new Date().toISOString(),
-    result: reports.every((report) => report.result === "PASS") ? "PASS" : "FAIL",
+    result: reports.length === 2 && reports.every((report) => report.result === "PASS" && report.cases.length === 8) ? "PASS" : "FAIL",
     engines: reports.map((report) => ({
       engine: report.engine, browserVersion: report.browserVersion, playwrightVersion: report.playwrightVersion,
       nodeVersion: report.nodeVersion, executableSha256: report.executableSha256,
       caseCount: report.cases.length, passCount: report.cases.filter((item) => item.result === "PASS").length,
     })),
     matrix: { pages: pages.map((item) => item.key), widths, motionPreferences },
+    mode: checkOnly ? "check" : "evidence",
+    expectedCaseCount: 16,
+    executedCaseCount: reports.reduce((total, report) => total + report.cases.length, 0),
     evidence: evidenceFiles.sort().map((file) => ({
       path: path.relative(studyRoot, file), bytes: fs.statSync(file).size, sha256: fileHash(file),
     })),
     alternateMontageRequired: false,
   };
-  fs.writeFileSync(path.join(studyRoot, "audit", "corpus-v0.2-summary.json"), `${JSON.stringify(summary, null, 2)}\n`);
+  const summaryPath = auditOutputRoot
+    ? path.join(evidenceRoot, "summary.json")
+    : path.join(studyRoot, "audit", "corpus-v0.2-summary.json");
+  fs.writeFileSync(summaryPath, `${JSON.stringify(summary, null, 2)}\n`);
   console.log(JSON.stringify(summary, null, 2));
   if (summary.result !== "PASS") process.exitCode = 1;
 })().catch((error) => { console.error(error); process.exitCode = 1; });

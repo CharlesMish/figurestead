@@ -6,7 +6,11 @@ const { chromium, firefox } = require("playwright");
 
 const repositoryRoot = path.resolve(__dirname, "../..");
 const projectRoot = path.join(repositoryRoot, "technical-showcase");
-const evidenceRoot = path.join(projectRoot, "evidence");
+const checkOnly = process.env.FIGURESTEAD_AUDIT_MODE === "check";
+const auditOutputRoot = process.env.FIGURESTEAD_AUDIT_OUTPUT_ROOT;
+const evidenceRoot = auditOutputRoot
+  ? path.join(path.resolve(auditOutputRoot), "technical-showcase")
+  : path.join(projectRoot, "evidence");
 const screenshotRoot = path.join(evidenceRoot, "screenshots");
 const frameRoot = path.join(evidenceRoot, "motion-frames");
 const baseUrl = process.env.FIGURESTEAD_TECHNICAL_URL || "http://127.0.0.1:4177/technical-showcase/";
@@ -370,7 +374,7 @@ function findingsFor(testCase) {
 function installedFirefoxExecutable() {
   if (process.env.FIGURESTEAD_FIREFOX_EXECUTABLE) return process.env.FIGURESTEAD_FIREFOX_EXECUTABLE;
   const cache = path.join(os.homedir(), "Library", "Caches", "ms-playwright");
-  const candidates = fs.readdirSync(cache).filter((name) => name.startsWith("firefox-")).sort().reverse()
+  const candidates = (fs.existsSync(cache) ? fs.readdirSync(cache) : []).filter((name) => name.startsWith("firefox-")).sort().reverse()
     .map((name) => path.join(cache, name, "firefox", "Nightly.app", "Contents", "MacOS", "firefox"));
   return candidates.find((candidate) => fs.existsSync(candidate)) || firefox.executablePath();
 }
@@ -425,7 +429,7 @@ async function runEngine(engineName, browserType) {
         await page.waitForFunction(() => [...document.querySelectorAll(".paper-pair img")].every((image) => image.complete && image.naturalWidth > 0));
         await page.evaluate(() => window.scrollTo(0, 0));
         const structure = await inspectStructure(page);
-        if (!reducedMotion) {
+        if (!checkOnly && !reducedMotion) {
           await page.screenshot({ path: path.join(screenshotRoot, `${engineName}-${width}-full.png`), fullPage: true });
           if (width === 1440) {
             await page.locator("#evidence-motion").screenshot({ path: path.join(screenshotRoot, `${engineName}-motion-close.png`) });
@@ -439,7 +443,7 @@ async function runEngine(engineName, browserType) {
         testCase.findings = [...runtimeErrors, ...findingsFor(testCase)];
         testCase.status = testCase.findings.length ? "FAIL" : "PASS";
         report.cases.push(testCase);
-        if (engineName === "chromium" && width === 1440 && !reducedMotion) report.motionFrames = await captureMotionFrames(page);
+        if (!checkOnly && engineName === "chromium" && width === 1440 && !reducedMotion) report.motionFrames = await captureMotionFrames(page);
         await context.close();
       }
     }
@@ -461,7 +465,13 @@ async function runEngine(engineName, browserType) {
     generatedAt: new Date().toISOString(), baseUrl, deployed: false, publicNavigationChanged: false,
     engines: reports.map((report) => ({ engine: report.engine, status: report.status, caseCount: report.caseCount, findingCount: report.findingCount })),
   };
-  summary.status = summary.engines.every((engine) => engine.status === "PASS") ? "PASS" : "FAIL";
+  summary.mode = checkOnly ? "check" : "evidence";
+  summary.expectedCaseCount = 8;
+  summary.executedCaseCount = summary.engines.reduce((total, engine) => total + engine.caseCount, 0);
+  summary.status = summary.engines.length === 2
+    && summary.executedCaseCount === summary.expectedCaseCount
+    && summary.engines.every((engine) => engine.status === "PASS" && engine.caseCount === 4)
+    ? "PASS" : "FAIL";
   fs.writeFileSync(path.join(evidenceRoot, "summary.json"), `${JSON.stringify(summary, null, 2)}\n`);
   process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
   if (summary.status !== "PASS") process.exitCode = 1;

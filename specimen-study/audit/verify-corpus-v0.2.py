@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import shutil
 import statistics
 import subprocess
@@ -167,9 +168,21 @@ def main() -> int:
         report["responseMatrix"]["columnShareSums"] == [1.0] * 10,
         report["responseMatrix"]["cellsMatchDerivedMatrices"],
     ]
+    report["expectedCheckCount"] = 21
+    report["executedCheckCount"] = len(checks)
+    if len(checks) != report["expectedCheckCount"]:
+        raise RuntimeError(
+            f"expected {report['expectedCheckCount']} corpus checks, executed {len(checks)}"
+        )
     if not all(checks):
         report["result"] = "FAIL"
-    output = study / "audit" / "corpus-v0.2-regeneration.json"
+    output_root = os.environ.get("FIGURESTEAD_AUDIT_OUTPUT_ROOT")
+    output = (
+        Path(output_root).resolve() / "corpus-v0.2-regeneration.json"
+        if output_root
+        else study / "audit" / "corpus-v0.2-regeneration.json"
+    )
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     return 0 if report["result"] == "PASS" else 1

@@ -6,18 +6,25 @@ const { chromium, firefox } = require("playwright");
 
 const repositoryRoot = path.resolve(__dirname, "../..");
 const studyRoot = path.join(repositoryRoot, "specimen-study");
-const evidenceRoot = path.join(studyRoot, "evidence", "corpus-v0.2", "response-matrix");
+const checkOnly = process.env.FIGURESTEAD_AUDIT_MODE === "check";
+const auditOutputRoot = process.env.FIGURESTEAD_AUDIT_OUTPUT_ROOT;
+const evidenceRoot = auditOutputRoot
+  ? path.join(path.resolve(auditOutputRoot), "response-matrix")
+  : path.join(studyRoot, "evidence", "corpus-v0.2", "response-matrix");
 const baseUrl = process.env.FIGURESTEAD_SPECIMEN_URL || "http://127.0.0.1:4179/specimen-study/";
 const widths = [1440, 390];
 const motionPreferences = ["no-preference", "reduce"];
 const expectedHabitats = ["Headwater", "Riffle", "Deep pool", "Side channel", "Floodplain", "Wet meadow", "Tidal creek", "Mudflat", "Seagrass bed", "Open estuary"];
 const expectedBands = ["Very low", "Low", "Moderate", "Elevated", "High", "Very high"];
 
+fs.mkdirSync(evidenceRoot, { recursive: true });
+
 const sha256 = (file) => crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
 function firefoxExecutable() {
-  const candidates = fs.readdirSync(path.join(os.homedir(), "Library", "Caches", "ms-playwright"))
+  const cache = path.join(os.homedir(), "Library", "Caches", "ms-playwright");
+  const candidates = (fs.existsSync(cache) ? fs.readdirSync(cache) : [])
     .filter((name) => name.startsWith("firefox-")).sort().reverse()
-    .map((name) => path.join(os.homedir(), "Library", "Caches", "ms-playwright", name, "firefox", "Nightly.app", "Contents", "MacOS", "firefox"));
+    .map((name) => path.join(cache, name, "firefox", "Nightly.app", "Contents", "MacOS", "firefox"));
   return candidates.find((candidate) => fs.existsSync(candidate)) || firefox.executablePath();
 }
 
@@ -130,7 +137,7 @@ async function runEngine(name, browserType) {
       const keyboard = await keyboardAudit(page);
       const findings = [...runtimeErrors, ...findingsFor(structure, keyboard)];
       report.cases.push({ width, reducedMotion, result: findings.length ? "FAIL" : "PASS", findings, structure, keyboard });
-      if (!reducedMotion) await page.screenshot({ path: path.join(evidenceRoot, `${name}-matrix-study-${width}.png`), fullPage: true });
+      if (!checkOnly && !reducedMotion) await page.screenshot({ path: path.join(evidenceRoot, `${name}-matrix-study-${width}.png`), fullPage: true });
       await context.close();
     }
   } finally { await browser.close(); }
@@ -143,10 +150,16 @@ async function runEngine(name, browserType) {
   const staticFiles = ["populated-wide.png", "populated-wide.svg", "populated-montage-cell.png", "populated-narrow-390.png"];
   const summary = {
     schemaVersion: "figurestead.response-matrix-browser-audit/1",
-    result: reports.every((report) => report.result === "PASS") ? "PASS" : "FAIL",
+    result: reports.length === 2 && reports.every((report) => report.result === "PASS" && report.cases.length === 4) ? "PASS" : "FAIL",
     matrix: { engines: ["chromium", "firefox"], widths, motionPreferences },
     reports,
-    staticEvidence: Object.fromEntries(staticFiles.map((name) => [name, { sha256: sha256(path.join(evidenceRoot, name)), bytes: fs.statSync(path.join(evidenceRoot, name)).size }])),
+    mode: checkOnly ? "check" : "evidence",
+    expectedCaseCount: 8,
+    executedCaseCount: reports.reduce((total, report) => total + report.cases.length, 0),
+    staticEvidence: Object.fromEntries(staticFiles.map((name) => {
+      const file = path.join(studyRoot, "evidence", "corpus-v0.2", "response-matrix", name);
+      return [name, { sha256: sha256(file), bytes: fs.statSync(file).size }];
+    })),
     sparseReference: { path: "site/assets/evidence-matrix.png", sha256: sha256(path.join(repositoryRoot, "site", "assets", "evidence-matrix.png")) },
     documentedLimitations: [
       "At 640 × 416, the provenance note crosses long rotated labels and exact annotations require close inspection.",
@@ -154,7 +167,10 @@ async function runEngine(name, browserType) {
     ],
     alternateMontageRequired: false,
   };
-  fs.writeFileSync(path.join(studyRoot, "audit", "response-matrix-browser.json"), `${JSON.stringify(summary, null, 2)}\n`);
+  const summaryPath = auditOutputRoot
+    ? path.join(evidenceRoot, "summary.json")
+    : path.join(studyRoot, "audit", "response-matrix-browser.json");
+  fs.writeFileSync(summaryPath, `${JSON.stringify(summary, null, 2)}\n`);
   console.log(JSON.stringify({ result: summary.result, engines: reports.map((report) => ({ engine: report.engine, version: report.browserVersion, cases: report.cases.length, passed: report.cases.filter((item) => item.result === "PASS").length })), documentedLimitations: summary.documentedLimitations }, null, 2));
   if (summary.result !== "PASS") process.exitCode = 1;
 })().catch((error) => { console.error(error); process.exitCode = 1; });
