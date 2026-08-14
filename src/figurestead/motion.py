@@ -17,6 +17,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from .core import GLYPHS, PlotSpec, ensure_axes, resolve, style_axes
+from ._statistics import linear_fit
 
 
 @dataclass(frozen=True)
@@ -324,6 +325,7 @@ def animate_scatter(x, y, *, series=None, labels=None, spec=None,
     y = np.asarray(y, dtype=float)
     if len(x) != len(y):
         raise ValueError("x and y must have the same length")
+    fit = linear_fit(x, y) if compile_fit else None
     series = np.zeros(len(x), dtype=int) if series is None else np.asarray(series)
     labels = list(np.unique(series)) if labels is None else list(labels)
     spec = spec or PlotSpec("Relationship", "Marks resolve first; the fitted relation compiles second.")
@@ -356,7 +358,7 @@ def animate_scatter(x, y, *, series=None, labels=None, spec=None,
     fit_glow, = ax.plot([], [], color=theme.primary, linewidth=5.0,
                         alpha=0.0, zorder=6)
     fit_x = np.linspace(float(x.min()), float(x.max()), 120)
-    slope, intercept = np.polyfit(x, y, 1)
+    slope, intercept = fit if fit is not None else (0.0, 0.0)
     fit_y = slope * fit_x + intercept
 
     def update(progress):

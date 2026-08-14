@@ -1,0 +1,51 @@
+{
+  "schema": "figurestead.scientific-geometry-findings/1",
+  "externalAudit": {
+    "reviewer": "Luna",
+    "independentlyReproducedAt": "d00f7b1c5b083011c55a74d11a7eccfbd352ac9e",
+    "limitation": "Luna did not freshly rerun Chromium or Firefox because her sandbox lacked the required browser environment. Codex post-fix browser verification is recorded separately."
+  },
+  "findings": [
+    {
+      "id": "explicit-core-scale-domains",
+      "finding": "Core browser renderers retained xScale.domain and yScale.domain as metadata but resolved rendered geometry from automatic data extents.",
+      "reproduction": "For line x=[0,1,2], xScale.domain=[0,100] resolved to [-0.16,2.16]; the equivalent yScale.domain=[0,100] also resolved to [-0.16,2.16].",
+      "oldBehavior": "Terminal/resolved domains, Canvas/controller geometry, and SVG geometry ignored authored core scale domains. The temporal extension already honored them.",
+      "correctedBehavior": "Core numeric domains resolve once with precedence scale domain, supported data-level domain, automatic finite extent. Existing no-hidden-evidence validation still rejects authored domains that clip evidence.",
+      "regressionLocations": [
+        "web/test/scientific-geometry.mjs",
+        "ci/check-browser-scientific-geometry.cjs"
+      ],
+      "correctiveCommit": "07017dbdb5d6f422a64fafd47447ef894d71a23b"
+    },
+    {
+      "id": "identifiable-linear-fit",
+      "finding": "linear_fit emitted plausible horizontal fitted lines when an ordinary least-squares line with intercept was not identifiable.",
+      "reproduction": "Browser terminal/resolved/SVG and Canvas code produced slope=0, intercept=5 for one point x=[1],y=[5], and slope=0, intercept=2 for constant x=[1,1,1],y=[1,2,3]. Python motion delegated rank-deficient input to numpy.polyfit.",
+      "oldBehavior": "Browser fit code substituted denominator 1 when x variance was zero; Python had no matching pre-allocation identifiability rule.",
+      "correctedBehavior": "A requested fit requires at least two finite observations and two distinct finite x values. Unidentifiable requests are rejected path-aware in the portable/browser contract and before Python motion figure allocation. A horizontal fit remains valid when x varies.",
+      "regressionLocations": [
+        "web/test/scientific-geometry.mjs",
+        "audit/current-head-hardening/test_scientific_geometry.py",
+        "ci/check-browser-scientific-geometry.cjs"
+      ],
+      "correctiveCommit": "5fdb32a3434845c529ef122ff4e9c185c5c77020"
+    }
+  ],
+  "codexPostFixBrowserVerification": {
+    "command": "FIGURESTEAD_SPECIMEN_URL=http://127.0.0.1:4179/specimen-study/ npm run test:browser-scientific-geometry",
+    "engines": ["chromium", "firefox"],
+    "expectedCaseCount": 2,
+    "executedCaseCount": 2,
+    "expectedAssertionCount": 28,
+    "executedAssertionCount": 28,
+    "result": "PASS",
+    "calibration": {
+      "xDomain": [-3, 93],
+      "yDomain": [-5, 100],
+      "slope": 0.9926296212121211,
+      "intercept": 0.5321095454545457
+    },
+    "acceptedOutputChanges": "Runtime-rendered geometry now follows existing authored domains for the V2 line/scatter/strip panels and ten accepted core specimen fixtures. Source contracts, corpus data, and accepted evidence files are unchanged. V2 normalized terminal identity changed from fnv1a32-c46d7647 to fnv1a32-f975f5bc because its authored core domains now control axes and mark geometry; static/restrained/expressive terminal invariance remains exact."
+  }
+}

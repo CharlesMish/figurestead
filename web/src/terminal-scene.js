@@ -7,6 +7,7 @@ import { legendWithStyles, resolveSeriesStyles } from "./series-style.js";
 import { compileMotionPlan, assertTerminalMotionIdentity } from "./motion-plan.js";
 import { auditPaperTheme, themeResolutionForProfile } from "./paper-profile.js";
 import { validateEvidenceCoverage } from "./evidence-coverage.js";
+import { linearFit } from "./statistics.js";
 
 export const TERMINAL_SCENE_VERSION = "figurestead.scene/1";
 
@@ -42,9 +43,7 @@ function scatterMarks(panel, contract, prepared, styles) {
     x: point.x, y: point.y, style: styles[point.series],
   }));
   if (contract.data.summary === "linear_fit") {
-    const n = prepared.points.length, sx = prepared.points.reduce((a, p) => a + p.x, 0), sy = prepared.points.reduce((a, p) => a + p.y, 0);
-    const sxx = prepared.points.reduce((a, p) => a + p.x * p.x, 0), sxy = prepared.points.reduce((a, p) => a + p.x * p.y, 0);
-    const slope = (n * sxy - sx * sy) / (n * sxx - sx * sx || 1), intercept = (sy - slope * sx) / n;
+    const { slope, intercept } = linearFit(prepared.points.map((point) => point.x), prepared.points.map((point) => point.y));
     marks.push({ id: markId(panel, "summary", "linear-fit"), kind: "summary-line", role: "model", slope, intercept, style: { color: contract.theme.summaryCore, edge: contract.theme.summaryEdge ?? null, lineStyle: "solid" } });
   }
   return marks;

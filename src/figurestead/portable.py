@@ -19,6 +19,7 @@ from .motion import MotionStyle, MotionTimeline
 from .profiles import Profile, get_profile
 from .themes import Theme, get_theme
 from .application import ApplicationProfile, apply_application_profile
+from ._statistics import linear_fit
 
 
 PORTABLE_SCHEMA_VERSION = "0.4"
@@ -127,6 +128,11 @@ def _validate_data(renderer: str, data: Mapping[str, Any]) -> dict[str, Any]:
         summary = normalized.get("summary")
         if summary not in {None, "linear_fit"}:
             raise PortableContractError("scatter data.summary must be null or 'linear_fit'")
+        if summary == "linear_fit":
+            try:
+                linear_fit(x, y)
+            except ValueError as error:
+                raise PortableContractError(f"data.summary: {error}") from error
 
     else:
         values = _numeric_sequence(normalized, "values")

@@ -1,3 +1,5 @@
+import { linearFit } from "./statistics.js";
+
 export const SCHEMA_VERSION = "0.4";
 export const LEGACY_SCHEMA_VERSION = "0.3";
 export const RENDERER_API_VERSION = "1";
@@ -183,6 +185,13 @@ export function normalizeScatterData(data, basePath = "config.data") {
   const summary = data.summary ?? null;
   if (summary !== null && summary !== "linear_fit") {
     throw new FiguresteadConfigError("must be null or 'linear_fit'", `${basePath}.summary`);
+  }
+  if (summary === "linear_fit") {
+    try {
+      linearFit(x, y);
+    } catch (error) {
+      throw new FiguresteadConfigError(error.message, `${basePath}.summary`);
+    }
   }
   return {
     x, y, series: series.map(String), seriesLabels: normalizeSeriesLabels(keys, data.seriesLabels), summary,

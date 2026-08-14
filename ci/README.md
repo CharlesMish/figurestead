@@ -9,6 +9,7 @@ Canonical local entry points:
 ```sh
 npm ci --ignore-scripts
 npm test
+python audit/current-head-hardening/test_scientific_geometry.py
 
 FIGURESTEAD_AUDIT_MODE=check \
 FIGURESTEAD_AUDIT_OUTPUT_ROOT=/tmp/figurestead-audits \
@@ -17,6 +18,9 @@ FIGURESTEAD_TECHNICAL_URL=http://127.0.0.1:4179/technical-showcase/ \
 FIGURESTEAD_LAYOUT_URL=http://127.0.0.1:4179/ \
 FIGURESTEAD_SPECIMEN_URL=http://127.0.0.1:4179/specimen-study/ \
 npm run test:browser-first-success
+
+FIGURESTEAD_SPECIMEN_URL=http://127.0.0.1:4179/specimen-study/ \
+npm run test:browser-scientific-geometry
 
 FIGURESTEAD_AUDIT_MODE=check FIGURESTEAD_AUDIT_OUTPUT_ROOT=/tmp/figurestead-audits \
 FIGURESTEAD_TECHNICAL_URL=http://127.0.0.1:4179/technical-showcase/ \

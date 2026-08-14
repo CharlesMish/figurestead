@@ -9,8 +9,9 @@
   },
   "scripts": {
     "test": "npm run test:core",
-    "test:core": "node web/test/core-smoke.mjs && python3 audit/current-head-hardening/test_svg_serialization.py",
-    "test:browser-first-success": "node ci/check-browser-first-success.cjs"
+    "test:core": "node web/test/core-smoke.mjs && node web/test/scientific-geometry.mjs && python3 audit/current-head-hardening/test_svg_serialization.py",
+    "test:browser-first-success": "node ci/check-browser-first-success.cjs",
+    "test:browser-scientific-geometry": "node ci/check-browser-scientific-geometry.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.0"

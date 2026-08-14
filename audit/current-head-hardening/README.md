@@ -1,5 +1,20 @@
 # Figurestead current-HEAD hardening revalidation
 
+## Scientific geometry follow-up
+
+Luna independently reproduced two P1 findings at
+`d00f7b1c5b083011c55a74d11a7eccfbd352ac9e`: authored core scale domains did
+not control rendered geometry, and unidentifiable `linear_fit` requests emitted
+plausible horizontal lines. Luna did not freshly rerun Chromium/Firefox because
+her sandbox lacked the required browser environment.
+
+The narrow corrections are `07017dbdb5d6f422a64fafd47447ef894d71a23b`
+(domain precedence and geometry) and
+`5fdb32a3434845c529ef122ff4e9c185c5c77020` (shared fit identifiability).
+Codex then ran the dedicated post-fix gate in Chromium and Firefox: 2/2 engine
+cases and 28/28 fixed-count assertions passed. The concise machine-readable
+record is `scientific-geometry-findings.json`.
+
 Historical source: `figurestead-hardening-handoff.zip`, prepared from
 `9ea5a9b80842c23476e810026c1330aa88db163b`.
 
