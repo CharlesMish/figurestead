@@ -148,6 +148,15 @@ jobs:
       - name: Execute exact browser first success
         run: npm run test:browser-first-success
 
+      - name: Verify packed curated theme in Chromium and Firefox
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/npm-theme-browser"
+          packed="$(npm pack --silent ./web --pack-destination "$RUNNER_TEMP/npm-theme-browser")"
+          test "$packed" = "figurestead-web-0.9.0-alpha.1.tgz"
+          node ci/check-packed-theme-browser.mjs "$RUNNER_TEMP/npm-theme-browser/$packed"
+
       - name: Verify browser scientific geometry
         run: npm run test:browser-scientific-geometry
 
@@ -230,14 +239,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          npm ci --ignore-scripts
           mkdir -p "$RUNNER_TEMP/npm-dist" "$RUNNER_TEMP/npm-consumer"
-          packed="$(npm pack ./web --pack-destination "$RUNNER_TEMP/npm-dist")"
+          packed="$(npm pack --silent ./web --pack-destination "$RUNNER_TEMP/npm-dist")"
           test "$packed" = "figurestead-web-0.9.0-alpha.1.tgz"
           cd "$RUNNER_TEMP/npm-consumer"
           npm init --yes >/dev/null
           npm install --ignore-scripts "$RUNNER_TEMP/npm-dist/$packed"
           cp "$GITHUB_WORKSPACE/ci/npm-package-smoke.mjs" .
           node npm-package-smoke.mjs
+          node "$GITHUB_WORKSPACE/ci/npm-types-theme-smoke.mjs" "$RUNNER_TEMP/npm-dist/$packed"
 
       - name: Verify npm retained-candidate integrity
         run: npm run test:npm-release-integrity

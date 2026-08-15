@@ -16,6 +16,8 @@
     "test:npm-release-integrity": "node release/npm/test-candidate-verifier.mjs && node release/npm/verify-all-candidates.mjs && node release/npm/check-publish-workflow.mjs"
   },
   "devDependencies": {
-    "playwright": "1.62.0"
+    "playwright": "1.62.0",
+    "typescript": "7.0.2",
+    "vite": "8.2.1"
   }
 }
