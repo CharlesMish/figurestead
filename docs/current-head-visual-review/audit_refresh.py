@@ -8,9 +8,6 @@ import json
 from pathlib import Path
 import subprocess
 
-from PIL import Image
-
-
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
 
@@ -21,6 +18,13 @@ def sha256_bytes(payload: bytes) -> str:
 
 def sha256(path: Path) -> str:
     return sha256_bytes(path.read_bytes())
+
+
+def png_dimensions(path: Path) -> list[int]:
+    payload = path.read_bytes()[:24]
+    if payload[:8] != b"\x89PNG\r\n\x1a\n" or payload[12:16] != b"IHDR":
+        raise ValueError(f"{path}: expected PNG IHDR")
+    return [int.from_bytes(payload[16:20], "big"), int.from_bytes(payload[20:24], "big")]
 
 
 def main() -> int:
@@ -36,9 +40,10 @@ def main() -> int:
         checks[f"{name}CurrentAnchor"] = sha256(current) == comparison["current"]["sha256"]
         for label, artifact in comparison["artifacts"].items():
             path = ROOT / artifact["path"]
-            with Image.open(path) as image:
-                dimensions = list(image.size)
-            checks[f"{name}-{label}Artifact"] = sha256(path) == artifact["sha256"] and dimensions == artifact["dimensions"]
+            checks[f"{name}-{label}Artifact"] = (
+                sha256(path) == artifact["sha256"]
+                and png_dimensions(path) == artifact["dimensions"]
+            )
 
     for specimen in manifest["changedSpecimens"]:
         path = ROOT / specimen["path"]
