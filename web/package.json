@@ -17,15 +17,52 @@
   "engines": {
     "node": ">=24 <25"
   },
+  "types": "./types/index.d.ts",
   "exports": {
-    ".": "./src/index.js",
-    "./extensions/temporal": "./src/extensions/temporal/index.js"
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./extensions/temporal": {
+      "types": "./types/extensions/temporal.d.ts",
+      "import": "./src/extensions/temporal/index.js"
+    },
+    "./themes/slipware": {
+      "types": "./types/theme-json.d.ts",
+      "default": "./themes/slipware.json"
+    },
+    "./themes/registration-ink": {
+      "types": "./types/theme-json.d.ts",
+      "default": "./themes/registration_ink.json"
+    },
+    "./themes/ultraviolet-laboratory": {
+      "types": "./types/theme-json.d.ts",
+      "default": "./themes/ultraviolet_laboratory.json"
+    },
+    "./themes/lavender-fog-notebook": {
+      "types": "./types/theme-json.d.ts",
+      "default": "./themes/lavender_fog_notebook.json"
+    },
+    "./themes/midnight-transit-signal-slate": {
+      "types": "./types/theme-json.d.ts",
+      "default": "./themes/midnight_transit_signal_slate.json"
+    },
+    "./themes/deep-observatory-sage-core": {
+      "types": "./types/theme-json.d.ts",
+      "default": "./themes/deep_observatory_sage_core.json"
+    }
   },
   "files": [
     "src",
+    "types",
+    "themes",
     "LICENSE",
     "README.md",
     "THIRD_PARTY_NOTICES.md",
     "TRADEMARKS.md"
-  ]
+  ],
+  "scripts": {
+    "prepack": "node scripts/curated-themes.mjs stage",
+    "postpack": "node scripts/curated-themes.mjs clean"
+  }
 }
