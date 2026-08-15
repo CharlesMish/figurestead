@@ -249,13 +249,13 @@
     {
       "id": "P2-9",
       "title": "Configuration transactionality",
-      "status": "STILL_REPRODUCES",
+      "status": "CLOSED_BY_LATER_WORK",
       "severity": "P2 controller-state consistency",
-      "paths": ["web/src/controller.js", "web/src/schema.js"],
+      "paths": ["web/src/create-matrix-plot.js", "web/src/clock.js", "web/src/accessibility.js", "ci/check-controller-integrity.cjs"],
       "reproduction": "Render a valid line contract, call setConfig({panels: []}), catch the error, and compare renderer/controller/companion state.",
-      "observed": "The rejected update changes controller renderers from ['line'] to [] while the prior accessibility companion remains attached.",
-      "regression": "No failed-update rollback regression exists.",
-      "futureWork": "Validate/resolve replacement configuration before mutating controller, playback, renderer, or companion state; assert atomic rollback."
+      "observed": "Corrected prospectively: rejected schema, renderer-preparation, and accessibility-description replacements leave reported state, terminal/resolved/composed scene identities, pixels, companion, and motion on the accepted contract.",
+      "regression": "ci/check-controller-integrity.cjs runs 31 explicit assertions in Chromium and Firefox, including A → invalid B → valid C recovery and asynchronous runtime-error containment.",
+      "futureWork": "None for this finding; keep the controller-integrity suite in required browser CI."
     },
     {
       "id": "P2-10",

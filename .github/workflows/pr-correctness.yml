@@ -151,6 +151,9 @@ jobs:
       - name: Verify browser scientific geometry
         run: npm run test:browser-scientific-geometry
 
+      - name: Verify controller transactionality and runtime errors
+        run: npm run test:browser-controller-integrity
+
       - name: Verify V2 terminal, accessibility, motion, and paper boundaries
         run: node audit/technical-showcase/run-technical-audit.cjs
 

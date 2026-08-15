@@ -68,7 +68,7 @@ because a filename changed.
 | P2-6 compatibility / metadata | `STILL_REPRODUCES` | npm still declares Node `>=24 <25`; Python still lacks authors, classifiers, and keywords; no declared-versus-tested support matrix exists. |
 | P2-7 static-site defense / resilience | `STILL_REPRODUCES` | Overview/Atlas heads have no CSP or referrer policy; `site/app.js` still throws at module top level when `public-alpha-set.json` fails. This accepted-R3 issue is held, not changed. |
 | P2-8 annotation accessibility text | `STILL_REPRODUCES` | Real hidden-companion output still says `Focus annotation: Evidence-bound peak at x undefined, y undefined.` for an `anchorId` annotation. |
-| P2-9 configuration transactionality | `STILL_REPRODUCES` | Rejected `setConfig({panels: []})` changes controller renderers from `["line"]` to `[]` while leaving the prior companion attached. State is mixed rather than rolled back. |
+| P2-9 configuration transactionality | `CLOSED_BY_LATER_WORK` | Replacement now prepares contract, renderer, scene, composition, and detached accessibility state before commit. The required two-browser controller suite proves rejected replacements preserve the accepted state and later valid replacement recovers normally. |
 | P2-10 consumer types / formatting | `STILL_REPRODUCES` | No `.d.ts` or `py.typed` is shipped and no formatting boundary is configured; the inspected source/site set contains 103 lines over 240 characters. |
 
 Exact structured paths, observations, regression coverage, and proposed future
@@ -207,8 +207,7 @@ shared boundary at current HEAD.
 
 Held for explicit compatibility/product decisions: semantic ID encoding,
 `figurestead.scene/1`, and empty-category policy. Also held as separate small
-correctness packages: iterative large-array extent, annotation description, and
-transactional configuration replacement.
+correctness packages: iterative large-array extent and annotation description.
 
 ## Scope confirmation
 
