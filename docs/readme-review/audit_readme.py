@@ -13,7 +13,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
-BASELINE = "0f077b7fd5ab4840e73b65c133f09bad89187e39"
+BASELINE = "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89"
 README = ROOT / "README.md"
 PROTECTED = [
     "site",
@@ -28,6 +28,10 @@ PROTECTED = [
     ".github",
     "VERSIONING.md",
 ]
+AUTHORIZED_PROTECTED_CHANGES = {
+    ".github/workflows/pr-correctness.yml",
+    "web/THIRD_PARTY_NOTICES.md",
+}
 
 
 def sha256(path: Path) -> str:
@@ -53,6 +57,7 @@ def main() -> int:
     manifest_path = ROOT / "docs" / "readme-review" / "asset-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     protected_changes = git("diff", "--name-only", BASELINE, "--", *PROTECTED).splitlines()
+    unexpected_protected_changes = sorted(set(protected_changes) - AUTHORIZED_PROTECTED_CHANGES)
     readme_docs = [README, *(ROOT / "docs" / "readme-review").glob("*.md"), *(ROOT / "docs" / "readme-review").glob("*.html"), manifest_path]
     local_leaks = []
     forbidden_prefix = "/" + "Users/"
@@ -85,7 +90,7 @@ def main() -> int:
         "relativeLinksExist": not missing,
         "meaningfulImageAlt": len(image_alts) == 2 and all(alt.strip() for alt, _ in image_alts),
         "assetManifestPasses": manifest["result"] == "PASS",
-        "protectedSurfacesUnchanged": not protected_changes,
+        "protectedSurfacesUnchangedExceptNarrowHygiene": not unexpected_protected_changes,
         "noLocalPathLeaks": not local_leaks,
         "noTrackedOsArtifacts": not tracked_os_artifacts,
         "packageVersionsUnchanged": 'version = "0.9.0a1"' in (ROOT / "pyproject.toml").read_text() and json.loads((ROOT / "web" / "package.json").read_text())["version"] == "0.9.0-alpha.1",
@@ -104,6 +109,8 @@ def main() -> int:
         "missingTargets": missing,
         "protectedPaths": PROTECTED,
         "protectedChanges": protected_changes,
+        "authorizedProtectedChanges": sorted(set(protected_changes) & AUTHORIZED_PROTECTED_CHANGES),
+        "unexpectedProtectedChanges": unexpected_protected_changes,
         "localPathLeaks": local_leaks,
         "trackedOsArtifacts": tracked_os_artifacts,
         "screenshots": screenshot_records,

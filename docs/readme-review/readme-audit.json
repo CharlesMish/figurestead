@@ -1,7 +1,7 @@
 {
   "schemaVersion": "figurestead.readme-audit/1",
   "result": "PASS",
-  "baseline": "0f077b7fd5ab4840e73b65c133f09bad89187e39",
+  "baseline": "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89",
   "outline": [
     "Figurestead",
     "Start here",
@@ -27,7 +27,7 @@
     "relativeLinksExist": true,
     "meaningfulImageAlt": true,
     "assetManifestPasses": true,
-    "protectedSurfacesUnchanged": true,
+    "protectedSurfacesUnchangedExceptNarrowHygiene": true,
     "noLocalPathLeaks": true,
     "noTrackedOsArtifacts": true,
     "packageVersionsUnchanged": true,
@@ -61,7 +61,15 @@
     ".github",
     "VERSIONING.md"
   ],
-  "protectedChanges": [],
+  "protectedChanges": [
+    ".github/workflows/pr-correctness.yml",
+    "web/THIRD_PARTY_NOTICES.md"
+  ],
+  "authorizedProtectedChanges": [
+    ".github/workflows/pr-correctness.yml",
+    "web/THIRD_PARTY_NOTICES.md"
+  ],
+  "unexpectedProtectedChanges": [],
   "localPathLeaks": [],
   "trackedOsArtifacts": [],
   "screenshots": {

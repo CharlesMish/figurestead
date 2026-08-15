@@ -52,3 +52,8 @@ cross-browser protection for the accepted compact/categorical fixtures. Static
 README and social-preview rendering studies remain path-specific reviewer tools;
 their immutable asset hashes are checked by the package/site job instead of
 regenerating screenshots on every pull request.
+
+`npm test` also runs `ci/check-playwright-notices.mjs`. The root
+`package.json` exact Playwright pin is the canonical tooling version; the check
+requires the lockfile's Playwright packages and both root/web third-party
+notices to agree with it.
