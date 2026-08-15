@@ -3,7 +3,7 @@ import * as root from "@figurestead/web";
 import * as temporal from "@figurestead/web/extensions/temporal";
 
 const cases = [
-  () => assert.equal(root.FIGURESTEAD_PACKAGE_VERSION, "0.9.0-alpha.1"),
+  () => assert.equal(root.FIGURESTEAD_PACKAGE_VERSION, process.env.EXPECTED_VERSION ?? "0.9.0-alpha.1"),
   () => assert.equal(typeof root.exportFigureSvg, "function"),
   () => assert.deepEqual(temporal.TEMPORAL_RENDERERS.map((renderer) => renderer.key), ["temporal_coverage", "temporal_observations"]),
 ];

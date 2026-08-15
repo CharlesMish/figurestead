@@ -24,7 +24,7 @@ on:
         required: true
         type: string
       expected_sha256:
-        description: Exact SHA-256 from the accepted release manifest
+        description: Approved SHA-256 of the exact expected retained tarball
         required: true
         type: string
       confirmation:
@@ -39,16 +39,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
-    name: Authenticate and publish exact accepted tarball
+  verify-candidate:
+    name: Preflight exact retained candidate without publication authority
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    environment:
-      name: npm
-      url: https://www.npmjs.com/package/@figurestead/web/v/${{ inputs.version }}
+    timeout-minutes: 10
     permissions:
       contents: read
-      id-token: write
     steps:
       - name: Check out selected commit
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -56,13 +52,13 @@ jobs:
           persist-credentials: false
 
       - name: Set up the accepted Node/npm runtime
-        uses: actions/setup-node@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24.17.0
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
-      - name: Authenticate repository, manifest, metadata, and registry absence
+      - name: Authenticate repository, exact candidate, and registry absence
         shell: bash
         env:
           VERSION: ${{ inputs.version }}
@@ -84,42 +80,64 @@ jobs:
           case "$DIST_TAG" in alpha|next|latest) ;; *) exit 64 ;; esac
           test "$(node --version)" = "v24.17.0"
           test "$(npm --version)" = "11.13.0"
+          test "$(node -p 'require("./web/package.json").version')" = "$VERSION"
 
-          release_dir="release/npm/$VERSION"
-          dist_dir="$release_dir/dist"
-          tarball="$dist_dir/figurestead-web-$VERSION.tgz"
-          manifest="$release_dir/SHA256SUMS.txt"
+          node release/npm/verify-candidate.mjs \
+            --version "$VERSION" \
+            --expected-sha256 "$EXPECTED_SHA256" \
+            --release-root release/npm
 
-          test -f "$tarball"
-          test -f "$manifest"
-          mapfile -t release_members < <(find "$release_dir" -type f -printf '%P\n' | LC_ALL=C sort)
-          expected_members=("SHA256SUMS.txt" "dist/figurestead-web-$VERSION.tgz")
-          test "${#release_members[@]}" -eq 2
-          test "${release_members[*]}" = "${expected_members[*]}"
-          test "$(wc -l < "$manifest" | tr -d ' ')" = "1"
-          test "$(cut -d ' ' -f 1 "$manifest")" = "$EXPECTED_SHA256"
-          (
-            cd "$dist_dir"
-            sha256sum --check "../SHA256SUMS.txt"
-            tar -tzf "figurestead-web-$VERSION.tgz" >/dev/null
-          )
-
-          TARBALL="$tarball" VERSION="$VERSION" node --input-type=module <<'NODE'
-          import { execFileSync } from "node:child_process";
-          const packageJson = JSON.parse(execFileSync(
-            "tar", ["-xOf", process.env.TARBALL, "package/package.json"], { encoding: "utf8" }
-          ));
-          if (packageJson.name !== "@figurestead/web") throw new Error("package name differs");
-          if (packageJson.version !== process.env.VERSION) throw new Error("package version differs");
-          if (packageJson.private !== false) throw new Error("private disposition differs");
-          if (packageJson.repository?.url !== "git+https://github.com/CharlesMish/figurestead.git") {
-            throw new Error("repository URL differs");
-          }
-          const url = "https://registry.npmjs.org/" + encodeURIComponent(packageJson.name) + "/" + encodeURIComponent(packageJson.version);
+          VERSION="$VERSION" node --input-type=module <<'NODE'
+          const url = "https://registry.npmjs.org/" + encodeURIComponent("@figurestead/web") + "/" + encodeURIComponent(process.env.VERSION);
           const response = await fetch(url, { headers: { accept: "application/json" } });
           if (response.status === 200) throw new Error("version already exists");
           if (response.status !== 404) throw new Error(`registry preflight returned ${response.status}`);
           NODE
+
+  publish:
+    name: Reverify and publish exact retained tarball
+    needs: verify-candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@figurestead/web/v/${{ inputs.version }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out the same protected-main commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up the accepted Node/npm runtime
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24.17.0
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Reverify exact bytes before trusted publication
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+          EXPECTED_COMMIT: ${{ inputs.expected_commit }}
+          EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+          REF_PROTECTED: ${{ github.ref_protected }}
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "CharlesMish/figurestead"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$REF_PROTECTED" = "true"
+          test "$GITHUB_SHA" = "$EXPECTED_COMMIT"
+          test "$(node --version)" = "v24.17.0"
+          test "$(npm --version)" = "11.13.0"
+          test "$(node -p 'require("./web/package.json").version')" = "$VERSION"
+          node release/npm/verify-candidate.mjs \
+            --version "$VERSION" \
+            --expected-sha256 "$EXPECTED_SHA256" \
+            --release-root release/npm
 
       - name: Publish with npm Trusted Publishing
         shell: bash
@@ -142,7 +160,7 @@ jobs:
       contents: read
     steps:
       - name: Set up Node
-        uses: actions/setup-node@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24.17.0
           registry-url: https://registry.npmjs.org

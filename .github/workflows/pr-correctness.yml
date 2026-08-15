@@ -236,6 +236,9 @@ jobs:
           cp "$GITHUB_WORKSPACE/ci/npm-package-smoke.mjs" .
           node npm-package-smoke.mjs
 
+      - name: Verify npm retained-candidate integrity
+        run: npm run test:npm-release-integrity
+
       - name: Verify accepted frozen-site bytes and derivative pixels
         run: python audit/public-site/validate-assets.py
 
