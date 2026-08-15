@@ -1,5 +1,12 @@
 # Figurestead current-HEAD hardening revalidation
 
+> **Historical audit snapshot.** This report records the repository state
+> audited at `c07b7683ddf2c37a22b59bac1c8e3deb8649366d`; its findings and counts are
+> intentionally preserved as observations of that state. Current required-CI
+> authority is `.github/workflows/pr-correctness.yml` and `ci/README.md`.
+> Later scientific-geometry findings are recorded separately in
+> `audit/current-head-hardening/scientific-geometry-findings.json`.
+
 ## Scientific geometry follow-up
 
 Luna independently reproduced two P1 findings at

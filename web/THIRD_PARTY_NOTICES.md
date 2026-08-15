@@ -25,8 +25,8 @@ only system font families and carries no downloaded font bytes or remote URL.
 
 ## Browser tooling observations
 
-The alpha verification environment used Playwright 1.61.1 and
-playwright-core 1.61.1 as
+The alpha verification environment uses Playwright 1.62.0 and
+playwright-core 1.62.0 as
 Apache-2.0 development/test tooling and optional fsevents 2.3.2 as MIT. These
 packages and downloaded browsers are not intended npm-tarball members or
 top-level archive members. They remain test-tool provenance only.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the social-preview study without touching accepted surfaces."""
+"""Verify the selected current social preview and retained historical study."""
 
 from __future__ import annotations
 
@@ -13,14 +13,14 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 STUDY = ROOT / "docs" / "social-preview-study"
-BASELINE = "88ee3f93f2799764f74cad5cb547f9d2383c464c"
+BASELINE = "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89"
 ACCEPTED_ASSETS = {
-    "docs/assets/readme/figurestead-at-a-glance.png": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6",
+    "docs/assets/readme/figurestead-at-a-glance.png": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656",
     "docs/assets/readme/populated-categorical-response-matrix.png": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
-    "docs/assets/readme/github-social-preview-candidate.png": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e",
+    "docs/assets/readme/github-social-preview-candidate.png": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969",
 }
 SELECTED_ASSET = ROOT / "docs" / "assets" / "readme" / "github-social-preview.png"
-SELECTED_SHA256 = "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
+SELECTED_SHA256 = "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54"
 PROTECTED = [
     "README.md",
     *ACCEPTED_ASSETS,
@@ -59,18 +59,19 @@ def main() -> int:
         with Image.open(path) as image:
             dimensions = list(image.size)
             mode = image.mode
-        placements_valid = all(
-            placement["sourceCrop"] == [0, 0, 674, 408]
-            and sha256(ROOT / placement["sourcePath"]) == placement["sourceSha256"]
+        placements_valid = all(placement["sourceCrop"] == [0, 0, 674, 408] for placement in record["placements"])
+        current_sources = all(
+            sha256(ROOT / placement["sourcePath"]) == placement["sourceSha256"]
             for placement in record["placements"]
-        )
+        ) if key == "C" else None
         candidate_results[key] = {
             "dimensions": dimensions,
             "mode": mode,
             "bytes": path.stat().st_size,
             "sha256": sha256(path),
             "manifestMatches": sha256(path) == record["sha256"] and path.stat().st_size == record["bytes"],
-            "fullAcceptedFramesOnly": placements_valid,
+            "fullFramesOnly": placements_valid,
+            "currentSourceHashesMatch": current_sources,
         }
 
     with Image.open(SELECTED_ASSET) as selected:
@@ -86,6 +87,11 @@ def main() -> int:
     }
 
     protected_changes = git("diff", "--name-only", BASELINE, "--", *PROTECTED).splitlines()
+    unexpected_protected_changes = [
+        path for path in protected_changes
+        if path.startswith(("site/", "technical-showcase/", "src/", "examples/", "release/"))
+        or path in {"README.md", "pyproject.toml", "VERSIONING.md"}
+    ]
     tracked_artifacts = [
         path for path in git("ls-files").splitlines()
         if Path(path).name == ".DS_Store" or "__MACOSX" in Path(path).parts or "__pycache__" in Path(path).parts
@@ -100,18 +106,18 @@ def main() -> int:
             local_leaks.append(path.relative_to(ROOT).as_posix())
 
     checks = {
-        "baselineAUnchanged": accepted_results["docs/assets/readme/github-social-preview-candidate.png"]["matches"],
-        "allAcceptedReadmeAssetsUnchanged": all(item["matches"] for item in accepted_results.values()),
+        "currentAcceptedReadmeAssetsMatch": all(item["matches"] for item in accepted_results.values()),
         "threeAlternatesPresent": set(candidate_results) == {"B", "C", "D"},
         "allCandidates1280x640Rgb": all(item["dimensions"] == [1280, 640] and item["mode"] == "RGB" for item in candidate_results.values()),
         "candidateHashesMatchManifest": all(item["manifestMatches"] for item in candidate_results.values()),
-        "fullAcceptedEvidenceFramesOnly": all(item["fullAcceptedFramesOnly"] for item in candidate_results.values()),
+        "fullFramesOnly": all(item["fullFramesOnly"] for item in candidate_results.values()),
+        "currentCandidateSourcesMatch": candidate_results["C"]["currentSourceHashesMatch"] is True,
         "contactSheetPresent": (STUDY / "comparison-contact-sheet.png").exists(),
         "smallPreviewStripPresent": (STUDY / "small-preview-strip.png").exists(),
-        "protectedSurfacesUnchanged": not protected_changes,
+        "protectedSurfacesUnchanged": not unexpected_protected_changes,
         "noLocalPathLeaks": not local_leaks,
         "noTrackedOsArtifacts": not tracked_artifacts,
-        "reviewOnlyFlags": manifest["acceptedAssetsModified"] is False and manifest["scientificFigureContentModified"] is False,
+        "refreshFlags": manifest["acceptedAssetsModified"] is True and manifest["scientificFigureContentModified"] is False,
         "recommendationRecorded": manifest["recommendation"] == "candidate C",
         "selectionRecorded": (
             manifest["selection"]["candidate"] == "C"
@@ -124,7 +130,8 @@ def main() -> int:
             and selected_results["sha256"] == SELECTED_SHA256
             and selected_results["matchesCandidateC"]
         ),
-        "readmeMontageUnchanged": accepted_results["docs/assets/readme/figurestead-at-a-glance.png"]["matches"],
+        "matrixPreserved": accepted_results["docs/assets/readme/populated-categorical-response-matrix.png"]["matches"],
+        "historicalStudyArtifactsRetained": manifest["currentHeadRefresh"]["historicalCandidatesRetained"] == ["B", "D", "comparison", "smallPreviewComparison"],
     }
     report = {
         "schemaVersion": "figurestead.social-preview-audit/1",
@@ -136,6 +143,7 @@ def main() -> int:
         "selectedAsset": selected_results,
         "protectedPaths": PROTECTED,
         "protectedChanges": protected_changes,
+        "unexpectedProtectedChanges": unexpected_protected_changes,
         "localPathLeaks": local_leaks,
         "trackedOsArtifacts": tracked_artifacts,
         "deploymentInvoked": False,

@@ -35,9 +35,9 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 301881,
-      "sha256": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e",
-      "role": "accepted baseline; unchanged",
+      "bytes": 303123,
+      "sha256": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969",
+      "role": "current accepted eight-panel README montage derivative",
       "rationale": "The complete eight-panel montage communicates maximum range, but individual figures become texture at small link-preview sizes."
     },
     "B": {
@@ -132,13 +132,13 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 219889,
-      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece",
+      "bytes": 227040,
+      "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54",
       "placements": [
         {
           "sourceKey": "watershed",
           "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
-          "sourceSha256": "4be8dc0356b26a8929e18c342195a56ebedc0934f161dcdc1034c64dfb96a0ec",
+          "sourceSha256": "d6f16cd8d53afbbe8e15ce0c7086ff9054dcd00fad81d1fe7fb34a17facdfc2c",
           "sourceCrop": [
             0,
             0,
@@ -156,7 +156,7 @@
         {
           "sourceKey": "circadian",
           "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/circadian_phase_shift.png",
-          "sourceSha256": "abc805045c8f1bcb237034ac3c6966c148dd01c2fbb919545eacf32007c590ac",
+          "sourceSha256": "d614a8daeb6585d5b8919d50d18a1b03ccb1af3ca83f95cc161c7f8683e4e2e6",
           "sourceCrop": [
             0,
             0,
@@ -174,7 +174,7 @@
         {
           "sourceKey": "seasonal",
           "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/paired_seasonal_distributions.png",
-          "sourceSha256": "a56c9a2b2cce81abcd4936eff21f458386e4b41b1412048bde0036d7487594e3",
+          "sourceSha256": "fed5cc197c5160c92a398d1c72fa2bba12c126b68ca4c1601689baae49d163bd",
           "sourceCrop": [
             0,
             0,
@@ -262,7 +262,7 @@
     "bytes": 145170,
     "sha256": "86a43a60b75866647a07a39df1aaa33ccc8bcce896f55c5213368090f82e4a3c"
   },
-  "acceptedAssetsModified": false,
+  "acceptedAssetsModified": true,
   "scientificFigureContentModified": false,
   "recommendation": "candidate C",
   "recommendationReason": "It best follows the governing rule at 25% delivery size: Figurestead remains unmistakable, the lead scientific figure stays meaningfully inspectable, and two supporting families add range without collapsing into a miniature gallery.",
@@ -276,8 +276,8 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 219889,
-      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
+      "bytes": 227040,
+      "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54"
     },
     "canonicalAsset": {
       "path": "docs/assets/readme/github-social-preview.png",
@@ -286,8 +286,8 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 219889,
-      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
+      "bytes": 227040,
+      "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54"
     },
     "byteIdenticalToSource": true,
     "readmeMontage": {
@@ -297,11 +297,23 @@
         960
       ],
       "mode": "RGB",
-      "bytes": 375121,
-      "sha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6"
+      "bytes": 376587,
+      "sha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656"
     },
-    "readmeMontageUnchanged": true,
+    "readmeMontageUnchanged": false,
     "githubSettingsChanged": false,
     "ownerAction": "Configure docs/assets/readme/github-social-preview.png manually in GitHub repository settings."
+  },
+  "currentHeadRefresh": {
+    "baselineCommit": "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89",
+    "reason": "selected outward assets now depict accepted authored-domain geometry",
+    "compositionChanged": false,
+    "historicalCandidatesRetained": [
+      "B",
+      "D",
+      "comparison",
+      "smallPreviewComparison"
+    ],
+    "reviewEvidence": "docs/current-head-visual-review/manifest.json"
   }
 }

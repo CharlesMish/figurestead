@@ -1,0 +1,367 @@
+{
+  "schemaVersion": "figurestead.current-head-outward-visual-refresh/1",
+  "result": "PASS",
+  "baselineCommit": "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89",
+  "comparisons": {
+    "montage": {
+      "previous": {
+        "bytes": 375121,
+        "sha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6"
+      },
+      "current": {
+        "path": "docs/assets/readme/figurestead-at-a-glance.png",
+        "dimensions": [
+          1920,
+          960
+        ],
+        "mode": "RGB",
+        "bytes": 376587,
+        "sha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656"
+      },
+      "artifacts": {
+        "full": {
+          "path": "docs/current-head-visual-review/montage-full-ab.png",
+          "dimensions": [
+            3840,
+            960
+          ],
+          "mode": "RGB",
+          "bytes": 514503,
+          "sha256": "93616328f08e7f9db6c77fc356fccd0cd1f83523ecd2c207693774dded84ebf3"
+        },
+        "readme-width": {
+          "path": "docs/current-head-visual-review/montage-readme-width-ab.png",
+          "dimensions": [
+            1536,
+            426
+          ],
+          "mode": "RGB",
+          "bytes": 203874,
+          "sha256": "a14b63f3ccddbd85eed9c549c447c7bbca38d7ca2d894069a1c29b8c655eee3b"
+        }
+      }
+    },
+    "social-c": {
+      "previous": {
+        "bytes": 219889,
+        "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece"
+      },
+      "current": {
+        "path": "docs/assets/readme/github-social-preview.png",
+        "dimensions": [
+          1280,
+          640
+        ],
+        "mode": "RGB",
+        "bytes": 227040,
+        "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54"
+      },
+      "artifacts": {
+        "full": {
+          "path": "docs/current-head-visual-review/social-c-full-ab.png",
+          "dimensions": [
+            2560,
+            640
+          ],
+          "mode": "RGB",
+          "bytes": 367108,
+          "sha256": "ac8de68cec9167ed94110b36114969117c142be827d201a978a5af10a7111491"
+        },
+        "25-percent": {
+          "path": "docs/current-head-visual-review/social-c-25-percent-ab.png",
+          "dimensions": [
+            640,
+            202
+          ],
+          "mode": "RGB",
+          "bytes": 60115,
+          "sha256": "2fa0573f34d1716b3c757a1da4911ad6e10dc2f03ace0a9ea58226e36067fd90"
+        }
+      }
+    }
+  },
+  "changedSpecimens": [
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/circadian_phase_shift.png",
+      "oldSha256": "abc805045c8f1bcb237034ac3c6966c148dd01c2fbb919545eacf32007c590ac",
+      "oldDomain": {
+        "x": [
+          -1.92,
+          25.92
+        ],
+        "y": [
+          0.374676,
+          1.6104239999999999
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          0,
+          24
+        ],
+        "y": [
+          0.35,
+          1.75
+        ]
+      },
+      "newSha256": "d614a8daeb6585d5b8919d50d18a1b03ccb1af3ca83f95cc161c7f8683e4e2e6",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/dose_response_plate.png",
+      "oldSha256": "10b7bc8d23509748f979bbc1fcb9dbd2196ffc203c39b46202dfd6847eb1c8ce",
+      "oldDomain": {
+        "x": [
+          -0.64,
+          8.64
+        ],
+        "y": [
+          0.18781199999999998,
+          1.923288
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          -0.3,
+          8.3
+        ],
+        "y": [
+          0,
+          1.95
+        ]
+      },
+      "newSha256": "4358c1860782ed0b671817abe257e996ffb4bcc925b5d7a148ede216669a1a63",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/gene_expression_recovery.png",
+      "oldSha256": "200c7ece927a9724cd008e1be002fd10ab635069520ca27f5a49cdd73207dcc5",
+      "oldDomain": {
+        "x": [
+          -5.76,
+          77.76
+        ],
+        "y": [
+          -2.375416,
+          2.7955159999999997
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          0,
+          72
+        ],
+        "y": [
+          -2.4,
+          2.7
+        ]
+      },
+      "newSha256": "dcd49a0f0d5f61232c6f93ef4ebda52322beaec18c4d42184f20fc1c407ccc8e",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/habitat_class_response.png",
+      "oldSha256": "1c3a0c33f1f28bb2cd64422632b6614c38c5c7c43f8e907ef8fbed89ae1d225b",
+      "oldDomain": {
+        "x": [
+          -0.5,
+          9.5
+        ],
+        "y": [
+          0.50362,
+          2.10268
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          -0.5,
+          9.5
+        ],
+        "y": [
+          0.3,
+          2.3
+        ]
+      },
+      "newSha256": "354da8c9d73bb00620c15c3d9b7641c0a7aec1318109fec31af136e396581b4d",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/instrument_calibration.png",
+      "oldSha256": "92190be9c6b86b976b9245b20070c5dc7fd7bc4a680abb44083e8803120b997c",
+      "oldDomain": {
+        "x": [
+          -7.2,
+          97.2
+        ],
+        "y": [
+          -10.3412,
+          101.3059
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          -3,
+          93
+        ],
+        "y": [
+          -5,
+          100
+        ]
+      },
+      "newSha256": "d3931d8e1b8069222989411b8169ae9972defd4ba27a6e95234aa44867879d72",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/lab_precision.png",
+      "oldSha256": "05e5ff9edd851fbfbd2c8488d55bc567792f64d112518db6f40b4ddde580b507",
+      "oldDomain": {
+        "x": [
+          -0.5,
+          5.5
+        ],
+        "y": [
+          94.42079600000001,
+          103.87630399999999
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          -0.5,
+          5.5
+        ],
+        "y": [
+          92,
+          108
+        ]
+      },
+      "newSha256": "d023c9b16739e249cd053880f7ad09ebda9b61ee63eada07f0c2b2201183a80b",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/paired_seasonal_distributions.png",
+      "oldSha256": "a56c9a2b2cce81abcd4936eff21f458386e4b41b1412048bde0036d7487594e3",
+      "oldDomain": {
+        "x": [
+          -0.5,
+          3.5
+        ],
+        "y": [
+          0.291028,
+          0.843072
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          -0.5,
+          3.5
+        ],
+        "y": [
+          0.25,
+          0.9
+        ]
+      },
+      "newSha256": "fed5cc197c5160c92a398d1c72fa2bba12c126b68ca4c1601689baae49d163bd",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/particle_size_relationship.png",
+      "oldSha256": "1d0304ac93a2225c9e3ae59696746e20bb80e9a8f25de2fa0c5f1c05a36114ae",
+      "oldDomain": {
+        "x": [
+          -1.310076,
+          62.930376
+        ],
+        "y": [
+          -1.017468,
+          17.475368
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          0,
+          62
+        ],
+        "y": [
+          0,
+          17
+        ]
+      },
+      "newSha256": "63aa6f6354df9a2054f77e44617bb6515e172fb4099de4336f6a65ec68ee8c8a",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/treatment_replicates.png",
+      "oldSha256": "d658f3fa1998c0a6260f91886db714909101a4069e92eda97e90245d6de21e4e",
+      "oldDomain": {
+        "x": [
+          -0.5,
+          4.5
+        ],
+        "y": [
+          0.686836,
+          2.3755640000000002
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          -0.5,
+          4.5
+        ],
+        "y": [
+          0.65,
+          2.35
+        ]
+      },
+      "newSha256": "13d135d70c5b561256d25bb3bb8c7e01c2f7744f1c9de24a987dd726e096ee96",
+      "expectedDifference": "authored scale-domain precedence only"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
+      "oldSha256": "4be8dc0356b26a8929e18c342195a56ebedc0934f161dcdc1034c64dfb96a0ec",
+      "oldDomain": {
+        "x": [
+          -1.36,
+          18.36
+        ],
+        "y": [
+          -0.021600000000000008,
+          2.0316
+        ]
+      },
+      "currentDomain": {
+        "x": [
+          0,
+          17
+        ],
+        "y": [
+          0,
+          2.05
+        ]
+      },
+      "newSha256": "d6f16cd8d53afbbe8e15ce0c7086ff9054dcd00fad81d1fe7fb34a17facdfc2c",
+      "expectedDifference": "authored scale-domain precedence only"
+    }
+  ],
+  "sourceMontage": {
+    "path": "specimen-study/evidence/corpus-v0.2/screenshots/chromium-montage-1920x1080.png",
+    "previousSha256": "cdfbfcdf98dfd2f1949f6bea8df6c0b6875e70ca4eb55b1a5f0a543a72f3bef9",
+    "currentSha256": "9f6efe945f26e6074e83622a3e62f10bd1c5651f087742fb96e9c98f16c701e6",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "compositionChanged": false
+  },
+  "matrix": {
+    "path": "docs/assets/readme/populated-categorical-response-matrix.png",
+    "previousSha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
+    "currentSha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
+    "byteIdentical": true
+  },
+  "claims": {
+    "compositionChanged": false,
+    "corpusDataChanged": false,
+    "themeChanged": false,
+    "githubSettingsChanged": false
+  }
+}

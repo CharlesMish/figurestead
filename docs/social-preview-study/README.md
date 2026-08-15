@@ -1,9 +1,10 @@
 # Figurestead GitHub social-preview A/B study
 
-This review-only packet compares the accepted 1280×640 montage-derived
-candidate A with three deterministic alternatives. It does not change the
-README, accepted README assets, scientific figures, site, renderer, corpus,
-themes, packages, releases, or deployment state.
+This packet records the accepted 1280×640 A/B/C/D composition study. Candidate
+C and its canonical selected asset were refreshed after authored scale domains
+began controlling rendered geometry. The composition decision did not reopen;
+historical B/D candidates, the original contact sheet, and the original
+small-preview strip remain byte-identical study evidence.
 
 ## Candidates
 
@@ -27,10 +28,10 @@ scientific figure remains meaningfully inspectable at 25% delivery size, and
 two accepted supporting figures communicate range without turning the preview
 into a miniature gallery.
 
-Candidate A remains unchanged as the accepted eight-panel montage/README story,
-and the populated categorical response matrix remains the second README visual.
-This promotion does not replace either README image. The original A/B/C/D study
-artifacts remain in this directory.
+Candidate A remains the accepted eight-panel montage/README story, regenerated
+with the same crop and composition from current renderer output. The populated
+categorical response matrix remains the second README visual and reproduces
+byte-identically. This promotion does not replace either README image.
 
 Candidate D is the restrained fallback if small-thumbnail legibility is valued
 above renderer-family range. Candidate B remains the stronger equal-weight
@@ -38,5 +39,6 @@ four-family option for larger previews.
 
 All source paths, source hashes, full-frame crop geometry, destinations,
 delivery hashes, font hashes, and rationales are recorded in `manifest.json`.
-The comparison sheet shows candidates at 50% delivery size; the companion
-small-preview strip tests all four at 25% delivery size.
+The historical comparison sheet and small-preview strip retain the original
+decision evidence. Current before/after and 25% checks are in
+`docs/current-head-visual-review/`.

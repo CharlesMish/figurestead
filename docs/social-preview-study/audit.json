@@ -1,29 +1,30 @@
 {
   "schemaVersion": "figurestead.social-preview-audit/1",
   "result": "PASS",
-  "baselineCommit": "88ee3f93f2799764f74cad5cb547f9d2383c464c",
+  "baselineCommit": "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89",
   "checks": {
-    "baselineAUnchanged": true,
-    "allAcceptedReadmeAssetsUnchanged": true,
+    "currentAcceptedReadmeAssetsMatch": true,
     "threeAlternatesPresent": true,
     "allCandidates1280x640Rgb": true,
     "candidateHashesMatchManifest": true,
-    "fullAcceptedEvidenceFramesOnly": true,
+    "fullFramesOnly": true,
+    "currentCandidateSourcesMatch": true,
     "contactSheetPresent": true,
     "smallPreviewStripPresent": true,
     "protectedSurfacesUnchanged": true,
     "noLocalPathLeaks": true,
     "noTrackedOsArtifacts": true,
-    "reviewOnlyFlags": true,
+    "refreshFlags": true,
     "recommendationRecorded": true,
     "selectionRecorded": true,
     "selectedAssetCanonical": true,
-    "readmeMontageUnchanged": true
+    "matrixPreserved": true,
+    "historicalStudyArtifactsRetained": true
   },
   "acceptedAssets": {
     "docs/assets/readme/figurestead-at-a-glance.png": {
-      "expectedSha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6",
-      "actualSha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6",
+      "expectedSha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656",
+      "actualSha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656",
       "matches": true
     },
     "docs/assets/readme/populated-categorical-response-matrix.png": {
@@ -32,8 +33,8 @@
       "matches": true
     },
     "docs/assets/readme/github-social-preview-candidate.png": {
-      "expectedSha256": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e",
-      "actualSha256": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e",
+      "expectedSha256": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969",
+      "actualSha256": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969",
       "matches": true
     }
   },
@@ -47,7 +48,8 @@
       "bytes": 169237,
       "sha256": "ddc623444a172570b215881c1ca8e959ccd9e1d5969d7d74d61038ba6b3d5ae5",
       "manifestMatches": true,
-      "fullAcceptedFramesOnly": true
+      "fullFramesOnly": true,
+      "currentSourceHashesMatch": null
     },
     "C": {
       "dimensions": [
@@ -55,10 +57,11 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 219889,
-      "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece",
+      "bytes": 227040,
+      "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54",
       "manifestMatches": true,
-      "fullAcceptedFramesOnly": true
+      "fullFramesOnly": true,
+      "currentSourceHashesMatch": true
     },
     "D": {
       "dimensions": [
@@ -69,7 +72,8 @@
       "bytes": 140607,
       "sha256": "6b9e380c6e14a2a5daf14cbb8c1c76d43e033338987e4ef7ffaf849812c4644f",
       "manifestMatches": true,
-      "fullAcceptedFramesOnly": true
+      "fullFramesOnly": true,
+      "currentSourceHashesMatch": null
     }
   },
   "selectedAsset": {
@@ -79,8 +83,8 @@
       640
     ],
     "mode": "RGB",
-    "bytes": 219889,
-    "sha256": "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece",
+    "bytes": 227040,
+    "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54",
     "matchesCandidateC": true
   },
   "protectedPaths": [
@@ -100,7 +104,28 @@
     ".github",
     "VERSIONING.md"
   ],
-  "protectedChanges": [],
+  "protectedChanges": [
+    ".github/workflows/pr-correctness.yml",
+    "docs/assets/readme/figurestead-at-a-glance.png",
+    "docs/assets/readme/github-social-preview-candidate.png",
+    "docs/readme-review/asset-manifest.json",
+    "docs/readme-review/audit_readme.py",
+    "docs/readme-review/readme-audit.json",
+    "specimen-study/audit/corpus-v0.2-summary.json",
+    "specimen-study/evidence/corpus-v0.2/individual/circadian_phase_shift.png",
+    "specimen-study/evidence/corpus-v0.2/individual/dose_response_plate.png",
+    "specimen-study/evidence/corpus-v0.2/individual/gene_expression_recovery.png",
+    "specimen-study/evidence/corpus-v0.2/individual/habitat_class_response.png",
+    "specimen-study/evidence/corpus-v0.2/individual/instrument_calibration.png",
+    "specimen-study/evidence/corpus-v0.2/individual/lab_precision.png",
+    "specimen-study/evidence/corpus-v0.2/individual/paired_seasonal_distributions.png",
+    "specimen-study/evidence/corpus-v0.2/individual/particle_size_relationship.png",
+    "specimen-study/evidence/corpus-v0.2/individual/treatment_replicates.png",
+    "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
+    "specimen-study/evidence/corpus-v0.2/screenshots/chromium-montage-1920x1080.png",
+    "web/THIRD_PARTY_NOTICES.md"
+  ],
+  "unexpectedProtectedChanges": [],
   "localPathLeaks": [],
   "trackedOsArtifacts": [],
   "deploymentInvoked": false,

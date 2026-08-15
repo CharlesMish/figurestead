@@ -3,7 +3,7 @@
   "result": "PASS",
   "environment": {
     "python": "3.12.13",
-    "pillow": "12.2.0"
+    "pillow": "12.3.0"
   },
   "assets": {
     "figurestead-at-a-glance": {
@@ -14,8 +14,8 @@
           1080
         ],
         "mode": "RGB",
-        "bytes": 372952,
-        "sha256": "cdfbfcdf98dfd2f1949f6bea8df6c0b6875e70ca4eb55b1a5f0a543a72f3bef9"
+        "bytes": 374652,
+        "sha256": "9f6efe945f26e6074e83622a3e62f10bd1c5651f087742fb96e9c98f16c701e6"
       },
       "derivative": {
         "path": "docs/assets/readme/figurestead-at-a-glance.png",
@@ -24,8 +24,8 @@
           960
         ],
         "mode": "RGB",
-        "bytes": 375121,
-        "sha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6"
+        "bytes": 376587,
+        "sha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656"
       },
       "transform": {
         "type": "lossless-crop-and-png-optimization",
@@ -73,8 +73,8 @@
           960
         ],
         "mode": "RGB",
-        "bytes": 375121,
-        "sha256": "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6"
+        "bytes": 376587,
+        "sha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656"
       },
       "derivative": {
         "path": "docs/assets/readme/github-social-preview-candidate.png",
@@ -83,8 +83,8 @@
           640
         ],
         "mode": "RGB",
-        "bytes": 301881,
-        "sha256": "7bfa485b77033ae10fa1a8d43b6350ede6e9b24474ef38ad4de2c02e2105c05e"
+        "bytes": 303123,
+        "sha256": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969"
       },
       "transform": {
         "type": "lanczos-resize",
