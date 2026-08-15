@@ -8,11 +8,43 @@ The package root provides Figurestead's accepted core rendering and custom
 renderer-registry APIs. The complete temporal extension is available from
 `@figurestead/web/extensions/temporal`; it is intentionally not a root export.
 
+Repository HEAD also owns first-party declarations for the root and temporal
+surfaces. Import contract, controller, option, state, error, theme, and temporal
+types directly from those package entrypoints—no downstream declaration shim
+or shadow schema is needed. TypeScript provides structural guidance; runtime
+validation remains authoritative for semantic constraints such as finite data,
+ordered domains, canonical colors, and matching cardinalities.
+
 Rendering requires a complete normalized figure contract. The repository's
 [runnable browser first-success example](https://github.com/CharlesMish/figurestead/tree/main/examples/browser-first-success)
 defines every identifier and imports the package's corresponding source entry.
 From a repository checkout, run `python3 -m http.server 4173`, then open
 `http://127.0.0.1:4173/examples/browser-first-success/`.
+
+Curated theme packs are distributed from the canonical repository JSON rather
+than retyped as JavaScript constants. For example, in Node 24 and TypeScript:
+
+```ts
+import {
+  applyTheme,
+  resolveTheme,
+  type FiguresteadContract,
+} from "@figurestead/web";
+import slipwarePack from "@figurestead/web/themes/slipware" with { type: "json" };
+
+export function withSlipware(contract: FiguresteadContract): FiguresteadContract {
+  return applyTheme(contract, resolveTheme(slipwarePack, "slipware"));
+}
+```
+
+The same explicit subpath works through the tested Vite browser route. Other
+curated subpaths are `registration-ink`, `ultraviolet-laboratory`,
+`lavender-fog-notebook`, `midnight-transit-signal-slate`, and
+`deep-observatory-sage-core` under `@figurestead/web/themes/`.
+
+These declarations and curated-theme subpaths are prepared at repository HEAD
+for a future authorized npm release. This pass does not republish or alter the
+existing registry artifact `0.9.0-alpha.1`.
 
 Python and browser surfaces share normalized contract vocabulary and selected
 theme definitions. Shared semantics do not imply pixel-identical output or
