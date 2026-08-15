@@ -245,9 +245,12 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD:site)" = "c65d33a1a72ce18b8a756ac007f9117e6336f28d"
           test "$(git rev-parse HEAD:technical-showcase)" = "d14516a981cf4ed8bd0a9e9c756e3076086e92e3"
-          echo "e02f4fa84579740b2902035e97855767293c1ce24840fad170b5521c44bfbece  docs/assets/readme/github-social-preview.png" | sha256sum --check -
-          echo "f8ff7b5101ccf2cd4d9fdecdcfa455866adac7da34ab723aea021dc9cfd044f6  docs/assets/readme/figurestead-at-a-glance.png" | sha256sum --check -
+          echo "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54  docs/assets/readme/github-social-preview.png" | sha256sum --check -
+          echo "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656  docs/assets/readme/figurestead-at-a-glance.png" | sha256sum --check -
           echo "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c  docs/assets/readme/populated-categorical-response-matrix.png" | sha256sum --check -
+
+      - name: Verify current-HEAD outward visual evidence
+        run: python docs/current-head-visual-review/audit_refresh.py
 
       - name: Confirm package/site checks did not alter tracked source or evidence
         shell: bash
