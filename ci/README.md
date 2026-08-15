@@ -9,6 +9,7 @@ Canonical local entry points:
 ```sh
 npm ci --ignore-scripts
 npm test
+npm run test:npm-release-integrity
 python audit/current-head-hardening/test_scientific_geometry.py
 
 FIGURESTEAD_AUDIT_MODE=check \
@@ -57,3 +58,9 @@ regenerating screenshots on every pull request.
 `package.json` exact Playwright pin is the canonical tooling version; the check
 requires the lockfile's Playwright packages and both root/web third-party
 notices to agree with it.
+
+`npm run test:npm-release-integrity` exercises the retained-candidate verifier
+against deterministic valid and adversarial fixtures, then verifies every real
+versioned candidate under `release/npm/`. A zero-candidate repository is an
+explicit passing state: verifier regressions remain covered while publication
+stays unavailable until a candidate lands through protected review.

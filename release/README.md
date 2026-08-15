@@ -1,4 +1,10 @@
-# Figurestead Python registry workflow
+# Figurestead retained release artifacts
+
+Python artifacts and future npm candidates use separate retained-byte
+lifecycles. See [`npm/README.md`](npm/README.md) for the prospective npm
+candidate process; no original npm `0.9.0-alpha.1` candidate is present here.
+
+## Python registry workflow
 
 This directory binds the accepted `figurestead` Python alpha artifacts to a manually dispatched, OIDC-only TestPyPI/PyPI workflow. It never builds or repacks them.
 
