@@ -58,6 +58,9 @@ jobs:
       - name: Verify scientific geometry contracts
         run: python audit/current-head-hardening/test_scientific_geometry.py
 
+      - name: Verify direct Python plotting input boundary
+        run: python audit/current-head-hardening/test_python_plot_inputs.py
+
       - name: Verify deterministic specimen corpus
         env:
           FIGURESTEAD_AUDIT_OUTPUT_ROOT: ${{ runner.temp }}/corpus-audit
