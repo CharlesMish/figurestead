@@ -13,7 +13,7 @@ function appendTable(root, panel, description, { interactive = false } = {}) {
   details.append(summary, table); root.append(details);
 }
 
-export function createAccessibilityCompanion(canvas, contract, registry, { visible = false, table = true } = {}) {
+export function prepareAccessibilityCompanion(canvas, contract, registry, { visible = false, table = true } = {}) {
   const id = `figurestead-${Math.random().toString(36).slice(2)}`, root = el("section");
   root.className = visible ? "figurestead-accessibility" : "figurestead-accessibility figurestead-sr-only";
   if (!visible) Object.assign(root.style, { position: "absolute", width: "1px", height: "1px", padding: "0", margin: "-1px", overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: "0" });
@@ -36,6 +36,24 @@ export function createAccessibilityCompanion(canvas, contract, registry, { visib
     [["Horizontal axis", panel.spec.xLabel || panel.xScale.label || "Unlabelled"], ["Vertical axis", panel.spec.yLabel || panel.yScale.label || "Unlabelled"], ["Renderer", panel.renderer.replaceAll("_", " ")]].forEach(([term, value]) => dl.append(el("dt", term), el("dd", value)));
     section.append(dl); if (table) appendTable(section, panel, described, { interactive: visible }); root.append(section);
   });
-  canvas.setAttribute("role", "img"); canvas.setAttribute("aria-labelledby", `${title.id} ${description.id}`); canvas.after(root);
-  return { root, destroy() { root.remove(); canvas.removeAttribute("role"); canvas.removeAttribute("aria-labelledby"); } };
+  const labelledBy = `${title.id} ${description.id}`;
+  let attached = false;
+  return {
+    root,
+    attach() {
+      if (attached) return;
+      canvas.setAttribute("role", "img"); canvas.setAttribute("aria-labelledby", labelledBy); canvas.after(root); attached = true;
+    },
+    destroy() {
+      root.remove();
+      if (canvas.getAttribute("aria-labelledby") === labelledBy) { canvas.removeAttribute("role"); canvas.removeAttribute("aria-labelledby"); }
+      attached = false;
+    },
+  };
+}
+
+export function createAccessibilityCompanion(canvas, contract, registry, options) {
+  const companion = prepareAccessibilityCompanion(canvas, contract, registry, options);
+  companion.attach();
+  return companion;
 }

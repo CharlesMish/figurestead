@@ -5,7 +5,7 @@ import { prepareAtmosphere, drawAtmosphere } from "./atmosphere.js";
 import { drawBackground, drawFigureHeader } from "./marks.js";
 import { CORE_REGISTRY } from "./core-renderers.js";
 import { AnimationClock } from "./clock.js";
-import { createAccessibilityCompanion } from "./accessibility.js";
+import { createAccessibilityCompanion, prepareAccessibilityCompanion } from "./accessibility.js";
 import { drawPanelSurface, drawPresentationAnnotations } from "./presentation.js";
 import { compileFigureModel } from "./terminal-scene.js";
 import { isResolvedRenderer, resolveSceneFrame, resolveTerminalScene } from "./resolved-scene.js";
@@ -21,10 +21,12 @@ export function createFigurestead(canvas, input, options = {}) {
   const media = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)");
   const isReduced = () => reducedOverride == null ? Boolean(media?.matches) : Boolean(reducedOverride);
 
-  const prepare = () => {
-    const model = compileFigureModel(contract, { registry });
-    contract = model.contract; scene = model.scene; preparedPanels = model.preparedPanels; domains = model.domains;
-    atmosphere = contract.view.ambient === "matrix" ? prepareAtmosphere(contract.motion) : [];
+  const prepareModel = (candidate) => {
+    const model = compileFigureModel(candidate, { registry });
+    return { ...model, atmosphere: model.contract.view.ambient === "matrix" ? prepareAtmosphere(model.contract.motion) : [] };
+  };
+  const applyModel = (model) => {
+    contract = model.contract; scene = model.scene; preparedPanels = model.preparedPanels; domains = model.domains; atmosphere = model.atmosphere;
   };
   const layoutFactory = (width, height) => deriveFigureLayout(width, height, contract);
   const measuredText = (text, fontSize) => {
@@ -40,7 +42,7 @@ export function createFigurestead(canvas, input, options = {}) {
     surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
     resolvedScene = resolve();
     composedScene = composeResolvedScene(resolvedScene);
-    if (clock) draw(clock.progress);
+    if (clock) clock.render(clock.progress);
   };
   const draw = (progress) => {
     if (!surface || destroyed) return;
@@ -59,10 +61,10 @@ export function createFigurestead(canvas, input, options = {}) {
     options.onProgress?.(p);
   };
 
-  prepare(); surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
+  applyModel(prepareModel(input)); surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
   resolvedScene = resolve();
   composedScene = composeResolvedScene(resolvedScene);
-  clock = new AnimationClock({ durationMs: contract.motion.durationMs, draw, onState: options.onState });
+  clock = new AnimationClock({ durationMs: contract.motion.durationMs, draw, onState: options.onState, onError: options.onError });
   companion = createAccessibilityCompanion(canvas, contract, registry, options.accessibility);
   clock.render(isReduced() ? 1 : 0);
 
@@ -73,24 +75,29 @@ export function createFigurestead(canvas, input, options = {}) {
   }, { threshold: [.35] }) : null;
   if (options.autoplay !== false) { if (intersectionObserver) intersectionObserver.observe(canvas); else { autoplayUsed = true; isReduced() ? clock.settle() : clock.play(); } }
   const visibility = () => { if (document.hidden) { wasPlayingBeforeHidden = clock.playing; clock.pause(); } else if (wasPlayingBeforeHidden) { wasPlayingBeforeHidden = false; clock.play(); } };
-  const mediaChange = () => { if (reducedOverride == null) isReduced() ? clock.settle() : draw(clock.progress); };
+  const mediaChange = () => { if (reducedOverride == null) isReduced() ? clock.settle() : clock.render(clock.progress); };
   document.addEventListener("visibilitychange", visibility); media?.addEventListener?.("change", mediaChange);
 
   const replace = (next) => {
-    clock.pause(); contract = next; prepare(); clock.durationMs = contract.motion.durationMs;
+    const nextModel = prepareModel(next);
+    const nextResolvedScene = resolveTerminalScene(nextModel.scene, { width: surface.layout.width, height: surface.layout.height, measureText: measuredText });
+    const nextComposedScene = composeResolvedScene(nextResolvedScene);
+    const nextCompanion = prepareAccessibilityCompanion(canvas, nextModel.contract, registry, options.accessibility);
+    clock.pause();
+    applyModel(nextModel);
+    resolvedScene = nextResolvedScene; composedScene = nextComposedScene;
     surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
-    resolvedScene = resolve();
-    composedScene = composeResolvedScene(resolvedScene);
-    companion.destroy(); companion = createAccessibilityCompanion(canvas, contract, registry, options.accessibility); clock.settle();
+    clock.durationMs = contract.motion.durationMs; clock.resetFailure();
+    nextCompanion.attach(); companion.destroy(); companion = nextCompanion; clock.settle();
   };
   return Object.freeze({
     play() { if (isReduced()) clock.settle(); else clock.play(); }, pause() { clock.pause(); }, replay() { if (isReduced()) clock.settle(); else clock.replay(); },
     setData(data) { if (contract.panels.length !== 1) throw new TypeError("setData is available only for single-panel figures; use setConfig for multi-panel figures"); const next = cloneValue(contract); next.panels[0].data = cloneValue(data); replace(next); },
     setConfig(next) { replace(next); },
-    setReducedMotion(value) { if (value !== null && typeof value !== "boolean") throw new TypeError("reduced motion must be true, false, or null"); reducedOverride = value; isReduced() ? clock.settle() : draw(clock.progress); },
+    setReducedMotion(value) { if (value !== null && typeof value !== "boolean") throw new TypeError("reduced motion must be true, false, or null"); reducedOverride = value; isReduced() ? clock.settle() : clock.render(clock.progress); },
     resize,
     destroy() { if (destroyed) return; destroyed = true; clock.destroy(); resizeObserver?.disconnect(); intersectionObserver?.disconnect(); document.removeEventListener("visibilitychange", visibility); media?.removeEventListener?.("change", mediaChange); companion.destroy(); },
-    getState() { return { progress: clock.progress, playing: clock.playing, reducedMotion: isReduced(), renderers: contract.panels.map((panel) => panel.renderer), sceneVersion: scene.schemaVersion, resolvedSceneVersion: resolvedScene.schemaVersion, composedSceneVersion: composedScene.schemaVersion, profile: contract.view.profile, destroyed }; },
+    getState() { return { progress: clock.progress, playing: clock.playing, reducedMotion: isReduced(), runtimeFailed: clock.failed, renderers: contract.panels.map((panel) => panel.renderer), sceneVersion: scene.schemaVersion, resolvedSceneVersion: resolvedScene.schemaVersion, composedSceneVersion: composedScene.schemaVersion, profile: contract.view.profile, destroyed }; },
     getScene() { return scene; },
     getResolvedScene() { return resolvedScene; },
     getComposedScene() { return composedScene; },
