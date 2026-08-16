@@ -1,4 +1,5 @@
 import { deriveLayout } from "./layout.js";
+import { SCREEN_PROJECT_LEGIBILITY_FLOORS } from "./screen-legibility.js";
 
 const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
 
@@ -28,7 +29,7 @@ function deriveMultiPanelLayout(width, height, contract, columns, scale, outer, 
       width, height, scale, rect, panelIndex: index,
       plot: { left: rect.left + leftPad, right: rect.right - rightPad, top: rect.top + topPad, bottom: rect.bottom - bottomPad },
       text: { titleY: rect.top + clamp(19 * scale, 14, 24), subtitleY: rect.top + clamp(37 * scale, 28, 46), xLabelY: rect.bottom - 7 * scale, yLabelX: rect.left + 12 * scale },
-      font: { title: clamp(14 * scale, 11, 17), subtitle: clamp(10 * scale, 8, 12), axis: clamp(10.5 * scale, narrow ? 10 : 8, 12), legend: clamp(9.5 * scale, narrow ? 9.5 : 8, 11), signature: clamp(8.5 * scale, narrow ? 8 : 7, 10) },
+      font: { title: clamp(14 * scale, 11, 17), subtitle: clamp(10 * scale, 8, 12), axis: clamp(10.5 * scale, narrow ? 10 : 8, 12), legend: clamp(9.5 * scale, narrow ? 9.5 : 8, 11), signature: clamp(8.5 * scale, narrow ? SCREEN_PROJECT_LEGIBILITY_FLOORS.compactProvenancePx : 7, 10) },
       provenance: provenanceHeight ? { left: outer, right: width - outer, y: height - clamp(8 * scale, 7, 12) } : null,
     };
   });
@@ -36,7 +37,7 @@ function deriveMultiPanelLayout(width, height, contract, columns, scale, outer, 
     width, height, scale, panels,
     plot: { left: outer, right: width - outer, top: contentTop, bottom: contentBottom },
     header: { left: outer, titleY: clamp(30 * scale, 22, 38), subtitleY: clamp(53 * scale, 42, 66) },
-    font: { title: clamp(19 * scale, 14, 23), subtitle: clamp(11.5 * scale, 9, 14), axis: clamp(10.5 * scale, narrow ? 10 : 8, 12), legend: clamp(10 * scale, narrow ? 9.5 : 8, 12), signature: clamp(9 * scale, narrow ? 8 : 7, 10) },
+    font: { title: clamp(19 * scale, 14, 23), subtitle: clamp(11.5 * scale, 9, 14), axis: clamp(10.5 * scale, narrow ? 10 : 8, 12), legend: clamp(10 * scale, narrow ? 9.5 : 8, 12), signature: clamp(9 * scale, narrow ? SCREEN_PROJECT_LEGIBILITY_FLOORS.compactProvenancePx : 7, 10) },
     provenance: provenanceHeight ? { left: outer, right: width - outer, y: height - clamp(8 * scale, 7, 12) } : null,
   };
 }

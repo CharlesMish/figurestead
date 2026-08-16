@@ -1,4 +1,5 @@
 import { colorContrast, hexToOklab, resolveContrastColor } from "./color-space.js";
+import { resolveScreenTheme } from "./screen-legibility.js";
 
 export const PAPER_PROFILE_VERSION = "figurestead.paper-profile/1";
 export const PAPER_FLOORS = Object.freeze({ text: 4.5, evidence: 3, thinEvidenceTarget: 4, pairwiseLightness: 0.1, identityWarning: 0.12 });
@@ -72,7 +73,10 @@ export function resolvePaperTheme(source) {
 export function themeResolutionForProfile(source, profile = "atlas") {
   const key = typeof profile === "string" ? profile : profile?.key;
   const clone = (value) => JSON.parse(JSON.stringify(value));
-  if (key !== "paper") return Object.freeze({ theme: clone(source), report: null });
+  if (key !== "paper") {
+    if (source.mode === "paper") return Object.freeze({ theme: clone(source), report: null });
+    return resolveScreenTheme(clone(source));
+  }
   if (source.mode === "paper") return Object.freeze({ theme: clone(source), report: auditPaperTheme(source) });
   return resolvePaperTheme(source);
 }
