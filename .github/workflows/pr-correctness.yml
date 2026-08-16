@@ -176,6 +176,10 @@ jobs:
         run: node audit/compact-layout/run-compact-layout-audit.cjs after
 
       - name: Verify study-only responsive-header evidence
+        env:
+          # Exact browser text bounds are platform-font evidence. CI protects the
+          # policy invariants; accepted macOS evidence is compared locally.
+          FIGURESTEAD_HEADER_STUDY_COMPARE_EVIDENCE: "0"
         run: npm run test:responsive-header-study
 
       - name: Verify specimen rendering

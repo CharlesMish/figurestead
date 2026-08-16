@@ -3,6 +3,7 @@ const path = require("node:path");
 const { chromium, firefox } = require("playwright");
 
 const mode = process.env.FIGURESTEAD_AUDIT_MODE || "check";
+const compareAcceptedEvidence = process.env.FIGURESTEAD_HEADER_STUDY_COMPARE_EVIDENCE !== "0";
 const baseUrl = process.env.FIGURESTEAD_HEADER_STUDY_URL || "http://127.0.0.1:4179/audit/responsive-header-study/";
 const outputRoot = process.env.FIGURESTEAD_HEADER_STUDY_OUTPUT_ROOT || path.join(__dirname, "evidence");
 const engines = { chromium, firefox };
@@ -59,10 +60,10 @@ function stable(value) {
   const json = `${JSON.stringify(payload, null, 2)}\n`;
   const target = path.join(outputRoot, "metrics.json");
   if (mode === "write") fs.writeFileSync(target, json);
-  else {
+  else if (compareAcceptedEvidence) {
     if (!fs.existsSync(target)) throw new Error(`missing accepted study evidence ${target}; run with FIGURESTEAD_AUDIT_MODE=write`);
     if (fs.readFileSync(target, "utf8") !== json) throw new Error("responsive-header study metrics diverged from accepted evidence");
   }
   if (records.length !== 6 || assertions !== 54) throw new Error(`expected 6 browser cases / 54 assertions, observed ${records.length} / ${assertions}`);
-  console.log(JSON.stringify({ suite: "responsive-header-feasibility", mode, browserCaseCount: records.length, assertionCount: assertions, result: "PASS", outputRoot }, null, 2));
+  console.log(JSON.stringify({ suite: "responsive-header-feasibility", mode, compareAcceptedEvidence, browserCaseCount: records.length, assertionCount: assertions, result: "PASS", outputRoot }, null, 2));
 })().catch((error) => { console.error(error); process.exitCode = 1; });

@@ -32,6 +32,12 @@ Run in comparison mode:
 node audit/responsive-header-study/run-study.cjs
 ```
 
+That exact comparison is intentionally tied to the recorded macOS browser/font
+environment. Cross-platform PR CI sets
+`FIGURESTEAD_HEADER_STUDY_COMPARE_EVIDENCE=0` and reruns the same 54 policy and
+scope assertions without pretending Linux font metrics must reproduce macOS
+text bounds byte-for-byte.
+
 Regeneration is intentional-only:
 
 ```sh
