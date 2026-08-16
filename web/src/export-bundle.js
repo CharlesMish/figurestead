@@ -6,7 +6,7 @@ import { compileTerminalScene, evidenceFingerprint } from "./terminal-scene.js";
 import { auditPhysicalTypography, resolveExportSize } from "./physical-export.js";
 
 export const EXPORT_MANIFEST_VERSION = "figurestead.export-manifest/1";
-export const FIGURESTEAD_PACKAGE_VERSION = "0.9.0-alpha.1";
+export const FIGURESTEAD_PACKAGE_VERSION = "0.9.0-alpha.2";
 
 function sorted(value) {
   if (Array.isArray(value)) return value.map(sorted);

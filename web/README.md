@@ -1,7 +1,7 @@
 # @figurestead/web experimental public alpha
 
 ```sh
-npm install @figurestead/web@0.9.0-alpha.1
+npm install @figurestead/web@0.9.0-alpha.2
 ```
 
 The package root provides Figurestead's accepted core rendering and custom
@@ -124,4 +124,4 @@ preferred height is never inferred as the next baseline by Figurestead.
 Height negotiation applies only to live Canvas rendering. SVG, paper, and
 explicitly dimensioned exports retain their requested dimensions.
 
-Version 0.9.0-alpha.1. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
+Version 0.9.0-alpha.2. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
