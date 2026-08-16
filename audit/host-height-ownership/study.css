@@ -1,0 +1,20 @@
+:root { color-scheme: light; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; background: #e9e4dc; color: #25211e; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 28px; }
+main { width: max-content; max-width: 100%; margin: 0 auto; }
+.study-heading { max-width: 1040px; margin: 0 0 22px; }
+.study-heading p { margin: 0 0 5px; color: #665f58; font-size: 12px; }
+.study-heading h1 { margin: 0 0 7px; font: 500 31px/1.05 Georgia, "Times New Roman", serif; }
+.visual-grid { display: grid; grid-template-columns: repeat(3, max-content); gap: 16px; align-items: start; }
+.study-card { width: 344px; margin: 0; padding: 10px; border: 1px solid #bdb5aa; background: #f8f4ed; box-shadow: 0 2px 8px rgb(40 31 23 / 8%); }
+.study-card > header { min-height: 31px; margin-bottom: 7px; }
+.study-card h2 { margin: 0; font: 600 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.study-card header p, .study-card figcaption { margin: 3px 0 0; color: #6d655d; font-size: 9px; line-height: 1.35; }
+.study-card img { display: block; width: 320px; height: auto; background: #fff; }
+.study-card figcaption { width: 320px; }
+.study-host { position: absolute; left: -10000px; top: 0; contain: layout style; }
+.study-host canvas { display: block; width: 100%; max-width: none; }
+.study-host.flex-grid { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; min-width: 0; }
+.study-host.flex-grid .sizing-target { display: flex; min-width: 0; align-items: stretch; }
+.study-host.flex-grid canvas { flex: 1 1 auto; min-width: 0; }
+@media (max-width: 1120px) { .visual-grid { grid-template-columns: repeat(2, max-content); } }
