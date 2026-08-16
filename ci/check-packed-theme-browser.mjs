@@ -49,10 +49,15 @@ try {
           ready: document.documentElement.dataset.packageThemeReady,
           theme: document.documentElement.dataset.theme,
           renderers: document.documentElement.dataset.renderers,
+          heightNegotiation: JSON.parse(document.documentElement.dataset.heightNegotiation ?? "null"),
           nonTransparent,
         };
       });
-      if (JSON.stringify(evidence) !== JSON.stringify({ ready: "true", theme: "slipware", renderers: "line", nonTransparent: true })) {
+      const expectedIdentity = { ready: "true", theme: "slipware", renderers: "line", nonTransparent: true };
+      for (const [key, value] of Object.entries(expectedIdentity)) {
+        if (evidence[key] !== value) throw new Error(`${engine}: unexpected packed theme evidence ${JSON.stringify(evidence)}`);
+      }
+      if (evidence.heightNegotiation?.baselineHeight !== 196 || evidence.heightNegotiation.preferredHeight <= 196 || evidence.heightNegotiation.width !== 320) {
         throw new Error(`${engine}: unexpected packed theme evidence ${JSON.stringify(evidence)}`);
       }
       if (errors.length) throw new Error(`${engine}: runtime errors: ${errors.join("; ")}`);
@@ -62,7 +67,7 @@ try {
     }
   }
   if (results.length !== 2) throw new Error(`expected 2 packed-theme browser cases, executed ${results.length}`);
-  console.log(JSON.stringify({ suite: "npm-packed-theme-browser", expectedCaseCount: 2, executedCaseCount: results.length, result: "PASS", results }, null, 2));
+  console.log(JSON.stringify({ suite: "npm-packed-theme-browser", expectedCaseCount: 2, executedCaseCount: results.length, hostHeightNegotiationCases: results.length, result: "PASS", results }, null, 2));
 } finally {
   await server?.close();
   fs.rmSync(temporaryRoot, { recursive: true, force: true });

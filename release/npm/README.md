@@ -4,12 +4,19 @@ This directory defines the prospective retained-candidate lifecycle for future
 `@figurestead/web` releases. It begins after `0.9.0-alpha.1`; it does not claim
 that the already-published alpha used this repaired process.
 
-## Safe current state
+## Current retained state
 
-No versioned npm candidate is retained at current HEAD. Publication is therefore
-unavailable. Do not run `npm pack` today and label the result as the historical
-`0.9.0-alpha.1` candidate: the original reviewed pre-publication bytes were not
-retained and cannot be reconstructed with honest provenance.
+The first prospective-lifecycle candidate is retained at
+`release/npm/0.9.0-alpha.2/`. Its exact tarball bytes were packed once from the
+accepted alpha.2 source commit
+`da6755b23e1b2533c85d75b4960fdd419a0f3b64` and are awaiting independent
+artifact audit.
+Retention is not publication approval: no npm publish, tag, release, or
+deployment is implied by this directory.
+
+Do not label any current pack as the historical `0.9.0-alpha.1` candidate: the
+original reviewed pre-publication bytes were not retained and cannot be
+reconstructed with honest provenance.
 
 The public registry artifact for `@figurestead/web@0.9.0-alpha.1` was downloaded
 read-only on 2026-08-14 and had SHA-256
@@ -69,9 +76,10 @@ to match them.
 8. After publication, compare the registry download back to the same approved
    SHA-256.
 
-`verify-all-candidates.mjs` verifies every future versioned directory in PR CI.
-Zero versioned directories is an explicit passing state for current HEAD, while
-any added or modified candidate must pass the complete verifier.
+`verify-all-candidates.mjs` verifies every versioned directory in PR CI. An
+absence of versioned directories was an explicit safe passing state before the
+first candidate; every retained candidate now present must pass the complete
+verifier.
 
 ## Trust boundary
 
