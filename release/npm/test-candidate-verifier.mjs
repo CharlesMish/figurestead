@@ -18,10 +18,13 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { CURATED_THEME_PACKAGES } from "../../web/scripts/curated-themes.mjs";
 
 const VERSION = "1.2.3-alpha.4";
 const BASENAME = `figurestead-web-${VERSION}.tgz`;
 const HERE = path.dirname(fileURLToPath(import.meta.url));
+const REPOSITORY_ROOT = path.resolve(HERE, "../..");
+const CANONICAL_THEME_ROOT = path.join(REPOSITORY_ROOT, "src", "figurestead", "themes");
 const VERIFIER = path.join(HERE, "verify-candidate.mjs");
 const TEMP = mkdtempSync(path.join(os.tmpdir(), "figurestead-npm-verifier-tests-"));
 const NPM_ENVIRONMENT = { ...process.env, npm_config_cache: path.join(TEMP, ".npm-cache") };
@@ -30,12 +33,23 @@ function sha256(candidate) {
   return createHash("sha256").update(readFileSync(candidate)).digest("hex");
 }
 
-function createCandidate(root, { packageName = "@figurestead/web", packageVersion = VERSION } = {}) {
+function createCandidate(root, {
+  packageName = "@figurestead/web",
+  packageVersion = VERSION,
+  omitThemeExport = null,
+  omitThemeFile = null,
+  mutateThemeFile = null,
+} = {}) {
   const source = path.join(root, "source");
   const releaseRoot = path.join(root, "release", "npm");
   const dist = path.join(releaseRoot, VERSION, "dist");
   mkdirSync(path.join(source, "src", "extensions", "temporal"), { recursive: true });
+  mkdirSync(path.join(source, "types", "extensions"), { recursive: true });
+  mkdirSync(path.join(source, "themes"), { recursive: true });
   mkdirSync(dist, { recursive: true });
+  const themeExports = Object.fromEntries(CURATED_THEME_PACKAGES
+    .filter(({ filename }) => filename !== omitThemeExport)
+    .map(({ subpath, filename }) => [subpath, { types: "./types/theme-json.d.ts", default: `./themes/${filename}` }]));
   writeFileSync(path.join(source, "package.json"), JSON.stringify({
     name: packageName,
     version: packageVersion,
@@ -43,14 +57,29 @@ function createCandidate(root, { packageName = "@figurestead/web", packageVersio
     type: "module",
     license: "MIT",
     repository: { type: "git", url: "git+https://github.com/CharlesMish/figurestead.git", directory: "web" },
-    exports: { ".": "./src/index.js", "./extensions/temporal": "./src/extensions/temporal/index.js" },
-    files: ["src"],
+    types: "./types/index.d.ts",
+    exports: {
+      ".": { types: "./types/index.d.ts", import: "./src/index.js" },
+      "./extensions/temporal": { types: "./types/extensions/temporal.d.ts", import: "./src/extensions/temporal/index.js" },
+      ...themeExports,
+    },
+    files: ["src", "types", "themes"],
   }, null, 2) + "\n");
   writeFileSync(path.join(source, "src", "index.js"), [
     `export const FIGURESTEAD_PACKAGE_VERSION = ${JSON.stringify(packageVersion)};`,
     "export function exportFigureSvg() { return '<svg/>'; }",
+    "export function validateThemePack(pack) { if (pack?.schemaVersion !== 'figurestead.theme-pack/1') throw new TypeError('invalid theme pack'); return pack; }",
     "",
   ].join("\n"));
+  writeFileSync(path.join(source, "types", "index.d.ts"), "export declare const FIGURESTEAD_PACKAGE_VERSION: string;\n");
+  writeFileSync(path.join(source, "types", "extensions", "temporal.d.ts"), "export declare const TEMPORAL_RENDERERS: readonly unknown[];\n");
+  writeFileSync(path.join(source, "types", "theme-json.d.ts"), "declare const pack: unknown; export default pack;\n");
+  CURATED_THEME_PACKAGES.forEach(({ filename }) => {
+    if (filename === omitThemeFile) return;
+    const destination = path.join(source, "themes", filename);
+    cpSync(path.join(CANONICAL_THEME_ROOT, filename), destination);
+    if (filename === mutateThemeFile) appendFileSync(destination, "\n");
+  });
   writeFileSync(path.join(source, "src", "extensions", "temporal", "index.js"), [
     "export const TEMPORAL_RENDERERS = [",
     "  { key: 'temporal_coverage' },",
@@ -202,10 +231,25 @@ try {
     runVerifier({ ...fixture, expectedSha256: valid.digest }, /must not contain symlinks/);
   });
 
-  assert.equal(cases.length, 15, "expected exactly 15 npm candidate integrity cases");
+  test("missing curated theme export", () => {
+    const fixture = createCandidate(path.join(TEMP, "missing-theme-export"), { omitThemeExport: "slipware.json" });
+    runVerifier(fixture, /public package export subpaths differ/);
+  });
+
+  test("missing curated theme member", () => {
+    const fixture = createCandidate(path.join(TEMP, "missing-theme-member"), { omitThemeFile: "slipware.json" });
+    runVerifier(fixture, /curated theme member is missing/);
+  });
+
+  test("curated theme bytes differ from canonical authority", () => {
+    const fixture = createCandidate(path.join(TEMP, "mutated-theme"), { mutateThemeFile: "slipware.json" });
+    runVerifier(fixture, /curated theme bytes differ from canonical authority/);
+  });
+
+  assert.equal(cases.length, 18, "expected exactly 18 npm candidate integrity cases");
   console.log(JSON.stringify({
     suite: "npm-candidate-integrity",
-    expectedCaseCount: 15,
+    expectedCaseCount: 18,
     executedCaseCount: cases.length,
     result: "PASS",
     cases,

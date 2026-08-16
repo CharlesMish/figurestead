@@ -15,6 +15,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { CURATED_THEME_PACKAGES } from "../../web/scripts/curated-themes.mjs";
 
 const PACKAGE_NAME = "@figurestead/web";
 const REPOSITORY_URL = "git+https://github.com/CharlesMish/figurestead.git";
@@ -22,6 +23,10 @@ const VERSION_PATTERN = /^[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?$/;
 const SHA256_PATTERN = /^[0-9a-f]{64}$/;
 const SCRIPT_ROOT = path.dirname(fileURLToPath(import.meta.url));
 const REPOSITORY_ROOT = path.resolve(SCRIPT_ROOT, "../..");
+const CANONICAL_THEME_ROOT = path.join(REPOSITORY_ROOT, "src", "figurestead", "themes");
+const ROOT_EXPORT = Object.freeze({ types: "./types/index.d.ts", import: "./src/index.js" });
+const TEMPORAL_EXPORT = Object.freeze({ types: "./types/extensions/temporal.d.ts", import: "./src/extensions/temporal/index.js" });
+const THEME_TYPES = "./types/theme-json.d.ts";
 
 function fail(message) {
   throw new Error(`npm candidate preflight: ${message}`);
@@ -81,6 +86,17 @@ function sha256(candidate) {
   return createHash("sha256").update(readFileSync(candidate)).digest("hex");
 }
 
+function requireExactExport(packageJson, subpath, expected) {
+  const observed = packageJson.exports?.[subpath];
+  if (
+    !observed
+    || typeof observed !== "object"
+    || Array.isArray(observed)
+    || JSON.stringify(Object.keys(observed).sort()) !== JSON.stringify(Object.keys(expected).sort())
+    || Object.entries(expected).some(([condition, target]) => observed[condition] !== target)
+  ) fail(`${subpath === "." ? "root package" : subpath} export differs`);
+}
+
 function inspectTarball(candidate, version) {
   let members;
   try {
@@ -113,11 +129,36 @@ function inspectTarball(candidate, version) {
   if (packageJson.private !== false) fail("package private disposition must be false");
   if (packageJson.license !== "MIT") fail("package license must be MIT");
   if (packageJson.repository?.url !== REPOSITORY_URL) fail("package repository URL differs");
-  if (packageJson.exports?.["."] !== "./src/index.js") fail("root package export differs");
-  if (packageJson.exports?.["./extensions/temporal"] !== "./src/extensions/temporal/index.js") {
-    fail("temporal extension export differs");
+  if (packageJson.types !== ROOT_EXPORT.types) fail("top-level package types target differs");
+  const expectedExportKeys = [
+    ".",
+    "./extensions/temporal",
+    ...CURATED_THEME_PACKAGES.map(({ subpath }) => subpath),
+  ];
+  const observedExportKeys = Object.keys(packageJson.exports ?? {}).sort();
+  if (JSON.stringify(observedExportKeys) !== JSON.stringify([...expectedExportKeys].sort())) {
+    fail("public package export subpaths differ");
   }
-  return packageJson;
+  requireExactExport(packageJson, ".", ROOT_EXPORT);
+  requireExactExport(packageJson, "./extensions/temporal", TEMPORAL_EXPORT);
+  for (const member of [
+    "package/src/index.js",
+    "package/types/index.d.ts",
+    "package/src/extensions/temporal/index.js",
+    "package/types/extensions/temporal.d.ts",
+    "package/types/theme-json.d.ts",
+  ]) {
+    if (!members.includes(member)) fail(`public export target is missing: ${member}`);
+  }
+  for (const { subpath, filename } of CURATED_THEME_PACKAGES) {
+    requireExactExport(packageJson, subpath, { types: THEME_TYPES, default: `./themes/${filename}` });
+    const member = `package/themes/${filename}`;
+    if (!members.includes(member)) fail(`curated theme member is missing: ${member}`);
+    const delivered = execFileSync("tar", ["-xOf", candidate, member]);
+    const authoritative = readFileSync(path.join(CANONICAL_THEME_ROOT, filename));
+    if (!delivered.equals(authoritative)) fail(`curated theme bytes differ from canonical authority: ${filename}`);
+  }
+  return { packageJson, themeCount: CURATED_THEME_PACKAGES.length };
 }
 
 function smokeInstalledCandidate(candidate, version) {
@@ -182,12 +223,12 @@ export function verifyCandidate({ version, expectedSha256, releaseRoot }) {
   const actualSha256 = sha256(candidate);
   if (actualSha256 !== expectedSha256) fail("actual exact candidate tarball SHA-256 does not equal approved SHA-256");
 
-  const packageJson = inspectTarball(candidate, version);
+  const inspection = inspectTarball(candidate, version);
   smokeInstalledCandidate(candidate, version);
   return {
     schemaVersion: "figurestead.npm-retained-candidate-verification/1",
     result: "PASS",
-    package: { name: packageJson.name, version: packageJson.version },
+    package: { name: inspection.packageJson.name, version: inspection.packageJson.version },
     candidate: {
       path: path.relative(process.cwd(), candidate) || candidate,
       basename,
@@ -201,7 +242,9 @@ export function verifyCandidate({ version, expectedSha256, releaseRoot }) {
       canonicalManifestRecord: true,
       approvedDigestDirectlyMatchesCandidateBytes: true,
       packageIdentity: true,
-      rootAndTemporalImports: true,
+      exactConditionalExportSurface: true,
+      canonicalCuratedThemeBytes: inspection.themeCount,
+      rootTemporalAndCuratedThemeImports: true,
     },
   };
 }

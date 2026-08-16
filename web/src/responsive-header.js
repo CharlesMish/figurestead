@@ -21,14 +21,20 @@ function wrap(text, maximumWidth, maximumLines, measure) {
   const words = String(text).trim().split(/\s+/).filter(Boolean);
   if (!words.length) return { lines: [], complete: true };
   const lines = [];
+  let truncated = false;
   let cursor = 0;
   while (cursor < words.length && lines.length < maximumLines) {
     let line = words[cursor++];
+    if (measure(line).width > maximumWidth) {
+      lines.push(ellipsis(line, maximumWidth, measure).lines[0]);
+      truncated = true;
+      continue;
+    }
     while (cursor < words.length && measure(`${line} ${words[cursor]}`).width <= maximumWidth) line += ` ${words[cursor++]}`;
     lines.push(line);
   }
-  const complete = cursor === words.length;
-  if (!complete) lines[lines.length - 1] = ellipsis(`${lines.at(-1)} ${words.slice(cursor).join(" ")}`, maximumWidth, measure).lines[0];
+  const complete = cursor === words.length && !truncated;
+  if (cursor < words.length) lines[lines.length - 1] = ellipsis(`${lines.at(-1)} ${words.slice(cursor).join(" ")}`, maximumWidth, measure).lines[0];
   return { lines, complete };
 }
 

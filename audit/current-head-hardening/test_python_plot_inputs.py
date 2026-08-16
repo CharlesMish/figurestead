@@ -234,6 +234,71 @@ class PythonPlotInputRegression(unittest.TestCase):
                 with self.subTest(value=value, path=path):
                     self.assert_rejected_before_allocation(invoke, rf"{path}: must contain only finite numbers")
 
+    def test_line_rejects_masked_values_before_allocation(self) -> None:
+        values = np.ma.masked_equal(np.array([12.4, -999.0, 13.1]), -999.0)
+        self.assert_rejected_before_allocation(
+            lambda: line(np.arange(3), values),
+            r"line\.ys: masked arrays are not currently supported \(1 masked entry\)",
+        )
+
+    def test_scatter_rejects_masked_x_before_allocation(self) -> None:
+        values = np.ma.masked_equal(np.array([12.4, -999.0, 13.1]), -999.0)
+        self.assert_rejected_before_allocation(
+            lambda: scatter(values, np.arange(3)),
+            r"scatter\.x: masked arrays are not currently supported \(1 masked entry\)",
+        )
+
+    def test_scatter_rejects_masked_y_before_allocation(self) -> None:
+        values = np.ma.masked_equal(np.array([12.4, -999.0, 13.1]), -999.0)
+        self.assert_rejected_before_allocation(
+            lambda: scatter(np.arange(3), values),
+            r"scatter\.y: masked arrays are not currently supported \(1 masked entry\)",
+        )
+
+    def test_histogram_rejects_masked_data_before_allocation(self) -> None:
+        values = np.ma.masked_equal(np.array([12.4, -999.0, 13.1]), -999.0)
+        self.assert_rejected_before_allocation(
+            lambda: histogram(values),
+            r"histogram\.values: masked arrays are not currently supported \(1 masked entry\)",
+        )
+
+    def test_strip_rejects_masked_values_before_allocation(self) -> None:
+        values = np.ma.masked_equal(np.array([12.4, -999.0, 13.1]), -999.0)
+        self.assert_rejected_before_allocation(
+            lambda: strip_summary(["a", "a", "b"], values),
+            r"strip_summary\.values: masked arrays are not currently supported \(1 masked entry\)",
+        )
+
+    def test_heatmap_rejects_masked_matrix_before_allocation(self) -> None:
+        values = np.ma.masked_equal(np.array([[12.4, -999.0], [13.1, 12.9]]), -999.0)
+        self.assert_rejected_before_allocation(
+            lambda: heatmap(values),
+            r"heatmap\.matrix: masked arrays are not currently supported \(1 masked entry\)",
+        )
+
+    def test_fully_unmasked_masked_array_is_rejected_consistently(self) -> None:
+        values = np.ma.array([12.4, 13.1, 12.9], mask=False)
+        self.assert_rejected_before_allocation(
+            lambda: histogram(values),
+            r"histogram\.values: masked arrays are not currently supported \(0 masked entries\)",
+        )
+
+    def test_nested_masked_array_cannot_be_stripped_by_outer_normalization(self) -> None:
+        values = [np.ma.masked_equal(np.array([12.4, -999.0]), -999.0), np.array([13.1, 12.9])]
+        self.assert_rejected_before_allocation(
+            lambda: line(np.arange(2), values),
+            r"line\.ys: masked arrays are not currently supported \(1 masked entry\)",
+        )
+
+    def test_ordinary_ndarray_and_later_render_succeed_after_mask_rejection(self) -> None:
+        masked = np.ma.masked_equal(np.array([12.4, -999.0, 13.1]), -999.0)
+        self.assert_rejected_before_allocation(
+            lambda: line(np.arange(3), masked), r"line\.ys: masked arrays"
+        )
+        fig, ax = line(np.arange(3), np.array([12.4, 13.1, 12.9]))
+        self.assertEqual(list(ax.lines[0].get_ydata()), [12.4, 13.1, 12.9])
+        plt.close(fig)
+
     def test_numeric_category_nonfinite_is_rejected(self) -> None:
         self.assert_rejected_before_allocation(
             lambda: strip_summary([1, math.nan], [1, 2]),
@@ -267,6 +332,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 37:
-        raise SystemExit(f"expected exactly 37 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 46:
+        raise SystemExit(f"expected exactly 46 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)

@@ -3,7 +3,7 @@ const { chromium, firefox } = require("playwright");
 
 const specimenUrl = process.env.FIGURESTEAD_SPECIMEN_URL || "http://127.0.0.1:4179/specimen-study/";
 const engines = { chromium, firefox };
-  const expectedCasesPerEngine = 44;
+  const expectedCasesPerEngine = 45;
 
 (async () => {
   const results = [];
@@ -63,6 +63,17 @@ const engines = { chromium, firefox };
         check(defaultHost.canvas.getAttribute("style") === defaultHost.initialStyle, "default preserves host CSS");
         check(companionText(defaultHost).includes(longTitle) && companionText(defaultHost).includes(longSubtitle), "default accessibility strings remain complete");
         remove(defaultHost, defaultController);
+
+        const overwideToken = "BishopCreekWatershedStationIdentifier_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789";
+        const overwideHost = makeHost({ width: 362 });
+        const overwideController = createFigurestead(overwideHost.canvas, contractFor(overwideToken, shortSubtitle), { autoplay: false, reducedMotion: true, registry: study.registry, dprCap: 1 });
+        await settle();
+        const overwideHeader = header(overwideController), overwidePanel = overwideController.getResolvedScene().panels[0];
+        const overwideContext = overwideHost.canvas.getContext("2d");
+        overwideContext.font = `500 ${overwidePanel.layout.font.title}px ui-monospace`;
+        const overwideMaximum = overwidePanel.layout.plot.right - overwidePanel.layout.plot.left;
+        check(!overwideHeader.title.complete && overwideHeader.title.lines.every((line) => overwideContext.measureText(line).width <= overwideMaximum + 0.01) && overwideHeader.title.lines.at(-1).endsWith("…") && companionText(overwideHost).includes(overwideToken), "over-wide unbreakable token is visually ellipsized and remains accessible");
+        remove(overwideHost, overwideController);
 
         async function negotiatedMount({ application = "immediate", kind = "fixed", requestImpl = null, baseline = 196, errors = [] } = {}) {
           const host = makeHost({ kind, height: baseline });
