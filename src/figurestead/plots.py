@@ -31,6 +31,13 @@ def _input_error(path: str, message: str) -> ValueError:
 
 
 def _array(value, *, path: str) -> np.ndarray:
+    if np.ma.isMaskedArray(value):
+        masked_count = int(np.ma.count_masked(value))
+        noun = "entry" if masked_count == 1 else "entries"
+        raise _input_error(
+            path,
+            f"masked arrays are not currently supported ({masked_count} masked {noun})",
+        )
     try:
         return np.asarray(value)
     except (TypeError, ValueError) as exc:
