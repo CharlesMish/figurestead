@@ -5,6 +5,7 @@ import { composeResolvedScene } from "./composition.js";
 import { partitionPanelMarks, plotClipRect } from "./render-layers.js";
 import { resolveExportSize } from "./physical-export.js";
 import { validateThemeColors } from "./schema.js";
+import { fixedResponsiveHeader, RESPONSIVE_HEADER_MAX_WIDTH } from "./responsive-header.js";
 
 const xmlValue = (value) => String(value).replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/gu, "\uFFFD");
 const esc = (value) => xmlValue(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[char]));
@@ -185,7 +186,17 @@ function matrixLegend(panel, theme, namespace) {
   return `<defs><linearGradient id="${esc(id)}"><stop offset="0%" stop-color="${esc(style.low)}"/><stop offset="68%" stop-color="${esc(style.color)}"/><stop offset="100%" stop-color="${esc(style.high)}"/></linearGradient></defs><text ${attrs({ x: left, y: top - 3 * panel.layout.scale, fill: theme.label, "font-size": panel.layout.font.legend })}>${esc(panel.valueScale.label)}</text><rect ${attrs({ x: left, y: top, width, height, fill: `url(#${id})`, stroke: theme.spine })}/><text ${attrs({ x: left, y: top + height + 12 * panel.layout.scale, fill: theme.secondary, "font-size": panel.layout.font.legend })}>${esc(panel.valueScale.domain[0])}</text><text ${attrs({ x: left + width, y: top + height + 12 * panel.layout.scale, fill: theme.secondary, "font-size": panel.layout.font.legend, "text-anchor": "end" })}>${esc(panel.valueScale.domain[1])}</text>`;
 }
 
-function panelSvg(panel, theme, profile, namespace) {
+function panelHeaderSvg(panel, theme, responsive) {
+  const titleFill = theme.mode === "paper" ? theme.label : theme.primary;
+  if (!responsive) {
+    return `<text ${attrs({ x: panel.layout.plot.left, y: panel.layout.text?.titleY ?? panel.layout.rect.top + 20, fill: titleFill, "font-size": panel.layout.font.title })}>${esc(panel.spec.title || panel.renderer)}</text>`;
+  }
+  const title = `<text ${attrs({ fill: titleFill, "font-size": panel.layout.font.title, "data-header-part": "title", "data-full-text": panel.spec.title || panel.renderer })}>${responsive.title.lines.map((line, index) => `<tspan ${attrs({ x: panel.layout.plot.left, y: responsive.title.baselines[index] })}>${esc(line)}</tspan>`).join("")}</text>`;
+  const subtitle = panel.spec.subtitle ? `<text ${attrs({ fill: theme.secondary, "font-size": panel.layout.font.subtitle, "font-style": "italic", "data-header-part": "subtitle", "data-full-text": panel.spec.subtitle })}>${responsive.subtitle.lines.map((line, index) => `<tspan ${attrs({ x: panel.layout.plot.left, y: responsive.subtitle.baselines[index] })}>${esc(line)}</tspan>`).join("")}</text>` : "";
+  return `<g ${attrs({ "data-responsive-header": responsive.policy })}>${title}${subtitle}</g>`;
+}
+
+function panelSvg(panel, theme, profile, namespace, responsive = null) {
   if (!panel.resolved) throw new TypeError(`SVG export requires a scene-aware renderer; ${panel.renderer} remains on the compatibility path`);
   const render = (mark) => mark.kind === "point" ? marker(mark)
     : ["segment", "summary-line"].includes(mark.kind) ? segment(mark)
@@ -206,7 +217,7 @@ function panelSvg(panel, theme, profile, namespace) {
     : mark.kind === "baseline-rule" ? baselineLabel(mark, panel)
       : mark.kind === "temporal-bar" ? temporalBarLabel(mark, panel, theme) : "").join("");
   const denominator = panel.meta?.denominator ? `<text ${attrs({ x: panel.layout.plot.right, y: panel.layout.plot.top - 5 * panel.layout.scale, fill: theme.warm, "font-size": panel.layout.font.signature, "text-anchor": "end" })}>${esc(`${panel.meta.denominator.label}: ${panel.meta.denominator.value}`)}</text>` : "";
-  const title = `<text ${attrs({ x: panel.layout.plot.left, y: panel.layout.text?.titleY ?? panel.layout.rect.top + 20, fill: theme.mode === "paper" ? theme.label : theme.primary, "font-size": panel.layout.font.title })}>${esc(panel.spec.title || panel.renderer)}</text>`;
+  const title = panelHeaderSvg(panel, theme, responsive);
   const provenance = theme.mode !== "paper" && panel.spec.signature && (panel.layout.panelIndex ?? 0) === 0
     ? `<text ${attrs({ x: panel.layout.provenance?.left ?? panel.layout.plot.left, y: panel.layout.provenance?.y ?? panel.layout.rect.bottom - 8 * panel.layout.scale, fill: theme.faint, "font-size": panel.layout.font.signature, "text-anchor": "start", "data-layer": "provenance" })}>${esc(panel.spec.signature)}</text>` : "";
   return `<g ${attrs({ "data-panel-id": panel.id, "data-renderer": panel.renderer, "data-denominator": panel.denominator == null ? null : JSON.stringify(panel.denominator), "data-x-category-order": panel.categories.x?.join("|"), "data-y-category-order": panel.categories.y?.join("|") })}><defs><clipPath id="${esc(clipId)}" clipPathUnits="userSpaceOnUse"><rect ${attrs({ x: plot.left, y: plot.top, width: plot.right - plot.left, height: plot.bottom - plot.top })}/></clipPath></defs><g data-layer="surface">${panelSurface(panel, theme)}</g><g data-layer="grid">${grid(panel, theme, profile)}</g>${renderLayer("reference", layers.reference)}${renderLayer("data", dataMarks)}${renderLayer("summary", layers.summary)}<g data-layer="axes">${title}${axes(panel, theme)}${provenance}</g><g data-layer="annotations">${dataLabels}${annotations(panel, theme)}</g><g data-layer="legend">${legend(panel, theme)}${matrixLegend(panel, theme, namespace)}${denominator}</g></g>`;
@@ -220,7 +231,8 @@ export function resolvedSceneToSvg(resolved, options = {}) {
   const title = composed.spec.title, description = [composed.spec.description || composed.spec.subtitle || "Scientific figure", composed.spec.note, ...composed.panels.flatMap((panel) => panel.notes ?? [])].filter(Boolean).join(" ");
   const titleId = `${namespace}-title`, descId = `${namespace}-desc`;
   const header = composed.layout.header ? `<text ${attrs({ x: composed.layout.header.left, y: composed.layout.header.titleY, fill: composed.theme.mode === "paper" ? composed.theme.label : composed.theme.primary, "font-size": composed.layout.font.title })}>${esc(title)}</text>` : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect ${attrs({ width: "100%", height: "100%", fill: composed.theme.field })}/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace)).join("")}</svg>`;
+  const fixedResponsive = composed.width <= RESPONSIVE_HEADER_MAX_WIDTH && composed.panels.length === 1 && composed.theme.mode !== "paper";
+  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect ${attrs({ width: "100%", height: "100%", fill: composed.theme.field })}/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace, panel.layout.headerText ?? (fixedResponsive ? fixedResponsiveHeader(panel) : null))).join("")}</svg>`;
 }
 
 export function sceneToSvg(scene, options = {}) {

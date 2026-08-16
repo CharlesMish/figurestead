@@ -119,7 +119,8 @@ test("multi-panel title floors stay at 14 and 11 while compact provenance become
 
 test("compact SVG carries the resolved provenance color and adopted title/signature floors", () => {
   const svg = exportFigureSvg(contractFor(themes.slipware), { width: 362, height: 196 });
-  assert.match(svg, /font-size="14"[^>]*>Compact scientific title<\/text>/);
+  assert.match(svg, /font-size="14"[^>]*data-header-part="title"[^>]*data-full-text="Compact scientific title"[^>]*><tspan[^>]*>Compact scientific title<\/tspan><\/text>/);
+  assert.match(svg, /font-size="9"[^>]*data-header-part="subtitle"[^>]*data-full-text="Compact scientific subtitle"/);
   assert.match(svg, /fill="#7A6D63"[^>]*font-size="9"[^>]*data-layer="provenance"/);
 });
 
