@@ -2,6 +2,7 @@ import {
   FiguresteadConfigError,
   createFigurestead,
   type CreateFiguresteadOptions,
+  type FiguresteadHeightNegotiationAdapter,
   type FiguresteadState,
 } from "@figurestead/web";
 import { lineContract } from "./shared.js";
@@ -14,8 +15,28 @@ const options: CreateFiguresteadOptions = {
   dprCap: 2,
   onProgress(progress) { progress.toFixed(2); },
   onState(state) { state.toUpperCase(); },
-  onError(error, context) { String(error); context.phase; context.progress.toFixed(2); },
+  onError(error, context) {
+    String(error);
+    if (context.phase === "draw") context.progress.toFixed(2);
+    else context.operation.toUpperCase();
+  },
 };
+
+// @valid-case mount-scoped host-height negotiation
+const heightNegotiation: FiguresteadHeightNegotiationAdapter = {
+  getBaselineHeight({ canvas: target, width, currentHeight }) {
+    target.nodeName; width.toFixed(1); currentHeight.toFixed(1);
+    return 196;
+  },
+  requestPreferredHeight({ preferredHeight, baselineHeight, width, signal }) {
+    preferredHeight.toFixed(1); baselineHeight.toFixed(1); width.toFixed(1); signal.aborted;
+  },
+};
+options.heightNegotiation = heightNegotiation;
+
+// @negative-case incomplete height negotiation adapter
+// @ts-expect-error requestPreferredHeight is required
+options.heightNegotiation = { getBaselineHeight: () => 196 };
 declare const canvas: HTMLCanvasElement;
 const figure = createFigurestead(canvas, lineContract, options);
 figure.play();

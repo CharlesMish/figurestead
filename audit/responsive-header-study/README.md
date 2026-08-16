@@ -1,5 +1,10 @@
 # Responsive-header feasibility study
 
+> Historical study note: production closure was authorized after this packet.
+> Current live Canvas behavior now implements bounded C fallback and the
+> explicit host-owned B negotiation described by the later cross-renderer and
+> host-height studies. This packet remains the pre-production A/B/C evidence.
+
 This is a study-only compositor. It does not add title or subtitle wrapping to Figurestead production code. The fixture is the current deterministic `watershed_storm_response` corpus scene, rendered in the light Slipware and dark Deep Observatory themes at 320, 362, and 390 CSS px.
 
 The pre-study 362×196 baseline remains scale 0.55 with the nominal compact plot top at 72 px. The established subtitle baseline is 52.56 px, leaving 19.44 px baseline-to-plot slack. After actual text bounds are included, the study records 17.568 px of ink-to-plot clearance. Every exact line baseline/bound and plot rectangle is recorded in `evidence/metrics.json` for Chromium and Firefox.

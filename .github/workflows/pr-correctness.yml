@@ -169,6 +169,9 @@ jobs:
       - name: Verify controller transactionality and runtime errors
         run: npm run test:browser-controller-integrity
 
+      - name: Verify production responsive headers and host-height negotiation
+        run: npm run test:browser-responsive-header
+
       - name: Verify V2 terminal, accessibility, motion, and paper boundaries
         run: node audit/technical-showcase/run-technical-audit.cjs
 
@@ -288,13 +291,15 @@ jobs:
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD:site)" = "c65d33a1a72ce18b8a756ac007f9117e6336f28d"
-          test "$(git rev-parse HEAD:technical-showcase)" = "d14516a981cf4ed8bd0a9e9c756e3076086e92e3"
+          test "$(git rev-parse HEAD:technical-showcase)" = "58bd350a4351133946162390bc7a9d5294d2f072"
           echo "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899  docs/assets/readme/github-social-preview.png" | sha256sum --check -
-          echo "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650  docs/assets/readme/figurestead-at-a-glance.png" | sha256sum --check -
+          echo "2f7e4c5b1ff0038e0020064e800dfe9856a18ad55dfbde4af78f3bcabe63dcc1  docs/assets/readme/figurestead-at-a-glance.png" | sha256sum --check -
           echo "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c  docs/assets/readme/populated-categorical-response-matrix.png" | sha256sum --check -
 
-      - name: Verify current-HEAD outward visual evidence
-        run: python docs/current-head-visual-review/audit_refresh.py
+      - name: Verify outward visual evidence generations
+        run: |
+          python docs/current-head-visual-review/audit_refresh.py
+          python docs/responsive-header-production-review/record_refresh.py
 
       - name: Confirm package/site checks did not alter tracked source or evidence
         shell: bash

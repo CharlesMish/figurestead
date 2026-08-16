@@ -30,11 +30,21 @@ PROTECTED = [
 ]
 AUTHORIZED_PROTECTED_CHANGES = {
     ".github/workflows/pr-correctness.yml",
+    "technical-showcase/evidence/screenshots/chromium-390-full.png",
+    "technical-showcase/evidence/screenshots/firefox-390-full.png",
+    "web/README.md",
+    "web/src/canvas-scene.js",
+    "web/src/create-matrix-plot.js",
     "web/src/figure-layout.js",
+    "web/src/height-negotiation.js",
     "web/src/layout.js",
     "web/src/paper-profile.js",
+    "web/src/resolved-scene.js",
+    "web/src/responsive-header.js",
     "web/src/screen-legibility.js",
+    "web/src/svg-export.js",
     "web/test/readability-micro-polish.mjs",
+    "web/types/index.d.ts",
 }
 
 

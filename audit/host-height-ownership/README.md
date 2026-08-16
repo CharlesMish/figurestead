@@ -1,5 +1,10 @@
 # Host-height ownership mechanism study
 
+> Closure note: the recommended mechanism B is now implemented as the
+> mount-scoped `heightNegotiation` adapter. This document remains the accepted
+> pre-production ownership study and does not claim that its study actors are
+> the production implementation.
+
 Disposition: **`READY_FOR_HEIGHT_OWNERSHIP_API`**
 
 This is study-only evidence. It adds no production sizing option, callback,

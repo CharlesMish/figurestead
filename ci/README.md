@@ -26,6 +26,9 @@ npm run test:browser-scientific-geometry
 FIGURESTEAD_SPECIMEN_URL=http://127.0.0.1:4179/specimen-study/ \
 npm run test:browser-controller-integrity
 
+FIGURESTEAD_SPECIMEN_URL=http://127.0.0.1:4179/specimen-study/ \
+npm run test:browser-responsive-header
+
 FIGURESTEAD_AUDIT_MODE=check FIGURESTEAD_AUDIT_OUTPUT_ROOT=/tmp/figurestead-audits \
 FIGURESTEAD_TECHNICAL_URL=http://127.0.0.1:4179/technical-showcase/ \
 node audit/technical-showcase/run-technical-audit.cjs

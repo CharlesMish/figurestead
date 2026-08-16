@@ -55,6 +55,18 @@ function panelLayout(source, panel) {
   return layout;
 }
 
+function preparedPanelLayout(source) {
+  return {
+    ...source,
+    rect: source.rect ? cloneRect(source.rect) : { left: 0, top: 0, right: source.width, bottom: source.height },
+    plot: cloneRect(source.plot),
+    text: source.text ? { ...source.text } : null,
+    font: { ...source.font },
+    provenance: source.provenance ? { ...source.provenance } : null,
+    legend: source.legend ? { ...source.legend } : null,
+  };
+}
+
 function numericScale(type, domain, range) {
   return type === "time" ? timeScale(domain, range) : linearScale(domain, range);
 }
@@ -212,11 +224,11 @@ export function isResolvedRenderer(renderer) { return RESOLVED_RENDERERS.include
 
 export function resolveTerminalScene(scene, options = {}) {
   const width = options.width ?? 960, height = options.height ?? 600;
-  const layout = deriveFigureLayout(width, height, { panels: scene.panels, layout: scene.layout, theme: scene.theme, spec: scene.spec });
+  const layout = options.layout ?? deriveFigureLayout(width, height, { panels: scene.panels, layout: scene.layout, theme: scene.theme, spec: scene.spec });
   const panels = scene.panels.map((panel, index) => {
-    let resolvedLayout = panelLayout(layout.panels[index], panel);
+    let resolvedLayout = options.refineLayout === false ? preparedPanelLayout(layout.panels[index]) : panelLayout(layout.panels[index], panel);
     let axes = resolveAxes(panel, resolvedLayout), marks, plots = null;
-    for (let pass = 0; pass < 2; pass += 1) {
+    for (let pass = 0; options.refineLayout !== false && pass < 2; pass += 1) {
       resolvedLayout = refineScientificLayout(resolvedLayout, panel, axes, { measureText: options.measureText, themeMode: scene.theme.mode });
       axes = resolveAxes(panel, resolvedLayout);
     }

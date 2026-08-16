@@ -16,6 +16,7 @@
     "test:responsive-header-study": "node audit/responsive-header-study/run-study.cjs",
     "test:responsive-header-cross-renderer": "node audit/responsive-header-cross-renderer/run-study.cjs",
     "test:host-height-ownership": "node audit/host-height-ownership/run-study.cjs",
+    "test:browser-responsive-header": "node ci/check-responsive-header-production.cjs",
     "test:browser-controller-integrity": "node ci/check-controller-integrity.cjs",
     "test:npm-release-integrity": "node release/npm/test-candidate-verifier.mjs && node release/npm/verify-all-candidates.mjs && node release/npm/check-publish-workflow.mjs"
   },

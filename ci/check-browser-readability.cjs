@@ -72,7 +72,7 @@ const expectedFaint = {
             const svgText = api.exportFigureSvg(contract, { width: figureWidth, height: figureHeight });
             const svg = new DOMParser().parseFromString(svgText, "image/svg+xml");
             const provenance = svg.querySelector('[data-layer="provenance"]');
-            const title = [...svg.querySelectorAll('g[data-layer="axes"] > text')].find((node) => node.textContent === "Compact scientific title");
+            const title = svg.querySelector('[data-header-part="title"]') ?? [...svg.querySelectorAll('g[data-layer="axes"] > text')].find((node) => node.textContent === "Compact scientific title");
             records.push({
               key,
               sourceFaint: theme.faint,

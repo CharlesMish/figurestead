@@ -35,8 +35,8 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 309598,
-      "sha256": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77",
+      "bytes": 308975,
+      "sha256": "69e0906ed79b986c0dfefb32106db49fce06e13eb2b907e6971eb560f1aeae9b",
       "role": "current accepted eight-panel README montage derivative",
       "rationale": "The complete eight-panel montage communicates maximum range, but individual figures become texture at small link-preview sizes."
     },
@@ -297,16 +297,16 @@
         960
       ],
       "mode": "RGB",
-      "bytes": 383146,
-      "sha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650"
+      "bytes": 385518,
+      "sha256": "2f7e4c5b1ff0038e0020064e800dfe9856a18ad55dfbde4af78f3bcabe63dcc1"
     },
     "readmeMontageUnchanged": false,
     "githubSettingsChanged": false,
     "ownerAction": "Configure docs/assets/readme/github-social-preview.png manually in GitHub repository settings."
   },
   "currentHeadRefresh": {
-    "baselineCommit": "a8f7831aad1c77c5b4577daf0cfb0c7752347833",
-    "reason": "compact 14 px title floor and screen provenance legibility treatment only",
+    "baselineCommit": "e14d9098f0daefebadf3c0637dbe14e6b5c937e9",
+    "reason": "production compact C header fitting in the accepted montage; selected C sources remain byte-identical",
     "compositionChanged": false,
     "historicalCandidatesRetained": [
       "B",
@@ -314,6 +314,6 @@
       "comparison",
       "smallPreviewComparison"
     ],
-    "reviewEvidence": "docs/current-head-visual-review/manifest.json"
+    "reviewEvidence": "docs/responsive-header-production-review/manifest.json"
   }
 }

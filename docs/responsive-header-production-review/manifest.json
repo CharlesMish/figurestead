@@ -1,0 +1,261 @@
+{
+  "schemaVersion": "figurestead.responsive-header-production-visual-refresh/1",
+  "result": "PASS",
+  "baselineCommit": "e14d9098f0daefebadf3c0637dbe14e6b5c937e9",
+  "changedAssets": [
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/categorical/chromium-montage-cell-1920.png",
+      "before": {
+        "bytes": 43826,
+        "sha256": "4bab7c158723a94dbfabfd58d52a00920d8783f37ae145ce933c0c25384dabee"
+      },
+      "after": {
+        "bytes": 43860,
+        "sha256": "f172f4182fa75bde9cd03ff052180de5e52ae7b35d8c22380edd4f512a12c82c"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/categorical/chromium-narrow-390.png",
+      "before": {
+        "bytes": 40766,
+        "sha256": "5fd0a2bd21a2b742cc258b65c6b84d611a8cee622d46f5a43604e5ec4dd71b5b"
+      },
+      "after": {
+        "bytes": 40609,
+        "sha256": "04f80e6ec6d8b3d7fb18584093b96d8f95ffa7164432854c59b44aafd77381bd"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/categorical/firefox-montage-cell-1920.png",
+      "before": {
+        "bytes": 48859,
+        "sha256": "390991078be848bf4aecacf88c5fad33bf9515f32460b3cd5b8ecd389349a40e"
+      },
+      "after": {
+        "bytes": 49651,
+        "sha256": "268fecfbdacfb532a8e7aa6cedd3fe5a13b139fc18ff4878022773a4af05fd59"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/categorical/firefox-narrow-390.png",
+      "before": {
+        "bytes": 46096,
+        "sha256": "63fa200b0b2fb92f3c8ddbe7d55549ac9826615e25a84d295dee83a502a16450"
+      },
+      "after": {
+        "bytes": 46728,
+        "sha256": "d78000fae00ccd910c653e6be274d17c0283fc9ea5598015cdc2c7e78ab9c2c5"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/screenshots/chromium-lab-390-full.png",
+      "before": {
+        "bytes": 683888,
+        "sha256": "0a34100f3fb0ed55868e4e0443ab3c2310accbb1b0a3503415a3cc82f0e1d1cf"
+      },
+      "after": {
+        "bytes": 681344,
+        "sha256": "a42f53f1af9e8cae93c2475fee4688bb7ae6ed79dc63ef9648b1cef85ace3aab"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/screenshots/chromium-montage-1920x1080.png",
+      "before": {
+        "bytes": 381222,
+        "sha256": "3fb6fbb3abe97a7475e9113e482837480d1bcfdb0fc470938b7b7f8dcb25b366"
+      },
+      "after": {
+        "bytes": 381274,
+        "sha256": "57efc7191ce2380dd0288002a9baf99b77b08433f883425a0beb7f546c963b3d"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/screenshots/chromium-montage-390-full.png",
+      "before": {
+        "bytes": 345581,
+        "sha256": "82e831394bc001d7da0c0064153c572f29e54054b6ce47661dde113f50bc2f0a"
+      },
+      "after": {
+        "bytes": 344333,
+        "sha256": "54c603aec047bd964e4d2d86f1f23b9be15bbf2d6bce50a2b2268f28b80ed799"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/screenshots/firefox-lab-390-full.png",
+      "before": {
+        "bytes": 803800,
+        "sha256": "bb831441e1bcffd516bd081056c8ba992ef5fa8eaf18455d49516b5c46f8d249"
+      },
+      "after": {
+        "bytes": 807729,
+        "sha256": "135f2131f74a4a30a5222ed7871c61cd93e41b82d70967d87116eeddce1b5505"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/screenshots/firefox-montage-1920x1080.png",
+      "before": {
+        "bytes": 444851,
+        "sha256": "5823a1e42e2050db5ee4ab4a7d51db34140286ecdde35cbd5103bb06edeb3832"
+      },
+      "after": {
+        "bytes": 451256,
+        "sha256": "4efb9835afe577b37c9d0657a1c6736b030c3655d1cde45c18a7aa311791e2ca"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/screenshots/firefox-montage-390-full.png",
+      "before": {
+        "bytes": 397882,
+        "sha256": "a089a8b5c24a734ab1a272b717a6f99bf39a5ef05b5f632b72c2c400f2b423c4"
+      },
+      "after": {
+        "bytes": 399880,
+        "sha256": "bfd063b65112680c656475fe29070cac14f7f07a1e521bb337688a885cc63540"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting; scientific plot geometry and complete accessibility text are preserved"
+    },
+    {
+      "path": "technical-showcase/evidence/screenshots/chromium-390-full.png",
+      "before": {
+        "bytes": 648580,
+        "sha256": "ee8c6540c9e14745c13ee205e71c5f9bf0d52ab7a851f363d6a188683a03de56"
+      },
+      "after": {
+        "bytes": 675124,
+        "sha256": "42dc6d80a86c7c8161c95b4f1f1ace36bff7a8d0b1b49429fa4a6c6424cdffbd"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting at the 390 px Technical Showcase viewport"
+    },
+    {
+      "path": "technical-showcase/evidence/screenshots/firefox-390-full.png",
+      "before": {
+        "bytes": 765122,
+        "sha256": "46857845a8e368dfb42b05658d91ab1f906b4ebb773731fb2632fbce5cb769f4"
+      },
+      "after": {
+        "bytes": 802569,
+        "sha256": "9636e161617e414842adb24ed17482a8aaa96daa664e69ecac7d223abb7f2a40"
+      },
+      "changed": true,
+      "reason": "production compact C visual header fitting at the 390 px Technical Showcase viewport"
+    },
+    {
+      "path": "docs/assets/readme/figurestead-at-a-glance.png",
+      "before": {
+        "bytes": 383146,
+        "sha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650"
+      },
+      "after": {
+        "bytes": 385518,
+        "sha256": "2f7e4c5b1ff0038e0020064e800dfe9856a18ad55dfbde4af78f3bcabe63dcc1"
+      },
+      "changed": true,
+      "reason": "deterministic derivative of the refreshed accepted eight-panel montage; composition and crop are unchanged"
+    },
+    {
+      "path": "docs/assets/readme/github-social-preview-candidate.png",
+      "before": {
+        "bytes": 309598,
+        "sha256": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77"
+      },
+      "after": {
+        "bytes": 308975,
+        "sha256": "69e0906ed79b986c0dfefb32106db49fce06e13eb2b907e6971eb560f1aeae9b"
+      },
+      "changed": true,
+      "reason": "deterministic derivative of the refreshed accepted eight-panel montage; composition and crop are unchanged"
+    }
+  ],
+  "unchangedAuthorities": [
+    {
+      "path": "docs/assets/readme/github-social-preview.png",
+      "bytes": 229276,
+      "sha256": "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "docs/social-preview-study/candidate-c-lead-plus-pair.png",
+      "bytes": 229276,
+      "sha256": "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "docs/assets/readme/populated-categorical-response-matrix.png",
+      "bytes": 84544,
+      "sha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/response-matrix/populated-wide.png",
+      "bytes": 84544,
+      "sha256": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
+      "bytes": 82630,
+      "sha256": "4b6050871a4e76966e575b21e835da4d42b6efab3ca06b366052557f8fdb6efc",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/circadian_phase_shift.png",
+      "bytes": 66923,
+      "sha256": "aae714da5e4496bbf276e315154b33feaa230c1ff5cbfd6618dd7b26d396ce07",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "specimen-study/evidence/corpus-v0.2/individual/paired_seasonal_distributions.png",
+      "bytes": 37191,
+      "sha256": "270b51c6ef544a85c4738a627f7cd0ebe9c6d7b75bf2962be7712ce236d7e476",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "technical-showcase/evidence/screenshots/chromium-paper-close.png",
+      "bytes": 131011,
+      "sha256": "509b533bc38af4a63a439e72619c2422eaea988639bb1d761c15d01c4f75da77",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "technical-showcase/evidence/screenshots/firefox-paper-close.png",
+      "bytes": 173081,
+      "sha256": "ac3d29c1d23bfb8673770da24e5824562cbb8cf21385f5787d06dc4820554ebe",
+      "byteIdenticalToBaseline": true
+    },
+    {
+      "path": "technical-showcase/evidence/motion-frames/chromium-restrained-04.png",
+      "bytes": 100076,
+      "sha256": "c2fdc4bc79bc2fbbcaebe54d052e74bda87b655fbc77b2154584498d18591b84",
+      "byteIdenticalToBaseline": true
+    }
+  ],
+  "claims": {
+    "compositionChanged": false,
+    "scientificGeometryChanged": false,
+    "individualScientificFramesChanged": false,
+    "themeTokensChanged": false,
+    "populatedPythonMatrixChanged": false,
+    "selectedSocialCandidateCChanged": false,
+    "technicalPaperEvidenceChanged": false,
+    "technicalTerminalFrameChanged": false
+  }
+}

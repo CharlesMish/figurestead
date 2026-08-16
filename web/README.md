@@ -65,7 +65,8 @@ options pattern:
 ```js
 const figure = createFigurestead(canvas, contract, {
   onError(error, context) {
-    // context.phase === "draw"; error is the original renderer error object.
+    // context.phase is "draw" or "height-negotiation".
+    // error is the original renderer or host-callback error object.
   },
 });
 ```
@@ -75,5 +76,52 @@ After a draw failure the controller is stopped, reports `playing: false` and
 reduced-motion changes. A later valid `setConfig()` clears that state and
 renders normally. Lifecycle notifications remain on `onState`; runtime failures
 are reported only through `onError`.
+
+## Responsive headers and host-owned height
+
+At compact live-Canvas widths, Figurestead preserves the established plot
+geometry and uses a bounded two-line title plus a one-line ellipsized subtitle
+when the host does not opt in to more height. Complete strings remain in the
+associated accessibility companion. Figurestead never changes host CSS by
+default.
+
+An auto-height host may opt in with one mount-scoped adapter. Figurestead's
+current measurement convention is the CSS-pixel border box reported by
+`canvas.getBoundingClientRect()` (including any reflected CSS transform). Retain
+the baseline independently in that same measurement space; do not derive it
+from the canvas after applying an earlier request:
+
+```js
+const baselineHeight = 196;
+const figure = createFigurestead(canvas, contract, {
+  heightNegotiation: {
+    getBaselineHeight() { return baselineHeight; },
+    requestPreferredHeight({ preferredHeight, signal }) {
+      if (!signal.aborted) canvas.style.height = `${preferredHeight}px`;
+    },
+  },
+});
+```
+
+State-driven or delayed hosts may apply on a later frame. The return value is
+not an acknowledgement; the host applies the absolute height and Figurestead's
+existing resize observation resolves the granted layout:
+
+```js
+requestPreferredHeight({ preferredHeight, signal }) {
+  requestAnimationFrame(() => {
+    if (!signal.aborted) canvas.style.height = `${preferredHeight}px`;
+  });
+}
+```
+
+Accepted contract, width, baseline, remount, and destroy transitions abort the
+prior signal. A host may decline or clamp a request; the fixed-height fallback
+then remains active without automatic retry in that generation. Host-applied
+CSS remains host state after `destroy()`. Before remount, the host either keeps
+that height intentionally or restores its independent baseline source; residual
+preferred height is never inferred as the next baseline by Figurestead.
+Height negotiation applies only to live Canvas rendering. SVG, paper, and
+explicitly dimensioned exports retain their requested dimensions.
 
 Version 0.9.0-alpha.1. [Source and full project documentation](https://github.com/CharlesMish/figurestead).

@@ -8,16 +8,20 @@ import { AnimationClock } from "./clock.js";
 import { createAccessibilityCompanion, prepareAccessibilityCompanion } from "./accessibility.js";
 import { drawPanelSurface, drawPresentationAnnotations } from "./presentation.js";
 import { compileFigureModel } from "./terminal-scene.js";
-import { isResolvedRenderer, resolveSceneFrame, resolveTerminalScene } from "./resolved-scene.js";
+import { isResolvedRenderer, resolveSceneFrame } from "./resolved-scene.js";
 import { drawResolvedPanel } from "./canvas-scene.js";
 import { composeResolvedScene } from "./composition.js";
+import { resolveResponsiveCanvasScene } from "./responsive-header.js";
+import { createHeightNegotiator, validateHeightNegotiation } from "./height-negotiation.js";
 
 export function createFigurestead(canvas, input, options = {}) {
   if (!(canvas instanceof HTMLCanvasElement)) throw new TypeError("createFigurestead requires an HTMLCanvasElement");
   const registry = options.registry ?? CORE_REGISTRY;
   if (registry.apiVersion !== "1") throw new TypeError("Figurestead requires renderer registry API 1");
+  const heightNegotiation = validateHeightNegotiation(options.heightNegotiation);
   let contract = input, scene = null, preparedPanels = [], domains = [], atmosphere, surface, resolvedScene = null, composedScene = null, clock = null, destroyed = false;
-  let reducedOverride = options.reducedMotion ?? null, companion = null;
+  let reducedOverride = options.reducedMotion ?? null, companion = null, contractRevision = 0;
+  const heightNegotiator = createHeightNegotiator(canvas, heightNegotiation, options.onError);
   const media = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)");
   const isReduced = () => reducedOverride == null ? Boolean(media?.matches) : Boolean(reducedOverride);
 
@@ -28,21 +32,43 @@ export function createFigurestead(canvas, input, options = {}) {
   const applyModel = (model) => {
     contract = model.contract; scene = model.scene; preparedPanels = model.preparedPanels; domains = model.domains; atmosphere = model.atmosphere;
   };
-  const layoutFactory = (width, height) => deriveFigureLayout(width, height, contract);
-  const measuredText = (text, fontSize) => {
+  const layoutFactory = (width, height, candidate = contract) => deriveFigureLayout(width, height, candidate);
+  const measuredText = (text, fontSize, style = "normal") => {
     surface.context.save();
-    surface.context.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace`;
+    const prefix = style === "italic" ? "italic " : style === "500" ? "500 " : "";
+    surface.context.font = `${prefix}${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace`;
     const value = surface.context.measureText(String(text));
     surface.context.restore();
     return { width: value.width, ascent: value.actualBoundingBoxAscent, descent: value.actualBoundingBoxDescent };
   };
-  const resolve = () => resolveTerminalScene(scene, { width: surface.layout.width, height: surface.layout.height, measureText: measuredText });
+  const observedBox = () => {
+    const rect = canvas.getBoundingClientRect();
+    return { width: rect.width, height: rect.height, visible: rect.width > 0 && rect.height > 0 && canvas.getClientRects().length > 0 };
+  };
+  const prepareResolution = (candidateScene, width, height, baselineResult) => {
+    const responsive = resolveResponsiveCanvasScene(candidateScene, {
+      width, height, baselineHeight: baselineResult.value, measureText: measuredText,
+    });
+    return { ...responsive, composed: composeResolvedScene(responsive.resolved), baselineError: baselineResult.error };
+  };
+  const commitNegotiation = (prepared, box) => heightNegotiator.commit({
+    contractRevision,
+    width: box.visible ? box.width : 0,
+    baselineHeight: prepared.baselineHeight,
+    preferredHeight: prepared.preferredHeight,
+    baselineError: prepared.baselineError,
+  });
   const resize = () => {
     if (destroyed) return;
+    const box = observedBox();
     surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
-    resolvedScene = resolve();
-    composedScene = composeResolvedScene(resolvedScene);
+    const baseline = box.visible ? heightNegotiator.baseline(box.width, box.height) : { value: null, error: null };
+    const prepared = prepareResolution(scene, surface.layout.width, surface.layout.height, baseline);
+    resolvedScene = prepared.resolved;
+    composedScene = prepared.composed;
+    surface = { ...surface, layout: resolvedScene.layout };
     if (clock) clock.render(clock.progress);
+    commitNegotiation(prepared, box);
   };
   const draw = (progress) => {
     if (!surface || destroyed) return;
@@ -62,11 +88,16 @@ export function createFigurestead(canvas, input, options = {}) {
   };
 
   applyModel(prepareModel(input)); surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
-  resolvedScene = resolve();
-  composedScene = composeResolvedScene(resolvedScene);
+  const initialBox = observedBox();
+  const initialBaseline = initialBox.visible ? heightNegotiator.baseline(initialBox.width, initialBox.height) : { value: null, error: null };
+  const initialResolution = prepareResolution(scene, surface.layout.width, surface.layout.height, initialBaseline);
+  resolvedScene = initialResolution.resolved;
+  composedScene = initialResolution.composed;
+  surface = { ...surface, layout: resolvedScene.layout };
   clock = new AnimationClock({ durationMs: contract.motion.durationMs, draw, onState: options.onState, onError: options.onError });
   companion = createAccessibilityCompanion(canvas, contract, registry, options.accessibility);
   clock.render(isReduced() ? 1 : 0);
+  commitNegotiation(initialResolution, initialBox);
 
   let autoplayUsed = false, wasPlayingBeforeHidden = false;
   const resizeObserver = globalThis.ResizeObserver ? new ResizeObserver(resize) : null; resizeObserver?.observe(canvas);
@@ -80,15 +111,19 @@ export function createFigurestead(canvas, input, options = {}) {
 
   const replace = (next) => {
     const nextModel = prepareModel(next);
-    const nextResolvedScene = resolveTerminalScene(nextModel.scene, { width: surface.layout.width, height: surface.layout.height, measureText: measuredText });
-    const nextComposedScene = composeResolvedScene(nextResolvedScene);
+    const box = observedBox();
+    const baseline = box.visible ? heightNegotiator.baseline(box.width, box.height) : { value: null, error: null };
+    const nextResolution = prepareResolution(nextModel.scene, surface.layout.width, surface.layout.height, baseline);
     const nextCompanion = prepareAccessibilityCompanion(canvas, nextModel.contract, registry, options.accessibility);
+    const nextSurface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory: (width, height) => layoutFactory(width, height, nextModel.contract) });
     clock.pause();
     applyModel(nextModel);
-    resolvedScene = nextResolvedScene; composedScene = nextComposedScene;
-    surface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory });
+    contractRevision += 1;
+    resolvedScene = nextResolution.resolved; composedScene = nextResolution.composed;
+    surface = { ...nextSurface, layout: resolvedScene.layout };
     clock.durationMs = contract.motion.durationMs; clock.resetFailure();
     nextCompanion.attach(); companion.destroy(); companion = nextCompanion; clock.settle();
+    commitNegotiation(nextResolution, box);
   };
   return Object.freeze({
     play() { if (isReduced()) clock.settle(); else clock.play(); }, pause() { clock.pause(); }, replay() { if (isReduced()) clock.settle(); else clock.replay(); },
@@ -96,7 +131,7 @@ export function createFigurestead(canvas, input, options = {}) {
     setConfig(next) { replace(next); },
     setReducedMotion(value) { if (value !== null && typeof value !== "boolean") throw new TypeError("reduced motion must be true, false, or null"); reducedOverride = value; isReduced() ? clock.settle() : clock.render(clock.progress); },
     resize,
-    destroy() { if (destroyed) return; destroyed = true; clock.destroy(); resizeObserver?.disconnect(); intersectionObserver?.disconnect(); document.removeEventListener("visibilitychange", visibility); media?.removeEventListener?.("change", mediaChange); companion.destroy(); },
+    destroy() { if (destroyed) return; destroyed = true; heightNegotiator.destroy(); clock.destroy(); resizeObserver?.disconnect(); intersectionObserver?.disconnect(); document.removeEventListener("visibilitychange", visibility); media?.removeEventListener?.("change", mediaChange); companion.destroy(); },
     getState() { return { progress: clock.progress, playing: clock.playing, reducedMotion: isReduced(), runtimeFailed: clock.failed, renderers: contract.panels.map((panel) => panel.renderer), sceneVersion: scene.schemaVersion, resolvedSceneVersion: resolvedScene.schemaVersion, composedSceneVersion: composedScene.schemaVersion, profile: contract.view.profile, destroyed }; },
     getScene() { return scene; },
     getResolvedScene() { return resolvedScene; },

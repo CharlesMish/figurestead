@@ -291,9 +291,37 @@ export interface AccessibilityOptions {
   table?: boolean;
 }
 
-export interface FiguresteadRuntimeErrorContext {
+export interface FiguresteadDrawErrorContext {
   phase: "draw";
   progress: number;
+}
+
+export interface FiguresteadHeightNegotiationErrorContext {
+  phase: "height-negotiation";
+  operation: "baseline" | "request";
+  width: number;
+  baselineHeight: number | null;
+  preferredHeight: number | null;
+}
+
+export type FiguresteadRuntimeErrorContext = FiguresteadDrawErrorContext | FiguresteadHeightNegotiationErrorContext;
+
+export interface FiguresteadHeightBaselineContext {
+  readonly canvas: HTMLCanvasElement;
+  readonly width: number;
+  readonly currentHeight: number;
+}
+
+export interface FiguresteadPreferredHeightRequest {
+  readonly preferredHeight: number;
+  readonly baselineHeight: number;
+  readonly width: number;
+  readonly signal: AbortSignal;
+}
+
+export interface FiguresteadHeightNegotiationAdapter {
+  getBaselineHeight(context: FiguresteadHeightBaselineContext): number | null;
+  requestPreferredHeight(request: FiguresteadPreferredHeightRequest): void;
 }
 
 export interface RendererDescription {
@@ -344,6 +372,7 @@ export interface CreateFiguresteadOptions {
   onProgress?: (progress: number) => void;
   onState?: (state: LifecycleState) => void;
   onError?: (error: unknown, context: FiguresteadRuntimeErrorContext) => void;
+  heightNegotiation?: FiguresteadHeightNegotiationAdapter;
 }
 
 export interface FiguresteadState {

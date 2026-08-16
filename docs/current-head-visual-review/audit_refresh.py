@@ -30,6 +30,9 @@ def png_dimensions(path: Path) -> list[int]:
 def main() -> int:
     manifest = json.loads((HERE / "manifest.json").read_text(encoding="utf-8"))
     baseline = manifest["baselineCommit"]
+    accepted = manifest.get("acceptedCommit")
+    def accepted_bytes(relative: str) -> bytes:
+        return subprocess.check_output(["git", "show", f"{accepted}:{relative}"], cwd=ROOT) if accepted else (ROOT / relative).read_bytes()
     checks: dict[str, bool] = {}
     for name, comparison in manifest["comparisons"].items():
         current = ROOT / comparison["current"]["path"]
@@ -37,7 +40,7 @@ def main() -> int:
             ["git", "show", f"{baseline}:{comparison['current']['path']}"], cwd=ROOT
         )
         checks[f"{name}PreviousAnchor"] = sha256_bytes(previous) == comparison["previous"]["sha256"]
-        checks[f"{name}CurrentAnchor"] = sha256(current) == comparison["current"]["sha256"]
+        checks[f"{name}CurrentAnchor"] = sha256_bytes(accepted_bytes(comparison["current"]["path"])) == comparison["current"]["sha256"]
         for label, artifact in comparison["artifacts"].items():
             path = ROOT / artifact["path"]
             checks[f"{name}-{label}Artifact"] = (
@@ -50,7 +53,7 @@ def main() -> int:
         previous = subprocess.check_output(["git", "show", f"{baseline}:{specimen['path']}"], cwd=ROOT)
         checks[f"specimen:{path.name}"] = (
             sha256_bytes(previous) == specimen["oldSha256"]
-            and sha256(path) == specimen["newSha256"]
+            and sha256_bytes(accepted_bytes(specimen["path"])) == specimen["newSha256"]
             and specimen["expectedDifference"] == "compact 14 px title floor and screen provenance legibility treatment only"
         )
 
@@ -61,21 +64,20 @@ def main() -> int:
     )
     checks["sourceMontageAnchors"] = (
         sha256_bytes(source_montage_previous) == source_montage["previousSha256"]
-        and sha256(source_montage_path) == source_montage["currentSha256"]
+        and sha256_bytes(accepted_bytes(source_montage["path"])) == source_montage["currentSha256"]
         and source_montage["dimensions"] == [1920, 1080]
         and source_montage["compositionChanged"] is False
     )
 
-    summary = json.loads(
-        (ROOT / "specimen-study" / "audit" / "corpus-v0.2-summary.json").read_text(encoding="utf-8")
-    )
+    summary_relative = "specimen-study/audit/corpus-v0.2-summary.json"
+    summary = json.loads(accepted_bytes(summary_relative))
     summary_records = {item["path"]: item for item in summary["evidence"]}
     tracked_refresh_paths = [
         specimen["path"].removeprefix("specimen-study/") for specimen in manifest["changedSpecimens"]
     ] + [source_montage["path"].removeprefix("specimen-study/")]
     checks["specimenSummaryMatches"] = all(
-        summary_records[relative]["sha256"] == sha256(ROOT / "specimen-study" / relative)
-        and summary_records[relative]["bytes"] == (ROOT / "specimen-study" / relative).stat().st_size
+        summary_records[relative]["sha256"] == sha256_bytes(accepted_bytes(f"specimen-study/{relative}"))
+        and summary_records[relative]["bytes"] == len(accepted_bytes(f"specimen-study/{relative}"))
         for relative in tracked_refresh_paths
     )
 

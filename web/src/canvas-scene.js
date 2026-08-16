@@ -133,8 +133,14 @@ function drawPanelText(context, panel, theme) {
   const { layout, spec } = panel;
   context.save(); context.textAlign = "left"; context.textBaseline = "alphabetic";
   context.fillStyle = theme.mode === "paper" ? theme.label : theme.primary; context.font = `500 ${layout.font.title}px ${FONT_STACK}`;
-  context.fillText(spec.title || panel.renderer, layout.plot.left, layout.text?.titleY ?? layout.rect.top + 20 * layout.scale);
-  if (spec.subtitle) { context.fillStyle = theme.secondary; context.font = `italic ${layout.font.subtitle}px ${FONT_STACK}`; context.fillText(spec.subtitle, layout.plot.left, layout.text?.subtitleY ?? layout.rect.top + 39 * layout.scale); }
+  const responsive = layout.headerText;
+  if (responsive) responsive.title.lines.forEach((line, index) => context.fillText(line, layout.plot.left, responsive.title.baselines[index]));
+  else context.fillText(spec.title || panel.renderer, layout.plot.left, layout.text?.titleY ?? layout.rect.top + 20 * layout.scale);
+  if (spec.subtitle) {
+    context.fillStyle = theme.secondary; context.font = `italic ${layout.font.subtitle}px ${FONT_STACK}`;
+    if (responsive) responsive.subtitle.lines.forEach((line, index) => context.fillText(line, layout.plot.left, responsive.subtitle.baselines[index]));
+    else context.fillText(spec.subtitle, layout.plot.left, layout.text?.subtitleY ?? layout.rect.top + 39 * layout.scale);
+  }
   if (theme.mode !== "paper" && spec.signature && (layout.panelIndex ?? 0) === 0) {
     const provenance = layout.provenance ?? { left: layout.plot.left, y: layout.rect.bottom - 8 * layout.scale };
     context.fillStyle = theme.faint; context.font = `${layout.font.signature}px ${FONT_STACK}`; context.textAlign = "left";
