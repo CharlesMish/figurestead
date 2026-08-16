@@ -8,8 +8,6 @@ import json
 from pathlib import Path
 import subprocess
 
-from PIL import Image
-
 
 ROOT = Path(__file__).resolve().parents[2]
 BASELINE = "e14d9098f0daefebadf3c0637dbe14e6b5c937e9"
@@ -27,10 +25,12 @@ def baseline_bytes(relative: str) -> bytes:
 
 def image_record(relative: str) -> dict:
     path = ROOT / relative
-    with Image.open(path) as image:
-        dimensions = list(image.size)
-        mode = image.mode
     payload = path.read_bytes()
+    if payload[:8] != b"\x89PNG\r\n\x1a\n" or payload[12:16] != b"IHDR":
+        raise ValueError(f"{relative}: expected PNG IHDR")
+    dimensions = [int.from_bytes(payload[16:20], "big"), int.from_bytes(payload[20:24], "big")]
+    color_modes = {0: "L", 2: "RGB", 3: "P", 4: "LA", 6: "RGBA"}
+    mode = color_modes.get(payload[25], f"PNG-color-type-{payload[25]}")
     return {"path": relative, "dimensions": dimensions, "mode": mode, "bytes": len(payload), "sha256": digest(payload)}
 
 
