@@ -35,8 +35,8 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 303123,
-      "sha256": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969",
+      "bytes": 309598,
+      "sha256": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77",
       "role": "current accepted eight-panel README montage derivative",
       "rationale": "The complete eight-panel montage communicates maximum range, but individual figures become texture at small link-preview sizes."
     },
@@ -132,13 +132,13 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 227040,
-      "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54",
+      "bytes": 229276,
+      "sha256": "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899",
       "placements": [
         {
           "sourceKey": "watershed",
           "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
-          "sourceSha256": "d6f16cd8d53afbbe8e15ce0c7086ff9054dcd00fad81d1fe7fb34a17facdfc2c",
+          "sourceSha256": "4b6050871a4e76966e575b21e835da4d42b6efab3ca06b366052557f8fdb6efc",
           "sourceCrop": [
             0,
             0,
@@ -156,7 +156,7 @@
         {
           "sourceKey": "circadian",
           "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/circadian_phase_shift.png",
-          "sourceSha256": "d614a8daeb6585d5b8919d50d18a1b03ccb1af3ca83f95cc161c7f8683e4e2e6",
+          "sourceSha256": "aae714da5e4496bbf276e315154b33feaa230c1ff5cbfd6618dd7b26d396ce07",
           "sourceCrop": [
             0,
             0,
@@ -174,7 +174,7 @@
         {
           "sourceKey": "seasonal",
           "sourcePath": "specimen-study/evidence/corpus-v0.2/individual/paired_seasonal_distributions.png",
-          "sourceSha256": "fed5cc197c5160c92a398d1c72fa2bba12c126b68ca4c1601689baae49d163bd",
+          "sourceSha256": "270b51c6ef544a85c4738a627f7cd0ebe9c6d7b75bf2962be7712ce236d7e476",
           "sourceCrop": [
             0,
             0,
@@ -276,8 +276,8 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 227040,
-      "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54"
+      "bytes": 229276,
+      "sha256": "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899"
     },
     "canonicalAsset": {
       "path": "docs/assets/readme/github-social-preview.png",
@@ -286,8 +286,8 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 227040,
-      "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54"
+      "bytes": 229276,
+      "sha256": "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899"
     },
     "byteIdenticalToSource": true,
     "readmeMontage": {
@@ -297,16 +297,16 @@
         960
       ],
       "mode": "RGB",
-      "bytes": 376587,
-      "sha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656"
+      "bytes": 383146,
+      "sha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650"
     },
     "readmeMontageUnchanged": false,
     "githubSettingsChanged": false,
     "ownerAction": "Configure docs/assets/readme/github-social-preview.png manually in GitHub repository settings."
   },
   "currentHeadRefresh": {
-    "baselineCommit": "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89",
-    "reason": "selected outward assets now depict accepted authored-domain geometry",
+    "baselineCommit": "a8f7831aad1c77c5b4577daf0cfb0c7752347833",
+    "reason": "compact 14 px title floor and screen provenance legibility treatment only",
     "compositionChanged": false,
     "historicalCandidatesRetained": [
       "B",

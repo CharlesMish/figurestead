@@ -1,0 +1,2861 @@
+{
+  "assertionCount": 54,
+  "browserCaseCount": 6,
+  "mode": "study-only",
+  "productionWrappingImplemented": false,
+  "records": [
+    {
+      "baseHeight": 173,
+      "engine": "chromium",
+      "fullText": {
+        "subtitle": "Five synthetic site responses after one rainfall pulse",
+        "title": "Storm response across five watershed sites"
+      },
+      "metrics": [
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 173,
+            "width": 320
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 89.08
+          },
+          "plotHeight": 42.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 294.203,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall…"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 247.845,
+                  "top": 26.803
+                },
+                "text": "Storm response across five"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 155.129,
+                  "top": 43.883
+                },
+                "text": "watershed sites"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 203,
+            "width": 320
+          },
+          "extraHeaderHeight": 29.23,
+          "headerHeight": 56.859,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 161.151,
+            "left": 28.698,
+            "right": 298,
+            "top": 101.23
+          },
+          "plotHeight": 59.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 288.784,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall"
+              },
+              {
+                "baseline": 81.79,
+                "bounds": {
+                  "bottom": 83.662,
+                  "left": 28.698,
+                  "right": 55.791,
+                  "top": 74.904
+                },
+                "text": "pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 247.845,
+                  "top": 26.803
+                },
+                "text": "Storm response across five"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 155.129,
+                  "top": 43.883
+                },
+                "text": "watershed sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 173,
+            "width": 320
+          },
+          "extraHeaderHeight": 0,
+          "headerHeight": 27.629,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 72
+          },
+          "plotHeight": 59.921,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 52.56,
+                "bounds": {
+                  "bottom": 54.432,
+                  "left": 28.698,
+                  "right": 294.203,
+                  "top": 45.674
+                },
+                "text": "Five synthetic site responses after one rainfall…"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 289.988,
+                  "top": 26.803
+                },
+                "text": "Storm response across five wat…"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 173,
+            "width": 320
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 89.08
+          },
+          "plotHeight": 42.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 294.203,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall…"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 247.845,
+                  "top": 26.803
+                },
+                "text": "Storm response across five"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 155.129,
+                  "top": 43.883
+                },
+                "text": "watershed sites"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 203,
+            "width": 320
+          },
+          "extraHeaderHeight": 29.23,
+          "headerHeight": 56.859,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 161.151,
+            "left": 28.698,
+            "right": 298,
+            "top": 101.23
+          },
+          "plotHeight": 59.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 288.784,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall"
+              },
+              {
+                "baseline": 81.79,
+                "bounds": {
+                  "bottom": 83.662,
+                  "left": 28.698,
+                  "right": 55.791,
+                  "top": 74.904
+                },
+                "text": "pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 247.845,
+                  "top": 26.803
+                },
+                "text": "Storm response across five"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 155.129,
+                  "top": 43.883
+                },
+                "text": "watershed sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 173,
+            "width": 320
+          },
+          "extraHeaderHeight": 0,
+          "headerHeight": 27.629,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 72
+          },
+          "plotHeight": 59.921,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.698,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 52.56,
+                "bounds": {
+                  "bottom": 54.432,
+                  "left": 28.698,
+                  "right": 294.203,
+                  "top": 45.674
+                },
+                "text": "Five synthetic site responses after one rainfall…"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 289.988,
+                  "top": 26.803
+                },
+                "text": "Storm response across five wat…"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 320
+        }
+      ],
+      "schemaVersion": "figurestead.responsive-header-study/1",
+      "sourceFixture": "specimen-study/corpus-v0.2/scenes/watershed_storm_response.json",
+      "studyOnly": true,
+      "width": 320
+    },
+    {
+      "baseHeight": 196,
+      "engine": "chromium",
+      "fullText": {
+        "subtitle": "Five synthetic site responses after one rainfall pulse",
+        "title": "Storm response across five watershed sites"
+      },
+      "metrics": [
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 196,
+            "width": 362
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 89.08
+          },
+          "plotHeight": 65.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 214,
+            "width": 362
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 172.001,
+            "left": 28.698,
+            "right": 340,
+            "top": 89.08
+          },
+          "plotHeight": 82.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 196,
+            "width": 362
+          },
+          "extraHeaderHeight": 0,
+          "headerHeight": 27.629,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 72
+          },
+          "plotHeight": 82.921,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 52.56,
+                "bounds": {
+                  "bottom": 54.432,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 45.674
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershe…"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 196,
+            "width": 362
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 89.08
+          },
+          "plotHeight": 65.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 214,
+            "width": 362
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 172.001,
+            "left": 28.698,
+            "right": 340,
+            "top": 89.08
+          },
+          "plotHeight": 82.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 196,
+            "width": 362
+          },
+          "extraHeaderHeight": 0,
+          "headerHeight": 27.629,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 72
+          },
+          "plotHeight": 82.921,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.698,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 52.56,
+                "bounds": {
+                  "bottom": 54.432,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 45.674
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershe…"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 362
+        }
+      ],
+      "schemaVersion": "figurestead.responsive-header-study/1",
+      "sourceFixture": "specimen-study/corpus-v0.2/scenes/watershed_storm_response.json",
+      "studyOnly": true,
+      "width": 362
+    },
+    {
+      "baseHeight": 211,
+      "engine": "chromium",
+      "fullText": {
+        "subtitle": "Five synthetic site responses after one rainfall pulse",
+        "title": "Storm response across five watershed sites"
+      },
+      "metrics": [
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 211,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 80.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 229,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 187.001,
+            "left": 28.698,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 97.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 211,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 80.841,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 211,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 80.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 229,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 187.001,
+            "left": 28.698,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 97.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 211,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 80.841,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.698,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.698,
+                  "right": 321.295,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.698,
+                  "right": 332.132,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.698,
+                  "right": 70.842,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        }
+      ],
+      "schemaVersion": "figurestead.responsive-header-study/1",
+      "sourceFixture": "specimen-study/corpus-v0.2/scenes/watershed_storm_response.json",
+      "studyOnly": true,
+      "width": 390
+    },
+    {
+      "baseHeight": 173,
+      "engine": "firefox",
+      "fullText": {
+        "subtitle": "Five synthetic site responses after one rainfall pulse",
+        "title": "Storm response across five watershed sites"
+      },
+      "metrics": [
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 173,
+            "width": 320
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 89.08
+          },
+          "plotHeight": 42.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 294.111,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall…"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 247.961,
+                  "top": 26.803
+                },
+                "text": "Storm response across five"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 155.194,
+                  "top": 43.883
+                },
+                "text": "watershed sites"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 203,
+            "width": 320
+          },
+          "extraHeaderHeight": 29.23,
+          "headerHeight": 56.859,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 161.151,
+            "left": 28.694,
+            "right": 298,
+            "top": 101.23
+          },
+          "plotHeight": 59.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 288.694,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall"
+              },
+              {
+                "baseline": 81.79,
+                "bounds": {
+                  "bottom": 83.662,
+                  "left": 28.694,
+                  "right": 55.778,
+                  "top": 74.904
+                },
+                "text": "pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 247.961,
+                  "top": 26.803
+                },
+                "text": "Storm response across five"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 155.194,
+                  "top": 43.883
+                },
+                "text": "watershed sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 173,
+            "width": 320
+          },
+          "extraHeaderHeight": 0,
+          "headerHeight": 27.629,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 72
+          },
+          "plotHeight": 59.921,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 52.56,
+                "bounds": {
+                  "bottom": 54.432,
+                  "left": 28.694,
+                  "right": 294.111,
+                  "top": 45.674
+                },
+                "text": "Five synthetic site responses after one rainfall…"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 290.128,
+                  "top": 26.803
+                },
+                "text": "Storm response across five wat…"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 173,
+            "width": 320
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 89.08
+          },
+          "plotHeight": 42.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 294.111,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall…"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 247.961,
+                  "top": 26.803
+                },
+                "text": "Storm response across five"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 155.194,
+                  "top": 43.883
+                },
+                "text": "watershed sites"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 203,
+            "width": 320
+          },
+          "extraHeaderHeight": 29.23,
+          "headerHeight": 56.859,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 161.151,
+            "left": 28.694,
+            "right": 298,
+            "top": 101.23
+          },
+          "plotHeight": 59.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 288.694,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall"
+              },
+              {
+                "baseline": 81.79,
+                "bounds": {
+                  "bottom": 83.662,
+                  "left": 28.694,
+                  "right": 55.778,
+                  "top": 74.904
+                },
+                "text": "pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 247.961,
+                  "top": 26.803
+                },
+                "text": "Storm response across five"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 155.194,
+                  "top": 43.883
+                },
+                "text": "watershed sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 320
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 173,
+            "width": 320
+          },
+          "extraHeaderHeight": 0,
+          "headerHeight": 27.629,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 72
+          },
+          "plotHeight": 59.921,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 131.921,
+            "left": 28.694,
+            "right": 298,
+            "top": 72
+          },
+          "preWrapPlotHeight": 59.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 52.56,
+                "bounds": {
+                  "bottom": 54.432,
+                  "left": 28.694,
+                  "right": 294.111,
+                  "top": 45.674
+                },
+                "text": "Five synthetic site responses after one rainfall…"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 290.128,
+                  "top": 26.803
+                },
+                "text": "Storm response across five wat…"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 320
+        }
+      ],
+      "schemaVersion": "figurestead.responsive-header-study/1",
+      "sourceFixture": "specimen-study/corpus-v0.2/scenes/watershed_storm_response.json",
+      "studyOnly": true,
+      "width": 320
+    },
+    {
+      "baseHeight": 196,
+      "engine": "firefox",
+      "fullText": {
+        "subtitle": "Five synthetic site responses after one rainfall pulse",
+        "title": "Storm response across five watershed sites"
+      },
+      "metrics": [
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 196,
+            "width": 362
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 89.08
+          },
+          "plotHeight": 65.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 214,
+            "width": 362
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 172.001,
+            "left": 28.694,
+            "right": 340,
+            "top": 89.08
+          },
+          "plotHeight": 82.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 196,
+            "width": 362
+          },
+          "extraHeaderHeight": 0,
+          "headerHeight": 27.629,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 72
+          },
+          "plotHeight": 82.921,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 52.56,
+                "bounds": {
+                  "bottom": 54.432,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 45.674
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershe…"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": false,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 196,
+            "width": 362
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 89.08
+          },
+          "plotHeight": 65.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 214,
+            "width": 362
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 172.001,
+            "left": 28.694,
+            "right": 340,
+            "top": 89.08
+          },
+          "plotHeight": 82.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 362
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 196,
+            "width": 362
+          },
+          "extraHeaderHeight": 0,
+          "headerHeight": 27.629,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 72
+          },
+          "plotHeight": 82.921,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 154.921,
+            "left": 28.694,
+            "right": 340,
+            "top": 72
+          },
+          "preWrapPlotHeight": 82.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 52.56,
+                "bounds": {
+                  "bottom": 54.432,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 45.674
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": false,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershe…"
+              }
+            ]
+          },
+          "visualTextComplete": false,
+          "width": 362
+        }
+      ],
+      "schemaVersion": "figurestead.responsive-header-study/1",
+      "sourceFixture": "specimen-study/corpus-v0.2/scenes/watershed_storm_response.json",
+      "studyOnly": true,
+      "width": 362
+    },
+    {
+      "baseHeight": 211,
+      "engine": "firefox",
+      "fullText": {
+        "subtitle": "Five synthetic site responses after one rainfall pulse",
+        "title": "Storm response across five watershed sites"
+      },
+      "metrics": [
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 211,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 80.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 229,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 187.001,
+            "left": 28.694,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 97.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 211,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 80.841,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "slipware",
+          "themeName": "Slipware",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 211,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 80.841,
+          "policy": "A",
+          "policyLabel": "A · title-only wrap",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 229,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 187.001,
+            "left": 28.694,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 97.921,
+          "policy": "B",
+          "policyLabel": "B · grow canvas",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        },
+        {
+          "accessibilityTextComplete": true,
+          "candidateFloorClear": true,
+          "candidatePlotFloor": 72,
+          "canvas": {
+            "height": 211,
+            "width": 390
+          },
+          "extraHeaderHeight": 17.08,
+          "headerHeight": 44.709,
+          "headerToPlotClearance": 17.568,
+          "multiPanelReferenceClear": false,
+          "multiPanelReferenceFloor": 120,
+          "plot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 89.08
+          },
+          "plotHeight": 80.841,
+          "policy": "C",
+          "policyLabel": "C · plot-floor guard",
+          "preWrapPlot": {
+            "bottom": 169.921,
+            "left": 28.694,
+            "right": 368,
+            "top": 72
+          },
+          "preWrapPlotHeight": 97.921,
+          "productionWrapping": false,
+          "scale": 0.55,
+          "subtitle": {
+            "complete": true,
+            "lineCount": 1,
+            "lines": [
+              {
+                "baseline": 69.64,
+                "bounds": {
+                  "bottom": 71.512,
+                  "left": 28.694,
+                  "right": 321.194,
+                  "top": 62.754
+                },
+                "text": "Five synthetic site responses after one rainfall pulse"
+              }
+            ]
+          },
+          "theme": "deep_observatory_sage_core",
+          "themeName": "Deep Observatory",
+          "title": {
+            "complete": true,
+            "lineCount": 2,
+            "lines": [
+              {
+                "baseline": 37.44,
+                "bounds": {
+                  "bottom": 40.352,
+                  "left": 28.694,
+                  "right": 332.294,
+                  "top": 26.803
+                },
+                "text": "Storm response across five watershed"
+              },
+              {
+                "baseline": 54.52,
+                "bounds": {
+                  "bottom": 54.718,
+                  "left": 28.694,
+                  "right": 70.861,
+                  "top": 43.917
+                },
+                "text": "sites"
+              }
+            ]
+          },
+          "visualTextComplete": true,
+          "width": 390
+        }
+      ],
+      "schemaVersion": "figurestead.responsive-header-study/1",
+      "sourceFixture": "specimen-study/corpus-v0.2/scenes/watershed_storm_response.json",
+      "studyOnly": true,
+      "width": 390
+    }
+  ],
+  "schemaVersion": "figurestead.responsive-header-study-evidence/1"
+}

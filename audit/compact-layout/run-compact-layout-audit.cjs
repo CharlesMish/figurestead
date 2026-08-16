@@ -169,7 +169,15 @@ function verifyAfter(captures, paperExports, footerOptionality) {
     before.captures.forEach((capture) => Object.values(capture.bounds).forEach((item) => beforeFonts.set(`${capture.pageName}:${item.sceneId}`, item.font)));
     captures.filter((capture) => capture.engine === "chromium" && capture.deviceScaleFactor === 1).forEach((capture) => Object.values(capture.bounds).forEach((item) => {
       const baseline = beforeFonts.get(`${capture.pageName}:${item.sceneId}`);
-      if (baseline && JSON.stringify(baseline) !== JSON.stringify(item.font)) failures.push(`${capture.pageName}/${item.sceneId}: typography changed`);
+      if (!baseline) return;
+      const expected = {
+        ...baseline,
+        title: baseline.title === 13 ? 14 : baseline.title,
+        signature: baseline.signature === 8 ? 9 : baseline.signature,
+      };
+      if (JSON.stringify(expected) !== JSON.stringify(item.font)) {
+        failures.push(`${capture.pageName}/${item.sceneId}: typography changed outside the accepted 13→14 px compact title and 8→9 px compact provenance floors`);
+      }
     }));
   }
   if (!paperExports || paperExports.length !== 2) failures.push("paper export evidence is missing");
@@ -192,7 +200,7 @@ function verifyAfter(captures, paperExports, footerOptionality) {
       "document-level horizontal overflow is zero",
       "measured annotation regions remain inside the CSS canvas",
       "DPR2 backing dimensions match the CSS canvas at 2×",
-      "axis/title/signature font sizes match the frozen before-state",
+      "subtitle, axis, legend, and wide typography match the frozen state; only compact title 13→14 px and provenance 8→9 px floors differ",
       "89 mm and 183 mm SVG exports retain a 6.372 pt minimum against the 6 pt project floor",
       "removing an optional provenance footer reclaims its reserved plot-height band",
     ],

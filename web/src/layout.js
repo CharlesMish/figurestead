@@ -1,3 +1,5 @@
+import { SCREEN_PROJECT_LEGIBILITY_FLOORS } from "./screen-legibility.js";
+
 const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
 
 export const MIN_CANVAS_WIDTH = 320;
@@ -16,11 +18,11 @@ export function deriveLayout(width, height) {
     scale,
     plot: { left, right: width - right, top, bottom: height - bottom },
     font: {
-      title: clamp(19 * scale, 13, 22),
+      title: clamp(19 * scale, 14, 22),
       subtitle: clamp(12.5 * scale, 9, 14),
       axis: clamp(12 * scale, narrow ? 10 : 9, 13),
       legend: clamp(11.5 * scale, narrow ? 9.5 : 8.5, 13),
-      signature: clamp(10 * scale, narrow ? 8 : 7.5, 11),
+      signature: clamp(10 * scale, narrow ? SCREEN_PROJECT_LEGIBILITY_FLOORS.compactProvenancePx : 7.5, 11),
     },
     provenance: { left, right: width - right, y: height - clamp(12 * scale, 10, 16) },
   };

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "figurestead.readme-audit/1",
   "result": "PASS",
-  "baseline": "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89",
+  "baseline": "a8f7831aad1c77c5b4577daf0cfb0c7752347833",
   "outline": [
     "Figurestead",
     "Start here",
@@ -63,11 +63,19 @@
   ],
   "protectedChanges": [
     ".github/workflows/pr-correctness.yml",
-    "web/THIRD_PARTY_NOTICES.md"
+    "web/src/figure-layout.js",
+    "web/src/layout.js",
+    "web/src/paper-profile.js",
+    "web/src/screen-legibility.js",
+    "web/test/readability-micro-polish.mjs"
   ],
   "authorizedProtectedChanges": [
     ".github/workflows/pr-correctness.yml",
-    "web/THIRD_PARTY_NOTICES.md"
+    "web/src/figure-layout.js",
+    "web/src/layout.js",
+    "web/src/paper-profile.js",
+    "web/src/screen-legibility.js",
+    "web/test/readability-micro-polish.mjs"
   ],
   "unexpectedProtectedChanges": [],
   "localPathLeaks": [],

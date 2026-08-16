@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT = ROOT / "docs" / "current-head-visual-review"
-BASELINE = "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89"
+BASELINE = "a8f7831aad1c77c5b4577daf0cfb0c7752347833"
 MONTAGE = "docs/assets/readme/figurestead-at-a-glance.png"
 MONTAGE_SOURCE = "specimen-study/evidence/corpus-v0.2/screenshots/chromium-montage-1920x1080.png"
 SOCIAL = "docs/assets/readme/github-social-preview.png"
@@ -24,58 +24,23 @@ SOCIAL_SOURCE = "docs/social-preview-study/candidate-c-lead-plus-pair.png"
 MATRIX = "docs/assets/readme/populated-categorical-response-matrix.png"
 FONT = Path("/System/Library/Fonts/Supplemental/Arial Bold.ttf")
 
-CHANGED_SPECIMENS = {
-    "circadian_phase_shift.png": {
-        "oldSha256": "abc805045c8f1bcb237034ac3c6966c148dd01c2fbb919545eacf32007c590ac",
-        "oldDomain": {"x": [-1.92, 25.92], "y": [0.374676, 1.6104239999999999]},
-        "currentDomain": {"x": [0, 24], "y": [0.35, 1.75]},
-    },
-    "dose_response_plate.png": {
-        "oldSha256": "10b7bc8d23509748f979bbc1fcb9dbd2196ffc203c39b46202dfd6847eb1c8ce",
-        "oldDomain": {"x": [-0.64, 8.64], "y": [0.18781199999999998, 1.923288]},
-        "currentDomain": {"x": [-0.3, 8.3], "y": [0, 1.95]},
-    },
-    "gene_expression_recovery.png": {
-        "oldSha256": "200c7ece927a9724cd008e1be002fd10ab635069520ca27f5a49cdd73207dcc5",
-        "oldDomain": {"x": [-5.76, 77.76], "y": [-2.375416, 2.7955159999999997]},
-        "currentDomain": {"x": [0, 72], "y": [-2.4, 2.7]},
-    },
-    "habitat_class_response.png": {
-        "oldSha256": "1c3a0c33f1f28bb2cd64422632b6614c38c5c7c43f8e907ef8fbed89ae1d225b",
-        "oldDomain": {"x": [-0.5, 9.5], "y": [0.50362, 2.10268]},
-        "currentDomain": {"x": [-0.5, 9.5], "y": [0.3, 2.3]},
-    },
-    "instrument_calibration.png": {
-        "oldSha256": "92190be9c6b86b976b9245b20070c5dc7fd7bc4a680abb44083e8803120b997c",
-        "oldDomain": {"x": [-7.2, 97.2], "y": [-10.3412, 101.3059]},
-        "currentDomain": {"x": [-3, 93], "y": [-5, 100]},
-    },
-    "lab_precision.png": {
-        "oldSha256": "05e5ff9edd851fbfbd2c8488d55bc567792f64d112518db6f40b4ddde580b507",
-        "oldDomain": {"x": [-0.5, 5.5], "y": [94.42079600000001, 103.87630399999999]},
-        "currentDomain": {"x": [-0.5, 5.5], "y": [92, 108]},
-    },
-    "paired_seasonal_distributions.png": {
-        "oldSha256": "a56c9a2b2cce81abcd4936eff21f458386e4b41b1412048bde0036d7487594e3",
-        "oldDomain": {"x": [-0.5, 3.5], "y": [0.291028, 0.843072]},
-        "currentDomain": {"x": [-0.5, 3.5], "y": [0.25, 0.9]},
-    },
-    "particle_size_relationship.png": {
-        "oldSha256": "1d0304ac93a2225c9e3ae59696746e20bb80e9a8f25de2fa0c5f1c05a36114ae",
-        "oldDomain": {"x": [-1.310076, 62.930376], "y": [-1.017468, 17.475368]},
-        "currentDomain": {"x": [0, 62], "y": [0, 17]},
-    },
-    "treatment_replicates.png": {
-        "oldSha256": "d658f3fa1998c0a6260f91886db714909101a4069e92eda97e90245d6de21e4e",
-        "oldDomain": {"x": [-0.5, 4.5], "y": [0.686836, 2.3755640000000002]},
-        "currentDomain": {"x": [-0.5, 4.5], "y": [0.65, 2.35]},
-    },
-    "watershed_storm_response.png": {
-        "oldSha256": "4be8dc0356b26a8929e18c342195a56ebedc0934f161dcdc1034c64dfb96a0ec",
-        "oldDomain": {"x": [-1.36, 18.36], "y": [-0.021600000000000008, 2.0316]},
-        "currentDomain": {"x": [0, 17], "y": [0, 2.05]},
-    },
-}
+CHANGED_SPECIMENS = (
+    "circadian_phase_shift.png",
+    "dose_response_plate.png",
+    "field_sampling_coverage.png",
+    "gene_expression_recovery.png",
+    "habitat_class_response.png",
+    "instrument_calibration.png",
+    "lab_precision.png",
+    "migration_monitoring_coverage.png",
+    "paired_seasonal_distributions.png",
+    "particle_size_relationship.png",
+    "reservoir_oxygen_thresholds.png",
+    "treatment_replicates.png",
+    "watershed_storm_response.png",
+)
+
+EXPECTED_DIFFERENCE = "compact 14 px title floor and screen provenance legibility treatment only"
 
 
 def sha256_bytes(payload: bytes) -> str:
@@ -135,8 +100,8 @@ def update_specimen_summary() -> None:
             evidence["sha256"] = sha256(current)
     summary["outwardVisualRefresh"] = {
         "baselineCommit": BASELINE,
-        "scope": "ten domain-sensitive individual frames and the Chromium wide montage",
-        "reason": "accepted authored scale domains now control rendered geometry",
+        "scope": "thirteen compact individual frames and the Chromium wide montage",
+        "reason": EXPECTED_DIFFERENCE,
     }
     summary_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
 
@@ -165,7 +130,7 @@ def update_social_manifest(candidate: Path, placements: list[dict]) -> None:
     })
     manifest["currentHeadRefresh"] = {
         "baselineCommit": BASELINE,
-        "reason": "selected outward assets now depict accepted authored-domain geometry",
+        "reason": EXPECTED_DIFFERENCE,
         "compositionChanged": False,
         "historicalCandidatesRetained": ["B", "D", "comparison", "smallPreviewComparison"],
         "reviewEvidence": "docs/current-head-visual-review/manifest.json",
@@ -205,15 +170,14 @@ def main() -> int:
 
     specimen_records = []
     individual = ROOT / "specimen-study" / "evidence" / "corpus-v0.2" / "individual"
-    for filename, expected in CHANGED_SPECIMENS.items():
+    for filename in CHANGED_SPECIMENS:
         current = individual / filename
         previous = baseline_bytes(current.relative_to(ROOT).as_posix())
-        assert sha256_bytes(previous) == expected["oldSha256"]
         specimen_records.append({
             "path": current.relative_to(ROOT).as_posix(),
-            **expected,
+            "oldSha256": sha256_bytes(previous),
             "newSha256": sha256(current),
-            "expectedDifference": "authored scale-domain precedence only",
+            "expectedDifference": EXPECTED_DIFFERENCE,
         })
 
     matrix_current = ROOT / MATRIX
@@ -242,7 +206,8 @@ def main() -> int:
         "claims": {
             "compositionChanged": False,
             "corpusDataChanged": False,
-            "themeChanged": False,
+            "themeTokensChanged": False,
+            "resolvedProvenanceTreatmentChanged": True,
             "githubSettingsChanged": False,
         },
     }

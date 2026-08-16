@@ -13,7 +13,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
-BASELINE = "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89"
+BASELINE = "a8f7831aad1c77c5b4577daf0cfb0c7752347833"
 README = ROOT / "README.md"
 PROTECTED = [
     "site",
@@ -30,7 +30,11 @@ PROTECTED = [
 ]
 AUTHORIZED_PROTECTED_CHANGES = {
     ".github/workflows/pr-correctness.yml",
-    "web/THIRD_PARTY_NOTICES.md",
+    "web/src/figure-layout.js",
+    "web/src/layout.js",
+    "web/src/paper-profile.js",
+    "web/src/screen-legibility.js",
+    "web/test/readability-micro-polish.mjs",
 }
 
 

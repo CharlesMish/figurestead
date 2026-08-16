@@ -19,7 +19,10 @@ order, `plot → ticks → x title → optional footer` and
 `y title → y ticks → plot`. Canvas uses the actual `measureText()` bounds; SVG
 and non-DOM export use a deterministic conservative monospace metric. The
 second resolution pass recomputes scales and geometry against the refined plot
-rectangle. No public API or typography values changed.
+rectangle. A later readability micro-pass changed only the accepted compact
+single-panel title floor from 13 to 14 px and compact provenance floor from 8
+to 9 px; the audit permits exactly those two deltas and rejects any other
+typographic drift.
 
 At the same montage target, all eight cases now have `4 px` x-tick/title gaps,
 `5 px` x-title/provenance gaps, `5.15 px` y-title/tick gaps, and zero measured
@@ -37,7 +40,7 @@ intersections. Removing the optional footer reclaims `12.5 px` of plot height.
 
 `after/bounds.json` is the acceptance record. It asserts positive measured
 inter-region gaps, zero overlap, zero document overflow, correct DPR2 backing
-dimensions, unchanged typography, footer optionality, and the unchanged
+dimensions, controlled compact typography, footer optionality, and the unchanged
 6.372 pt paper-pair minimum against Figurestead's 6 pt project floor.
 
 ## Commands

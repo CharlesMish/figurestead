@@ -3,7 +3,7 @@
   "engine": "firefox",
   "playwrightVersion": "1.62.0",
   "browserVersion": "153.0",
-  "nodeVersion": "v24.14.0",
+  "nodeVersion": "v24.19.0",
   "executableSha256": "65ecab21ee6aa479836eb27aec213e15295f07ca21b5aa995d45bcaff4d09d7d",
   "cases": [
     {
@@ -47,79 +47,79 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-dxfqdo0q1gr-title figurestead-dxfqdo0q1gr-description",
+            "labelledBy": "figurestead-16ivue2e759-title figurestead-16ivue2e759-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-xf8g0rketgb-title figurestead-xf8g0rketgb-description",
+            "labelledBy": "figurestead-wbez59ckzm-title figurestead-wbez59ckzm-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-dg94clsak7l-title figurestead-dg94clsak7l-description",
+            "labelledBy": "figurestead-oc3l1su5cw-title figurestead-oc3l1su5cw-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-5icpmaqa82f-title figurestead-5icpmaqa82f-description",
+            "labelledBy": "figurestead-0gmayp8ks5yv-title figurestead-0gmayp8ks5yv-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-we91rnb8ri-title figurestead-we91rnb8ri-description",
+            "labelledBy": "figurestead-udsxx8yq0d-title figurestead-udsxx8yq0d-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-87dsec2p4wp-title figurestead-87dsec2p4wp-description",
+            "labelledBy": "figurestead-vo6ysh7e3q-title figurestead-vo6ysh7e3q-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-3nvnay5a14r-title figurestead-3nvnay5a14r-description",
+            "labelledBy": "figurestead-gz74w23iqm-title figurestead-gz74w23iqm-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-24c8dxsl0m7-title figurestead-24c8dxsl0m7-description",
+            "labelledBy": "figurestead-0pcd0d334ly-title figurestead-0pcd0d334ly-description",
             "targetsExist": true
           },
           {
             "sceneId": "gene_expression_recovery",
             "role": "img",
-            "labelledBy": "figurestead-i53jngyie5-title figurestead-i53jngyie5-description",
+            "labelledBy": "figurestead-aiflyxo07ll-title figurestead-aiflyxo07ll-description",
             "targetsExist": true
           },
           {
             "sceneId": "particle_size_relationship",
             "role": "img",
-            "labelledBy": "figurestead-rsmemgcbu8-title figurestead-rsmemgcbu8-description",
+            "labelledBy": "figurestead-stxfupstxqh-title figurestead-stxfupstxqh-description",
             "targetsExist": true
           },
           {
             "sceneId": "habitat_class_response",
             "role": "img",
-            "labelledBy": "figurestead-yya0idg3goa-title figurestead-yya0idg3goa-description",
+            "labelledBy": "figurestead-qf8uepvmkbb-title figurestead-qf8uepvmkbb-description",
             "targetsExist": true
           },
           {
             "sceneId": "lab_precision",
             "role": "img",
-            "labelledBy": "figurestead-xqyj1f0z72-title figurestead-xqyj1f0z72-description",
+            "labelledBy": "figurestead-p1c5p4g1a8-title figurestead-p1c5p4g1a8-description",
             "targetsExist": true
           },
           {
             "sceneId": "migration_monitoring_coverage",
             "role": "img",
-            "labelledBy": "figurestead-b7i1dg4kzft-title figurestead-b7i1dg4kzft-description",
+            "labelledBy": "figurestead-w4q9wkb97d-title figurestead-w4q9wkb97d-description",
             "targetsExist": true
           }
         ],
@@ -130,11 +130,12 @@
             "renderer": "line",
             "theme": "slipware",
             "seed": 2409,
-            "fingerprint": "fnv1a32-6e66ac0e",
+            "fingerprint": "fnv1a32-f5a2ebb4",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -157,11 +158,12 @@
             "renderer": "line",
             "theme": "deep_observatory_sage_core",
             "seed": 3112,
-            "fingerprint": "fnv1a32-00d5a3c5",
+            "fingerprint": "fnv1a32-aaed3d69",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -184,11 +186,12 @@
             "renderer": "scatter",
             "theme": "registration_ink",
             "seed": 5309,
-            "fingerprint": "fnv1a32-8562cee5",
+            "fingerprint": "fnv1a32-888226cb",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -211,11 +214,12 @@
             "renderer": "scatter",
             "theme": "lavender_fog_notebook",
             "seed": 6143,
-            "fingerprint": "fnv1a32-280b339d",
+            "fingerprint": "fnv1a32-6e2a0759",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -238,11 +242,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 8119,
-            "fingerprint": "fnv1a32-a8d8128e",
+            "fingerprint": "fnv1a32-35723736",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -271,11 +276,12 @@
             "renderer": "strip_summary",
             "theme": "lavender_fog_notebook",
             "seed": 10061,
-            "fingerprint": "fnv1a32-af792465",
+            "fingerprint": "fnv1a32-38671e21",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -308,6 +314,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -335,6 +342,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_observations"
               ],
@@ -357,11 +365,12 @@
             "renderer": "line",
             "theme": "ultraviolet_laboratory",
             "seed": 4217,
-            "fingerprint": "fnv1a32-951e566f",
+            "fingerprint": "fnv1a32-993b2f61",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -384,11 +393,12 @@
             "renderer": "scatter",
             "theme": "midnight_transit_signal_slate",
             "seed": 7041,
-            "fingerprint": "fnv1a32-dc072080",
+            "fingerprint": "fnv1a32-c571ec9e",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -411,11 +421,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 15401,
-            "fingerprint": "fnv1a32-b8a2911b",
+            "fingerprint": "fnv1a32-7fd042a8",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -449,11 +460,12 @@
             "renderer": "strip_summary",
             "theme": "ultraviolet_laboratory",
             "seed": 9097,
-            "fingerprint": "fnv1a32-93d46739",
+            "fingerprint": "fnv1a32-c5a20348",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -488,6 +500,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -669,7 +682,7 @@
         },
         "categoricalSvgConsistency": {
           "categoryOrder": "headwater|riffle|deep pool|side channel|floodplain|wet meadow|tidal creek|mudflat|seagrass bed|open estuary",
-          "fingerprint": "fnv1a32-b8a2911b",
+          "fingerprint": "fnv1a32-7fd042a8",
           "markIdsMatch": true,
           "fullLabelsPresent": true
         },
@@ -680,19 +693,19 @@
           "studyLinked": true
         },
         "pixelHashes": {
-          "watershed_storm_response": "fnv1a32-2f020afe@674x407",
-          "circadian_phase_shift": "fnv1a32-c441267d@674x407",
-          "instrument_calibration": "fnv1a32-2194267c@674x407",
-          "dose_response_plate": "fnv1a32-5f9800bc@674x407",
-          "treatment_replicates": "fnv1a32-fa38f421@674x407",
-          "paired_seasonal_distributions": "fnv1a32-60acf563@674x407",
-          "field_sampling_coverage": "fnv1a32-1e08c7ef@674x407",
-          "reservoir_oxygen_thresholds": "fnv1a32-6ebbc729@674x407",
-          "gene_expression_recovery": "fnv1a32-2c421664@674x407",
-          "particle_size_relationship": "fnv1a32-a12a408d@674x407",
-          "habitat_class_response": "fnv1a32-112105df@674x407",
-          "lab_precision": "fnv1a32-25fe90fa@674x407",
-          "migration_monitoring_coverage": "fnv1a32-d89d234b@674x407"
+          "watershed_storm_response": "fnv1a32-3ee53353@674x407",
+          "circadian_phase_shift": "fnv1a32-5d188489@674x407",
+          "instrument_calibration": "fnv1a32-419225cf@674x407",
+          "dose_response_plate": "fnv1a32-39ff1483@674x407",
+          "treatment_replicates": "fnv1a32-b65bf89d@674x407",
+          "paired_seasonal_distributions": "fnv1a32-8c8454b5@674x407",
+          "field_sampling_coverage": "fnv1a32-7a959518@674x407",
+          "reservoir_oxygen_thresholds": "fnv1a32-53f64509@674x407",
+          "gene_expression_recovery": "fnv1a32-79fdaf5c@674x407",
+          "particle_size_relationship": "fnv1a32-0aae6464@674x407",
+          "habitat_class_response": "fnv1a32-ee477569@674x407",
+          "lab_precision": "fnv1a32-df2b1aca@674x407",
+          "migration_monitoring_coverage": "fnv1a32-c63010bb@674x407"
         }
       },
       "keyboard": {
@@ -1152,79 +1165,79 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-lzlaurlsraa-title figurestead-lzlaurlsraa-description",
+            "labelledBy": "figurestead-jz4ok0qv4qg-title figurestead-jz4ok0qv4qg-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-h9k8cqihcts-title figurestead-h9k8cqihcts-description",
+            "labelledBy": "figurestead-dlpzof17706-title figurestead-dlpzof17706-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-28mrq05i0ua-title figurestead-28mrq05i0ua-description",
+            "labelledBy": "figurestead-9e96zacd0e5-title figurestead-9e96zacd0e5-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-q9bo1xts8o-title figurestead-q9bo1xts8o-description",
+            "labelledBy": "figurestead-o84kc2qnbtp-title figurestead-o84kc2qnbtp-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-hv8pnaho314-title figurestead-hv8pnaho314-description",
+            "labelledBy": "figurestead-aj5i4hfpeqb-title figurestead-aj5i4hfpeqb-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-l2qbvuas1f-title figurestead-l2qbvuas1f-description",
+            "labelledBy": "figurestead-w7bzlgz84kj-title figurestead-w7bzlgz84kj-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-q70t2q4hf6e-title figurestead-q70t2q4hf6e-description",
+            "labelledBy": "figurestead-glckzgeao4j-title figurestead-glckzgeao4j-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-s3rltp5hi19-title figurestead-s3rltp5hi19-description",
+            "labelledBy": "figurestead-62m69qkf6r8-title figurestead-62m69qkf6r8-description",
             "targetsExist": true
           },
           {
             "sceneId": "gene_expression_recovery",
             "role": "img",
-            "labelledBy": "figurestead-2slcuz2qkp6-title figurestead-2slcuz2qkp6-description",
+            "labelledBy": "figurestead-vkxjnivqkm-title figurestead-vkxjnivqkm-description",
             "targetsExist": true
           },
           {
             "sceneId": "particle_size_relationship",
             "role": "img",
-            "labelledBy": "figurestead-qzbftirlxq-title figurestead-qzbftirlxq-description",
+            "labelledBy": "figurestead-gj5tt485w4v-title figurestead-gj5tt485w4v-description",
             "targetsExist": true
           },
           {
             "sceneId": "habitat_class_response",
             "role": "img",
-            "labelledBy": "figurestead-svc430das7-title figurestead-svc430das7-description",
+            "labelledBy": "figurestead-ovaaaotd4-title figurestead-ovaaaotd4-description",
             "targetsExist": true
           },
           {
             "sceneId": "lab_precision",
             "role": "img",
-            "labelledBy": "figurestead-09v0brgl0zd-title figurestead-09v0brgl0zd-description",
+            "labelledBy": "figurestead-cvelzf52jj4-title figurestead-cvelzf52jj4-description",
             "targetsExist": true
           },
           {
             "sceneId": "migration_monitoring_coverage",
             "role": "img",
-            "labelledBy": "figurestead-c7ott90c7yt-title figurestead-c7ott90c7yt-description",
+            "labelledBy": "figurestead-ytqynfb4tfk-title figurestead-ytqynfb4tfk-description",
             "targetsExist": true
           }
         ],
@@ -1235,11 +1248,12 @@
             "renderer": "line",
             "theme": "slipware",
             "seed": 2409,
-            "fingerprint": "fnv1a32-6e66ac0e",
+            "fingerprint": "fnv1a32-f5a2ebb4",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -1262,11 +1276,12 @@
             "renderer": "line",
             "theme": "deep_observatory_sage_core",
             "seed": 3112,
-            "fingerprint": "fnv1a32-00d5a3c5",
+            "fingerprint": "fnv1a32-aaed3d69",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -1289,11 +1304,12 @@
             "renderer": "scatter",
             "theme": "registration_ink",
             "seed": 5309,
-            "fingerprint": "fnv1a32-8562cee5",
+            "fingerprint": "fnv1a32-888226cb",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -1316,11 +1332,12 @@
             "renderer": "scatter",
             "theme": "lavender_fog_notebook",
             "seed": 6143,
-            "fingerprint": "fnv1a32-280b339d",
+            "fingerprint": "fnv1a32-6e2a0759",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -1343,11 +1360,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 8119,
-            "fingerprint": "fnv1a32-a8d8128e",
+            "fingerprint": "fnv1a32-35723736",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -1376,11 +1394,12 @@
             "renderer": "strip_summary",
             "theme": "lavender_fog_notebook",
             "seed": 10061,
-            "fingerprint": "fnv1a32-af792465",
+            "fingerprint": "fnv1a32-38671e21",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -1413,6 +1432,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -1440,6 +1460,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_observations"
               ],
@@ -1462,11 +1483,12 @@
             "renderer": "line",
             "theme": "ultraviolet_laboratory",
             "seed": 4217,
-            "fingerprint": "fnv1a32-951e566f",
+            "fingerprint": "fnv1a32-993b2f61",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -1489,11 +1511,12 @@
             "renderer": "scatter",
             "theme": "midnight_transit_signal_slate",
             "seed": 7041,
-            "fingerprint": "fnv1a32-dc072080",
+            "fingerprint": "fnv1a32-c571ec9e",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -1516,11 +1539,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 15401,
-            "fingerprint": "fnv1a32-b8a2911b",
+            "fingerprint": "fnv1a32-7fd042a8",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -1554,11 +1578,12 @@
             "renderer": "strip_summary",
             "theme": "ultraviolet_laboratory",
             "seed": 9097,
-            "fingerprint": "fnv1a32-93d46739",
+            "fingerprint": "fnv1a32-c5a20348",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -1593,6 +1618,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -1774,7 +1800,7 @@
         },
         "categoricalSvgConsistency": {
           "categoryOrder": "headwater|riffle|deep pool|side channel|floodplain|wet meadow|tidal creek|mudflat|seagrass bed|open estuary",
-          "fingerprint": "fnv1a32-b8a2911b",
+          "fingerprint": "fnv1a32-7fd042a8",
           "markIdsMatch": true,
           "fullLabelsPresent": true
         },
@@ -1785,19 +1811,19 @@
           "studyLinked": true
         },
         "pixelHashes": {
-          "watershed_storm_response": "fnv1a32-2f020afe@674x407",
-          "circadian_phase_shift": "fnv1a32-c441267d@674x407",
-          "instrument_calibration": "fnv1a32-2194267c@674x407",
-          "dose_response_plate": "fnv1a32-5f9800bc@674x407",
-          "treatment_replicates": "fnv1a32-fa38f421@674x407",
-          "paired_seasonal_distributions": "fnv1a32-60acf563@674x407",
-          "field_sampling_coverage": "fnv1a32-1e08c7ef@674x407",
-          "reservoir_oxygen_thresholds": "fnv1a32-6ebbc729@674x407",
-          "gene_expression_recovery": "fnv1a32-2c421664@674x407",
-          "particle_size_relationship": "fnv1a32-a12a408d@674x407",
-          "habitat_class_response": "fnv1a32-112105df@674x407",
-          "lab_precision": "fnv1a32-25fe90fa@674x407",
-          "migration_monitoring_coverage": "fnv1a32-d89d234b@674x407"
+          "watershed_storm_response": "fnv1a32-3ee53353@674x407",
+          "circadian_phase_shift": "fnv1a32-5d188489@674x407",
+          "instrument_calibration": "fnv1a32-419225cf@674x407",
+          "dose_response_plate": "fnv1a32-39ff1483@674x407",
+          "treatment_replicates": "fnv1a32-b65bf89d@674x407",
+          "paired_seasonal_distributions": "fnv1a32-8c8454b5@674x407",
+          "field_sampling_coverage": "fnv1a32-7a959518@674x407",
+          "reservoir_oxygen_thresholds": "fnv1a32-53f64509@674x407",
+          "gene_expression_recovery": "fnv1a32-79fdaf5c@674x407",
+          "particle_size_relationship": "fnv1a32-0aae6464@674x407",
+          "habitat_class_response": "fnv1a32-ee477569@674x407",
+          "lab_precision": "fnv1a32-df2b1aca@674x407",
+          "migration_monitoring_coverage": "fnv1a32-c63010bb@674x407"
         }
       },
       "keyboard": {
@@ -2257,79 +2283,79 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-wml3hju9b4e-title figurestead-wml3hju9b4e-description",
+            "labelledBy": "figurestead-074ulngxhu4h-title figurestead-074ulngxhu4h-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-3gmh9gkmo3s-title figurestead-3gmh9gkmo3s-description",
+            "labelledBy": "figurestead-9eo68csu25p-title figurestead-9eo68csu25p-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-krmuelu3ed-title figurestead-krmuelu3ed-description",
+            "labelledBy": "figurestead-1hzwa5sezsa-title figurestead-1hzwa5sezsa-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-1z9t1pcjvepj-title figurestead-1z9t1pcjvepj-description",
+            "labelledBy": "figurestead-gjoyrl6h6wi-title figurestead-gjoyrl6h6wi-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-errei4lbjtm-title figurestead-errei4lbjtm-description",
+            "labelledBy": "figurestead-c9aswu1um6s-title figurestead-c9aswu1um6s-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-7m3xxa843gr-title figurestead-7m3xxa843gr-description",
+            "labelledBy": "figurestead-taaogx1lo1g-title figurestead-taaogx1lo1g-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-unh2uhq0v4n-title figurestead-unh2uhq0v4n-description",
+            "labelledBy": "figurestead-gppbxhm6px-title figurestead-gppbxhm6px-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-psnslw6jwka-title figurestead-psnslw6jwka-description",
+            "labelledBy": "figurestead-2bnwkmbm5nx-title figurestead-2bnwkmbm5nx-description",
             "targetsExist": true
           },
           {
             "sceneId": "gene_expression_recovery",
             "role": "img",
-            "labelledBy": "figurestead-1fg6t3qtzrm-title figurestead-1fg6t3qtzrm-description",
+            "labelledBy": "figurestead-pixrak9ckl-title figurestead-pixrak9ckl-description",
             "targetsExist": true
           },
           {
             "sceneId": "particle_size_relationship",
             "role": "img",
-            "labelledBy": "figurestead-c4qxf2n60gr-title figurestead-c4qxf2n60gr-description",
+            "labelledBy": "figurestead-bmttegin0ed-title figurestead-bmttegin0ed-description",
             "targetsExist": true
           },
           {
             "sceneId": "habitat_class_response",
             "role": "img",
-            "labelledBy": "figurestead-aj3z29vwoe-title figurestead-aj3z29vwoe-description",
+            "labelledBy": "figurestead-focyj92ub19-title figurestead-focyj92ub19-description",
             "targetsExist": true
           },
           {
             "sceneId": "lab_precision",
             "role": "img",
-            "labelledBy": "figurestead-vvf0m3hq76-title figurestead-vvf0m3hq76-description",
+            "labelledBy": "figurestead-sj8ta7ncg6j-title figurestead-sj8ta7ncg6j-description",
             "targetsExist": true
           },
           {
             "sceneId": "migration_monitoring_coverage",
             "role": "img",
-            "labelledBy": "figurestead-vzhsuewraf-title figurestead-vzhsuewraf-description",
+            "labelledBy": "figurestead-383yrke3cc7-title figurestead-383yrke3cc7-description",
             "targetsExist": true
           }
         ],
@@ -2340,11 +2366,12 @@
             "renderer": "line",
             "theme": "slipware",
             "seed": 2409,
-            "fingerprint": "fnv1a32-6e66ac0e",
+            "fingerprint": "fnv1a32-f5a2ebb4",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -2367,11 +2394,12 @@
             "renderer": "line",
             "theme": "deep_observatory_sage_core",
             "seed": 3112,
-            "fingerprint": "fnv1a32-00d5a3c5",
+            "fingerprint": "fnv1a32-aaed3d69",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -2394,11 +2422,12 @@
             "renderer": "scatter",
             "theme": "registration_ink",
             "seed": 5309,
-            "fingerprint": "fnv1a32-8562cee5",
+            "fingerprint": "fnv1a32-888226cb",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -2421,11 +2450,12 @@
             "renderer": "scatter",
             "theme": "lavender_fog_notebook",
             "seed": 6143,
-            "fingerprint": "fnv1a32-280b339d",
+            "fingerprint": "fnv1a32-6e2a0759",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -2448,11 +2478,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 8119,
-            "fingerprint": "fnv1a32-a8d8128e",
+            "fingerprint": "fnv1a32-35723736",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -2481,11 +2512,12 @@
             "renderer": "strip_summary",
             "theme": "lavender_fog_notebook",
             "seed": 10061,
-            "fingerprint": "fnv1a32-af792465",
+            "fingerprint": "fnv1a32-38671e21",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -2518,6 +2550,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -2545,6 +2578,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_observations"
               ],
@@ -2567,11 +2601,12 @@
             "renderer": "line",
             "theme": "ultraviolet_laboratory",
             "seed": 4217,
-            "fingerprint": "fnv1a32-951e566f",
+            "fingerprint": "fnv1a32-993b2f61",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -2594,11 +2629,12 @@
             "renderer": "scatter",
             "theme": "midnight_transit_signal_slate",
             "seed": 7041,
-            "fingerprint": "fnv1a32-dc072080",
+            "fingerprint": "fnv1a32-c571ec9e",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -2621,11 +2657,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 15401,
-            "fingerprint": "fnv1a32-b8a2911b",
+            "fingerprint": "fnv1a32-7fd042a8",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -2659,11 +2696,12 @@
             "renderer": "strip_summary",
             "theme": "ultraviolet_laboratory",
             "seed": 9097,
-            "fingerprint": "fnv1a32-93d46739",
+            "fingerprint": "fnv1a32-c5a20348",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -2698,6 +2736,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -2728,37 +2767,37 @@
               "left": 40.72773361206055,
               "right": 340,
               "top": 72,
-              "bottom": 127.93993083628726
+              "bottom": 126.96532146128726
             },
             "xTicks": {
               "left": 40.72773361206055,
               "right": 340,
-              "top": 131.93993083628726,
-              "bottom": 189.8845672607422
+              "top": 130.96532146128726,
+              "bottom": 188.9099578857422
             },
             "xTitle": {
               "left": 151.2555332183838,
               "right": 229.47220039367676,
-              "top": 193.8845672607422,
-              "bottom": 201.6531219482422
+              "top": 192.9099578857422,
+              "bottom": 200.6785125732422
             },
             "provenance": {
               "left": 40.72773361206055,
-              "right": 257.47773361206055,
-              "top": 206.6531219482422,
+              "right": 284.47773361206055,
+              "top": 205.6785125732422,
               "bottom": 214.4499969482422
             },
             "yTicks": {
               "left": 18.677734375,
               "right": 36.72773361206055,
               "top": 72,
-              "bottom": 127.93993083628726
+              "bottom": 126.96532146128726
             },
             "yTitle": {
               "left": 4,
               "right": 13.677734375,
               "top": 72,
-              "bottom": 127.93993083628726
+              "bottom": 126.96532146128726
             },
             "gaps": {
               "plotToXTicks": 4,
@@ -2879,7 +2918,7 @@
         },
         "categoricalSvgConsistency": {
           "categoryOrder": "headwater|riffle|deep pool|side channel|floodplain|wet meadow|tidal creek|mudflat|seagrass bed|open estuary",
-          "fingerprint": "fnv1a32-b8a2911b",
+          "fingerprint": "fnv1a32-7fd042a8",
           "markIdsMatch": true,
           "fullLabelsPresent": true
         },
@@ -2890,19 +2929,19 @@
           "studyLinked": true
         },
         "pixelHashes": {
-          "watershed_storm_response": "fnv1a32-1632329b@362x218",
-          "circadian_phase_shift": "fnv1a32-e697d1ad@362x218",
-          "instrument_calibration": "fnv1a32-b1c61a36@362x218",
-          "dose_response_plate": "fnv1a32-7d5f2f60@362x218",
-          "treatment_replicates": "fnv1a32-ed07b876@362x218",
-          "paired_seasonal_distributions": "fnv1a32-eebbc4cd@362x218",
-          "field_sampling_coverage": "fnv1a32-6d787869@362x218",
-          "reservoir_oxygen_thresholds": "fnv1a32-a28290f6@362x218",
-          "gene_expression_recovery": "fnv1a32-c7071e39@362x218",
-          "particle_size_relationship": "fnv1a32-9c825f95@362x218",
-          "habitat_class_response": "fnv1a32-bba18fe0@362x218",
-          "lab_precision": "fnv1a32-683154e9@362x218",
-          "migration_monitoring_coverage": "fnv1a32-a906f01d@362x218"
+          "watershed_storm_response": "fnv1a32-69af3718@362x218",
+          "circadian_phase_shift": "fnv1a32-8a924163@362x218",
+          "instrument_calibration": "fnv1a32-8a67cb78@362x218",
+          "dose_response_plate": "fnv1a32-f868b0f1@362x218",
+          "treatment_replicates": "fnv1a32-4f588026@362x218",
+          "paired_seasonal_distributions": "fnv1a32-aa4de2cc@362x218",
+          "field_sampling_coverage": "fnv1a32-dd31623f@362x218",
+          "reservoir_oxygen_thresholds": "fnv1a32-2974a5b9@362x218",
+          "gene_expression_recovery": "fnv1a32-07ecaff4@362x218",
+          "particle_size_relationship": "fnv1a32-4232566c@362x218",
+          "habitat_class_response": "fnv1a32-b4f38536@362x218",
+          "lab_precision": "fnv1a32-b8027945@362x218",
+          "migration_monitoring_coverage": "fnv1a32-78c87bd5@362x218"
         }
       },
       "keyboard": {
@@ -3362,79 +3401,79 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-f37h3w00j9-title figurestead-f37h3w00j9-description",
+            "labelledBy": "figurestead-ocaetdem1b-title figurestead-ocaetdem1b-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-q3xbm2ab2v-title figurestead-q3xbm2ab2v-description",
+            "labelledBy": "figurestead-2zoc44soa07-title figurestead-2zoc44soa07-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-x4hn0bl8tml-title figurestead-x4hn0bl8tml-description",
+            "labelledBy": "figurestead-vh61vav2wlp-title figurestead-vh61vav2wlp-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-p873hvrztp-title figurestead-p873hvrztp-description",
+            "labelledBy": "figurestead-5coo8nvdp3l-title figurestead-5coo8nvdp3l-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-0zy2drhfwgp8-title figurestead-0zy2drhfwgp8-description",
+            "labelledBy": "figurestead-7wf1vaojr9u-title figurestead-7wf1vaojr9u-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-x5bqjuga6t-title figurestead-x5bqjuga6t-description",
+            "labelledBy": "figurestead-e3ktwgsup4w-title figurestead-e3ktwgsup4w-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-pj0dol8zgz-title figurestead-pj0dol8zgz-description",
+            "labelledBy": "figurestead-eejiax8cpsp-title figurestead-eejiax8cpsp-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-4p8e9nn2gax-title figurestead-4p8e9nn2gax-description",
+            "labelledBy": "figurestead-72p2z3i873p-title figurestead-72p2z3i873p-description",
             "targetsExist": true
           },
           {
             "sceneId": "gene_expression_recovery",
             "role": "img",
-            "labelledBy": "figurestead-f060iuf39g-title figurestead-f060iuf39g-description",
+            "labelledBy": "figurestead-9cjnyyiucpt-title figurestead-9cjnyyiucpt-description",
             "targetsExist": true
           },
           {
             "sceneId": "particle_size_relationship",
             "role": "img",
-            "labelledBy": "figurestead-vbp9nc9tege-title figurestead-vbp9nc9tege-description",
+            "labelledBy": "figurestead-erkeeud7ead-title figurestead-erkeeud7ead-description",
             "targetsExist": true
           },
           {
             "sceneId": "habitat_class_response",
             "role": "img",
-            "labelledBy": "figurestead-zj5davnzul-title figurestead-zj5davnzul-description",
+            "labelledBy": "figurestead-koece2lwrz-title figurestead-koece2lwrz-description",
             "targetsExist": true
           },
           {
             "sceneId": "lab_precision",
             "role": "img",
-            "labelledBy": "figurestead-rn1zsaydc4-title figurestead-rn1zsaydc4-description",
+            "labelledBy": "figurestead-vmycd1bhvl-title figurestead-vmycd1bhvl-description",
             "targetsExist": true
           },
           {
             "sceneId": "migration_monitoring_coverage",
             "role": "img",
-            "labelledBy": "figurestead-21e0w11nsgu-title figurestead-21e0w11nsgu-description",
+            "labelledBy": "figurestead-dmse7fboclh-title figurestead-dmse7fboclh-description",
             "targetsExist": true
           }
         ],
@@ -3445,11 +3484,12 @@
             "renderer": "line",
             "theme": "slipware",
             "seed": 2409,
-            "fingerprint": "fnv1a32-6e66ac0e",
+            "fingerprint": "fnv1a32-f5a2ebb4",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -3472,11 +3512,12 @@
             "renderer": "line",
             "theme": "deep_observatory_sage_core",
             "seed": 3112,
-            "fingerprint": "fnv1a32-00d5a3c5",
+            "fingerprint": "fnv1a32-aaed3d69",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -3499,11 +3540,12 @@
             "renderer": "scatter",
             "theme": "registration_ink",
             "seed": 5309,
-            "fingerprint": "fnv1a32-8562cee5",
+            "fingerprint": "fnv1a32-888226cb",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -3526,11 +3568,12 @@
             "renderer": "scatter",
             "theme": "lavender_fog_notebook",
             "seed": 6143,
-            "fingerprint": "fnv1a32-280b339d",
+            "fingerprint": "fnv1a32-6e2a0759",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -3553,11 +3596,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 8119,
-            "fingerprint": "fnv1a32-a8d8128e",
+            "fingerprint": "fnv1a32-35723736",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -3586,11 +3630,12 @@
             "renderer": "strip_summary",
             "theme": "lavender_fog_notebook",
             "seed": 10061,
-            "fingerprint": "fnv1a32-af792465",
+            "fingerprint": "fnv1a32-38671e21",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -3623,6 +3668,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -3650,6 +3696,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_observations"
               ],
@@ -3672,11 +3719,12 @@
             "renderer": "line",
             "theme": "ultraviolet_laboratory",
             "seed": 4217,
-            "fingerprint": "fnv1a32-951e566f",
+            "fingerprint": "fnv1a32-993b2f61",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -3699,11 +3747,12 @@
             "renderer": "scatter",
             "theme": "midnight_transit_signal_slate",
             "seed": 7041,
-            "fingerprint": "fnv1a32-dc072080",
+            "fingerprint": "fnv1a32-c571ec9e",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -3726,11 +3775,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 15401,
-            "fingerprint": "fnv1a32-b8a2911b",
+            "fingerprint": "fnv1a32-7fd042a8",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -3764,11 +3814,12 @@
             "renderer": "strip_summary",
             "theme": "ultraviolet_laboratory",
             "seed": 9097,
-            "fingerprint": "fnv1a32-93d46739",
+            "fingerprint": "fnv1a32-c5a20348",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -3803,6 +3854,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -3833,37 +3885,37 @@
               "left": 40.72773361206055,
               "right": 340,
               "top": 72,
-              "bottom": 127.93993083628726
+              "bottom": 126.96532146128726
             },
             "xTicks": {
               "left": 40.72773361206055,
               "right": 340,
-              "top": 131.93993083628726,
-              "bottom": 189.8845672607422
+              "top": 130.96532146128726,
+              "bottom": 188.9099578857422
             },
             "xTitle": {
               "left": 151.2555332183838,
               "right": 229.47220039367676,
-              "top": 193.8845672607422,
-              "bottom": 201.6531219482422
+              "top": 192.9099578857422,
+              "bottom": 200.6785125732422
             },
             "provenance": {
               "left": 40.72773361206055,
-              "right": 257.47773361206055,
-              "top": 206.6531219482422,
+              "right": 284.47773361206055,
+              "top": 205.6785125732422,
               "bottom": 214.4499969482422
             },
             "yTicks": {
               "left": 18.677734375,
               "right": 36.72773361206055,
               "top": 72,
-              "bottom": 127.93993083628726
+              "bottom": 126.96532146128726
             },
             "yTitle": {
               "left": 4,
               "right": 13.677734375,
               "top": 72,
-              "bottom": 127.93993083628726
+              "bottom": 126.96532146128726
             },
             "gaps": {
               "plotToXTicks": 4,
@@ -3984,7 +4036,7 @@
         },
         "categoricalSvgConsistency": {
           "categoryOrder": "headwater|riffle|deep pool|side channel|floodplain|wet meadow|tidal creek|mudflat|seagrass bed|open estuary",
-          "fingerprint": "fnv1a32-b8a2911b",
+          "fingerprint": "fnv1a32-7fd042a8",
           "markIdsMatch": true,
           "fullLabelsPresent": true
         },
@@ -3995,19 +4047,19 @@
           "studyLinked": true
         },
         "pixelHashes": {
-          "watershed_storm_response": "fnv1a32-1632329b@362x218",
-          "circadian_phase_shift": "fnv1a32-e697d1ad@362x218",
-          "instrument_calibration": "fnv1a32-b1c61a36@362x218",
-          "dose_response_plate": "fnv1a32-7d5f2f60@362x218",
-          "treatment_replicates": "fnv1a32-ed07b876@362x218",
-          "paired_seasonal_distributions": "fnv1a32-eebbc4cd@362x218",
-          "field_sampling_coverage": "fnv1a32-6d787869@362x218",
-          "reservoir_oxygen_thresholds": "fnv1a32-a28290f6@362x218",
-          "gene_expression_recovery": "fnv1a32-c7071e39@362x218",
-          "particle_size_relationship": "fnv1a32-9c825f95@362x218",
-          "habitat_class_response": "fnv1a32-bba18fe0@362x218",
-          "lab_precision": "fnv1a32-683154e9@362x218",
-          "migration_monitoring_coverage": "fnv1a32-a906f01d@362x218"
+          "watershed_storm_response": "fnv1a32-69af3718@362x218",
+          "circadian_phase_shift": "fnv1a32-8a924163@362x218",
+          "instrument_calibration": "fnv1a32-8a67cb78@362x218",
+          "dose_response_plate": "fnv1a32-f868b0f1@362x218",
+          "treatment_replicates": "fnv1a32-4f588026@362x218",
+          "paired_seasonal_distributions": "fnv1a32-aa4de2cc@362x218",
+          "field_sampling_coverage": "fnv1a32-dd31623f@362x218",
+          "reservoir_oxygen_thresholds": "fnv1a32-2974a5b9@362x218",
+          "gene_expression_recovery": "fnv1a32-07ecaff4@362x218",
+          "particle_size_relationship": "fnv1a32-4232566c@362x218",
+          "habitat_class_response": "fnv1a32-b4f38536@362x218",
+          "lab_precision": "fnv1a32-b8027945@362x218",
+          "migration_monitoring_coverage": "fnv1a32-78c87bd5@362x218"
         }
       },
       "keyboard": {
@@ -4455,49 +4507,49 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-8cwbu5gcm35-title figurestead-8cwbu5gcm35-description",
+            "labelledBy": "figurestead-4rysr9sp79h-title figurestead-4rysr9sp79h-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-o1b5iwqayhf-title figurestead-o1b5iwqayhf-description",
+            "labelledBy": "figurestead-6hrgxlmfaba-title figurestead-6hrgxlmfaba-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-1yfysre79nr-title figurestead-1yfysre79nr-description",
+            "labelledBy": "figurestead-yt0e0nne6vj-title figurestead-yt0e0nne6vj-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-aajkji1pb9o-title figurestead-aajkji1pb9o-description",
+            "labelledBy": "figurestead-fsu6y2qta8b-title figurestead-fsu6y2qta8b-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-jcor6mgc6o-title figurestead-jcor6mgc6o-description",
+            "labelledBy": "figurestead-7aozmiuq1qa-title figurestead-7aozmiuq1qa-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-6j6uw5wl31y-title figurestead-6j6uw5wl31y-description",
+            "labelledBy": "figurestead-0rvyt4t9h3g-title figurestead-0rvyt4t9h3g-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-iijwxazpew-title figurestead-iijwxazpew-description",
+            "labelledBy": "figurestead-c7fgoq37gqp-title figurestead-c7fgoq37gqp-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-hxwxnqygq3q-title figurestead-hxwxnqygq3q-description",
+            "labelledBy": "figurestead-h552k3zues-title figurestead-h552k3zues-description",
             "targetsExist": true
           }
         ],
@@ -4508,11 +4560,12 @@
             "renderer": "line",
             "theme": "slipware",
             "seed": 2409,
-            "fingerprint": "fnv1a32-6e66ac0e",
+            "fingerprint": "fnv1a32-f5a2ebb4",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -4535,11 +4588,12 @@
             "renderer": "line",
             "theme": "deep_observatory_sage_core",
             "seed": 3112,
-            "fingerprint": "fnv1a32-00d5a3c5",
+            "fingerprint": "fnv1a32-aaed3d69",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -4562,11 +4616,12 @@
             "renderer": "scatter",
             "theme": "registration_ink",
             "seed": 5309,
-            "fingerprint": "fnv1a32-8562cee5",
+            "fingerprint": "fnv1a32-888226cb",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -4589,11 +4644,12 @@
             "renderer": "scatter",
             "theme": "lavender_fog_notebook",
             "seed": 6143,
-            "fingerprint": "fnv1a32-280b339d",
+            "fingerprint": "fnv1a32-6e2a0759",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -4616,11 +4672,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 8119,
-            "fingerprint": "fnv1a32-a8d8128e",
+            "fingerprint": "fnv1a32-35723736",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -4649,11 +4706,12 @@
             "renderer": "strip_summary",
             "theme": "lavender_fog_notebook",
             "seed": 10061,
-            "fingerprint": "fnv1a32-af792465",
+            "fingerprint": "fnv1a32-38671e21",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -4686,6 +4744,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -4713,6 +4772,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_observations"
               ],
@@ -4739,14 +4799,14 @@
         "categoricalSvgConsistency": null,
         "matrixCandidate": null,
         "pixelHashes": {
-          "watershed_storm_response": "fnv1a32-21246b34@329x214",
-          "circadian_phase_shift": "fnv1a32-f087cdbc@329x214",
-          "instrument_calibration": "fnv1a32-d1422aa3@329x214",
-          "dose_response_plate": "fnv1a32-9d7fc64f@329x214",
-          "treatment_replicates": "fnv1a32-71d2f298@329x214",
-          "paired_seasonal_distributions": "fnv1a32-a1b2b8a3@329x214",
-          "field_sampling_coverage": "fnv1a32-63ee10c4@329x214",
-          "reservoir_oxygen_thresholds": "fnv1a32-b83449cc@329x214"
+          "watershed_storm_response": "fnv1a32-726742b2@329x214",
+          "circadian_phase_shift": "fnv1a32-5fb3da64@329x214",
+          "instrument_calibration": "fnv1a32-a1fc85e8@329x214",
+          "dose_response_plate": "fnv1a32-4e374b0a@329x214",
+          "treatment_replicates": "fnv1a32-e0f7c3cf@329x214",
+          "paired_seasonal_distributions": "fnv1a32-3ce8eed7@329x214",
+          "field_sampling_coverage": "fnv1a32-348387c8@329x214",
+          "reservoir_oxygen_thresholds": "fnv1a32-04647aa0@329x214"
         }
       },
       "keyboard": {
@@ -4807,49 +4867,49 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-l233wec0xmn-title figurestead-l233wec0xmn-description",
+            "labelledBy": "figurestead-7mapuxyp5vn-title figurestead-7mapuxyp5vn-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-fly1983g23-title figurestead-fly1983g23-description",
+            "labelledBy": "figurestead-at02riqe93w-title figurestead-at02riqe93w-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-tu63g9d7eoq-title figurestead-tu63g9d7eoq-description",
+            "labelledBy": "figurestead-z7xkv8vafa-title figurestead-z7xkv8vafa-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-e8u3axt869-title figurestead-e8u3axt869-description",
+            "labelledBy": "figurestead-722ws99m2ck-title figurestead-722ws99m2ck-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-jnq2s1eqtvk-title figurestead-jnq2s1eqtvk-description",
+            "labelledBy": "figurestead-ofz2kecp73-title figurestead-ofz2kecp73-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-0xi4lm73wtd-title figurestead-0xi4lm73wtd-description",
+            "labelledBy": "figurestead-lczz8k3kim-title figurestead-lczz8k3kim-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-ry5ef7etiij-title figurestead-ry5ef7etiij-description",
+            "labelledBy": "figurestead-8eqx7aadlx7-title figurestead-8eqx7aadlx7-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-pnz44iz9jon-title figurestead-pnz44iz9jon-description",
+            "labelledBy": "figurestead-sppsu68l7bc-title figurestead-sppsu68l7bc-description",
             "targetsExist": true
           }
         ],
@@ -4860,11 +4920,12 @@
             "renderer": "line",
             "theme": "slipware",
             "seed": 2409,
-            "fingerprint": "fnv1a32-6e66ac0e",
+            "fingerprint": "fnv1a32-f5a2ebb4",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -4887,11 +4948,12 @@
             "renderer": "line",
             "theme": "deep_observatory_sage_core",
             "seed": 3112,
-            "fingerprint": "fnv1a32-00d5a3c5",
+            "fingerprint": "fnv1a32-aaed3d69",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -4914,11 +4976,12 @@
             "renderer": "scatter",
             "theme": "registration_ink",
             "seed": 5309,
-            "fingerprint": "fnv1a32-8562cee5",
+            "fingerprint": "fnv1a32-888226cb",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -4941,11 +5004,12 @@
             "renderer": "scatter",
             "theme": "lavender_fog_notebook",
             "seed": 6143,
-            "fingerprint": "fnv1a32-280b339d",
+            "fingerprint": "fnv1a32-6e2a0759",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -4968,11 +5032,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 8119,
-            "fingerprint": "fnv1a32-a8d8128e",
+            "fingerprint": "fnv1a32-35723736",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -5001,11 +5066,12 @@
             "renderer": "strip_summary",
             "theme": "lavender_fog_notebook",
             "seed": 10061,
-            "fingerprint": "fnv1a32-af792465",
+            "fingerprint": "fnv1a32-38671e21",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -5038,6 +5104,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -5065,6 +5132,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_observations"
               ],
@@ -5091,14 +5159,14 @@
         "categoricalSvgConsistency": null,
         "matrixCandidate": null,
         "pixelHashes": {
-          "watershed_storm_response": "fnv1a32-21246b34@329x214",
-          "circadian_phase_shift": "fnv1a32-f087cdbc@329x214",
-          "instrument_calibration": "fnv1a32-d1422aa3@329x214",
-          "dose_response_plate": "fnv1a32-9d7fc64f@329x214",
-          "treatment_replicates": "fnv1a32-71d2f298@329x214",
-          "paired_seasonal_distributions": "fnv1a32-a1b2b8a3@329x214",
-          "field_sampling_coverage": "fnv1a32-63ee10c4@329x214",
-          "reservoir_oxygen_thresholds": "fnv1a32-b83449cc@329x214"
+          "watershed_storm_response": "fnv1a32-726742b2@329x214",
+          "circadian_phase_shift": "fnv1a32-5fb3da64@329x214",
+          "instrument_calibration": "fnv1a32-a1fc85e8@329x214",
+          "dose_response_plate": "fnv1a32-4e374b0a@329x214",
+          "treatment_replicates": "fnv1a32-e0f7c3cf@329x214",
+          "paired_seasonal_distributions": "fnv1a32-3ce8eed7@329x214",
+          "field_sampling_coverage": "fnv1a32-348387c8@329x214",
+          "reservoir_oxygen_thresholds": "fnv1a32-04647aa0@329x214"
         }
       },
       "keyboard": {
@@ -5159,49 +5227,49 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-e0ps6m4u7l-title figurestead-e0ps6m4u7l-description",
+            "labelledBy": "figurestead-a80fuhwfkbp-title figurestead-a80fuhwfkbp-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-iruqgzapwdb-title figurestead-iruqgzapwdb-description",
+            "labelledBy": "figurestead-6oropxe1xp2-title figurestead-6oropxe1xp2-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-99ka5e22wza-title figurestead-99ka5e22wza-description",
+            "labelledBy": "figurestead-hpdkm0wjnsl-title figurestead-hpdkm0wjnsl-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-ib26nklw5be-title figurestead-ib26nklw5be-description",
+            "labelledBy": "figurestead-bchwqxrfkko-title figurestead-bchwqxrfkko-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-486blhveii4-title figurestead-486blhveii4-description",
+            "labelledBy": "figurestead-x2hbm4fa8g-title figurestead-x2hbm4fa8g-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-urds2vx8kf8-title figurestead-urds2vx8kf8-description",
+            "labelledBy": "figurestead-johxxsss51-title figurestead-johxxsss51-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-klkfcqo7ae-title figurestead-klkfcqo7ae-description",
+            "labelledBy": "figurestead-49vfc60l32a-title figurestead-49vfc60l32a-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-vijir0vfrn-title figurestead-vijir0vfrn-description",
+            "labelledBy": "figurestead-sk11utna1d-title figurestead-sk11utna1d-description",
             "targetsExist": true
           }
         ],
@@ -5212,11 +5280,12 @@
             "renderer": "line",
             "theme": "slipware",
             "seed": 2409,
-            "fingerprint": "fnv1a32-6e66ac0e",
+            "fingerprint": "fnv1a32-f5a2ebb4",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -5239,11 +5308,12 @@
             "renderer": "line",
             "theme": "deep_observatory_sage_core",
             "seed": 3112,
-            "fingerprint": "fnv1a32-00d5a3c5",
+            "fingerprint": "fnv1a32-aaed3d69",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -5266,11 +5336,12 @@
             "renderer": "scatter",
             "theme": "registration_ink",
             "seed": 5309,
-            "fingerprint": "fnv1a32-8562cee5",
+            "fingerprint": "fnv1a32-888226cb",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -5293,11 +5364,12 @@
             "renderer": "scatter",
             "theme": "lavender_fog_notebook",
             "seed": 6143,
-            "fingerprint": "fnv1a32-280b339d",
+            "fingerprint": "fnv1a32-6e2a0759",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -5320,11 +5392,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 8119,
-            "fingerprint": "fnv1a32-a8d8128e",
+            "fingerprint": "fnv1a32-35723736",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -5353,11 +5426,12 @@
             "renderer": "strip_summary",
             "theme": "lavender_fog_notebook",
             "seed": 10061,
-            "fingerprint": "fnv1a32-af792465",
+            "fingerprint": "fnv1a32-38671e21",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -5390,6 +5464,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -5417,6 +5492,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": false,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_observations"
               ],
@@ -5443,14 +5519,14 @@
         "categoricalSvgConsistency": null,
         "matrixCandidate": null,
         "pixelHashes": {
-          "watershed_storm_response": "fnv1a32-90a41e6a@362x242",
-          "circadian_phase_shift": "fnv1a32-cf8c0564@362x242",
-          "instrument_calibration": "fnv1a32-b7bef710@362x242",
-          "dose_response_plate": "fnv1a32-16a27c1e@362x242",
-          "treatment_replicates": "fnv1a32-4574c358@362x242",
-          "paired_seasonal_distributions": "fnv1a32-ecea6f16@362x242",
-          "field_sampling_coverage": "fnv1a32-a2ff9009@362x242",
-          "reservoir_oxygen_thresholds": "fnv1a32-2147bae3@362x242"
+          "watershed_storm_response": "fnv1a32-62b5827a@362x242",
+          "circadian_phase_shift": "fnv1a32-8ebb6a13@362x242",
+          "instrument_calibration": "fnv1a32-a718fe4a@362x242",
+          "dose_response_plate": "fnv1a32-ca556e55@362x242",
+          "treatment_replicates": "fnv1a32-7abc5237@362x242",
+          "paired_seasonal_distributions": "fnv1a32-a549f51a@362x242",
+          "field_sampling_coverage": "fnv1a32-14cba44e@362x242",
+          "reservoir_oxygen_thresholds": "fnv1a32-bbdef5e7@362x242"
         }
       },
       "keyboard": {
@@ -5511,49 +5587,49 @@
           {
             "sceneId": "watershed_storm_response",
             "role": "img",
-            "labelledBy": "figurestead-6pm2ushhpnb-title figurestead-6pm2ushhpnb-description",
+            "labelledBy": "figurestead-rtc0meq0xr8-title figurestead-rtc0meq0xr8-description",
             "targetsExist": true
           },
           {
             "sceneId": "circadian_phase_shift",
             "role": "img",
-            "labelledBy": "figurestead-1f9ckf7y7cq-title figurestead-1f9ckf7y7cq-description",
+            "labelledBy": "figurestead-7gvs12xpsi8-title figurestead-7gvs12xpsi8-description",
             "targetsExist": true
           },
           {
             "sceneId": "instrument_calibration",
             "role": "img",
-            "labelledBy": "figurestead-51xm8pk1teq-title figurestead-51xm8pk1teq-description",
+            "labelledBy": "figurestead-k1hcuv3a26a-title figurestead-k1hcuv3a26a-description",
             "targetsExist": true
           },
           {
             "sceneId": "dose_response_plate",
             "role": "img",
-            "labelledBy": "figurestead-gi74m12dq6o-title figurestead-gi74m12dq6o-description",
+            "labelledBy": "figurestead-17nkmgkf5r5-title figurestead-17nkmgkf5r5-description",
             "targetsExist": true
           },
           {
             "sceneId": "treatment_replicates",
             "role": "img",
-            "labelledBy": "figurestead-5xpukejwwox-title figurestead-5xpukejwwox-description",
+            "labelledBy": "figurestead-sg8d02lwnrn-title figurestead-sg8d02lwnrn-description",
             "targetsExist": true
           },
           {
             "sceneId": "paired_seasonal_distributions",
             "role": "img",
-            "labelledBy": "figurestead-cfmfx8utaef-title figurestead-cfmfx8utaef-description",
+            "labelledBy": "figurestead-1iq7c0oxk8x-title figurestead-1iq7c0oxk8x-description",
             "targetsExist": true
           },
           {
             "sceneId": "field_sampling_coverage",
             "role": "img",
-            "labelledBy": "figurestead-61k35dvmhqr-title figurestead-61k35dvmhqr-description",
+            "labelledBy": "figurestead-kuij4lutjz-title figurestead-kuij4lutjz-description",
             "targetsExist": true
           },
           {
             "sceneId": "reservoir_oxygen_thresholds",
             "role": "img",
-            "labelledBy": "figurestead-n8n2kjc7n1-title figurestead-n8n2kjc7n1-description",
+            "labelledBy": "figurestead-gzbfp8stxpv-title figurestead-gzbfp8stxpv-description",
             "targetsExist": true
           }
         ],
@@ -5564,11 +5640,12 @@
             "renderer": "line",
             "theme": "slipware",
             "seed": 2409,
-            "fingerprint": "fnv1a32-6e66ac0e",
+            "fingerprint": "fnv1a32-f5a2ebb4",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -5591,11 +5668,12 @@
             "renderer": "line",
             "theme": "deep_observatory_sage_core",
             "seed": 3112,
-            "fingerprint": "fnv1a32-00d5a3c5",
+            "fingerprint": "fnv1a32-aaed3d69",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "line"
               ],
@@ -5618,11 +5696,12 @@
             "renderer": "scatter",
             "theme": "registration_ink",
             "seed": 5309,
-            "fingerprint": "fnv1a32-8562cee5",
+            "fingerprint": "fnv1a32-888226cb",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -5645,11 +5724,12 @@
             "renderer": "scatter",
             "theme": "lavender_fog_notebook",
             "seed": 6143,
-            "fingerprint": "fnv1a32-280b339d",
+            "fingerprint": "fnv1a32-6e2a0759",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "scatter"
               ],
@@ -5672,11 +5752,12 @@
             "renderer": "strip_summary",
             "theme": "slipware",
             "seed": 8119,
-            "fingerprint": "fnv1a32-a8d8128e",
+            "fingerprint": "fnv1a32-35723736",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -5705,11 +5786,12 @@
             "renderer": "strip_summary",
             "theme": "lavender_fog_notebook",
             "seed": 10061,
-            "fingerprint": "fnv1a32-af792465",
+            "fingerprint": "fnv1a32-38671e21",
             "state": {
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "strip_summary"
               ],
@@ -5742,6 +5824,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_coverage"
               ],
@@ -5769,6 +5852,7 @@
               "progress": 1,
               "playing": false,
               "reducedMotion": true,
+              "runtimeFailed": false,
               "renderers": [
                 "temporal_observations"
               ],
@@ -5795,14 +5879,14 @@
         "categoricalSvgConsistency": null,
         "matrixCandidate": null,
         "pixelHashes": {
-          "watershed_storm_response": "fnv1a32-90a41e6a@362x242",
-          "circadian_phase_shift": "fnv1a32-cf8c0564@362x242",
-          "instrument_calibration": "fnv1a32-b7bef710@362x242",
-          "dose_response_plate": "fnv1a32-16a27c1e@362x242",
-          "treatment_replicates": "fnv1a32-4574c358@362x242",
-          "paired_seasonal_distributions": "fnv1a32-ecea6f16@362x242",
-          "field_sampling_coverage": "fnv1a32-a2ff9009@362x242",
-          "reservoir_oxygen_thresholds": "fnv1a32-2147bae3@362x242"
+          "watershed_storm_response": "fnv1a32-62b5827a@362x242",
+          "circadian_phase_shift": "fnv1a32-8ebb6a13@362x242",
+          "instrument_calibration": "fnv1a32-a718fe4a@362x242",
+          "dose_response_plate": "fnv1a32-ca556e55@362x242",
+          "treatment_replicates": "fnv1a32-7abc5237@362x242",
+          "paired_seasonal_distributions": "fnv1a32-a549f51a@362x242",
+          "field_sampling_coverage": "fnv1a32-14cba44e@362x242",
+          "reservoir_oxygen_thresholds": "fnv1a32-bbdef5e7@362x242"
         }
       },
       "keyboard": {

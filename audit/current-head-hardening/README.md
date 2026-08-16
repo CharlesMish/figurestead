@@ -95,10 +95,12 @@ The ordinary 640×480 fixture is byte-identical before/after:
 
 | Path | Bytes | SHA-256 |
 | --- | ---: | --- |
-| `exportFigureSvg` | 4,140 | `a1b3bf0c3dc31bb8346151bd17b95c05ccca81fd75abbfe45f832a50a6f75f63` |
-| `exportFigureArtifacts().svg` | 4,140 | `a1b3bf0c3dc31bb8346151bd17b95c05ccca81fd75abbfe45f832a50a6f75f63` |
-| `sceneToSvg` | 4,140 | `a1b3bf0c3dc31bb8346151bd17b95c05ccca81fd75abbfe45f832a50a6f75f63` |
-| `resolvedSceneToSvg` | 4,095 | `f34f50f4e8ef6368352d33b87b3d9a13c24bd85694fa18362dcd34ec167cb5f5` |
+| `exportFigureSvg` | 4,140 | `c25e8c1107585ff414ef921014a1243d3376948b033a256028363c939bcb2dc9` |
+| `exportFigureArtifacts().svg` | 4,140 | `c25e8c1107585ff414ef921014a1243d3376948b033a256028363c939bcb2dc9` |
+| `sceneToSvg` | 4,140 | `c25e8c1107585ff414ef921014a1243d3376948b033a256028363c939bcb2dc9` |
+| `resolvedSceneToSvg` | 4,095 | `75b6107f23fa88647e63ef7850d984d4bb411c4438b2214ac61d76cfd3148e4a` |
+
+The 2026-08-15 hash-only refresh above is the direct, reviewed consequence of resolving Slipware's browser provenance token from `#9C8F84` to `#7A6D63` at the Figurestead 3.4:1 screen/project legibility floor. Byte lengths and parsed XML structure remain unchanged.
 
 The accepted V2 audit passed 8/8 Chromium/Firefox cases after the repair. The
 compact-layout audit passed Chromium/Firefox, including the 89 mm and 183 mm

@@ -1,8 +1,8 @@
 # Figurestead GitHub social-preview A/B study
 
 This packet records the accepted 1280×640 A/B/C/D composition study. Candidate
-C and its canonical selected asset were refreshed after authored scale domains
-began controlling rendered geometry. The composition decision did not reopen;
+C and its canonical selected asset were refreshed after the compact 14 px title
+floor and screen provenance legibility treatment were accepted. The composition decision did not reopen;
 historical B/D candidates, the original contact sheet, and the original
 small-preview strip remain byte-identical study evidence.
 
@@ -29,7 +29,7 @@ two accepted supporting figures communicate range without turning the preview
 into a miniature gallery.
 
 Candidate A remains the accepted eight-panel montage/README story, regenerated
-with the same crop and composition from current renderer output. The populated
+with the same 4×2 composition and crop from current renderer output. The populated
 categorical response matrix remains the second README visual and reproduces
 byte-identically. This promotion does not replace either README image.
 

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "figurestead.social-preview-audit/1",
   "result": "PASS",
-  "baselineCommit": "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89",
+  "baselineCommit": "a8f7831aad1c77c5b4577daf0cfb0c7752347833",
   "checks": {
     "currentAcceptedReadmeAssetsMatch": true,
     "threeAlternatesPresent": true,
@@ -23,8 +23,8 @@
   },
   "acceptedAssets": {
     "docs/assets/readme/figurestead-at-a-glance.png": {
-      "expectedSha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656",
-      "actualSha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656",
+      "expectedSha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650",
+      "actualSha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650",
       "matches": true
     },
     "docs/assets/readme/populated-categorical-response-matrix.png": {
@@ -33,8 +33,8 @@
       "matches": true
     },
     "docs/assets/readme/github-social-preview-candidate.png": {
-      "expectedSha256": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969",
-      "actualSha256": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969",
+      "expectedSha256": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77",
+      "actualSha256": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77",
       "matches": true
     }
   },
@@ -57,8 +57,8 @@
         640
       ],
       "mode": "RGB",
-      "bytes": 227040,
-      "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54",
+      "bytes": 229276,
+      "sha256": "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899",
       "manifestMatches": true,
       "fullFramesOnly": true,
       "currentSourceHashesMatch": true
@@ -83,8 +83,8 @@
       640
     ],
     "mode": "RGB",
-    "bytes": 227040,
-    "sha256": "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54",
+    "bytes": 229276,
+    "sha256": "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899",
     "matchesCandidateC": true
   },
   "protectedPaths": [
@@ -109,21 +109,44 @@
     "docs/assets/readme/figurestead-at-a-glance.png",
     "docs/assets/readme/github-social-preview-candidate.png",
     "docs/readme-review/asset-manifest.json",
-    "docs/readme-review/audit_readme.py",
-    "docs/readme-review/readme-audit.json",
     "specimen-study/audit/corpus-v0.2-summary.json",
+    "specimen-study/evidence/corpus-v0.2/categorical/chromium-full-specimen-lab-1440.png",
+    "specimen-study/evidence/corpus-v0.2/categorical/chromium-montage-cell-1920.png",
+    "specimen-study/evidence/corpus-v0.2/categorical/chromium-narrow-390.png",
+    "specimen-study/evidence/corpus-v0.2/categorical/chromium-normal-wide-1160.png",
+    "specimen-study/evidence/corpus-v0.2/categorical/firefox-full-specimen-lab-1440.png",
+    "specimen-study/evidence/corpus-v0.2/categorical/firefox-montage-cell-1920.png",
+    "specimen-study/evidence/corpus-v0.2/categorical/firefox-narrow-390.png",
+    "specimen-study/evidence/corpus-v0.2/categorical/firefox-normal-wide-1160.png",
+    "specimen-study/evidence/corpus-v0.2/categorical/habitat-class-response-1160.svg",
+    "specimen-study/evidence/corpus-v0.2/chromium.json",
+    "specimen-study/evidence/corpus-v0.2/firefox.json",
     "specimen-study/evidence/corpus-v0.2/individual/circadian_phase_shift.png",
     "specimen-study/evidence/corpus-v0.2/individual/dose_response_plate.png",
+    "specimen-study/evidence/corpus-v0.2/individual/field_sampling_coverage.png",
     "specimen-study/evidence/corpus-v0.2/individual/gene_expression_recovery.png",
     "specimen-study/evidence/corpus-v0.2/individual/habitat_class_response.png",
     "specimen-study/evidence/corpus-v0.2/individual/instrument_calibration.png",
     "specimen-study/evidence/corpus-v0.2/individual/lab_precision.png",
+    "specimen-study/evidence/corpus-v0.2/individual/migration_monitoring_coverage.png",
     "specimen-study/evidence/corpus-v0.2/individual/paired_seasonal_distributions.png",
     "specimen-study/evidence/corpus-v0.2/individual/particle_size_relationship.png",
+    "specimen-study/evidence/corpus-v0.2/individual/reservoir_oxygen_thresholds.png",
     "specimen-study/evidence/corpus-v0.2/individual/treatment_replicates.png",
     "specimen-study/evidence/corpus-v0.2/individual/watershed_storm_response.png",
+    "specimen-study/evidence/corpus-v0.2/screenshots/chromium-lab-1440-full.png",
+    "specimen-study/evidence/corpus-v0.2/screenshots/chromium-lab-390-full.png",
     "specimen-study/evidence/corpus-v0.2/screenshots/chromium-montage-1920x1080.png",
-    "web/THIRD_PARTY_NOTICES.md"
+    "specimen-study/evidence/corpus-v0.2/screenshots/chromium-montage-390-full.png",
+    "specimen-study/evidence/corpus-v0.2/screenshots/firefox-lab-1440-full.png",
+    "specimen-study/evidence/corpus-v0.2/screenshots/firefox-lab-390-full.png",
+    "specimen-study/evidence/corpus-v0.2/screenshots/firefox-montage-1920x1080.png",
+    "specimen-study/evidence/corpus-v0.2/screenshots/firefox-montage-390-full.png",
+    "web/src/figure-layout.js",
+    "web/src/layout.js",
+    "web/src/paper-profile.js",
+    "web/src/screen-legibility.js",
+    "web/test/readability-micro-polish.mjs"
   ],
   "unexpectedProtectedChanges": [],
   "localPathLeaks": [],

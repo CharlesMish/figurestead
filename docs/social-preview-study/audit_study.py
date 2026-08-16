@@ -13,14 +13,14 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 STUDY = ROOT / "docs" / "social-preview-study"
-BASELINE = "f648f5e04fa39c419fa3cc61aae9bb2c3807ae89"
+BASELINE = "a8f7831aad1c77c5b4577daf0cfb0c7752347833"
 ACCEPTED_ASSETS = {
-    "docs/assets/readme/figurestead-at-a-glance.png": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656",
+    "docs/assets/readme/figurestead-at-a-glance.png": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650",
     "docs/assets/readme/populated-categorical-response-matrix.png": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
-    "docs/assets/readme/github-social-preview-candidate.png": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969",
+    "docs/assets/readme/github-social-preview-candidate.png": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77",
 }
 SELECTED_ASSET = ROOT / "docs" / "assets" / "readme" / "github-social-preview.png"
-SELECTED_SHA256 = "fff8f95fa6e7e3a708dec6356225d75eae557f4cf2d758cb7f8b4c1703e2ec54"
+SELECTED_SHA256 = "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899"
 PROTECTED = [
     "README.md",
     *ACCEPTED_ASSETS,
