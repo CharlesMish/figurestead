@@ -51,7 +51,7 @@ def main() -> int:
         checks[f"specimen:{path.name}"] = (
             sha256_bytes(previous) == specimen["oldSha256"]
             and sha256(path) == specimen["newSha256"]
-            and specimen["expectedDifference"] == "authored scale-domain precedence only"
+            and specimen["expectedDifference"] == "compact 14 px title floor and screen provenance legibility treatment only"
         )
 
     source_montage = manifest["sourceMontage"]
@@ -90,10 +90,11 @@ def main() -> int:
     checks["scopeClaims"] = manifest["claims"] == {
         "compositionChanged": False,
         "corpusDataChanged": False,
-        "themeChanged": False,
+        "themeTokensChanged": False,
+        "resolvedProvenanceTreatmentChanged": True,
         "githubSettingsChanged": False,
     }
-    checks["exactlyTenSpecimens"] = len(manifest["changedSpecimens"]) == 10
+    checks["exactlyThirteenSpecimens"] = len(manifest["changedSpecimens"]) == 13
     result = "PASS" if all(checks.values()) else "FAIL"
     print(json.dumps({"result": result, "checks": checks}, indent=2))
     return 0 if result == "PASS" else 1

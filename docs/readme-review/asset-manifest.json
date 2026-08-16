@@ -14,8 +14,8 @@
           1080
         ],
         "mode": "RGB",
-        "bytes": 374652,
-        "sha256": "9f6efe945f26e6074e83622a3e62f10bd1c5651f087742fb96e9c98f16c701e6"
+        "bytes": 381222,
+        "sha256": "3fb6fbb3abe97a7475e9113e482837480d1bcfdb0fc470938b7b7f8dcb25b366"
       },
       "derivative": {
         "path": "docs/assets/readme/figurestead-at-a-glance.png",
@@ -24,8 +24,8 @@
           960
         ],
         "mode": "RGB",
-        "bytes": 376587,
-        "sha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656"
+        "bytes": 383146,
+        "sha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650"
       },
       "transform": {
         "type": "lossless-crop-and-png-optimization",
@@ -73,8 +73,8 @@
           960
         ],
         "mode": "RGB",
-        "bytes": 376587,
-        "sha256": "0f5d17e95abbac62d4ef1e9952928a6b5ea266d3e362f404e42c8efc26fa3656"
+        "bytes": 383146,
+        "sha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650"
       },
       "derivative": {
         "path": "docs/assets/readme/github-social-preview-candidate.png",
@@ -83,8 +83,8 @@
           640
         ],
         "mode": "RGB",
-        "bytes": 303123,
-        "sha256": "e9d6c176adb034d2785b8c3fd649fc59449ef0ad7e85ae4f73ba3ddacdeb4969"
+        "bytes": 309598,
+        "sha256": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77"
       },
       "transform": {
         "type": "lanczos-resize",
