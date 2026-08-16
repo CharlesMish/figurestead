@@ -173,6 +173,9 @@ jobs:
       - name: Verify final-coordinate inspection purity
         run: npm run test:browser-final-coordinate-purity
 
+      - name: Verify accessibility annotation prose
+        run: npm run test:browser-accessibility-annotations
+
       - name: Verify production responsive headers and host-height negotiation
         run: npm run test:browser-responsive-header
 

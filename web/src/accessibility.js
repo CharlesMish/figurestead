@@ -13,7 +13,18 @@ function appendTable(root, panel, description, { interactive = false } = {}) {
   details.append(summary, table); root.append(details);
 }
 
-export function prepareAccessibilityCompanion(canvas, contract, registry, { visible = false, table = true } = {}) {
+function annotationCoordinates(item, composedPanel, focusIndex) {
+  if (!item.anchorId && item.x != null && item.y != null) return { x: item.x, y: item.y };
+  const composed = composedPanel?.composedAnnotations?.[focusIndex];
+  if (!composed?.boundMarkId) return null;
+  const mark = composedPanel.marks?.find((candidate) => candidate.id === composed.boundMarkId);
+  if (!mark) return null;
+  const x = mark.x ?? mark.group ?? mark.xCategory ?? mark.evidence?.x ?? mark.evidence?.group;
+  const y = mark.y ?? mark.yCategory ?? mark.evidence?.y ?? mark.evidence?.yCategory;
+  return x != null && y != null ? { x, y } : null;
+}
+
+export function prepareAccessibilityCompanion(canvas, contract, registry, { visible = false, table = true, composedScene = null } = {}) {
   const id = `figurestead-${Math.random().toString(36).slice(2)}`, root = el("section");
   root.className = visible ? "figurestead-accessibility" : "figurestead-accessibility figurestead-sr-only";
   if (!visible) Object.assign(root.style, { position: "absolute", width: "1px", height: "1px", padding: "0", margin: "-1px", overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: "0" });
@@ -21,7 +32,7 @@ export function prepareAccessibilityCompanion(canvas, contract, registry, { visi
   if (contract.spec.subtitle) root.append(el("p", contract.spec.subtitle));
   const description = el("p", contract.spec.description || `${contract.panels.length}-panel scientific figure.`); description.id = `${id}-description`; root.append(description);
   contract.panels.forEach((panel, index) => {
-    const section = el("section"), panelTitle = panel.spec.title || `${panel.renderer.replaceAll("_", " ")} panel`, definition = registry.get(panel.renderer), described = definition.describe({ ...contract, renderer: panel.renderer, spec: { ...contract.spec, ...panel.spec }, data: panel.data });
+    const section = el("section"), panelTitle = panel.spec.title || `${panel.renderer.replaceAll("_", " ")} panel`, definition = registry.get(panel.renderer), described = definition.describe({ ...contract, renderer: panel.renderer, spec: { ...contract.spec, ...panel.spec }, data: panel.data }), composedPanel = composedScene?.panels?.[index];
     const repeatsContractTitle = contract.panels.length === 1 && panelTitle.trim() === contract.spec.title.trim();
     if (repeatsContractTitle) section.setAttribute("aria-labelledby", title.id);
     else {
@@ -29,8 +40,10 @@ export function prepareAccessibilityCompanion(canvas, contract, registry, { visi
       section.setAttribute("aria-labelledby", heading.id); section.append(heading);
     }
     if (panel.spec.description || described.summary) section.append(el("p", panel.spec.description || described.summary));
-    panel.annotations.filter((item) => item?.type === "focus" && typeof item.label === "string" && item.label.trim()).forEach((item) => {
-      section.append(el("p", `Focus annotation: ${item.label} at x ${item.x}, y ${item.y}.`));
+    panel.annotations.filter((item) => item?.type === "focus" && typeof item.label === "string" && item.label.trim()).forEach((item, focusIndex) => {
+      const coordinates = annotationCoordinates(item, composedPanel, focusIndex);
+      const suffix = coordinates ? ` at x ${coordinates.x}, y ${coordinates.y}.` : ".";
+      section.append(el("p", `Focus annotation: ${item.label}${suffix}`));
     });
     const dl = el("dl");
     [["Horizontal axis", panel.spec.xLabel || panel.xScale.label || "Unlabelled"], ["Vertical axis", panel.spec.yLabel || panel.yScale.label || "Unlabelled"], ["Renderer", panel.renderer.replaceAll("_", " ")]].forEach(([term, value]) => dl.append(el("dt", term), el("dd", value)));
