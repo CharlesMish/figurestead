@@ -170,6 +170,9 @@ jobs:
       - name: Verify controller transactionality and runtime errors
         run: npm run test:browser-controller-integrity
 
+      - name: Verify final-coordinate inspection purity
+        run: npm run test:browser-final-coordinate-purity
+
       - name: Verify production responsive headers and host-height negotiation
         run: npm run test:browser-responsive-header
 

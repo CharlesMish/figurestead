@@ -126,6 +126,25 @@ function scatterGeometry(panel, axes, radius) {
   });
 }
 
+function fallbackPointGeometry(panel, axes, radius) {
+  return panel.marks.map((mark) => {
+    if (mark.kind === "point") return { ...mark, geometry: pointGeometry(mark, axes, radius) };
+    if (mark.kind !== "renderer-mark") return { ...mark, geometry: null };
+    const evidence = mark.evidence ?? {};
+    const candidate = {
+      x: evidence.x,
+      y: evidence.y,
+      group: evidence.group,
+      yCategory: evidence.yCategory,
+      xOffset: evidence.xOffset,
+    };
+    const geometry = pointGeometry(candidate, axes, radius);
+    return Number.isFinite(geometry.cx) && Number.isFinite(geometry.cy)
+      ? { ...mark, geometry }
+      : { ...mark, geometry: null };
+  });
+}
+
 function barGeometry(panel, axes, layout) {
   const horizontal = panel.orientation === "horizontal", categories = horizontal ? panel.categories.y : panel.categories.x;
   const category = horizontal ? axes.y : axes.x, value = horizontal ? axes.x : axes.y;
@@ -239,7 +258,7 @@ export function resolveTerminalScene(scene, options = {}) {
     else if (panel.renderer === "categorical_matrix") { const matrix = matrixGeometry(panel, resolvedLayout, scene.theme); marks = matrix.marks; axes = matrix.axes; }
     else if (panel.renderer === "temporal_coverage") { const coverage = coverageGeometry(panel, resolvedLayout, radius); marks = coverage.marks; axes = coverage.axes; plots = coverage.plots; }
     else if (["interval_comparison", "strip_summary", "temporal_observations", "paired_points", "reference_improvement"].includes(panel.renderer)) marks = extensionGeometry(panel, axes, resolvedLayout, radius);
-    else marks = panel.marks.map((mark) => ({ ...mark, geometry: null }));
+    else marks = fallbackPointGeometry(panel, axes, radius);
     const evidenceFrame = cloneRect(plots ? resolvedLayout.plot : (axes.plot ?? resolvedLayout.plot));
     return { ...panel, layout: resolvedLayout, axes, plots, evidenceFrame, marks, resolved: isResolvedRenderer(panel.renderer) };
   });

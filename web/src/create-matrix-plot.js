@@ -137,11 +137,17 @@ export function createFigurestead(canvas, input, options = {}) {
     getResolvedScene() { return resolvedScene; },
     getComposedScene() { return composedScene; },
     getFinalCoordinates() {
-      return preparedPanels.map((state, index) => {
-        if (isResolvedRenderer(state.panel.renderer)) return { panelId: state.panel.id, points: resolvedScene.panels[index].marks.filter((mark) => mark.kind === "point").map((mark) => ({ x: mark.geometry.cx, y: mark.geometry.cy, dataX: mark.x ?? mark.group, dataY: mark.y ?? mark.yCategory })) };
-        const scales = state.definition.draw(surface.context, { contract: state.contract, prepared: state.prepared, layout: surface.layout.panels[index], domains: domains[index], progress: 1, settled: true, panel: state.panel, figure: contract });
-        return { panelId: state.panel.id, points: (state.prepared.points ?? []).map((point) => ({ x: scales?.x?.(point.x), y: scales?.y?.(point.y), dataX: point.x, dataY: point.y })) };
-      });
+      return resolvedScene.panels.map((panel) => ({
+        panelId: panel.id,
+        points: panel.marks
+          .filter((mark) => ["point", "renderer-mark"].includes(mark.kind) && Number.isFinite(mark.geometry?.cx) && Number.isFinite(mark.geometry?.cy))
+          .map((mark) => ({
+            x: mark.geometry.cx,
+            y: mark.geometry.cy,
+            dataX: mark.x ?? mark.group ?? mark.evidence?.x ?? mark.evidence?.group,
+            dataY: mark.y ?? mark.yCategory ?? mark.evidence?.y ?? mark.evidence?.yCategory,
+          })),
+      }));
     },
   });
 }
