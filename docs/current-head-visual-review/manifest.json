@@ -2,6 +2,7 @@
   "schemaVersion": "figurestead.current-head-outward-visual-refresh/1",
   "result": "PASS",
   "baselineCommit": "a8f7831aad1c77c5b4577daf0cfb0c7752347833",
+  "acceptedCommit": "e14d9098f0daefebadf3c0637dbe14e6b5c937e9",
   "comparisons": {
     "montage": {
       "previous": {

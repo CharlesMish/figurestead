@@ -15,12 +15,16 @@ ROOT = Path(__file__).resolve().parents[2]
 STUDY = ROOT / "docs" / "social-preview-study"
 BASELINE = "a8f7831aad1c77c5b4577daf0cfb0c7752347833"
 ACCEPTED_ASSETS = {
-    "docs/assets/readme/figurestead-at-a-glance.png": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650",
+    "docs/assets/readme/figurestead-at-a-glance.png": "2f7e4c5b1ff0038e0020064e800dfe9856a18ad55dfbde4af78f3bcabe63dcc1",
     "docs/assets/readme/populated-categorical-response-matrix.png": "347517b89a32098dba055de3e5c44d1ac484a5b2abc28d264862e6ba7f64152c",
-    "docs/assets/readme/github-social-preview-candidate.png": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77",
+    "docs/assets/readme/github-social-preview-candidate.png": "69e0906ed79b986c0dfefb32106db49fce06e13eb2b907e6971eb560f1aeae9b",
 }
 SELECTED_ASSET = ROOT / "docs" / "assets" / "readme" / "github-social-preview.png"
 SELECTED_SHA256 = "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899"
+AUTHORIZED_TECHNICAL_SHOWCASE_CHANGES = {
+    "technical-showcase/evidence/screenshots/chromium-390-full.png",
+    "technical-showcase/evidence/screenshots/firefox-390-full.png",
+}
 PROTECTED = [
     "README.md",
     *ACCEPTED_ASSETS,
@@ -89,7 +93,10 @@ def main() -> int:
     protected_changes = git("diff", "--name-only", BASELINE, "--", *PROTECTED).splitlines()
     unexpected_protected_changes = [
         path for path in protected_changes
-        if path.startswith(("site/", "technical-showcase/", "src/", "examples/", "release/"))
+        if (
+            path.startswith(("site/", "technical-showcase/", "src/", "examples/", "release/"))
+            and path not in AUTHORIZED_TECHNICAL_SHOWCASE_CHANGES
+        )
         or path in {"README.md", "pyproject.toml", "VERSIONING.md"}
     ]
     tracked_artifacts = [

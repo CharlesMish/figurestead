@@ -23,8 +23,8 @@
   },
   "acceptedAssets": {
     "docs/assets/readme/figurestead-at-a-glance.png": {
-      "expectedSha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650",
-      "actualSha256": "03dc2683afe2e4ffabb8a4d796389c2c596071ddcbcceb16ee53a16f89873650",
+      "expectedSha256": "2f7e4c5b1ff0038e0020064e800dfe9856a18ad55dfbde4af78f3bcabe63dcc1",
+      "actualSha256": "2f7e4c5b1ff0038e0020064e800dfe9856a18ad55dfbde4af78f3bcabe63dcc1",
       "matches": true
     },
     "docs/assets/readme/populated-categorical-response-matrix.png": {
@@ -33,8 +33,8 @@
       "matches": true
     },
     "docs/assets/readme/github-social-preview-candidate.png": {
-      "expectedSha256": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77",
-      "actualSha256": "b52a5424f0f8d083e6b162414c71443aada830767b5e4688afeff2e345828b77",
+      "expectedSha256": "69e0906ed79b986c0dfefb32106db49fce06e13eb2b907e6971eb560f1aeae9b",
+      "actualSha256": "69e0906ed79b986c0dfefb32106db49fce06e13eb2b907e6971eb560f1aeae9b",
       "matches": true
     }
   },
@@ -109,6 +109,8 @@
     "docs/assets/readme/figurestead-at-a-glance.png",
     "docs/assets/readme/github-social-preview-candidate.png",
     "docs/readme-review/asset-manifest.json",
+    "docs/readme-review/audit_readme.py",
+    "docs/readme-review/readme-audit.json",
     "specimen-study/audit/corpus-v0.2-summary.json",
     "specimen-study/evidence/corpus-v0.2/categorical/chromium-full-specimen-lab-1440.png",
     "specimen-study/evidence/corpus-v0.2/categorical/chromium-montage-cell-1920.png",
@@ -142,11 +144,19 @@
     "specimen-study/evidence/corpus-v0.2/screenshots/firefox-lab-390-full.png",
     "specimen-study/evidence/corpus-v0.2/screenshots/firefox-montage-1920x1080.png",
     "specimen-study/evidence/corpus-v0.2/screenshots/firefox-montage-390-full.png",
+    "technical-showcase/evidence/screenshots/chromium-390-full.png",
+    "technical-showcase/evidence/screenshots/firefox-390-full.png",
+    "web/README.md",
+    "web/src/canvas-scene.js",
+    "web/src/create-matrix-plot.js",
     "web/src/figure-layout.js",
     "web/src/layout.js",
     "web/src/paper-profile.js",
+    "web/src/resolved-scene.js",
     "web/src/screen-legibility.js",
-    "web/test/readability-micro-polish.mjs"
+    "web/src/svg-export.js",
+    "web/test/readability-micro-polish.mjs",
+    "web/types/index.d.ts"
   ],
   "unexpectedProtectedChanges": [],
   "localPathLeaks": [],

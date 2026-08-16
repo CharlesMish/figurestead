@@ -1,4 +1,10 @@
-# Current-HEAD outward visual refresh
+# Accepted readability outward visual refresh
+
+This is the retained historical packet accepted at
+`e14d9098f0daefebadf3c0637dbe14e6b5c937e9`. The later production
+responsive-header refresh is recorded separately in
+`docs/responsive-header-production-review/` so this packet's before/after
+artifacts are not rewritten to conceal a second visual change.
 
 This packet compares the outward README montage and owner-selected social
 preview at the accepted pre-refresh commit
