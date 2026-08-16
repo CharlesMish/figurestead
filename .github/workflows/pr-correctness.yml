@@ -189,6 +189,13 @@ jobs:
           FIGURESTEAD_CROSS_HEADER_COMPARE_EVIDENCE: "0"
         run: npm run test:responsive-header-cross-renderer
 
+      - name: Verify study-only host-height ownership evidence
+        env:
+          # CI protects ownership/lifecycle invariants without claiming that
+          # Linux aspect-ratio subpixels reproduce recorded macOS evidence.
+          FIGURESTEAD_HOST_HEIGHT_COMPARE_EVIDENCE: "0"
+        run: npm run test:host-height-ownership
+
       - name: Verify specimen rendering
         run: node specimen-study/audit/run-specimen-audit.cjs
 
