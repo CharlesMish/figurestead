@@ -6,14 +6,15 @@ const webRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const repositoryRoot = path.resolve(webRoot, "..");
 const canonicalRoot = path.join(repositoryRoot, "src", "figurestead", "themes");
 const packageRoot = path.join(webRoot, "themes");
-const themeFiles = Object.freeze([
-  "slipware.json",
-  "registration_ink.json",
-  "ultraviolet_laboratory.json",
-  "lavender_fog_notebook.json",
-  "midnight_transit_signal_slate.json",
-  "deep_observatory_sage_core.json",
+export const CURATED_THEME_PACKAGES = Object.freeze([
+  { subpath: "./themes/slipware", filename: "slipware.json" },
+  { subpath: "./themes/registration-ink", filename: "registration_ink.json" },
+  { subpath: "./themes/ultraviolet-laboratory", filename: "ultraviolet_laboratory.json" },
+  { subpath: "./themes/lavender-fog-notebook", filename: "lavender_fog_notebook.json" },
+  { subpath: "./themes/midnight-transit-signal-slate", filename: "midnight_transit_signal_slate.json" },
+  { subpath: "./themes/deep-observatory-sage-core", filename: "deep_observatory_sage_core.json" },
 ]);
+const themeFiles = Object.freeze(CURATED_THEME_PACKAGES.map(({ filename }) => filename));
 const report = (value) => {
   if (process.env.FIGURESTEAD_THEME_STAGE_REPORT === "1") console.log(JSON.stringify(value));
 };
@@ -55,7 +56,9 @@ function clean() {
   report({ action: "clean-curated-themes", result: "PASS" });
 }
 
-const action = process.argv[2];
-if (action === "stage") stage();
-else if (action === "clean") clean();
-else throw new Error("usage: node web/scripts/curated-themes.mjs <stage|clean>");
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const action = process.argv[2];
+  if (action === "stage") stage();
+  else if (action === "clean") clean();
+  else throw new Error("usage: node web/scripts/curated-themes.mjs <stage|clean>");
+}
