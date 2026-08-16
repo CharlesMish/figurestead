@@ -182,6 +182,13 @@ jobs:
           FIGURESTEAD_HEADER_STUDY_COMPARE_EVIDENCE: "0"
         run: npm run test:responsive-header-study
 
+      - name: Verify study-only cross-renderer header evidence
+        env:
+          # CI protects structural and policy invariants without claiming that
+          # Linux fallback-font bounds reproduce recorded macOS pixels.
+          FIGURESTEAD_CROSS_HEADER_COMPARE_EVIDENCE: "0"
+        run: npm run test:responsive-header-cross-renderer
+
       - name: Verify specimen rendering
         run: node specimen-study/audit/run-specimen-audit.cjs
 
