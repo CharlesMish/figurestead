@@ -1,5 +1,10 @@
 # Responsive-header cross-renderer validation
 
+> Historical study note: the evidence below remains the accepted
+> pre-production B/C comparison. Production now implements this bounded C
+> fallback and exposes B only through the explicit host-owned height adapter;
+> the study harness itself still adds no production API.
+
 This is study-only evidence. It adds no production wrapping, height negotiation,
 truncation, plot floor, host option, or SVG behavior. The historical policy A
 result remains in `audit/responsive-header-study/`; this study compares only B
