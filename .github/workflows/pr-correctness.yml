@@ -61,6 +61,9 @@ jobs:
       - name: Verify direct Python plotting input boundary
         run: python audit/current-head-hardening/test_python_plot_inputs.py
 
+      - name: Verify Python motion input boundary
+        run: python audit/current-head-hardening/test_python_motion_inputs.py
+
       - name: Verify deterministic specimen corpus
         env:
           FIGURESTEAD_AUDIT_OUTPUT_ROOT: ${{ runner.temp }}/corpus-audit

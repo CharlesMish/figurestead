@@ -18,6 +18,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from .core import GLYPHS, PlotSpec, ensure_axes, resolve, style_axes
 from ._statistics import linear_fit
+from .plots import _array
 
 
 @dataclass(frozen=True)
@@ -244,11 +245,17 @@ def _save_storyboard(checkpoints, output):
 def animate_strip_summary(groups, values, *, series=None, order=None, labels=None,
                           spec=None, theme="slipware", profile="deep_scope",
                           timeline=None, motion=None, output="strip_trickle.gif"):
-    groups = np.asarray(groups)
-    values = np.asarray(values, dtype=float)
+    groups = _array(groups, path="animate_strip_summary.groups")
+    values = np.asarray(
+        _array(values, path="animate_strip_summary.values"), dtype=float
+    )
     if len(groups) != len(values):
         raise ValueError("groups and values must have the same length")
-    series = np.zeros(len(values), dtype=int) if series is None else np.asarray(series)
+    series = (
+        np.zeros(len(values), dtype=int)
+        if series is None
+        else _array(series, path="animate_strip_summary.series")
+    )
     if len(series) != len(values):
         raise ValueError("series must match values")
     order = list(dict.fromkeys(groups.tolist())) if order is None else list(order)
@@ -321,12 +328,16 @@ def animate_strip_summary(groups, values, *, series=None, order=None, labels=Non
 def animate_scatter(x, y, *, series=None, labels=None, spec=None,
                     theme="slipware", profile="deep_scope", timeline=None,
                     motion=None, compile_fit=True, output="scatter_trickle.gif"):
-    x = np.asarray(x, dtype=float)
-    y = np.asarray(y, dtype=float)
+    x = np.asarray(_array(x, path="animate_scatter.x"), dtype=float)
+    y = np.asarray(_array(y, path="animate_scatter.y"), dtype=float)
     if len(x) != len(y):
         raise ValueError("x and y must have the same length")
+    series = (
+        np.zeros(len(x), dtype=int)
+        if series is None
+        else _array(series, path="animate_scatter.series")
+    )
     fit = linear_fit(x, y) if compile_fit else None
-    series = np.zeros(len(x), dtype=int) if series is None else np.asarray(series)
     labels = list(np.unique(series)) if labels is None else list(labels)
     spec = spec or PlotSpec("Relationship", "Marks resolve first; the fitted relation compiles second.")
     timeline = timeline or MotionTimeline()
@@ -377,8 +388,10 @@ def animate_scatter(x, y, *, series=None, labels=None, spec=None,
 def animate_line(x, ys, *, labels=None, spec=None, theme="slipware",
                  profile="deep_scope", timeline=None, motion=None,
                  output="line_trickle.gif"):
-    x = np.asarray(x, dtype=float)
-    ys = np.atleast_2d(np.asarray(ys, dtype=float))
+    x = np.asarray(_array(x, path="animate_line.x"), dtype=float)
+    ys = np.atleast_2d(
+        np.asarray(_array(ys, path="animate_line.ys"), dtype=float)
+    )
     if ys.shape[1] != len(x):
         raise ValueError("Each line must match x")
     labels = labels or [f"series {index + 1}" for index in range(len(ys))]
