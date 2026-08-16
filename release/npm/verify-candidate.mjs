@@ -129,6 +129,7 @@ function inspectTarball(candidate, version) {
   if (packageJson.private !== false) fail("package private disposition must be false");
   if (packageJson.license !== "MIT") fail("package license must be MIT");
   if (packageJson.repository?.url !== REPOSITORY_URL) fail("package repository URL differs");
+  if (packageJson.types !== ROOT_EXPORT.types) fail("top-level package types target differs");
   const expectedExportKeys = [
     ".",
     "./extensions/temporal",
@@ -140,6 +141,15 @@ function inspectTarball(candidate, version) {
   }
   requireExactExport(packageJson, ".", ROOT_EXPORT);
   requireExactExport(packageJson, "./extensions/temporal", TEMPORAL_EXPORT);
+  for (const member of [
+    "package/src/index.js",
+    "package/types/index.d.ts",
+    "package/src/extensions/temporal/index.js",
+    "package/types/extensions/temporal.d.ts",
+    "package/types/theme-json.d.ts",
+  ]) {
+    if (!members.includes(member)) fail(`public export target is missing: ${member}`);
+  }
   for (const { subpath, filename } of CURATED_THEME_PACKAGES) {
     requireExactExport(packageJson, subpath, { types: THEME_TYPES, default: `./themes/${filename}` });
     const member = `package/themes/${filename}`;
