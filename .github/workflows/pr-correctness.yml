@@ -175,6 +175,9 @@ jobs:
       - name: Verify compact scientific layout
         run: node audit/compact-layout/run-compact-layout-audit.cjs after
 
+      - name: Verify study-only responsive-header evidence
+        run: npm run test:responsive-header-study
+
       - name: Verify specimen rendering
         run: node specimen-study/audit/run-specimen-audit.cjs
 

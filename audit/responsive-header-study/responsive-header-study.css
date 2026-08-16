@@ -1,0 +1,16 @@
+:root { color-scheme: light; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; background: #e9e4dc; color: #25211e; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 28px; }
+main { margin: 0 auto; width: max-content; max-width: 100%; }
+.study-heading { margin: 0 0 18px; }
+.study-heading p { margin: 0 0 5px; color: #665f58; font-size: 12px; }
+.study-heading h1 { margin: 0 0 6px; font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 28px; }
+.study-grid { display: grid; grid-template-columns: repeat(3, max-content); gap: 16px; align-items: start; }
+.study-card { margin: 0; padding: 10px; border: 1px solid #bdb5aa; background: #f8f4ed; box-shadow: 0 2px 8px rgb(40 31 23 / 8%); }
+.study-card header { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 7px; }
+.study-card h2 { margin: 0; font: 600 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+.study-card header span { color: #736a62; font-size: 10px; }
+.study-card canvas { display: block; max-width: none; }
+.study-card figcaption { width: 0; min-width: 100%; margin-top: 7px; color: #615a53; font-size: 10px; line-height: 1.35; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.production-source { position: absolute; left: -10000px; top: 0; opacity: 0; pointer-events: none; }
