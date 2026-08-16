@@ -131,6 +131,9 @@ function fallbackPointGeometry(panel, axes, radius) {
     if (mark.kind === "point") return { ...mark, geometry: pointGeometry(mark, axes, radius) };
     if (mark.kind !== "renderer-mark") return { ...mark, geometry: null };
     const evidence = mark.evidence ?? {};
+    const hasX = evidence.x != null || (evidence.group != null && axes.x.bandwidth);
+    const hasY = evidence.y != null || (evidence.yCategory != null && axes.y.bandwidth);
+    if (!hasX || !hasY) return { ...mark, geometry: null };
     const candidate = {
       x: evidence.x,
       y: evidence.y,

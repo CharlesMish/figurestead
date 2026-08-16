@@ -30,9 +30,19 @@ def _input_error(path: str, message: str) -> ValueError:
     return ValueError(f"{path}: {message}")
 
 
-def _array(value, *, path: str) -> np.ndarray:
+def _masked_entry_count(value) -> int | None:
     if np.ma.isMaskedArray(value):
-        masked_count = int(np.ma.count_masked(value))
+        return int(np.ma.count_masked(value))
+    if isinstance(value, (list, tuple)):
+        nested = [_masked_entry_count(item) for item in value]
+        found = [count for count in nested if count is not None]
+        return sum(found) if found else None
+    return None
+
+
+def _array(value, *, path: str) -> np.ndarray:
+    masked_count = _masked_entry_count(value)
+    if masked_count is not None:
         noun = "entry" if masked_count == 1 else "entries"
         raise _input_error(
             path,

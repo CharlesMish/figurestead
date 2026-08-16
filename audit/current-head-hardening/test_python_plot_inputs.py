@@ -283,6 +283,13 @@ class PythonPlotInputRegression(unittest.TestCase):
             r"histogram\.values: masked arrays are not currently supported \(0 masked entries\)",
         )
 
+    def test_nested_masked_array_cannot_be_stripped_by_outer_normalization(self) -> None:
+        values = [np.ma.masked_equal(np.array([12.4, -999.0]), -999.0), np.array([13.1, 12.9])]
+        self.assert_rejected_before_allocation(
+            lambda: line(np.arange(2), values),
+            r"line\.ys: masked arrays are not currently supported \(1 masked entry\)",
+        )
+
     def test_ordinary_ndarray_and_later_render_succeed_after_mask_rejection(self) -> None:
         masked = np.ma.masked_equal(np.array([12.4, -999.0, 13.1]), -999.0)
         self.assert_rejected_before_allocation(
@@ -325,6 +332,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 45:
-        raise SystemExit(f"expected exactly 45 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 46:
+        raise SystemExit(f"expected exactly 46 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)

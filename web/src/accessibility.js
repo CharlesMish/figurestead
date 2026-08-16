@@ -14,14 +14,15 @@ function appendTable(root, panel, description, { interactive = false } = {}) {
 }
 
 function annotationCoordinates(item, composedPanel, focusIndex) {
-  if (!item.anchorId && item.x != null && item.y != null) return { x: item.x, y: item.y };
   const composed = composedPanel?.composedAnnotations?.[focusIndex];
+  if (!item.anchorId) return composed?.status === "authored-coordinate" ? { x: item.x, y: item.y } : null;
   if (!composed?.boundMarkId) return null;
   const mark = composedPanel.marks?.find((candidate) => candidate.id === composed.boundMarkId);
   if (!mark) return null;
   const x = mark.x ?? mark.group ?? mark.xCategory ?? mark.evidence?.x ?? mark.evidence?.group;
   const y = mark.y ?? mark.yCategory ?? mark.evidence?.y ?? mark.evidence?.yCategory;
-  return x != null && y != null ? { x, y } : null;
+  const usable = (value) => (typeof value === "number" && Number.isFinite(value)) || (typeof value === "string" && value.length > 0);
+  return usable(x) && usable(y) ? { x, y } : null;
 }
 
 export function prepareAccessibilityCompanion(canvas, contract, registry, { visible = false, table = true, composedScene = null } = {}) {
