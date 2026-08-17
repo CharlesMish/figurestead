@@ -9,7 +9,7 @@ that the already-published alpha used this repaired process.
 The replacement `0.9.0-alpha.2` candidate is retained at
 `release/npm/0.9.0-alpha.2/`. Its exact tarball bytes were packed once from the
 accepted source-only authority
-`27bc7f8ac3f917d8c7c37ba8d92b1ded3281d3d5` after the complete protected
+`27bc7f88985353c598d9b8f67bcf39c20def33d2` after the complete protected
 correctness floor passed. It is awaiting narrow artifact re-audit and is not
 approved for publication. No npm publish, tag, release, or deployment is
 implied by this directory.
