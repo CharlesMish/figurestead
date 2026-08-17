@@ -4,12 +4,19 @@ This directory defines the prospective retained-candidate lifecycle for future
 `@figurestead/web` releases. It begins after `0.9.0-alpha.1`; it does not claim
 that the already-published alpha used this repaired process.
 
-## Current candidate state
+## Current retained state
 
-No active npm candidate is retained while the rejected alpha.2 artifact is
-being corrected. The rejected bytes and their disposition remain preserved in
-Git history and in [REJECTIONS.md](REJECTIONS.md); they must not be published or
-treated as the current candidate.
+The replacement `0.9.0-alpha.2` candidate is retained at
+`release/npm/0.9.0-alpha.2/`. Its exact tarball bytes were packed once from the
+accepted source-only authority
+`27bc7f8ac3f917d8c7c37ba8d92b1ded3281d3d5` after the complete protected
+correctness floor passed. It is awaiting narrow artifact re-audit and is not
+approved for publication. No npm publish, tag, release, or deployment is
+implied by this directory.
+
+The earlier alpha.2 digest and its final rejected disposition remain preserved
+in Git history and in [REJECTIONS.md](REJECTIONS.md); those bytes must not be
+published or restored as the active candidate.
 
 Do not label any current pack as the historical `0.9.0-alpha.1` candidate: the
 original reviewed pre-publication bytes were not retained and cannot be
@@ -74,9 +81,9 @@ to match them.
    SHA-256.
 
 `verify-all-candidates.mjs` verifies every versioned directory in PR CI. An
-absence of versioned directories was an explicit safe passing state before the
-first candidate and is again the safe state while a rejected candidate is being
-recut. Every retained candidate present must pass the complete verifier.
+absence of versioned directories is an explicit safe passing state before a
+candidate exists or while a rejected candidate is being recut. Every retained
+candidate present must pass the complete verifier.
 
 ## Node authorities
 
