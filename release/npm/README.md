@@ -6,13 +6,17 @@ that the already-published alpha used this repaired process.
 
 ## Current retained state
 
-The first prospective-lifecycle candidate is retained at
+The replacement `0.9.0-alpha.2` candidate is retained at
 `release/npm/0.9.0-alpha.2/`. Its exact tarball bytes were packed once from the
-accepted alpha.2 source commit
-`da6755b23e1b2533c85d75b4960fdd419a0f3b64` and are awaiting independent
-artifact audit.
-Retention is not publication approval: no npm publish, tag, release, or
-deployment is implied by this directory.
+accepted source-only authority
+`27bc7f8ac3f917d8c7c37ba8d92b1ded3281d3d5` after the complete protected
+correctness floor passed. It is awaiting narrow artifact re-audit and is not
+approved for publication. No npm publish, tag, release, or deployment is
+implied by this directory.
+
+The earlier alpha.2 digest and its final rejected disposition remain preserved
+in Git history and in [REJECTIONS.md](REJECTIONS.md); those bytes must not be
+published or restored as the active candidate.
 
 Do not label any current pack as the historical `0.9.0-alpha.1` candidate: the
 original reviewed pre-publication bytes were not retained and cannot be
@@ -77,9 +81,43 @@ to match them.
    SHA-256.
 
 `verify-all-candidates.mjs` verifies every versioned directory in PR CI. An
-absence of versioned directories was an explicit safe passing state before the
-first candidate; every retained candidate now present must pass the complete
-verifier.
+absence of versioned directories is an explicit safe passing state before a
+candidate exists or while a rejected candidate is being recut. Every retained
+candidate present must pass the complete verifier.
+
+## Node authorities
+
+The public `@figurestead/web` consumer package supports Node `>=22.22.0` with no
+speculative upper ceiling. Git history shows that the former `>=24 <25` range
+entered with the original public-package metadata rather than with a recorded
+consumer-runtime incompatibility. Disposable packed candidates were exercised
+on Node 22.22.0, 22.23.2, 24.19.0, and 25.9.0 through ordinary and engine-strict
+installs, root and temporal imports, and six theme imports; the minimum, Node
+24, and Node 25 cases also passed the packed TypeScript fixtures and Vite build.
+Figurestead repository development, candidate verification, and trusted
+publication remain separately pinned to Node 24 by the private root tooling
+package and workflows. Widening the consumer range does not change the
+release-tooling authority.
+
+## Artifact-audit boundaries
+
+The packed README first-success regression extracts its code from the README
+inside a temporary or retained tarball and runs it against that installed
+package. It also guards the specific rejected stale phrases. This proves the
+tested packed documentation and package correspond operationally; it is not a
+general semantic-staleness detector.
+
+The candidate verifier intentionally does not compare a retained README with
+arbitrary later `main`: an accepted candidate may remain publishable after the
+source branch advances. Semantic truthfulness therefore remains an explicit
+artifact-review responsibility rather than an ambiguous current-tree hash
+check.
+
+The packed package still records source-only `prepack` and `postpack` theme
+staging hooks whose helper is not shipped. Ordinary installation and all public
+imports are unaffected. Consumer repacking/vendoring is a non-blocking edge and
+is held for a separately designed lifecycle change; the canonical repository
+pack path remains authoritative.
 
 ## Trust boundary
 
