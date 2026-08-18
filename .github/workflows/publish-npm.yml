@@ -140,6 +140,7 @@ jobs:
             --release-root release/npm
 
       - name: Publish with npm Trusted Publishing
+        id: npm-publish
         shell: bash
         env:
           VERSION: ${{ inputs.version }}
@@ -151,14 +152,29 @@ jobs:
           --tag "$DIST_TAG"
           --registry=https://registry.npmjs.org/
 
+      - name: Classify publication-command failure
+        if: failure() && steps.npm-publish.outcome == 'failure'
+        shell: bash
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ### npm publication command failed
+
+          npm did not report successful publication. The post-publish registry readback did not run.
+          SUMMARY
+
   verify-public:
-    name: Verify exact public registry bytes
+    name: Confirm exact public bytes after bounded registry propagation
     needs: publish
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
       contents: read
     steps:
+      - name: Check out the same verification authority
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
       - name: Set up Node
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
@@ -166,7 +182,7 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
-      - name: Download and verify published tarball
+      - name: Bounded propagation-aware registry readback
         shell: bash
         env:
           VERSION: ${{ inputs.version }}
@@ -174,9 +190,9 @@ jobs:
           EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
         run: |
           set -euo pipefail
-          mkdir registry-copy
-          packed="$(npm pack "@figurestead/web@$VERSION" --pack-destination registry-copy --registry=https://registry.npmjs.org/)"
-          test "$packed" = "figurestead-web-$VERSION.tgz"
-          echo "$EXPECTED_SHA256  registry-copy/$packed" | sha256sum --check -
-          test "$(npm view "@figurestead/web@$VERSION" version --registry=https://registry.npmjs.org/)" = "$VERSION"
-          test "$(npm view "@figurestead/web" "dist-tags.$DIST_TAG" --registry=https://registry.npmjs.org/)" = "$VERSION"
+          node release/npm/verify-public-registry.mjs \
+            --package @figurestead/web \
+            --version "$VERSION" \
+            --expected-sha256 "$EXPECTED_SHA256" \
+            --dist-tag "$DIST_TAG" \
+            --registry https://registry.npmjs.org/
