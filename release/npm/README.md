@@ -1,18 +1,34 @@
 # Figurestead npm retained candidates
 
-This directory defines the prospective retained-candidate lifecycle for future
-`@figurestead/web` releases. It begins after `0.9.0-alpha.1`; it does not claim
-that the already-published alpha used this repaired process.
+This directory defines the retained-candidate lifecycle for
+`@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
+already-published first alpha used this repaired process.
 
 ## Current retained state
 
-The replacement `0.9.0-alpha.2` candidate is retained at
-`release/npm/0.9.0-alpha.2/`. Its exact tarball bytes were packed once from the
-accepted source-only authority
-`27bc7f88985353c598d9b8f67bcf39c20def33d2` after the complete protected
-correctness floor passed. It is awaiting narrow artifact re-audit and is not
-approved for publication. No npm publish, tag, release, or deployment is
-implied by this directory.
+`@figurestead/web@0.9.0-alpha.2` is published. Its accepted candidate is
+retained at
+`release/npm/0.9.0-alpha.2/dist/figurestead-web-0.9.0-alpha.2.tgz`, was packed
+once from accepted source-only authority
+`27bc7f88985353c598d9b8f67bcf39c20def33d2`, and was retained by commit
+`750c8a3c58a14f9619dbd93af8dde6dfdaa7a092` after the complete protected
+correctness floor passed. The retained artifact is 84,601 bytes with 62 archive
+members and SHA-256
+`ac737f3e243b6cb941c801c387a9725dd565132cab5fa1e4c74cb4ebd4eb7f78`.
+
+GitHub Actions run `32093254496` passed its unprivileged candidate gate,
+protected-commit/exact-byte reverification, and Trusted Publishing/OIDC
+`npm publish` step; npm emitted `+ @figurestead/web@0.9.0-alpha.2`. The overall
+workflow run then failed because its immediate `npm pack` registry readback saw
+`ETARGET` before npm propagation completed. This was a failed workflow run
+after successful publication, not a failed release, and no second publication
+was attempted.
+
+Independent read-only verification after propagation downloaded registry bytes
+that were byte-for-byte identical to the retained candidate: the same SHA-256,
+84,601-byte size, and 62 members. Registry provenance attestation is present;
+the `alpha` dist-tag points to `0.9.0-alpha.2`, while `latest` remains
+`0.9.0-alpha.1`.
 
 The earlier alpha.2 digest and its final rejected disposition remain preserved
 in Git history and in [REJECTIONS.md](REJECTIONS.md); those bytes must not be
@@ -77,8 +93,9 @@ to match them.
 7. The unprivileged workflow job verifies the retained candidate first. Only
    then may the environment/OIDC publication job start; it repeats the same
    canonical preflight and publishes the exact derived tarball path.
-8. After publication, compare the registry download back to the same approved
-   SHA-256.
+8. After publication, run the bounded public-registry verifier. It waits only
+   for narrowly identified propagation states and accepts only a registry
+   download whose SHA-256 exactly equals the same approved digest.
 
 `verify-all-candidates.mjs` verifies every versioned directory in PR CI. An
 absence of versioned directories is an explicit safe passing state before a
@@ -113,6 +130,21 @@ source branch advances. Semantic truthfulness therefore remains an explicit
 artifact-review responsibility rather than an ambiguous current-tree hash
 check.
 
+The alpha.2 packing OS/architecture was not recorded in committed
+contemporaneous evidence and is therefore not inferred here. Reviewer x64
+repacking did not reproduce the retained gzip stream byte-for-byte, while the
+uncompressed tar payload and all 62 member contents/metadata matched source
+authority. The release guarantee is exact-byte retention plus approved SHA-256
+binding: independently regenerated npm packs may differ at gzip-stream level
+across environments even when their tar payload and member contents are
+identical. Publication consumes the retained bytes and does not depend on
+repacking, so this does not weaken alpha.2 artifact provenance.
+
+`verify-current-package.mjs` reports the SHA-256 of its disposable fresh pack
+as machine-readable informational output. That digest verifies the temporary
+pack it tests; it is deliberately not compared with a retained candidate as a
+pass/fail invariant.
+
 The packed package still records source-only `prepack` and `postpack` theme
 staging hooks whose helper is not shipped. Ordinary installation and all public
 imports are unaffected. Consumer repacking/vendoring is a non-blocking edge and
@@ -126,3 +158,22 @@ manifest records the reviewed digest but cannot redirect trust. Candidate
 verification is local/read-only and requires no registry credentials or OIDC.
 The publish job retains `contents: read` and `id-token: write` only after its
 unprivileged candidate gate succeeds.
+
+## Post-publication registry readback
+
+`verify-public-registry.mjs` is a separate, read-only gate after a successful
+publish command. It uses seven attempts with deterministic delays of 0, 5, 10,
+15, 30, 30, and 30 seconds: at most 120 seconds of waiting. It retries only
+when the exact version is not visible (HTTP 404), exact-version metadata is
+visible while its tarball still returns 404, or the requested dist-tag has not
+yet converged. There is no automatic republish path.
+
+Malformed metadata, unexpected HTTP/authentication responses, wrong
+package/version identity, unsafe tarball location, and local input errors fail
+closed without being treated as propagation. Once tarball bytes are visible,
+a SHA-256 mismatch is an immediate `POST_PUBLISH_INTEGRITY_FAILURE` with no
+retry. Exhausting the bounded visibility window produces
+`POST_PUBLISH_VISIBILITY_TIMEOUT` and explicitly instructs the operator not to
+republish automatically. Success requires the registry tarball SHA-256 to equal
+the approved retained-candidate SHA-256 and the requested dist-tag to point to
+the exact version.
