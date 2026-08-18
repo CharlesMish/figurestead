@@ -20,7 +20,7 @@
     "test:browser-controller-integrity": "node ci/check-controller-integrity.cjs",
     "test:browser-final-coordinate-purity": "node ci/check-final-coordinate-purity.cjs",
     "test:browser-accessibility-annotations": "node ci/check-accessibility-annotations.cjs",
-    "test:npm-release-integrity": "node release/npm/test-candidate-verifier.mjs && node release/npm/verify-current-package.mjs && node release/npm/verify-all-candidates.mjs && node release/npm/check-publish-workflow.mjs"
+    "test:npm-release-integrity": "node release/npm/test-candidate-verifier.mjs && node release/npm/test-public-registry-verifier.mjs && node release/npm/verify-current-package.mjs && node release/npm/verify-all-candidates.mjs && node release/npm/check-publish-workflow.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.0",
