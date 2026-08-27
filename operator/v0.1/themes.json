@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "figurestead.operator-themes/1",
+  "authority": {
+    "python": "figurestead==0.9.0a1",
+    "web": "@figurestead/web@0.9.0-alpha.2",
+    "publicGuidance": "The recommended counts are Figurestead project-authored color-led usage guidance, not accessibility certification. Above the recommendation, add redundant marker, dash, or other identity channels where the renderer supports them."
+  },
+  "themes": [
+    {
+      "key": "deep_observatory_sage_core",
+      "name": "Deep Observatory / Sage Core",
+      "webSubpath": "@figurestead/web/themes/deep-observatory-sage-core",
+      "appearance": "dark",
+      "group": "foundation",
+      "role": "Sage-toned dark five-series foundation",
+      "recommendedColorLedSeries": 5,
+      "themePackSha256": "46a2e7acd5eaac21923db736f42ed1edb83beeaf28bc80ee5f7a48f8d0f49b0f"
+    },
+    {
+      "key": "slipware",
+      "name": "Slipware",
+      "webSubpath": "@figurestead/web/themes/slipware",
+      "appearance": "light",
+      "group": "foundation",
+      "role": "Light five-series foundation",
+      "recommendedColorLedSeries": 5,
+      "themePackSha256": "2e574b06c3762de1820d44fb4850fb352a7361d6546335742d4ef47ce5bfca52"
+    },
+    {
+      "key": "midnight_transit_signal_slate",
+      "name": "Midnight Transit / Signal Slate",
+      "webSubpath": "@figurestead/web/themes/midnight-transit-signal-slate",
+      "appearance": "dark",
+      "group": "foundation",
+      "role": "Balanced dark five-series foundation",
+      "recommendedColorLedSeries": 5,
+      "themePackSha256": "c68d7ae7e63f52c00104cbbd5f445c6bfc7c72325f0d2682203a2b507917a60d"
+    },
+    {
+      "key": "ultraviolet_laboratory",
+      "name": "Ultraviolet Laboratory",
+      "webSubpath": "@figurestead/web/themes/ultraviolet-laboratory",
+      "appearance": "dark",
+      "group": "signature",
+      "role": "High-contrast dark signature",
+      "recommendedColorLedSeries": 3,
+      "redundancyGuidance": "Use active marker/dash redundancy for larger series counts.",
+      "themePackSha256": "67ae1cfc038a77aad4e453171ea240a05508a24f590cb15db2f5f8e6c4f13d6a"
+    },
+    {
+      "key": "lavender_fog_notebook",
+      "name": "Lavender Fog Notebook",
+      "webSubpath": "@figurestead/web/themes/lavender-fog-notebook",
+      "appearance": "light",
+      "group": "signature",
+      "role": "Editorial light signature",
+      "recommendedColorLedSeries": 3,
+      "redundancyGuidance": "Use active marker/dash redundancy for larger series counts.",
+      "themePackSha256": "bb7a3782755af8cc339099904ff31d0b196dd696703499b013b064d25a4df748"
+    },
+    {
+      "key": "registration_ink",
+      "name": "Registration Ink",
+      "webSubpath": "@figurestead/web/themes/registration-ink",
+      "appearance": "light",
+      "group": "signature",
+      "role": "Publication / registration-print specialist",
+      "recommendedColorLedSeries": 5,
+      "themePackSha256": "5f7344add269b3ace0ebe5e8ed8fca7984286b240241e08147d2028d6d2db0d4"
+    }
+  ]
+}

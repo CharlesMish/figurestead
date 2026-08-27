@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "figurestead.operator-reference-index/1",
+  "operatorVersion": "0.1",
+  "status": "local_prototype_not_published",
+  "figurestead": {
+    "python": {
+      "package": "figurestead",
+      "version": "0.9.0a1",
+      "releaseTag": "v0.9.0-alpha.1",
+      "sourceCommit": "f3cc4a4dbf40b60635707c5ad6e21856bac57057",
+      "wheelSha256": "29bdfb3f38d0933a237248fc9cdf5e6b92ebf1dff47a734fc363f07061e4ddb5"
+    },
+    "web": {
+      "package": "@figurestead/web",
+      "version": "0.9.0-alpha.2",
+      "releaseTag": "v0.9.0-alpha.2",
+      "sourceCommit": "0cd97599cce69b08957e61e900be53954ae39023",
+      "tarballSha256": "ac737f3e243b6cb941c801c387a9725dd565132cab5fa1e4c74cb4ebd4eb7f78"
+    }
+  },
+  "referenceRoot": {
+    "currentLocalPath": "operator/v0.1/",
+    "immutableUrl": null,
+    "prospectiveTemplate": "https://raw.githubusercontent.com/CharlesMish/figurestead/<operator-reference-commit>/operator/v0.1/",
+    "note": "No immutable remote URL exists until this exact tree receives real Git authority and is published. Never substitute floating main."
+  },
+  "resources": {
+    "plot-selection": {
+      "path": "plot-selection.md",
+      "format": "markdown",
+      "bytes": 1650,
+      "sha256": "27cb15a9685c904fdf13116218b1a4fdc2548af2c3b84dd926b4242eb5fdf864",
+      "fetch_when": [
+        "choosing a supported Figurestead surface",
+        "deciding whether to refuse or use another tool"
+      ]
+    },
+    "python-api": {
+      "path": "python-api.json",
+      "format": "json",
+      "bytes": 2695,
+      "sha256": "4a3264ff47ec3dfdb79833ff91193a87d6a149b8fa2be6cc3e6bfca4dfb36931",
+      "fetch_when": [
+        "writing or correcting Python Figurestead code"
+      ]
+    },
+    "browser-contract": {
+      "path": "browser-contract.md",
+      "format": "markdown",
+      "bytes": 2268,
+      "sha256": "40157b028b57f34b8d5cd9457ce20653dd5e248accfe402407ade64567786ad7",
+      "fetch_when": [
+        "choosing or implementing browser, portable, Canvas, SVG, lifecycle, or motion output"
+      ]
+    },
+    "themes": {
+      "path": "themes.json",
+      "format": "json",
+      "bytes": 2988,
+      "sha256": "e7fc322e5e7de5856615ed78c292463f6067899c2e07dc997d71c42332ecfaf1",
+      "fetch_when": [
+        "selecting a curated theme",
+        "checking color-led series capacity or redundant identity guidance"
+      ]
+    },
+    "validation-rules": {
+      "path": "validation-rules.md",
+      "format": "markdown",
+      "bytes": 2516,
+      "sha256": "391124adddcaf24ec250e0588417528e184492b2fd3faa2aeeb799b556ff4e78",
+      "fetch_when": [
+        "validating scientific inputs or contract failures",
+        "handling missing, masked, nonfinite, categorical, domain, or fit ambiguity"
+      ]
+    },
+    "python-line": {
+      "path": "examples/python-line.md",
+      "format": "markdown",
+      "bytes": 1044,
+      "sha256": "4343229b3b16d72dd967845d986e79187c17b343750813c1741d79909ed91dd9",
+      "fetch_when": [
+        "implementing a Python line figure after reading python-api"
+      ]
+    },
+    "python-scatter-fit": {
+      "path": "examples/python-scatter-fit.md",
+      "format": "markdown",
+      "bytes": 1309,
+      "sha256": "a58a794a5f83fc4de29799e4cd1a97c70cbfb1c45ceb43c61575a7f56a2d819e",
+      "fetch_when": [
+        "implementing an explicitly authorized Python OLS scatter fit after reading python-api"
+      ]
+    },
+    "python-strip-summary": {
+      "path": "examples/python-strip-summary.md",
+      "format": "markdown",
+      "bytes": 1074,
+      "sha256": "9b0780b678644614c3fc06ba9a239f581df8a4041becae5b52b1c5f29d33c996",
+      "fetch_when": [
+        "implementing a Python grouped strip/median figure after reading python-api"
+      ]
+    },
+    "python-heatmap": {
+      "path": "examples/python-heatmap.md",
+      "format": "markdown",
+      "bytes": 1189,
+      "sha256": "36711ab396051fdab9555b54bb5df0ed2a7600abbbe56e643ad0c6e72c6e1319",
+      "fetch_when": [
+        "implementing a Python heatmap after reading python-api"
+      ]
+    },
+    "browser-line": {
+      "path": "examples/browser-line.json",
+      "format": "json",
+      "bytes": 2687,
+      "sha256": "3cdad39a55990017e35acabe10e22d68f1a8e0821ccb7b9a415b3c33c6632d9b",
+      "fetch_when": [
+        "implementing or correcting a browser line contract after reading browser-contract"
+      ]
+    }
+  }
+}

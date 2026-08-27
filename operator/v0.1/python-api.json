@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "figurestead.operator-python-api/1",
+  "authority": {
+    "package": "figurestead",
+    "version": "0.9.0a1",
+    "wheelSha256": "29bdfb3f38d0933a237248fc9cdf5e6b92ebf1dff47a734fc363f07061e4ddb5",
+    "sourceCommit": "f3cc4a4dbf40b60635707c5ad6e21856bac57057"
+  },
+  "publicImport": "figurestead",
+  "plotSpecSignature": "PlotSpec(title: str, subtitle: str = '', xlabel: str = '', ylabel: str = '', note: str = '', signature: str = 'figurestead')",
+  "profiles": [
+    "deep_scope",
+    "instrument",
+    "monograph"
+  ],
+  "plotters": {
+    "line": {
+      "signature": "line(x, ys, *, labels=None, spec=None, theme='slipware', profile='deep_scope', ax=None, pose=None, focus=None)",
+      "input": "x is one finite one-dimensional sequence; ys is one series or a two-dimensional series-by-x array; every series and label must match exactly"
+    },
+    "scatter": {
+      "signature": "scatter(x, y, *, series=None, spec=None, theme='slipware', profile='deep_scope', ax=None)",
+      "input": "x and y are equal-length finite one-dimensional sequences; optional series has the same length"
+    },
+    "histogram": {
+      "signature": "histogram(values, *, labels=None, bins=20, spec=None, theme='slipware', profile='deep_scope', ax=None)",
+      "input": "values is one finite numeric dataset, or a list/tuple of finite datasets; labels must match the dataset count"
+    },
+    "strip_summary": {
+      "signature": "strip_summary(groups, values, *, series=None, order=None, spec=None, theme='slipware', profile='deep_scope', ax=None, seed=42)",
+      "input": "groups and finite values have equal length; optional series matches; authored order is unique and accounts for observed categories"
+    },
+    "heatmap": {
+      "signature": "heatmap(matrix, *, xlabels=None, ylabels=None, spec=None, theme='slipware', profile='deep_scope', ax=None)",
+      "input": "matrix is finite, numeric, rectangular, and two-dimensional; xlabels match columns and ylabels match rows"
+    }
+  },
+  "returns": "Each convenience plotter returns (matplotlib.figure.Figure, matplotlib.axes.Axes).",
+  "fitPolicy": "The static Python convenience scatter does not select or compile a fit. Compute a scientifically authorized model explicitly and label it by name.",
+  "inputPolicy": "Reject masked arrays, NaN, infinity, silent label truncation, and ambiguous ordering before calling the released convenience API. Runtime permissiveness is not permission to reinterpret data.",
+  "examples": {
+    "line": "examples/python-line.md",
+    "scatter_fit": "examples/python-scatter-fit.md",
+    "strip_summary": "examples/python-strip-summary.md",
+    "heatmap": "examples/python-heatmap.md"
+  }
+}
