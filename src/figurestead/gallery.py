@@ -71,7 +71,7 @@ def build_gallery(output, *, theme="slipware", profile="deep_scope"):
     ax.axis("off")
     ax.text(0.0, 0.96, "SYSTEM GRAMMAR", transform=ax.transAxes,
             color=theme_obj.primary, fontsize=11, fontfamily="DejaVu Sans Mono",
-            fontweight="medium", va="top")
+            fontweight=400, va="top")
     principles = [
         "theme = semantic color roles",
         "profile = marks, grid, motion density",

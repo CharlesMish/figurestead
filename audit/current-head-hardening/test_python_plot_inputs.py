@@ -30,6 +30,45 @@ class PythonPlotInputRegression(unittest.TestCase):
     def tearDown(self) -> None:
         plt.close("all")
 
+    def test_shipped_title_profiles_request_regular_weight(self) -> None:
+        from figurestead.profiles import PROFILES
+
+        for key in ("deep_scope", "instrument", "monograph"):
+            for profile in (key, PROFILES[key]):
+                with self.subTest(profile=key, by_key=isinstance(profile, str)):
+                    fig, ax = line([0, 1], [0, 1], profile=profile)
+                    self.assertEqual(ax._left_title.get_fontweight(), 400)
+                    self.assertEqual(ax._left_title.get_fontfamily(), [PROFILES[key].title_family])
+                    plt.close(fig)
+
+    def test_custom_title_profiles_keep_medium_and_artist_overrides(self) -> None:
+        from dataclasses import replace
+        from figurestead.profiles import PROFILES
+
+        for family in ("DejaVu Sans Mono", "STIXGeneral"):
+            custom = replace(PROFILES["deep_scope"], title_family=family)
+            for by_key in (False, True):
+                with self.subTest(family=family, by_key=by_key), patch.dict(PROFILES, deep_scope=custom):
+                    fig, ax = line([0, 1], [0, 1], profile="deep_scope" if by_key else custom)
+                    self.assertEqual(ax._left_title.get_fontweight(), "medium")
+                    self.assertEqual(ax._left_title.get_fontfamily(), [family])
+                    ax._left_title.set_fontweight(700)
+                    self.assertEqual(ax._left_title.get_fontweight(), 700)
+                    plt.close(fig)
+
+    def test_gallery_system_grammar_requests_regular_weight(self) -> None:
+        from figurestead.gallery import build_gallery
+
+        weights = []
+
+        def inspect_save(fig, *args, **kwargs):
+            weights.extend(text.get_fontweight() for ax in fig.axes for text in ax.texts
+                           if text.get_text() == "SYSTEM GRAMMAR")
+
+        with patch("matplotlib.figure.Figure.savefig", inspect_save):
+            build_gallery(Path(os.environ["MPLCONFIGDIR"]) / "unused-gallery.png")
+        self.assertEqual(weights, [400])
+
     def assert_rejected_before_allocation(self, invoke, pattern: str) -> None:
         before = tuple(plt.get_fignums())
         with patch("figurestead.plots.ensure_axes") as ensure_axes:
@@ -332,6 +371,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 46:
-        raise SystemExit(f"expected exactly 46 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 49:
+        raise SystemExit(f"expected exactly 49 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)
