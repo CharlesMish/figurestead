@@ -25,7 +25,19 @@ class RenderedContrastTests(unittest.TestCase):
             finally:plt.close(fig)
     def test_independent_fixture_and_authored_inputs(self):
         spec=importlib.util.spec_from_file_location('reference',F/'reference.py');ref=importlib.util.module_from_spec(spec);spec.loader.exec_module(ref)
-        self.assertEqual(ref.fixture(),DATA)
+        actual=ref.fixture()
+        self.assertEqual({k:v for k,v in actual.items() if k!='rows'}, {k:v for k,v in DATA.items() if k!='rows'})
+        self.assertEqual(len(actual['rows']),len(DATA['rows']))
+        for observed,expected in zip(actual['rows'],DATA['rows']):
+            with self.subTest(theme=expected['theme'],context=expected['context'],series=expected['index']):
+                self.assertEqual(observed.keys(),expected.keys())
+                self.assertEqual({k:v for k,v in observed.items() if k not in ('effectiveColor','ratio')},
+                                 {k:v for k,v in expected.items() if k not in ('effectiveColor','ratio')})
+                # Only derived floats tolerate platform/libm last-bit differences; passes stays exact.
+                self.assertEqual(len(observed['effectiveColor']),len(expected['effectiveColor']))
+                for channel,want in zip(observed['effectiveColor'],expected['effectiveColor']):
+                    self.assertAlmostEqual(channel,want,places=14)
+                self.assertAlmostEqual(observed['ratio'],expected['ratio'],places=12)
         for i in DATA['inputs']:self.assertEqual(hashlib.sha256((ROOT/i['path']).read_bytes()).hexdigest(),i['sha256'])
     def test_all_six_themes_and_verified_opacity_variants(self):
         for expected in DATA['rows']:
