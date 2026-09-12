@@ -1,0 +1,35 @@
+{
+  "python": {
+    "deep_observatory_sage_core": [],
+    "lavender_fog_notebook": [],
+    "midnight_transit_signal_slate": [],
+    "registration_ink": [],
+    "slipware": [
+      {
+        "level": "warning",
+        "token": "secondary",
+        "surface": "field",
+        "ratio": 4.31,
+        "minimum": 4.5
+      }
+    ],
+    "ultraviolet_laboratory": []
+  },
+  "browser": {
+    "deep_observatory_sage_core": [],
+    "lavender_fog_notebook": [],
+    "midnight_transit_signal_slate": [],
+    "registration_ink": [],
+    "slipware": [
+      {
+        "level": "warning",
+        "token": "secondary",
+        "surface": "field",
+        "ratio": 4.31,
+        "minimum": 4.5
+      }
+    ],
+    "ultraviolet_laboratory": []
+  },
+  "provenance": "Captured from unmodified dbb99e78315ba5cb3ca8a99b996be785d5819eb2 before additive audit implementation"
+}

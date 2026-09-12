@@ -181,3 +181,26 @@ Height negotiation applies only to live Canvas rendering. SVG, paper, and
 explicitly dimensioned exports retain their requested dimensions.
 
 Version 0.9.0-alpha.2. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
+
+## Rendered series contrast
+
+`contrastAudit(theme)` remains a static authored-palette inspection.
+`renderedSeriesAudit(theme, { substrate, opacity, compositing: "srgb-source-over" })`
+measures the supplied theme's series colors in the caller-supplied single-layer
+context. The opaque `#RRGGBB` substrate and opacity in [0,1] are required; no
+renderer/surface defaults are inferred. Results retain unrounded effective sRGB
+channels and ratio. The exact policy is `passes = ratio >= 3`, without an epsilon
+or display-rounding rule. Values effectively on the floating-point threshold may
+classify differently across Python/JavaScript final ULPs; this is not physical
+certification. Figures and colors are never changed.
+
+Nonempty **theme-level** `seriesEdges` are conservatively rejected. Per-series
+contract/style overrides can independently change the rendered color or add an
+edge; they are not inspected by that theme-level check. The caller must account
+for those overrides before interpreting the result as a rendered-mark measurement.
+
+Verified Canvas line **segments** use panel or field with effective .78 (Firefox
+exposes its float32 value); SVG line **segments** use panel or field at 1. Python's
+verified default line **polyline** uses field/.88. Companion markers/points may
+have different opacity and are outside those contexts. This is not an assessment
+of glow, antialias boundaries, every layered mark or whole-figure accessibility.

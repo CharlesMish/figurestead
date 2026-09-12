@@ -9,7 +9,7 @@ from .registry import PLOTS, available_plots, render
 from .themes import THEMES, Theme, get_theme
 from .theme_io import (
     THEME_PACK_VERSION, PALETTE_PACK_VERSION, ThemePack, PalettePack, PaletteResolution, ThemePackError, apply_theme, compile_theme_pack,
-    contrast_audit, load_authored_theme_pack, load_compiled_theme_pack, load_theme, load_theme_pack,
+    contrast_audit, rendered_series_audit, load_authored_theme_pack, load_compiled_theme_pack, load_theme, load_theme_pack,
     normalize_theme_pack_lenient, preview_theme_pack, theme_to_contract,
     load_palette_pack, resolve_palette,
 )
@@ -65,6 +65,7 @@ __all__ = [
     "compile_theme_pack",
     "apply_theme",
     "contrast_audit",
+    "rendered_series_audit",
     "preview_theme_pack",
     "theme_to_contract",
     "heatmap",
