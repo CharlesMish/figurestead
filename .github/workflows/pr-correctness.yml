@@ -58,6 +58,9 @@ jobs:
       - name: Verify scientific geometry contracts
         run: python audit/current-head-hardening/test_scientific_geometry.py
 
+      - name: Verify rendered series contrast
+        run: python audit/current-head-hardening/test_rendered_contrast.py
+
       - name: Verify direct Python plotting input boundary
         run: python audit/current-head-hardening/test_python_plot_inputs.py
 
@@ -200,6 +203,9 @@ jobs:
 
       - name: Verify browser title and provenance legibility
         run: npm run test:browser-readability
+
+      - name: Verify rendered line-segment context facts
+        run: npm run test:browser-rendered-contrast
 
       - name: Verify controller transactionality and runtime errors
         run: npm run test:browser-controller-integrity

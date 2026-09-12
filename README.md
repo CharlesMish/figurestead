@@ -63,6 +63,7 @@ Figurestead's two surfaces share a normalized contract vocabulary, selected them
 - [Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
 - [Python first-success example](examples/python-first-success.py)
 - [Browser first-success example](examples/browser-first-success/)
+- [Static palette versus rendered-series contrast](docs/rendered-series-contrast.md)
 - [Deterministic specimen corpus and local visual lab](specimen-study/README.md)
 - [Technical-showcase reviewer packet](technical-showcase/reviewer-packet/README.md) — repository-local and undeployed
 

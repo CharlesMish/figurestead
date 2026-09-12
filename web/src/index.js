@@ -22,7 +22,7 @@ export { THEME_CATALOG_VERSION, auditThemeCatalog, catalogThemePack, mergeThemeP
 export { prepareScatter } from "./renderers/scatter.js";
 export { prepareStrip } from "./renderers/strip-summary.js";
 export { AnimationClock } from "./clock.js";
-export { THEME_PACK_VERSION, PALETTE_PACK_VERSION, applyTheme, contrastAudit, contrastRatio, loadThemePack, normalizeThemePackLenient, resolveTheme, resolvePalette, themeForProfile, validateAuthoredThemePack, validateThemePack, validatePalettePack } from "./theme-pack.js";
+export { THEME_PACK_VERSION, PALETTE_PACK_VERSION, applyTheme, contrastAudit, contrastRatio, renderedSeriesAudit, loadThemePack, normalizeThemePackLenient, resolveTheme, resolvePalette, themeForProfile, validateAuthoredThemePack, validateThemePack, validatePalettePack } from "./theme-pack.js";
 export { RENDER_LAYER_ORDER, partitionPanelMarks, plotClipRect, renderLayerForMark, withCanvasPlotClip } from "./render-layers.js";
 export { validateEvidenceCoverage } from "./evidence-coverage.js";
 export { colorContrast, hexToOklab, hexToOklch, oklabDistance, oklchToHex, resolveContrastColor } from "./color-space.js";

@@ -1,0 +1,3615 @@
+{
+  "method": "Independent encoded-sRGB source-over, relative luminance; full-coverage edge-free ink; floor3",
+  "inputs": [
+    {
+      "path": "src/figurestead/themes/deep_observatory_sage_core.json",
+      "sha256": "46a2e7acd5eaac21923db736f42ed1edb83beeaf28bc80ee5f7a48f8d0f49b0f"
+    },
+    {
+      "path": "src/figurestead/themes/lavender_fog_notebook.json",
+      "sha256": "bb7a3782755af8cc339099904ff31d0b196dd696703499b013b064d25a4df748"
+    },
+    {
+      "path": "src/figurestead/themes/midnight_transit_signal_slate.json",
+      "sha256": "c68d7ae7e63f52c00104cbbd5f445c6bfc7c72325f0d2682203a2b507917a60d"
+    },
+    {
+      "path": "src/figurestead/themes/registration_ink.json",
+      "sha256": "5f7344add269b3ace0ebe5e8ed8fca7984286b240241e08147d2028d6d2db0d4"
+    },
+    {
+      "path": "src/figurestead/themes/slipware.json",
+      "sha256": "2e574b06c3762de1820d44fb4850fb352a7361d6546335742d4ef47ce5bfca52"
+    },
+    {
+      "path": "src/figurestead/themes/ultraviolet_laboratory.json",
+      "sha256": "67ae1cfc038a77aad4e453171ea240a05508a24f590cb15db2f5f8e6c4f13d6a"
+    }
+  ],
+  "rows": [
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.88,
+      "color": "#5A9FA4",
+      "index": 0,
+      "effectiveColor": [
+        0.31811764705882356,
+        0.5595294117647058,
+        0.5796078431372549
+      ],
+      "ratio": 4.892819524795476,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.88,
+      "color": "#C59C3E",
+      "index": 1,
+      "effectiveColor": [
+        0.6873725490196079,
+        0.5491764705882353,
+        0.2276078431372549
+      ],
+      "ratio": 5.716120787795669,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.88,
+      "color": "#B44D4F",
+      "index": 2,
+      "effectiveColor": [
+        0.6287058823529411,
+        0.27654901960784317,
+        0.28627450980392155
+      ],
+      "ratio": 2.9997121180177393,
+      "passes": false
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.88,
+      "color": "#8A76C4",
+      "index": 3,
+      "effectiveColor": [
+        0.48376470588235293,
+        0.41803921568627456,
+        0.6900392156862745
+      ],
+      "ratio": 3.9236179153361,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.88,
+      "color": "#7BB888",
+      "index": 4,
+      "effectiveColor": [
+        0.432,
+        0.6458039215686273,
+        0.4829803921568628
+      ],
+      "ratio": 6.289822705018996,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.78,
+      "color": "#5A9FA4",
+      "index": 0,
+      "effectiveColor": [
+        0.2968627450980392,
+        0.5182745098039215,
+        0.5378823529411765
+      ],
+      "ratio": 3.715249352365105,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.78,
+      "color": "#C59C3E",
+      "index": 1,
+      "effectiveColor": [
+        0.6241568627450981,
+        0.5090980392156862,
+        0.22588235294117645
+      ],
+      "ratio": 4.271502119601238,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.78,
+      "color": "#B44D4F",
+      "index": 2,
+      "effectiveColor": [
+        0.572156862745098,
+        0.26745098039215687,
+        0.27788235294117647
+      ],
+      "ratio": 2.346349490059066,
+      "passes": false
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.78,
+      "color": "#8A76C4",
+      "index": 3,
+      "effectiveColor": [
+        0.4436862745098039,
+        0.39286274509803926,
+        0.635764705882353
+      ],
+      "ratio": 3.028504313179225,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.78,
+      "color": "#7BB888",
+      "index": 4,
+      "effectiveColor": [
+        0.3978039215686274,
+        0.5947450980392157,
+        0.452235294117647
+      ],
+      "ratio": 4.68623651420719,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.78,
+      "color": "#5A9FA4",
+      "index": 0,
+      "effectiveColor": [
+        0.2890980392156863,
+        0.5061960784313726,
+        0.5266666666666667
+      ],
+      "ratio": 4.111728900189954,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.78,
+      "color": "#C59C3E",
+      "index": 1,
+      "effectiveColor": [
+        0.6163921568627452,
+        0.4970196078431373,
+        0.21466666666666664
+      ],
+      "ratio": 4.744123994793294,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.78,
+      "color": "#B44D4F",
+      "index": 2,
+      "effectiveColor": [
+        0.5643921568627451,
+        0.2553725490196079,
+        0.26666666666666666
+      ],
+      "ratio": 2.604046405614342,
+      "passes": false
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.78,
+      "color": "#8A76C4",
+      "index": 3,
+      "effectiveColor": [
+        0.43592156862745096,
+        0.3807843137254902,
+        0.6245490196078431
+      ],
+      "ratio": 3.3501647336637363,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.78,
+      "color": "#7BB888",
+      "index": 4,
+      "effectiveColor": [
+        0.3900392156862745,
+        0.5826666666666667,
+        0.4410196078431372
+      ],
+      "ratio": 5.200061092269078,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 1.0,
+      "color": "#5A9FA4",
+      "index": 0,
+      "effectiveColor": [
+        0.35294117647058826,
+        0.6235294117647059,
+        0.6431372549019608
+      ],
+      "ratio": 5.174017160685821,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 1.0,
+      "color": "#C59C3E",
+      "index": 1,
+      "effectiveColor": [
+        0.7725490196078432,
+        0.611764705882353,
+        0.24313725490196078
+      ],
+      "ratio": 6.121427096771708,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 1.0,
+      "color": "#B44D4F",
+      "index": 2,
+      "effectiveColor": [
+        0.7058823529411765,
+        0.30196078431372547,
+        0.30980392156862746
+      ],
+      "ratio": 3.0723666258792357,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 1.0,
+      "color": "#8A76C4",
+      "index": 3,
+      "effectiveColor": [
+        0.5411764705882353,
+        0.4627450980392157,
+        0.7686274509803922
+      ],
+      "ratio": 4.083285063594046,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 1.0,
+      "color": "#7BB888",
+      "index": 4,
+      "effectiveColor": [
+        0.4823529411764706,
+        0.7215686274509804,
+        0.5333333333333333
+      ],
+      "ratio": 6.759693620732943,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 1.0,
+      "color": "#5A9FA4",
+      "index": 0,
+      "effectiveColor": [
+        0.35294117647058826,
+        0.6235294117647059,
+        0.6431372549019608
+      ],
+      "ratio": 5.962198475368806,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 1.0,
+      "color": "#C59C3E",
+      "index": 1,
+      "effectiveColor": [
+        0.7725490196078432,
+        0.611764705882353,
+        0.24313725490196078
+      ],
+      "ratio": 7.053931629908981,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 1.0,
+      "color": "#B44D4F",
+      "index": 2,
+      "effectiveColor": [
+        0.7058823529411765,
+        0.30196078431372547,
+        0.30980392156862746
+      ],
+      "ratio": 3.5403940581756994,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 1.0,
+      "color": "#8A76C4",
+      "index": 3,
+      "effectiveColor": [
+        0.5411764705882353,
+        0.4627450980392157,
+        0.7686274509803922
+      ],
+      "ratio": 4.705310250155729,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 1.0,
+      "color": "#7BB888",
+      "index": 4,
+      "effectiveColor": [
+        0.4823529411764706,
+        0.7215686274509804,
+        0.5333333333333333
+      ],
+      "ratio": 7.78942816535847,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.7799999713897705,
+      "color": "#5A9FA4",
+      "index": 0,
+      "effectiveColor": [
+        0.29686273780523564,
+        0.5182744961158902,
+        0.5378823392531451
+      ],
+      "ratio": 3.7152491844815625,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.7799999713897705,
+      "color": "#C59C3E",
+      "index": 1,
+      "effectiveColor": [
+        0.6241568434472178,
+        0.5090980258642458,
+        0.2258823506972369
+      ],
+      "ratio": 4.2715019085000945,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.7799999713897705,
+      "color": "#B44D4F",
+      "index": 2,
+      "effectiveColor": [
+        0.5721568453545663,
+        0.26745097590427774,
+        0.27788234878988827
+      ],
+      "ratio": 2.346349406656395,
+      "passes": false
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.7799999713897705,
+      "color": "#8A76C4",
+      "index": 3,
+      "effectiveColor": [
+        0.44368626183154536,
+        0.392862736010084,
+        0.6357646886040182
+      ],
+      "ratio": 3.028504191155495,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#19252A",
+      "opacity": 0.7799999713897705,
+      "color": "#7BB888",
+      "index": 4,
+      "effectiveColor": [
+        0.3978039105733236,
+        0.5947450815462598,
+        0.4522352835711311
+      ],
+      "ratio": 4.686236277351762,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.7799999713897705,
+      "color": "#5A9FA4",
+      "index": 0,
+      "effectiveColor": [
+        0.28909803091310987,
+        0.5061960631725835,
+        0.5266666515200746
+      ],
+      "ratio": 4.111728690666805,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.7799999713897705,
+      "color": "#C59C3E",
+      "index": 1,
+      "effectiveColor": [
+        0.6163921365550921,
+        0.4970195929209391,
+        0.21466666296416637
+      ],
+      "ratio": 4.744123734786104,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.7799999713897705,
+      "color": "#B44D4F",
+      "index": 2,
+      "effectiveColor": [
+        0.5643921384624406,
+        0.255372542960971,
+        0.26666666105681774
+      ],
+      "ratio": 2.604046299369378,
+      "passes": false
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.7799999713897705,
+      "color": "#8A76C4",
+      "index": 3,
+      "effectiveColor": [
+        0.43592155493941964,
+        0.38078430306677724,
+        0.6245490008709478
+      ],
+      "ratio": 3.350164579485617,
+      "passes": true
+    },
+    {
+      "theme": "deep_observatory_sage_core",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#10171D",
+      "opacity": 0.7799999713897705,
+      "color": "#7BB888",
+      "index": 4,
+      "effectiveColor": [
+        0.3900392036811978,
+        0.5826666486029531,
+        0.44101959583806055
+      ],
+      "ratio": 5.2000608007317455,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.88,
+      "color": "#6855A8",
+      "index": 0,
+      "effectiveColor": [
+        0.4737254901960784,
+        0.40674509803921566,
+        0.6964705882352941
+      ],
+      "ratio": 4.251132867150481,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.88,
+      "color": "#18776D",
+      "index": 1,
+      "effectiveColor": [
+        0.1976470588235294,
+        0.524078431372549,
+        0.49286274509803923
+      ],
+      "ratio": 3.891118560664901,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.88,
+      "color": "#9B5B16",
+      "index": 2,
+      "effectiveColor": [
+        0.6497254901960785,
+        0.42745098039215684,
+        0.19262745098039213
+      ],
+      "ratio": 3.8758290726888314,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.88,
+      "color": "#A44E5E",
+      "index": 3,
+      "effectiveColor": [
+        0.6807843137254902,
+        0.3825882352941177,
+        0.44109803921568624
+      ],
+      "ratio": 3.9484809289292375,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.88,
+      "color": "#326D9B",
+      "index": 4,
+      "effectiveColor": [
+        0.28737254901960785,
+        0.4895686274509804,
+        0.6516078431372548
+      ],
+      "ratio": 3.944067853889699,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.88,
+      "color": "#52752C",
+      "index": 5,
+      "effectiveColor": [
+        0.3978039215686274,
+        0.5171764705882352,
+        0.2685490196078431
+      ],
+      "ratio": 3.8047170968048616,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.78,
+      "color": "#6855A8",
+      "index": 0,
+      "effectiveColor": [
+        0.5355294117647059,
+        0.47568627450980383,
+        0.7338823529411764
+      ],
+      "ratio": 3.6667660638115174,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.78,
+      "color": "#18776D",
+      "index": 1,
+      "effectiveColor": [
+        0.2908235294117647,
+        0.5796862745098039,
+        0.5534117647058824
+      ],
+      "ratio": 3.432021063954688,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.78,
+      "color": "#9B5B16",
+      "index": 2,
+      "effectiveColor": [
+        0.691529411764706,
+        0.49403921568627446,
+        0.2872941176470588
+      ],
+      "ratio": 3.4136721019327254,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.78,
+      "color": "#A44E5E",
+      "index": 3,
+      "effectiveColor": [
+        0.7190588235294118,
+        0.4542745098039216,
+        0.5075294117647059
+      ],
+      "ratio": 3.473291102014476,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.78,
+      "color": "#326D9B",
+      "index": 4,
+      "effectiveColor": [
+        0.3703529411764706,
+        0.5490980392156862,
+        0.6941176470588235
+      ],
+      "ratio": 3.4522462656783612,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.78,
+      "color": "#52752C",
+      "index": 5,
+      "effectiveColor": [
+        0.468235294117647,
+        0.5735686274509804,
+        0.3545882352941176
+      ],
+      "ratio": 3.339082247639272,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.78,
+      "color": "#6855A8",
+      "index": 0,
+      "effectiveColor": [
+        0.5286274509803922,
+        0.46792156862745093,
+        0.7278431372549019
+      ],
+      "ratio": 3.487279916447145,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.78,
+      "color": "#18776D",
+      "index": 1,
+      "effectiveColor": [
+        0.28392156862745094,
+        0.571921568627451,
+        0.5473725490196077
+      ],
+      "ratio": 3.2631064137340364,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.78,
+      "color": "#9B5B16",
+      "index": 2,
+      "effectiveColor": [
+        0.6846274509803921,
+        0.48627450980392156,
+        0.2812549019607843
+      ],
+      "ratio": 3.244812483032887,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.78,
+      "color": "#A44E5E",
+      "index": 3,
+      "effectiveColor": [
+        0.712156862745098,
+        0.44650980392156864,
+        0.5014901960784314
+      ],
+      "ratio": 3.3007004301320637,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.78,
+      "color": "#326D9B",
+      "index": 4,
+      "effectiveColor": [
+        0.36345098039215684,
+        0.5413333333333333,
+        0.6880784313725491
+      ],
+      "ratio": 3.2825527907556284,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.78,
+      "color": "#52752C",
+      "index": 5,
+      "effectiveColor": [
+        0.46133333333333326,
+        0.5658039215686275,
+        0.3485490196078431
+      ],
+      "ratio": 3.175464129258965,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 1.0,
+      "color": "#6855A8",
+      "index": 0,
+      "effectiveColor": [
+        0.40784313725490196,
+        0.3333333333333333,
+        0.6588235294117647
+      ],
+      "ratio": 5.8658387347423195,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 1.0,
+      "color": "#18776D",
+      "index": 1,
+      "effectiveColor": [
+        0.09411764705882353,
+        0.4666666666666667,
+        0.42745098039215684
+      ],
+      "ratio": 5.196327966332402,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 1.0,
+      "color": "#9B5B16",
+      "index": 2,
+      "effectiveColor": [
+        0.6078431372549019,
+        0.3568627450980392,
+        0.08627450980392157
+      ],
+      "ratio": 5.191881818188576,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 1.0,
+      "color": "#A44E5E",
+      "index": 3,
+      "effectiveColor": [
+        0.6431372549019608,
+        0.3058823529411765,
+        0.3686274509803922
+      ],
+      "ratio": 5.289274335494195,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 1.0,
+      "color": "#326D9B",
+      "index": 4,
+      "effectiveColor": [
+        0.19607843137254902,
+        0.42745098039215684,
+        0.6078431372549019
+      ],
+      "ratio": 5.335947195044322,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 1.0,
+      "color": "#52752C",
+      "index": 5,
+      "effectiveColor": [
+        0.3215686274509804,
+        0.4588235294117647,
+        0.17254901960784313
+      ],
+      "ratio": 5.1419072366980565,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 1.0,
+      "color": "#6855A8",
+      "index": 0,
+      "effectiveColor": [
+        0.40784313725490196,
+        0.3333333333333333,
+        0.6588235294117647
+      ],
+      "ratio": 5.439269512541906,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 1.0,
+      "color": "#18776D",
+      "index": 1,
+      "effectiveColor": [
+        0.09411764705882353,
+        0.4666666666666667,
+        0.42745098039215684
+      ],
+      "ratio": 4.818446186908739,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 1.0,
+      "color": "#9B5B16",
+      "index": 2,
+      "effectiveColor": [
+        0.6078431372549019,
+        0.3568627450980392,
+        0.08627450980392157
+      ],
+      "ratio": 4.814323366773279,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 1.0,
+      "color": "#A44E5E",
+      "index": 3,
+      "effectiveColor": [
+        0.6431372549019608,
+        0.3058823529411765,
+        0.3686274509803922
+      ],
+      "ratio": 4.9046334100740925,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 1.0,
+      "color": "#326D9B",
+      "index": 4,
+      "effectiveColor": [
+        0.19607843137254902,
+        0.42745098039215684,
+        0.6078431372549019
+      ],
+      "ratio": 4.947912176077419,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 1.0,
+      "color": "#52752C",
+      "index": 5,
+      "effectiveColor": [
+        0.3215686274509804,
+        0.4588235294117647,
+        0.17254901960784313
+      ],
+      "ratio": 4.767982983105136,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.7799999713897705,
+      "color": "#6855A8",
+      "index": 0,
+      "effectiveColor": [
+        0.5355294283698587,
+        0.47568629302230536,
+        0.7338823627023136
+      ],
+      "ratio": 3.6667658495469238,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.7799999713897705,
+      "color": "#18776D",
+      "index": 1,
+      "effectiveColor": [
+        0.29082355499267576,
+        0.5796862892076081,
+        0.5534117810866412
+      ],
+      "ratio": 3.4320208827632506,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.7799999713897705,
+      "color": "#9B5B16",
+      "index": 2,
+      "effectiveColor": [
+        0.6915294226478128,
+        0.4940392335255941,
+        0.2872941437889548
+      ],
+      "ratio": 3.4136719205729302,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.7799999713897705,
+      "color": "#A44E5E",
+      "index": 3,
+      "effectiveColor": [
+        0.7190588334027459,
+        0.4542745291018018,
+        0.5075294298284194
+      ],
+      "ratio": 3.4732909155973184,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.7799999713897705,
+      "color": "#326D9B",
+      "index": 4,
+      "effectiveColor": [
+        0.37035296384026023,
+        0.5490980550354603,
+        0.6941176582785213
+      ],
+      "ratio": 3.4522460773440713,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FCFAFF",
+      "opacity": 0.7799999713897705,
+      "color": "#52752C",
+      "index": 5,
+      "effectiveColor": [
+        0.4682353131911334,
+        0.5735686423731785,
+        0.3545882589676801
+      ],
+      "ratio": 3.3390820687768685,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.7799999713897705,
+      "color": "#6855A8",
+      "index": 0,
+      "effectiveColor": [
+        0.5286274666879691,
+        0.4679215861301796,
+        0.7278431462306603
+      ],
+      "ratio": 3.4872797229085917,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.7799999713897705,
+      "color": "#18776D",
+      "index": 1,
+      "effectiveColor": [
+        0.2839215933107862,
+        0.5719215823154823,
+        0.5473725646149878
+      ],
+      "ratio": 3.2631062510415267,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.7799999713897705,
+      "color": "#9B5B16",
+      "index": 2,
+      "effectiveColor": [
+        0.6846274609659232,
+        0.4862745266334683,
+        0.28125492731730145
+      ],
+      "ratio": 3.2448123200970036,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.7799999713897705,
+      "color": "#A44E5E",
+      "index": 3,
+      "effectiveColor": [
+        0.7121568717208563,
+        0.4465098222096761,
+        0.501490213356766
+      ],
+      "ratio": 3.30070026259822,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.7799999713897705,
+      "color": "#326D9B",
+      "index": 4,
+      "effectiveColor": [
+        0.3634510021583707,
+        0.5413333481433344,
+        0.6880784418068681
+      ],
+      "ratio": 3.2825526212522553,
+      "passes": true
+    },
+    {
+      "theme": "lavender_fog_notebook",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#F4F1F8",
+      "opacity": 0.7799999713897705,
+      "color": "#52752C",
+      "index": 5,
+      "effectiveColor": [
+        0.4613333515092438,
+        0.5658039354810528,
+        0.34854904249602675
+      ],
+      "ratio": 3.175463968369672,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.88,
+      "color": "#5EA5C8",
+      "index": 0,
+      "effectiveColor": [
+        0.32909803921568626,
+        0.5792941176470588,
+        0.7061960784313726
+      ],
+      "ratio": 5.47057622930353,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.88,
+      "color": "#8BAF81",
+      "index": 1,
+      "effectiveColor": [
+        0.4843921568627451,
+        0.6138039215686275,
+        0.4611764705882353
+      ],
+      "ratio": 6.035272996966055,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.88,
+      "color": "#B6696B",
+      "index": 2,
+      "effectiveColor": [
+        0.6327843137254902,
+        0.37223529411764705,
+        0.38525490196078427
+      ],
+      "ratio": 3.791038868688698,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.88,
+      "color": "#8B69A3",
+      "index": 3,
+      "effectiveColor": [
+        0.4843921568627451,
+        0.37223529411764705,
+        0.5785098039215687
+      ],
+      "ratio": 3.418677125722703,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.88,
+      "color": "#CDAD33",
+      "index": 4,
+      "effectiveColor": [
+        0.712156862745098,
+        0.6069019607843138,
+        0.192
+      ],
+      "ratio": 6.731693762035783,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.78,
+      "color": "#5EA5C8",
+      "index": 0,
+      "effectiveColor": [
+        0.30392156862745096,
+        0.5357647058823529,
+        0.6618039215686274
+      ],
+      "ratio": 4.061879454589057,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.78,
+      "color": "#8BAF81",
+      "index": 1,
+      "effectiveColor": [
+        0.44156862745098036,
+        0.5663529411764705,
+        0.44462745098039214
+      ],
+      "ratio": 4.437882721663071,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.78,
+      "color": "#B6696B",
+      "index": 2,
+      "effectiveColor": [
+        0.5730980392156864,
+        0.3522352941176471,
+        0.37733333333333335
+      ],
+      "ratio": 2.871355830315567,
+      "passes": false
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.78,
+      "color": "#8B69A3",
+      "index": 3,
+      "effectiveColor": [
+        0.44156862745098036,
+        0.3522352941176471,
+        0.5486274509803922
+      ],
+      "ratio": 2.633098304541509,
+      "passes": false
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.78,
+      "color": "#CDAD33",
+      "index": 4,
+      "effectiveColor": [
+        0.6434509803921569,
+        0.560235294117647,
+        0.2060392156862745
+      ],
+      "ratio": 4.884922674394262,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.78,
+      "color": "#5EA5C8",
+      "index": 0,
+      "effectiveColor": [
+        0.29615686274509806,
+        0.5228235294117648,
+        0.6410980392156862
+      ],
+      "ratio": 4.555581033547274,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.78,
+      "color": "#8BAF81",
+      "index": 1,
+      "effectiveColor": [
+        0.43380392156862746,
+        0.5534117647058824,
+        0.423921568627451
+      ],
+      "ratio": 4.990053270886318,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.78,
+      "color": "#B6696B",
+      "index": 2,
+      "effectiveColor": [
+        0.5653333333333334,
+        0.33929411764705886,
+        0.3566274509803922
+      ],
+      "ratio": 3.2252948226620597,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.78,
+      "color": "#8B69A3",
+      "index": 3,
+      "effectiveColor": [
+        0.43380392156862746,
+        0.33929411764705886,
+        0.527921568627451
+      ],
+      "ratio": 2.944606335847598,
+      "passes": false
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.78,
+      "color": "#CDAD33",
+      "index": 4,
+      "effectiveColor": [
+        0.6356862745098039,
+        0.5472941176470588,
+        0.18533333333333332
+      ],
+      "ratio": 5.5152344267407845,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 1.0,
+      "color": "#5EA5C8",
+      "index": 0,
+      "effectiveColor": [
+        0.3686274509803922,
+        0.6470588235294118,
+        0.7843137254901961
+      ],
+      "ratio": 5.735441481567284,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 1.0,
+      "color": "#8BAF81",
+      "index": 1,
+      "effectiveColor": [
+        0.5450980392156862,
+        0.6862745098039216,
+        0.5058823529411764
+      ],
+      "ratio": 6.372782450644706,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 1.0,
+      "color": "#B6696B",
+      "index": 2,
+      "effectiveColor": [
+        0.7137254901960784,
+        0.4117647058823529,
+        0.4196078431372549
+      ],
+      "ratio": 3.8936751716097677,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 1.0,
+      "color": "#8B69A3",
+      "index": 3,
+      "effectiveColor": [
+        0.5450980392156862,
+        0.4117647058823529,
+        0.6392156862745098
+      ],
+      "ratio": 3.4651868244669455,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 1.0,
+      "color": "#CDAD33",
+      "index": 4,
+      "effectiveColor": [
+        0.803921568627451,
+        0.6784313725490196,
+        0.2
+      ],
+      "ratio": 7.173804145676855,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 1.0,
+      "color": "#5EA5C8",
+      "index": 0,
+      "effectiveColor": [
+        0.3686274509803922,
+        0.6470588235294118,
+        0.7843137254901961
+      ],
+      "ratio": 6.728079168043556,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 1.0,
+      "color": "#8BAF81",
+      "index": 1,
+      "effectiveColor": [
+        0.5450980392156862,
+        0.6862745098039216,
+        0.5058823529411764
+      ],
+      "ratio": 7.475725275282494,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 1.0,
+      "color": "#B6696B",
+      "index": 2,
+      "effectiveColor": [
+        0.7137254901960784,
+        0.4117647058823529,
+        0.4196078431372549
+      ],
+      "ratio": 4.567556812048136,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 1.0,
+      "color": "#8B69A3",
+      "index": 3,
+      "effectiveColor": [
+        0.5450980392156862,
+        0.4117647058823529,
+        0.6392156862745098
+      ],
+      "ratio": 4.064909625876646,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 1.0,
+      "color": "#CDAD33",
+      "index": 4,
+      "effectiveColor": [
+        0.803921568627451,
+        0.6784313725490196,
+        0.2
+      ],
+      "ratio": 8.415380469536874,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.7799999713897705,
+      "color": "#5EA5C8",
+      "index": 0,
+      "effectiveColor": [
+        0.3039215602126776,
+        0.5357646914089427,
+        0.6618039056366565
+      ],
+      "ratio": 4.06187926252496,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.7799999713897705,
+      "color": "#8BAF81",
+      "index": 1,
+      "effectiveColor": [
+        0.441568613987343,
+        0.5663529255810906,
+        0.4446274430144067
+      ],
+      "ratio": 4.437882500673277,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.7799999713897705,
+      "color": "#B6696B",
+      "index": 2,
+      "effectiveColor": [
+        0.5730980209275788,
+        0.35223528637605556,
+        0.3773333278356814
+      ],
+      "ratio": 2.871355713091658,
+      "passes": false
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.7799999713897705,
+      "color": "#8B69A3",
+      "index": 3,
+      "effectiveColor": [
+        0.441568613987343,
+        0.35223528637605556,
+        0.5486274391997095
+      ],
+      "ratio": 2.633098207979824,
+      "passes": false
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#13243A",
+      "opacity": 0.7799999713897705,
+      "color": "#CDAD33",
+      "index": 4,
+      "effectiveColor": [
+        0.6434509595235188,
+        0.560235278746661,
+        0.20603921647165335
+      ],
+      "ratio": 4.884922414888967,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.7799999713897705,
+      "color": "#5EA5C8",
+      "index": 0,
+      "effectiveColor": [
+        0.29615685332055186,
+        0.5228235132553998,
+        0.6410980205909879
+      ],
+      "ratio": 4.555580788598988,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.7799999713897705,
+      "color": "#8BAF81",
+      "index": 1,
+      "effectiveColor": [
+        0.4338039070952172,
+        0.5534117474275477,
+        0.42392155796873804
+      ],
+      "ratio": 4.990052991484503,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.7799999713897705,
+      "color": "#B6696B",
+      "index": 2,
+      "effectiveColor": [
+        0.5653333140354531,
+        0.33929410822251266,
+        0.35662744279001274
+      ],
+      "ratio": 3.2252946711024895,
+      "passes": true
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.7799999713897705,
+      "color": "#8B69A3",
+      "index": 3,
+      "effectiveColor": [
+        0.4338039070952172,
+        0.33929410822251266,
+        0.5279215541540407
+      ],
+      "ratio": 2.9446062083894495,
+      "passes": false
+    },
+    {
+      "theme": "midnight_transit_signal_slate",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0A1522",
+      "opacity": 0.7799999713897705,
+      "color": "#CDAD33",
+      "index": 4,
+      "effectiveColor": [
+        0.6356862526313931,
+        0.5472941005931181,
+        0.1853333314259847
+      ],
+      "ratio": 5.515234102306595,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.88,
+      "color": "#9C3038",
+      "index": 0,
+      "effectiveColor": [
+        0.6470588235294118,
+        0.27058823529411763,
+        0.292078431372549
+      ],
+      "ratio": 4.47258700990766,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.88,
+      "color": "#1C6673",
+      "index": 1,
+      "effectiveColor": [
+        0.20533333333333334,
+        0.4569411764705883,
+        0.49568627450980396
+      ],
+      "ratio": 3.9973801704834084,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.88,
+      "color": "#4E3E78",
+      "index": 2,
+      "effectiveColor": [
+        0.37788235294117645,
+        0.3189019607843137,
+        0.5129411764705881
+      ],
+      "ratio": 5.269140332337438,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.88,
+      "color": "#B16D28",
+      "index": 3,
+      "effectiveColor": [
+        0.7195294117647059,
+        0.4810980392156863,
+        0.23686274509803923
+      ],
+      "ratio": 2.6881625453837117,
+      "passes": false
+    },
+    {
+      "theme": "registration_ink",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.88,
+      "color": "#6C2948",
+      "index": 4,
+      "effectiveColor": [
+        0.4814117647058824,
+        0.2464313725490196,
+        0.3472941176470588
+      ],
+      "ratio": 5.907061519987838,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.78,
+      "color": "#9C3038",
+      "index": 0,
+      "effectiveColor": [
+        0.6885490196078431,
+        0.3530196078431372,
+        0.368
+      ],
+      "ratio": 4.113804602950501,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.78,
+      "color": "#1C6673",
+      "index": 1,
+      "effectiveColor": [
+        0.29701960784313725,
+        0.5181960784313725,
+        0.5484705882352942
+      ],
+      "ratio": 3.6763885431114462,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.78,
+      "color": "#4E3E78",
+      "index": 2,
+      "effectiveColor": [
+        0.4499607843137255,
+        0.39584313725490194,
+        0.563764705882353
+      ],
+      "ratio": 4.603635117566456,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.78,
+      "color": "#B16D28",
+      "index": 3,
+      "effectiveColor": [
+        0.7527843137254902,
+        0.5396078431372549,
+        0.3190588235294118
+      ],
+      "ratio": 2.6316317099940925,
+      "passes": false
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.78,
+      "color": "#6C2948",
+      "index": 4,
+      "effectiveColor": [
+        0.5417254901960784,
+        0.33160784313725483,
+        0.4169411764705882
+      ],
+      "ratio": 5.1282671554379,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.78,
+      "color": "#9C3038",
+      "index": 0,
+      "effectiveColor": [
+        0.6764705882352942,
+        0.3392156862745098,
+        0.3524705882352941
+      ],
+      "ratio": 3.7286597689288405,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.78,
+      "color": "#1C6673",
+      "index": 1,
+      "effectiveColor": [
+        0.2849411764705882,
+        0.5043921568627451,
+        0.5329411764705883
+      ],
+      "ratio": 3.33987805101877,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.78,
+      "color": "#4E3E78",
+      "index": 2,
+      "effectiveColor": [
+        0.43788235294117644,
+        0.38203921568627447,
+        0.5482352941176472
+      ],
+      "ratio": 4.193714310092755,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.78,
+      "color": "#B16D28",
+      "index": 3,
+      "effectiveColor": [
+        0.7407058823529412,
+        0.5258039215686274,
+        0.3035294117647059
+      ],
+      "ratio": 2.37653717286685,
+      "passes": false
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.78,
+      "color": "#6C2948",
+      "index": 4,
+      "effectiveColor": [
+        0.5296470588235295,
+        0.3178039215686274,
+        0.40141176470588236
+      ],
+      "ratio": 4.668002115062475,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 1.0,
+      "color": "#9C3038",
+      "index": 0,
+      "effectiveColor": [
+        0.611764705882353,
+        0.18823529411764706,
+        0.2196078431372549
+      ],
+      "ratio": 6.341654039244435,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 1.0,
+      "color": "#1C6673",
+      "index": 1,
+      "effectiveColor": [
+        0.10980392156862745,
+        0.4,
+        0.45098039215686275
+      ],
+      "ratio": 5.738693168364232,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 1.0,
+      "color": "#4E3E78",
+      "index": 2,
+      "effectiveColor": [
+        0.3058823529411765,
+        0.24313725490196078,
+        0.47058823529411764
+      ],
+      "ratio": 8.033165982580513,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 1.0,
+      "color": "#B16D28",
+      "index": 3,
+      "effectiveColor": [
+        0.6941176470588235,
+        0.42745098039215684,
+        0.1568627450980392
+      ],
+      "ratio": 3.6067455081337387,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 1.0,
+      "color": "#6C2948",
+      "index": 4,
+      "effectiveColor": [
+        0.4235294117647059,
+        0.1607843137254902,
+        0.2823529411764706
+      ],
+      "ratio": 8.957996961887263,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 1.0,
+      "color": "#9C3038",
+      "index": 0,
+      "effectiveColor": [
+        0.611764705882353,
+        0.18823529411764706,
+        0.2196078431372549
+      ],
+      "ratio": 5.489424766042178,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 1.0,
+      "color": "#1C6673",
+      "index": 1,
+      "effectiveColor": [
+        0.10980392156862745,
+        0.4,
+        0.45098039215686275
+      ],
+      "ratio": 4.967493371317514,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 1.0,
+      "color": "#4E3E78",
+      "index": 2,
+      "effectiveColor": [
+        0.3058823529411765,
+        0.24313725490196078,
+        0.47058823529411764
+      ],
+      "ratio": 6.95362125111431,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 1.0,
+      "color": "#B16D28",
+      "index": 3,
+      "effectiveColor": [
+        0.6941176470588235,
+        0.42745098039215684,
+        0.1568627450980392
+      ],
+      "ratio": 3.122049546480721,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 1.0,
+      "color": "#6C2948",
+      "index": 4,
+      "effectiveColor": [
+        0.4235294117647059,
+        0.1607843137254902,
+        0.2823529411764706
+      ],
+      "ratio": 7.754167930386392,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.7799999713897705,
+      "color": "#9C3038",
+      "index": 0,
+      "effectiveColor": [
+        0.6885490295933742,
+        0.35301962927276015,
+        0.3680000192978803
+      ],
+      "ratio": 4.113804362005149,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.7799999713897705,
+      "color": "#1C6673",
+      "index": 1,
+      "effectiveColor": [
+        0.2970196321898816,
+        0.5181960938023585,
+        0.5484706009135527
+      ],
+      "ratio": 3.6763883349420245,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.7799999713897705,
+      "color": "#4E3E78",
+      "index": 2,
+      "effectiveColor": [
+        0.44996080305062086,
+        0.39584315711376716,
+        0.5637647179996266
+      ],
+      "ratio": 4.603634794163922,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.7799999713897705,
+      "color": "#B16D28",
+      "index": 3,
+      "effectiveColor": [
+        0.7527843213548847,
+        0.5396078577228621,
+        0.3190588446224437
+      ],
+      "ratio": 2.631631604436459,
+      "passes": false
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#F5EFE4",
+      "opacity": 0.7799999713897705,
+      "color": "#6C2948",
+      "index": 4,
+      "effectiveColor": [
+        0.5417255055670644,
+        0.3316078653522566,
+        0.41694119397331686
+      ],
+      "ratio": 5.12826677865256,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.7799999713897705,
+      "color": "#9C3038",
+      "index": 0,
+      "effectiveColor": [
+        0.6764705966500675,
+        0.33921570590898104,
+        0.3524706055136288
+      ],
+      "ratio": 3.7286595721970155,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.7799999713897705,
+      "color": "#1C6673",
+      "index": 1,
+      "effectiveColor": [
+        0.28494119924657485,
+        0.5043921704385795,
+        0.5329411871293012
+      ],
+      "ratio": 3.339877880851985,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.7799999713897705,
+      "color": "#4E3E78",
+      "index": 2,
+      "effectiveColor": [
+        0.4378823701073142,
+        0.38203923374998805,
+        0.5482353042153751
+      ],
+      "ratio": 4.193714040429273,
+      "passes": true
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.7799999713897705,
+      "color": "#B16D28",
+      "index": 3,
+      "effectiveColor": [
+        0.740705888411578,
+        0.525803934359083,
+        0.3035294308381922
+      ],
+      "ratio": 2.3765370897397196,
+      "passes": false
+    },
+    {
+      "theme": "registration_ink",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E7DFD2",
+      "opacity": 0.7799999713897705,
+      "color": "#6C2948",
+      "index": 4,
+      "effectiveColor": [
+        0.5296470726237578,
+        0.3178039419884775,
+        0.40141178018906537
+      ],
+      "ratio": 4.668001800858805,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.88,
+      "color": "#1B4C8A",
+      "index": 0,
+      "effectiveColor": [
+        0.19858823529411765,
+        0.36156862745098034,
+        0.5684705882352942
+      ],
+      "ratio": 4.629758122869061,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.88,
+      "color": "#143F33",
+      "index": 1,
+      "effectiveColor": [
+        0.17443137254901964,
+        0.3167058823529411,
+        0.26823529411764707
+      ],
+      "ratio": 6.043605150368186,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.88,
+      "color": "#0E766E",
+      "index": 2,
+      "effectiveColor": [
+        0.15372549019607845,
+        0.5065098039215686,
+        0.47184313725490196
+      ],
+      "ratio": 3.168395966990352,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.88,
+      "color": "#8B7A16",
+      "index": 3,
+      "effectiveColor": [
+        0.5850980392156864,
+        0.520313725490196,
+        0.16815686274509803
+      ],
+      "ratio": 2.5264459254361573,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.88,
+      "color": "#3C97AC",
+      "index": 4,
+      "effectiveColor": [
+        0.3124705882352941,
+        0.6203921568627451,
+        0.6858039215686276
+      ],
+      "ratio": 2.0820112373068045,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.78,
+      "color": "#1B4C8A",
+      "index": 0,
+      "effectiveColor": [
+        0.29827450980392156,
+        0.44384313725490193,
+        0.6274509803921569
+      ],
+      "ratio": 4.625585040444525,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.78,
+      "color": "#143F33",
+      "index": 1,
+      "effectiveColor": [
+        0.2768627450980392,
+        0.404078431372549,
+        0.3613333333333333
+      ],
+      "ratio": 5.759227881504544,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.78,
+      "color": "#0E766E",
+      "index": 2,
+      "effectiveColor": [
+        0.2585098039215686,
+        0.5723137254901961,
+        0.5418039215686274
+      ],
+      "ratio": 3.392465780674114,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.78,
+      "color": "#8B7A16",
+      "index": 3,
+      "effectiveColor": [
+        0.6408627450980392,
+        0.5845490196078431,
+        0.27262745098039215
+      ],
+      "ratio": 2.7831834459815075,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.78,
+      "color": "#3C97AC",
+      "index": 4,
+      "effectiveColor": [
+        0.3992156862745098,
+        0.6732549019607843,
+        0.7314509803921568
+      ],
+      "ratio": 2.3747002022947465,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.78,
+      "color": "#1B4C8A",
+      "index": 0,
+      "effectiveColor": [
+        0.27584313725490195,
+        0.4145098039215686,
+        0.5912156862745098
+      ],
+      "ratio": 3.8014974546378992,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.78,
+      "color": "#143F33",
+      "index": 1,
+      "effectiveColor": [
+        0.2544313725490196,
+        0.3747450980392157,
+        0.3250980392156863
+      ],
+      "ratio": 4.75242849968044,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.78,
+      "color": "#0E766E",
+      "index": 2,
+      "effectiveColor": [
+        0.236078431372549,
+        0.5429803921568628,
+        0.5055686274509803
+      ],
+      "ratio": 2.761954252388704,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.78,
+      "color": "#8B7A16",
+      "index": 3,
+      "effectiveColor": [
+        0.6184313725490196,
+        0.5552156862745098,
+        0.2363921568627451
+      ],
+      "ratio": 2.246718767741327,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.78,
+      "color": "#3C97AC",
+      "index": 4,
+      "effectiveColor": [
+        0.3767843137254902,
+        0.643921568627451,
+        0.6952156862745098
+      ],
+      "ratio": 1.9148222610957026,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 1.0,
+      "color": "#1B4C8A",
+      "index": 0,
+      "effectiveColor": [
+        0.10588235294117647,
+        0.2980392156862745,
+        0.5411764705882353
+      ],
+      "ratio": 7.910669646324133,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 1.0,
+      "color": "#143F33",
+      "index": 1,
+      "effectiveColor": [
+        0.0784313725490196,
+        0.24705882352941178,
+        0.2
+      ],
+      "ratio": 10.824615397441908,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 1.0,
+      "color": "#0E766E",
+      "index": 2,
+      "effectiveColor": [
+        0.054901960784313725,
+        0.4627450980392157,
+        0.43137254901960786
+      ],
+      "ratio": 5.048068703880991,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 1.0,
+      "color": "#8B7A16",
+      "index": 3,
+      "effectiveColor": [
+        0.5450980392156862,
+        0.47843137254901963,
+        0.08627450980392157
+      ],
+      "ratio": 3.9565930472902497,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 1.0,
+      "color": "#3C97AC",
+      "index": 4,
+      "effectiveColor": [
+        0.23529411764705882,
+        0.592156862745098,
+        0.6745098039215687
+      ],
+      "ratio": 3.115361240259647,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 1.0,
+      "color": "#1B4C8A",
+      "index": 0,
+      "effectiveColor": [
+        0.10588235294117647,
+        0.2980392156862745,
+        0.5411764705882353
+      ],
+      "ratio": 5.836568707906388,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 1.0,
+      "color": "#143F33",
+      "index": 1,
+      "effectiveColor": [
+        0.0784313725490196,
+        0.24705882352941178,
+        0.2
+      ],
+      "ratio": 7.98650611496442,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 1.0,
+      "color": "#0E766E",
+      "index": 2,
+      "effectiveColor": [
+        0.054901960784313725,
+        0.4627450980392157,
+        0.43137254901960786
+      ],
+      "ratio": 3.7245139981447926,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 1.0,
+      "color": "#8B7A16",
+      "index": 3,
+      "effectiveColor": [
+        0.5450980392156862,
+        0.47843137254901963,
+        0.08627450980392157
+      ],
+      "ratio": 2.919212683905324,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 1.0,
+      "color": "#3C97AC",
+      "index": 4,
+      "effectiveColor": [
+        0.23529411764705882,
+        0.592156862745098,
+        0.6745098039215687
+      ],
+      "ratio": 2.2985437063691605,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.7799999713897705,
+      "color": "#1B4C8A",
+      "index": 0,
+      "effectiveColor": [
+        0.29827453482384775,
+        0.4438431562161913,
+        0.6274509916118547
+      ],
+      "ratio": 4.625584721545945,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.7799999713897705,
+      "color": "#143F33",
+      "index": 1,
+      "effectiveColor": [
+        0.27686277090334427,
+        0.4040784517923991,
+        0.3613333543141683
+      ],
+      "ratio": 5.7592274095670755,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.7799999713897705,
+      "color": "#0E766E",
+      "index": 2,
+      "effectiveColor": [
+        0.25850983040005554,
+        0.5723137397392123,
+        0.5418039359298407
+      ],
+      "ratio": 3.3924656070769212,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.7799999713897705,
+      "color": "#8B7A16",
+      "index": 3,
+      "effectiveColor": [
+        0.6408627575519038,
+        0.5845490334080715,
+        0.2726274752149395
+      ],
+      "ratio": 2.783183323715493,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#FAF5EE",
+      "opacity": 0.7799999713897705,
+      "color": "#3C97AC",
+      "index": 4,
+      "effectiveColor": [
+        0.3992157075919357,
+        0.6732549125073003,
+        0.7314509877971574
+      ],
+      "ratio": 2.3747001196458535,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.7799999713897705,
+      "color": "#1B4C8A",
+      "index": 0,
+      "effectiveColor": [
+        0.2758431593577067,
+        0.4145098190681607,
+        0.5912156927819345
+      ],
+      "ratio": 3.8014972405737923,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.7799999713897705,
+      "color": "#143F33",
+      "index": 1,
+      "effectiveColor": [
+        0.2544313954372032,
+        0.3747451146443685,
+        0.32509805548424814
+      ],
+      "ratio": 4.752428173601468,
+      "passes": true
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.7799999713897705,
+      "color": "#0E766E",
+      "index": 2,
+      "effectiveColor": [
+        0.2360784549339145,
+        0.5429804025911817,
+        0.5055686370999205
+      ],
+      "ratio": 2.761954143445847,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.7799999713897705,
+      "color": "#8B7A16",
+      "index": 3,
+      "effectiveColor": [
+        0.6184313820857628,
+        0.5552156962600409,
+        0.23639217638501933
+      ],
+      "ratio": 2.246718693260232,
+      "passes": false
+    },
+    {
+      "theme": "slipware",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#E0D3C4",
+      "opacity": 0.7799999713897705,
+      "color": "#3C97AC",
+      "index": 4,
+      "effectiveColor": [
+        0.37678433212579465,
+        0.6439215753592696,
+        0.6952156889672373
+      ],
+      "ratio": 1.914822215014109,
+      "passes": false
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.88,
+      "color": "#B59BFF",
+      "index": 0,
+      "effectiveColor": [
+        0.6307450980392157,
+        0.540078431372549,
+        0.8912941176470588
+      ],
+      "ratio": 6.7185402369085105,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.88,
+      "color": "#67D7C4",
+      "index": 1,
+      "effectiveColor": [
+        0.3615686274509804,
+        0.7471372549019607,
+        0.6876862745098039
+      ],
+      "ratio": 8.801478438889722,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.88,
+      "color": "#F2A65A",
+      "index": 2,
+      "effectiveColor": [
+        0.8412549019607843,
+        0.5780392156862745,
+        0.32188235294117645
+      ],
+      "ratio": 7.60119988887756,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.88,
+      "color": "#E57FA6",
+      "index": 3,
+      "effectiveColor": [
+        0.7963921568627451,
+        0.44345098039215686,
+        0.584156862745098
+      ],
+      "ratio": 5.88116214603176,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.88,
+      "color": "#8DB7FF",
+      "index": 4,
+      "effectiveColor": [
+        0.49270588235294116,
+        0.6367058823529411,
+        0.8912941176470588
+      ],
+      "ratio": 7.593876176872655,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "python-line-polyline",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.88,
+      "color": "#BBD66B",
+      "index": 5,
+      "effectiveColor": [
+        0.6514509803921569,
+        0.7436862745098038,
+        0.3805490196078431
+      ],
+      "ratio": 9.396451211224981,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.78,
+      "color": "#B59BFF",
+      "index": 0,
+      "effectiveColor": [
+        0.5734901960784314,
+        0.4905098039215687,
+        0.8153725490196079
+      ],
+      "ratio": 5.2291053618599905,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.78,
+      "color": "#67D7C4",
+      "index": 1,
+      "effectiveColor": [
+        0.3349019607843137,
+        0.6740392156862746,
+        0.6349019607843137
+      ],
+      "ratio": 6.717381107475543,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.78,
+      "color": "#F2A65A",
+      "index": 2,
+      "effectiveColor": [
+        0.7600784313725492,
+        0.5241568627450981,
+        0.31066666666666665
+      ],
+      "ratio": 5.848763162065335,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.78,
+      "color": "#E57FA6",
+      "index": 3,
+      "effectiveColor": [
+        0.7203137254901961,
+        0.40486274509803927,
+        0.5431372549019609
+      ],
+      "ratio": 4.60548958268217,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.78,
+      "color": "#8DB7FF",
+      "index": 4,
+      "effectiveColor": [
+        0.4511372549019608,
+        0.5761568627450981,
+        0.8153725490196079
+      ],
+      "ratio": 5.8609249678755715,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.78,
+      "color": "#BBD66B",
+      "index": 5,
+      "effectiveColor": [
+        0.591843137254902,
+        0.6709803921568628,
+        0.3626666666666667
+      ],
+      "ratio": 7.1481423520374,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.78,
+      "color": "#B59BFF",
+      "index": 0,
+      "effectiveColor": [
+        0.5648627450980392,
+        0.4836078431372549,
+        0.8007058823529412
+      ],
+      "ratio": 5.480874913268541,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.78,
+      "color": "#67D7C4",
+      "index": 1,
+      "effectiveColor": [
+        0.3262745098039216,
+        0.6671372549019609,
+        0.620235294117647
+      ],
+      "ratio": 7.070621062605013,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.78,
+      "color": "#F2A65A",
+      "index": 2,
+      "effectiveColor": [
+        0.7514509803921569,
+        0.5172549019607844,
+        0.29600000000000004
+      ],
+      "ratio": 6.148732471185708,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.78,
+      "color": "#E57FA6",
+      "index": 3,
+      "effectiveColor": [
+        0.711686274509804,
+        0.3979607843137255,
+        0.5284705882352942
+      ],
+      "ratio": 4.827664125146099,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.78,
+      "color": "#8DB7FF",
+      "index": 4,
+      "effectiveColor": [
+        0.44250980392156863,
+        0.5692549019607843,
+        0.8007058823529412
+      ],
+      "ratio": 6.152660311955041,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.78,
+      "color": "#BBD66B",
+      "index": 5,
+      "effectiveColor": [
+        0.5832156862745099,
+        0.6640784313725491,
+        0.34800000000000003
+      ],
+      "ratio": 7.528073534451969,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 1.0,
+      "color": "#B59BFF",
+      "index": 0,
+      "effectiveColor": [
+        0.7098039215686275,
+        0.6078431372549019,
+        1.0
+      ],
+      "ratio": 7.831690440763836,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 1.0,
+      "color": "#67D7C4",
+      "index": 1,
+      "effectiveColor": [
+        0.403921568627451,
+        0.8431372549019608,
+        0.7686274509803922
+      ],
+      "ratio": 10.411497867792464,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 1.0,
+      "color": "#F2A65A",
+      "index": 2,
+      "effectiveColor": [
+        0.9490196078431372,
+        0.6509803921568628,
+        0.35294117647058826
+      ],
+      "ratio": 8.933863679173962,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 1.0,
+      "color": "#E57FA6",
+      "index": 3,
+      "effectiveColor": [
+        0.8980392156862745,
+        0.4980392156862745,
+        0.6509803921568628
+      ],
+      "ratio": 6.816449900983041,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 1.0,
+      "color": "#8DB7FF",
+      "index": 4,
+      "effectiveColor": [
+        0.5529411764705883,
+        0.7176470588235294,
+        1.0
+      ],
+      "ratio": 8.910073319493685,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-panel",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 1.0,
+      "color": "#BBD66B",
+      "index": 5,
+      "effectiveColor": [
+        0.7333333333333333,
+        0.8392156862745098,
+        0.4196078431372549
+      ],
+      "ratio": 11.143161721617009,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 1.0,
+      "color": "#B59BFF",
+      "index": 0,
+      "effectiveColor": [
+        0.7098039215686275,
+        0.6078431372549019,
+        1.0
+      ],
+      "ratio": 8.437701335439922,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 1.0,
+      "color": "#67D7C4",
+      "index": 1,
+      "effectiveColor": [
+        0.403921568627451,
+        0.8431372549019608,
+        0.7686274509803922
+      ],
+      "ratio": 11.217132511488071,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 1.0,
+      "color": "#F2A65A",
+      "index": 2,
+      "effectiveColor": [
+        0.9490196078431372,
+        0.6509803921568628,
+        0.35294117647058826
+      ],
+      "ratio": 9.625159991519316,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 1.0,
+      "color": "#E57FA6",
+      "index": 3,
+      "effectiveColor": [
+        0.8980392156862745,
+        0.4980392156862745,
+        0.6509803921568628
+      ],
+      "ratio": 7.3439021712500665,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 1.0,
+      "color": "#8DB7FF",
+      "index": 4,
+      "effectiveColor": [
+        0.5529411764705883,
+        0.7176470588235294,
+        1.0
+      ],
+      "ratio": 9.599528749942142,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "svg-line-segment-field",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 1.0,
+      "color": "#BBD66B",
+      "index": 5,
+      "effectiveColor": [
+        0.7333333333333333,
+        0.8392156862745098,
+        0.4196078431372549
+      ],
+      "ratio": 12.005412018090526,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.7799999713897705,
+      "color": "#B59BFF",
+      "index": 0,
+      "effectiveColor": [
+        0.5734901783513088,
+        0.49050978866277956,
+        0.8153725250094545
+      ],
+      "ratio": 5.22910506874417,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.7799999713897705,
+      "color": "#67D7C4",
+      "index": 1,
+      "effectiveColor": [
+        0.3349019518085555,
+        0.6740391936956668,
+        0.634901943393782
+      ],
+      "ratio": 6.717380694596802,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.7799999713897705,
+      "color": "#F2A65A",
+      "index": 2,
+      "effectiveColor": [
+        0.7600784068014107,
+        0.5241568462521422,
+        0.3106666611690147
+      ],
+      "ratio": 5.8487628164270395,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.7799999713897705,
+      "color": "#E57FA6",
+      "index": 3,
+      "effectiveColor": [
+        0.7203137023776185,
+        0.4048627329807655,
+        0.5431372408773385
+      ],
+      "ratio": 4.605489333576838,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.7799999713897705,
+      "color": "#8DB7FF",
+      "index": 4,
+      "effectiveColor": [
+        0.45113724166271735,
+        0.5761568443447935,
+        0.8153725250094545
+      ],
+      "ratio": 5.860924625495262,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-panel-f32-opacity",
+      "surface": "panel",
+      "substrate": "#171329",
+      "opacity": 0.7799999713897705,
+      "color": "#BBD66B",
+      "index": 5,
+      "effectiveColor": [
+        0.5918431188545975,
+        0.6709803702784519,
+        0.3626666592616661
+      ],
+      "ratio": 7.14814190589111,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.7799999713897705,
+      "color": "#B59BFF",
+      "index": 0,
+      "effectiveColor": [
+        0.5648627262489468,
+        0.48360782698089,
+        0.8007058564354391
+      ],
+      "ratio": 5.480874583808523,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.7799999713897705,
+      "color": "#67D7C4",
+      "index": 1,
+      "effectiveColor": [
+        0.3262744997061935,
+        0.6671372320137772,
+        0.6202352748197668
+      ],
+      "ratio": 7.070620603028073,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.7799999713897705,
+      "color": "#F2A65A",
+      "index": 2,
+      "effectiveColor": [
+        0.7514509546990488,
+        0.5172548845702527,
+        0.29599999259499943
+      ],
+      "ratio": 6.148732085203484,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.7799999713897705,
+      "color": "#E57FA6",
+      "index": 3,
+      "effectiveColor": [
+        0.7116862502752566,
+        0.39796077129887597,
+        0.5284705723033232
+      ],
+      "ratio": 4.827663844646963,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.7799999713897705,
+      "color": "#8DB7FF",
+      "index": 4,
+      "effectiveColor": [
+        0.4425097895603554,
+        0.569254882662904,
+        0.8007058564354391
+      ],
+      "ratio": 6.152659928694834,
+      "passes": true
+    },
+    {
+      "theme": "ultraviolet_laboratory",
+      "context": "canvas-line-segment-field-f32-opacity",
+      "surface": "field",
+      "substrate": "#0D0B18",
+      "opacity": 0.7799999713897705,
+      "color": "#BBD66B",
+      "index": 5,
+      "effectiveColor": [
+        0.5832156667522356,
+        0.6640784085965624,
+        0.3479999906876508
+      ],
+      "ratio": 7.528073038502051,
+      "passes": true
+    }
+  ]
+}

@@ -609,6 +609,29 @@ export function validatePalettePack(input: PalettePack): UnknownRecord;
 export function resolvePalette(pack: PalettePack, key: string, options?: { mode?: ApplicationProfileKey }): UnknownRecord & { theme: FiguresteadTheme };
 export function contrastRatio(left: CanonicalColor, right: CanonicalColor): number;
 export function contrastAudit(theme: FiguresteadTheme): UnknownRecord[];
+/** Caller-supplied single-layer facts; no renderer, substrate or opacity defaults. */
+export interface SeriesRenderContext {
+  substrate: CanonicalColor;
+  opacity: number;
+  compositing: "srgb-source-over";
+}
+export interface RenderedSeriesContrast {
+  token: string;
+  color: CanonicalColor;
+  substrate: CanonicalColor;
+  opacity: number;
+  compositing: "srgb-source-over";
+  /** Unrounded encoded sRGB channels, each in [0, 1]. */
+  effectiveColor: number[];
+  ratio: number;
+  minimum: 3;
+  passes: boolean;
+}
+/** Rejects nonempty theme-level seriesEdges, not contract/style overrides.
+ * Caller must account for effective colors/layers. Line segment contexts exclude
+ * companion markers. Unrounded ratio >= 3; final ULPs may differ across runtimes.
+ */
+export function renderedSeriesAudit(theme: FiguresteadTheme, context: SeriesRenderContext): RenderedSeriesContrast[];
 
 export const RENDER_LAYER_ORDER: readonly string[];
 export function renderLayerForMark(mark: UnknownRecord): string;

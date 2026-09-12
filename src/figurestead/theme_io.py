@@ -6,6 +6,7 @@ import argparse
 from copy import deepcopy
 from dataclasses import dataclass
 import json
+import math
 from pathlib import Path
 import re
 from typing import Any, Mapping
@@ -413,7 +414,7 @@ def contrast_ratio(left: str, right: str) -> float:
 
 
 def contrast_audit(theme: Theme) -> list[dict[str, Any]]:
-    """Report contrast risks without mutating the supplied colors."""
+    """Inspect authored palette contrast, not composited renderer output."""
     checks = [
         ("label", theme.label, 4.5), ("secondary", theme.secondary, 4.5),
         ("primary", theme.primary, 3.0), ("summary_core", theme.summary_core, 3.0),
@@ -430,6 +431,48 @@ def contrast_audit(theme: Theme) -> list[dict[str, Any]]:
         if ratio < 3 and edge is None:
             findings.append({"level": "warning", "token": f"series[{index}]", "surface": "panel", "ratio": round(ratio, 2), "minimum": 3.0})
     return findings
+
+
+def rendered_series_audit(
+    theme: Theme, *, substrate: str, opacity: float, compositing: str,
+) -> list[dict[str, Any]]:
+    """Measure supplied theme series colors in an explicit single-layer context.
+
+    ``srgb-source-over`` blends encoded sRGB channels before computing relative
+    luminance. Inputs describe rendering facts, not a renderer preset. Results
+    retain unrounded channels/ratios; ``passes`` means ratio >= 3, including at
+    the boundary, without epsilon. Final floating-point ULPs may differ across
+    runtimes; this is not physical certification. Nonempty theme-level edges
+    reject conservatively. Contract/style overrides are not inspected: callers
+    must account for any effective color or layer before claiming rendered-mark
+    contrast. The verified Python line primitive is its default polyline, not
+    companion markers/points. No whole-figure accessibility claim is made.
+    """
+    if not isinstance(substrate, str) or not HEX_COLOR.fullmatch(substrate):
+        raise ThemePackError("substrate must be an opaque #RRGGBB color")
+    if (isinstance(opacity, bool) or not isinstance(opacity, (int, float))
+            or not math.isfinite(opacity) or not 0 <= opacity <= 1):
+        raise ThemePackError("opacity must be a finite number in [0, 1]")
+    if compositing != "srgb-source-over":
+        raise ThemePackError("compositing must be srgb-source-over")
+    if theme.series_edges:
+        raise ThemePackError("layered series edges are not supported by this single-layer audit")
+    if not theme.series or any(not isinstance(c, str) or not HEX_COLOR.fullmatch(c) for c in theme.series):
+        raise ThemePackError("series must contain opaque #RRGGBB colors")
+    background = [int(substrate[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    background_luminance = _luminance(substrate)
+    rows = []
+    for index, color in enumerate(theme.series):
+        foreground = [int(color[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+        effective = [opacity * f + (1 - opacity) * b for f, b in zip(foreground, background)]
+        linear = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in effective]
+        luminance = sum(w * c for w, c in zip((0.2126, 0.7152, 0.0722), linear))
+        high, low = sorted((luminance, background_luminance), reverse=True)
+        ratio = (high + 0.05) / (low + 0.05)
+        rows.append({"token": f"series[{index}]", "color": color, "substrate": substrate,
+                     "opacity": opacity, "compositing": compositing, "effectiveColor": effective,
+                     "ratio": ratio, "minimum": 3.0, "passes": ratio >= 3.0})
+    return rows
 
 
 def preview_theme_pack(source: str | Path | Mapping[str, Any], output: str | Path) -> Path:

@@ -251,6 +251,7 @@ export function contrastRatio(left, right) {
   return colorContrast(left, right);
 }
 
+/** Authored palette inspection; does not model renderer compositing. */
 export function contrastAudit(theme) {
   if (theme.mode === "paper") return auditPaperTheme(theme).findings;
   const findings = [];
@@ -265,4 +266,34 @@ export function contrastAudit(theme) {
     if (ratio < 3 && !theme.seriesEdges?.[index]) findings.push({ level: "warning", token: `series[${index}]`, surface: "panel", ratio: Number(ratio.toFixed(2)), minimum: 3 });
   });
   return findings;
+}
+
+/** Supplied theme series colors in a caller-supplied single-layer context.
+ * Theme-level seriesEdges reject; contract/style overrides are not inspected.
+ * Callers must account for effective mark colors/layers before claiming rendered
+ * contrast. Verified line segments do not include companion markers/points.
+ * No defaults: encoded-sRGB blend, then luminance; passes = ratio >= 3 exactly.
+ * Final ULPs may differ across runtimes; this is not physical certification.
+ */
+export function renderedSeriesAudit(theme, context) {
+  object(context, "renderContext");
+  const fields = ["substrate", "opacity", "compositing"];
+  if (Object.keys(context).length !== fields.length || fields.some(key => !hasOwn(context, key))) {
+    throw new FiguresteadConfigError("requires exactly substrate, opacity, compositing", "renderContext");
+  }
+  const { substrate, opacity, compositing } = context;
+  if (typeof substrate !== "string" || substrate.length !== 7 || !COLOR.test(substrate)) throw new FiguresteadConfigError("must be an opaque #RRGGBB color", "renderContext.substrate");
+  if (typeof opacity !== "number" || !Number.isFinite(opacity) || opacity < 0 || opacity > 1) throw new FiguresteadConfigError("must be a finite number in [0, 1]", "renderContext.opacity");
+  if (compositing !== "srgb-source-over") throw new FiguresteadConfigError("must be srgb-source-over", "renderContext.compositing");
+  if (theme.seriesEdges?.length) throw new FiguresteadConfigError("layered series edges are not supported by this single-layer audit", "theme.seriesEdges");
+  if (!Array.isArray(theme.series) || !theme.series.length || theme.series.some(c => typeof c !== "string" || c.length !== 7 || !COLOR.test(c))) throw new FiguresteadConfigError("must contain opaque #RRGGBB colors", "theme.series");
+  const background = hexChannels(substrate).map(c => c / 255);
+  const luminance = channels => channels.map(c => c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)
+    .reduce((sum, c, i) => sum + c * [0.2126, 0.7152, 0.0722][i], 0);
+  const back = luminance(background);
+  return theme.series.map((color, index) => {
+    const effectiveColor = hexChannels(color).map((c, i) => opacity * c / 255 + (1 - opacity) * background[i]);
+    const front = luminance(effectiveColor), ratio = (Math.max(front, back) + 0.05) / (Math.min(front, back) + 0.05);
+    return { token: `series[${index}]`, color, substrate, opacity, compositing, effectiveColor, ratio, minimum: 3, passes: ratio >= 3 };
+  });
 }
