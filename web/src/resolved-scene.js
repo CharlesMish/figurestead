@@ -1,3 +1,4 @@
+import { lineMarkerGeometry } from "./line-identity.js";
 import { deriveFigureLayout } from "./figure-layout.js";
 import { refineScientificLayout } from "./scientific-layout.js";
 import { markMotionState } from "./motion-plan.js";
@@ -94,7 +95,7 @@ function pointGeometry(mark, axes, radius) {
   return { cx, cy, radius };
 }
 
-function lineGeometry(panel, axes, radius) {
+function lineGeometry(panel, axes, scale) {
   const controls = new Map();
   const series = [...new Set(panel.marks.filter((mark) => mark.kind === "point").map((mark) => mark.series))];
   series.forEach((key) => {
@@ -104,7 +105,10 @@ function lineGeometry(panel, axes, radius) {
   });
   const segmentIndex = new Map();
   return panel.marks.map((mark) => {
-    if (mark.kind === "point") return { ...mark, geometry: pointGeometry(mark, axes, radius) };
+    if (mark.kind === "point") {
+      const marker = lineMarkerGeometry(mark.style, scale, panel.presentation?.markerScale ?? 1);
+      return { ...mark, lineIdentity: true, geometry: { ...pointGeometry(mark, axes, marker.radius), outlineWidth: marker.outlineWidth } };
+    }
     if (mark.kind !== "segment") return { ...mark };
     const index = segmentIndex.get(mark.series) ?? 0; segmentIndex.set(mark.series, index + 1);
     const control = controls.get(`${mark.series}\u0000${index}`);
@@ -255,7 +259,7 @@ export function resolveTerminalScene(scene, options = {}) {
       axes = resolveAxes(panel, resolvedLayout);
     }
     const radius = Math.max(3.2, Math.sqrt(scene.profile.markerSize) * 0.62 * resolvedLayout.scale) * (panel.presentation?.markerScale ?? 1);
-    if (panel.renderer === "line") marks = lineGeometry(panel, axes, radius);
+    if (panel.renderer === "line") marks = lineGeometry(panel, axes, resolvedLayout.scale);
     else if (panel.renderer === "scatter") marks = scatterGeometry(panel, axes, radius);
     else if (["categorical_bar", "categorical_layered_bar"].includes(panel.renderer)) marks = barGeometry(panel, axes, resolvedLayout);
     else if (panel.renderer === "categorical_matrix") { const matrix = matrixGeometry(panel, resolvedLayout, scene.theme); marks = matrix.marks; axes = matrix.axes; }

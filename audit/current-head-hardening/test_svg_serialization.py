@@ -14,12 +14,11 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 RUNNER = ROOT / "web" / "test" / "svg-serialization-cases.mjs"
 EXPECTED_NORMAL = {
-    # Hash-only change from the accepted Slipware provenance resolution
-    # (#9C8F84 -> #7A6D63); SVG byte length and XML structure are unchanged.
-    "exportFigureSvg": (4140, "c25e8c1107585ff414ef921014a1243d3376948b033a256028363c939bcb2dc9"),
-    "exportFigureArtifacts": (4140, "c25e8c1107585ff414ef921014a1243d3376948b033a256028363c939bcb2dc9"),
-    "sceneToSvg": (4140, "c25e8c1107585ff414ef921014a1243d3376948b033a256028363c939bcb2dc9"),
-    "resolvedSceneToSvg": (4095, "75b6107f23fa88647e63ef7850d984d4bb411c4438b2214ac61d76cfd3148e4a"),
+    # B2 line geometry: own-series masks and larger open markers; escaping rules unchanged.
+    'exportFigureSvg': (5394, '442ad6318e77725c07728fad463017ec28533b627cc2cf2842577489f3ce45db'),
+    'exportFigureArtifacts': (5394, '442ad6318e77725c07728fad463017ec28533b627cc2cf2842577489f3ce45db'),
+    'sceneToSvg': (5394, '442ad6318e77725c07728fad463017ec28533b627cc2cf2842577489f3ce45db'),
+    'resolvedSceneToSvg': (5349, '8ddad3163b409f218957381ab189e65b95cd06b2287850dbf7d0f357d3d906e7'),
 }
 SVG = "{http://www.w3.org/2000/svg}"
 

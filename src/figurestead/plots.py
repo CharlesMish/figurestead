@@ -20,6 +20,7 @@ from .core import (
     style_axes,
     style_legend,
 )
+from ._line_identity import IdentityLine, IdentityLegend, LINE_IDENTITIES
 from .presentation import FocusAnnotation, draw_focus_annotation, monotone_curve, resolve_pose
 
 
@@ -245,9 +246,23 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
     return fig, ax
 
 
-def line(x, ys, *, labels=None, spec=None, theme="slipware",
+def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
          profile="deep_scope", ax=None, pose=None, focus: FocusAnnotation | None = None):
-    """Draw one or more finite numeric series sharing one x vector."""
+    """Draw one or more finite numeric series sharing one x vector.
+
+    ``series_slots`` optionally supplies one zero-based, nonnegative integer per
+    input series (Python or NumPy integers, not booleans). Omission uses row
+    positions. Carry the original slots when filtering or reordering rows, e.g.
+    ``series_slots=[1, 2]`` retains the second/third colors and square/triangle
+    default markers. Labels are display text only; duplicates are permitted.
+
+    Slots may repeat and have no upper bound. Colors, optional theme edges, and
+    markers each cycle modulo their own sequence length: the default marker
+    cycle is circle, square, upright triangle, diamond. An explicit pose keeps
+    its own marker cycle, indexed by the same slots. Cycling is a style-selection
+    rule, not a claim of distinguishability for additional series. Slots do not
+    select line rhythm; ordinary Matplotlib line-style overrides remain separate.
+    """
     x = _numeric_array(x, path="line.x", dimensions=(1,))
     ys = _numeric_array(ys, path="line.ys", dimensions=(1, 2))
     ys = np.atleast_2d(ys)
@@ -258,17 +273,31 @@ def line(x, ys, *, labels=None, spec=None, theme="slipware",
         )
     labels = ([f"series {index + 1}" for index in range(len(ys))]
               if labels is None else _metadata(labels, path="line.labels", expected=len(ys)))
+    if _masked_entry_count(series_slots) is not None:
+        raise _input_error("line.series_slots", "masked arrays are not currently supported")
+    slots = (list(range(len(ys))) if series_slots is None else
+             _metadata(series_slots, path="line.series_slots", expected=len(ys)))
+    for index, slot in enumerate(slots):
+        if isinstance(slot, (bool, np.bool_)) or not isinstance(slot, (int, np.integer)) or slot < 0:
+            raise _input_error(f"line.series_slots[{index}]", "must be a nonnegative integer (not boolean)")
+    slots = [int(slot) for slot in slots]
     spec = spec or PlotSpec("Line")
     theme, profile = resolve(theme, profile)
     presentation = resolve_pose(pose)
     fig, ax = ensure_axes(ax)
     style_axes(ax, theme, profile, spec, panel_surface=presentation.panel_surface if presentation else False, frame=presentation.frame if presentation else False)
-    for series_index, (y, label, color) in enumerate(zip(ys, labels, series_colors(theme))):
+    for series_index, y, label in zip(slots, ys, labels):
+        color = theme.series[series_index % len(theme.series)]
         draw_x, draw_y = monotone_curve(x, y) if presentation and presentation.curve == "monotone" else (x, y)
         width = presentation.line_width if presentation else 1.45
         if presentation:
             ax.plot(draw_x, draw_y, color=color, linewidth=width + 3.2, alpha=0.13, zorder=2.6)
-        path, = ax.plot(draw_x, draw_y, color=color, linewidth=width, alpha=0.92 if presentation else 0.88, label=label, zorder=3)
+        if presentation:
+            path, = ax.plot(draw_x, draw_y, color=color, linewidth=width, alpha=0.92, label=label, zorder=3)
+        else:
+            path = IdentityLine(draw_x, draw_y, color=color, linewidth=width,
+                                alpha=0.88, label=label, zorder=3)
+            ax.add_line(path)
         if theme.series_edges:
             path.set_path_effects([pe.Stroke(linewidth=width + 1.45, foreground=theme.series_edges[series_index % len(theme.series_edges)], alpha=0.75), pe.Normal()])
         if presentation:
@@ -279,10 +308,16 @@ def line(x, ys, *, labels=None, spec=None, theme="slipware",
             ax.scatter(x, y, s=26 * presentation.marker_scale, marker=marker, facecolors="none",
                        edgecolors=color, linewidths=1.2, alpha=0.96, zorder=4.2)
         else:
-            ax.scatter(x[::max(1, len(x) // 18)], y[::max(1, len(x) // 18)],
-                       s=7, color=color, alpha=0.62, edgecolors="none", zorder=4)
+            marker, size = LINE_IDENTITIES[series_index % len(LINE_IDENTITIES)]
+            points = ax.scatter(x, y, s=size ** 2, marker=marker, facecolors="none",
+                                edgecolors=color, linewidths=1., alpha=1., zorder=4)
+            if theme.series_edges:
+                points.set_path_effects([pe.Stroke(linewidth=2.1, foreground=theme.series_edges[series_index % len(theme.series_edges)]), pe.Normal()])
+            path.identity_marker, path.identity_points = marker, points
+            path.identity_edge_width = 1.45 if theme.series_edges else 0.
     if len(ys) > 1:
-        style_legend(ax, theme, location=presentation.legend_location if presentation else "best")
+        style_legend(ax, theme, location=presentation.legend_location if presentation else "best",
+                     handler_map=None if presentation else {IdentityLine: IdentityLegend()})
     if focus is not None:
         draw_focus_annotation(ax, focus, theme)
     add_note(ax, spec, theme)

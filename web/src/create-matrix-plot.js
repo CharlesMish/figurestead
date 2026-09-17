@@ -127,7 +127,14 @@ export function createFigurestead(canvas, input, options = {}) {
   };
   return Object.freeze({
     play() { if (isReduced()) clock.settle(); else clock.play(); }, pause() { clock.pause(); }, replay() { if (isReduced()) clock.settle(); else clock.replay(); },
-    setData(data) { if (contract.panels.length !== 1) throw new TypeError("setData is available only for single-panel figures; use setConfig for multi-panel figures"); const next = cloneValue(contract); next.panels[0].data = cloneValue(data); replace(next); },
+    setData(data) {
+      if (contract.panels.length !== 1) throw new TypeError("setData is available only for single-panel figures; use setConfig for multi-panel figures");
+      const next = cloneValue(contract);
+      // Data-only updates retain established line identities, including filtered keys.
+      // setConfig remains an explicit new style/theme contract.
+      if (contract.panels[0].renderer === "line") next.style.series = { ...scene.seriesStyles, ...next.style.series };
+      next.panels[0].data = cloneValue(data); replace(next);
+    },
     setConfig(next) { replace(next); },
     setReducedMotion(value) { if (value !== null && typeof value !== "boolean") throw new TypeError("reduced motion must be true, false, or null"); reducedOverride = value; isReduced() ? clock.settle() : clock.render(clock.progress); },
     resize,
