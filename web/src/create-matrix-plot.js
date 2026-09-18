@@ -132,7 +132,13 @@ export function createFigurestead(canvas, input, options = {}) {
       const next = cloneValue(contract);
       // Data-only updates retain established line identities, including filtered keys.
       // setConfig remains an explicit new style/theme contract.
-      if (contract.panels[0].renderer === "line") next.style.series = { ...scene.seriesStyles, ...next.style.series };
+      if (contract.panels[0].renderer === "line") {
+        // Merge each override onto its complete established style, not over the key.
+        // Entries absent from this scene retain their saved style (or future override).
+        const retained = Object.fromEntries(Object.entries(scene.seriesStyles).map(([key, style]) =>
+          [key, { ...style, ...next.style.series[key] }]));
+        next.style.series = { ...next.style.series, ...retained };
+      }
       next.panels[0].data = cloneValue(data); replace(next);
     },
     setConfig(next) { replace(next); },
