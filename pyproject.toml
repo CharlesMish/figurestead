@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "figurestead"
-version = "0.9.0a1"
+version = "0.9.0a2"
 description = "A framework-free scientific figure system for deterministic, inspectable Python and browser output."
 readme = "README.md"
 license = {text = "MIT"}

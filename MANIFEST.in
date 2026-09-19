@@ -1,0 +1,7 @@
+include VERSIONING.md
+include docs/direct-series-labels.md
+include docs/rendered-series-contrast.md
+include docs/reference-themes.md
+recursive-include docs/assets/reference-themes *.png *.json
+recursive-include examples/direct-series-labels *.py *.js *.html *.md
+include release/notes/0.9.0a2-web-alpha.3.md

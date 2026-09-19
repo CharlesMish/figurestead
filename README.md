@@ -2,14 +2,14 @@
 
 Figurestead is an experimental scientific figure system with Python and framework-free browser surfaces. It shares figure-contract and theme semantics across runtimes while keeping scientific output deterministic and inspectable.
 
-Current public alpha: Python `figurestead==0.9.0a1` and browser `@figurestead/web@0.9.0-alpha.1`.
+Coordinated release target: Python `figurestead==0.9.0a2` and browser `@figurestead/web@0.9.0-alpha.3`. The package counters are independent. Registry commands below require those exact versions to be available; review candidates use the retained files in [release preparation](release/README.md).
 
 ## Start here
 
 ### Python
 
 ```bash
-python -m pip install "figurestead==0.9.0a1"
+python -m pip install "figurestead==0.9.0a2"
 ```
 
 ```python
@@ -24,7 +24,7 @@ figure.savefig("figurestead-first-success.png", dpi=150)
 ### Browser
 
 ```bash
-npm install @figurestead/web@0.9.0-alpha.1
+npm install @figurestead/web@0.9.0-alpha.3
 ```
 
 The package exports `createFigurestead`; rendering requires a complete normalized figure contract. The repository includes one with every identifier defined. From a checkout:
@@ -36,6 +36,16 @@ python3 -m http.server 4173
 Open <http://127.0.0.1:4173/examples/browser-first-success/>. [Inspect the exact browser example and its inline contract](examples/browser-first-success/).
 
 Python and browser surfaces share normalized figure-contract vocabulary and selected theme definitions. Each surface renders through its own implementation; shared semantics do not imply pixel-identical output.
+
+## Series identity and optional direct labels
+
+Default line series combine color with persistent open **circle (S1), square (S2), and upright triangle (S3)** markers and matching line-and-marker legends. Line rhythm remains an independent semantic channel. Python callers can carry `series_slots=[1, 2]` when rebuilding filtered S2/S3 rows; browser `setData` retains established keyed identity through supported filtering/reordering and partial style overrides. `setConfig` replaces the contract.
+
+Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/main/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Product defaults are unchanged.
+
+Opt in with Python `line(..., direct_labels=True)` or browser `style: { directLabels: true }`. Direct labels reuse the actual body marker identity beside the traces. V1 covers ordinary one-panel, 2–3-series line figures with single-line printable ASCII labels. Unsupported or insufficient layouts fall back atomically to the ordinary legend. This treatment does not support Unicode, multiline or math interpretation; printable ASCII math punctuation is literal. Active browser transitions use ordinary treatment until settled, and exports without trustworthy measurement retain the ordinary legend.
+
+See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/main/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/main/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/main/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
 
 ## Figurestead at a glance
 
