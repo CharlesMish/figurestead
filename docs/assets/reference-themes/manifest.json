@@ -1,0 +1,243 @@
+{
+  "sourceRevision": "2a0509b9df88753dd9bcf881a546b4cd7806b1eb",
+  "mergedPR": 25,
+  "specimenOrigin": "Retained B2 development renders, not new renders of the merge commit. Stable-slot and keyed-style follow-ups retain the approved visual design.",
+  "regenerated": false,
+  "specimens": [
+    {
+      "path": "python/lavender_fog_notebook/normal.png",
+      "sha256": "816cc5c01a10f8638f0ae601aa05b9a2d55bf502c06efc898420a70038bf467a",
+      "bytes": 50856,
+      "dimensions": [
+        1008,
+        624
+      ],
+      "retainedSource": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/python/lavender_fog_notebook/normal.png"
+    },
+    {
+      "path": "python/lavender_fog_notebook/grayscale.png",
+      "sha256": "780b9ed3cda868ee8f62ccd230df0b2383895125427150b86b5c94d673d2a4e6",
+      "bytes": 42415,
+      "dimensions": [
+        1008,
+        624
+      ],
+      "retainedSource": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/python/lavender_fog_notebook/grayscale.png"
+    },
+    {
+      "path": "python/ultraviolet_laboratory/normal.png",
+      "sha256": "2505ce5b7714708ada79826efd7568c73a6a5ffaa59699971c771573d3b8d75d",
+      "bytes": 51228,
+      "dimensions": [
+        1008,
+        624
+      ],
+      "retainedSource": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/python/ultraviolet_laboratory/normal.png"
+    },
+    {
+      "path": "python/ultraviolet_laboratory/grayscale.png",
+      "sha256": "638a73d9c320a8aebc497cca754fa14ef130accc9d3b20d95603c1cf77bc07da",
+      "bytes": 43249,
+      "dimensions": [
+        1008,
+        624
+      ],
+      "retainedSource": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/python/ultraviolet_laboratory/grayscale.png"
+    },
+    {
+      "path": "canvas/lavender_fog_notebook/normal.png",
+      "sha256": "6d26e54d2d512c4f96114c0ab78b10c33b4904800abeef0516ab3d892240a99c",
+      "bytes": 54435,
+      "dimensions": [
+        760,
+        520
+      ],
+      "retainedSource": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/canvas/lavender_fog_notebook/normal.png"
+    },
+    {
+      "path": "canvas/lavender_fog_notebook/grayscale.png",
+      "sha256": "95513db3e3ecafd28bb4ec48d5fcab790e0d7ea19d38cf83f20dd27f7cb919dd",
+      "bytes": 31072,
+      "dimensions": [
+        760,
+        520
+      ],
+      "retainedSource": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/canvas/lavender_fog_notebook/grayscale.png"
+    },
+    {
+      "path": "canvas/ultraviolet_laboratory/normal.png",
+      "sha256": "d3e3205060ac0d1871517f21e9a4e7d4ca4cd1417d29d4498494bd73df7952e9",
+      "bytes": 55105,
+      "dimensions": [
+        760,
+        520
+      ],
+      "retainedSource": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/canvas/ultraviolet_laboratory/normal.png"
+    },
+    {
+      "path": "canvas/ultraviolet_laboratory/grayscale.png",
+      "sha256": "eef595021d4a0b04f5174a5dd9671df0defbcf0c44bf90226ebaf9480ac4a732",
+      "bytes": 31286,
+      "dimensions": [
+        760,
+        520
+      ],
+      "retainedSource": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/canvas/ultraviolet_laboratory/grayscale.png"
+    }
+  ],
+  "contrastFixture": {
+    "path": "audit/rendered-contrast/expected.json",
+    "sha256": "d0bb2e4a16dcf5ee97ca7cb282aad36847c4fa9d9f908e756b785c6c37f64dc2",
+    "summary": [
+      {
+        "theme": "lavender_fog_notebook",
+        "palette": {
+          "path": "src/figurestead/themes/lavender_fog_notebook.json",
+          "sha256": "bb7a3782755af8cc339099904ff31d0b196dd696703499b013b064d25a4df748"
+        },
+        "rows": 42,
+        "failures": 0,
+        "minimumRatio": 3.175463968369672,
+        "contexts": [
+          "canvas-line-segment-field",
+          "canvas-line-segment-field-f32-opacity",
+          "canvas-line-segment-panel",
+          "canvas-line-segment-panel-f32-opacity",
+          "python-line-polyline",
+          "svg-line-segment-field",
+          "svg-line-segment-panel"
+        ]
+      },
+      {
+        "theme": "ultraviolet_laboratory",
+        "palette": {
+          "path": "src/figurestead/themes/ultraviolet_laboratory.json",
+          "sha256": "67ae1cfc038a77aad4e453171ea240a05508a24f590cb15db2f5f8e6c4f13d6a"
+        },
+        "rows": 42,
+        "failures": 0,
+        "minimumRatio": 4.605489333576838,
+        "contexts": [
+          "canvas-line-segment-field",
+          "canvas-line-segment-field-f32-opacity",
+          "canvas-line-segment-panel",
+          "canvas-line-segment-panel-f32-opacity",
+          "python-line-polyline",
+          "svg-line-segment-field",
+          "svg-line-segment-panel"
+        ]
+      }
+    ]
+  },
+  "sourceBindings": [
+    {
+      "path": "src/figurestead/_line_identity.py",
+      "retainedRenderSourceSha256": "5ce0d2eaec7a21d867c7aa27adb5eb0d76452edcc06c8b923da665f9891b9e0e",
+      "designatedMainSourceSha256": "5ce0d2eaec7a21d867c7aa27adb5eb0d76452edcc06c8b923da665f9891b9e0e"
+    },
+    {
+      "path": "src/figurestead/core.py",
+      "retainedRenderSourceSha256": "c4e75224bde0285ac637ced9e8cbc52671e6a1b93e2b82fbfd12287b7bb3c2c9",
+      "designatedMainSourceSha256": "c4e75224bde0285ac637ced9e8cbc52671e6a1b93e2b82fbfd12287b7bb3c2c9"
+    },
+    {
+      "path": "src/figurestead/plots.py",
+      "retainedRenderSourceSha256": "eb55b7cc03f82f3265faf38d40277170998e9f06a3a5228e663a05f05eac62ae",
+      "designatedMainSourceSha256": "11870c88425a7487904918885c501a0b9d81fd514259614ba0fb1195a1080028"
+    },
+    {
+      "path": "web/src/canvas-scene.js",
+      "retainedRenderSourceSha256": "9d8f7afc7452c6bcb36d42068769c0fe8eab5d95fc2feb25031367596639fdab",
+      "designatedMainSourceSha256": "9d8f7afc7452c6bcb36d42068769c0fe8eab5d95fc2feb25031367596639fdab"
+    },
+    {
+      "path": "web/src/composition.js",
+      "retainedRenderSourceSha256": "e55c80a7227e11fb36c35a6c7210718cd09f8dc3505ca8661f339f32cab672fb",
+      "designatedMainSourceSha256": "e55c80a7227e11fb36c35a6c7210718cd09f8dc3505ca8661f339f32cab672fb"
+    },
+    {
+      "path": "web/src/create-matrix-plot.js",
+      "retainedRenderSourceSha256": "26c49e50f5f7316d726ae254dbceec6c9426f22ba7080cef1b077dcc3a00f045",
+      "designatedMainSourceSha256": "b64815c16d046a54d4cb87a0aa89916a99cb5312ad1d9db1ac6983b03c2a07b7"
+    },
+    {
+      "path": "web/src/line-identity.js",
+      "retainedRenderSourceSha256": "edd65122f5126e23099c96109df959e6449fc2e958369e5fd577c14e1263bcd3",
+      "designatedMainSourceSha256": "edd65122f5126e23099c96109df959e6449fc2e958369e5fd577c14e1263bcd3"
+    },
+    {
+      "path": "web/src/resolved-scene.js",
+      "retainedRenderSourceSha256": "6847b0898af3e346471cd6b01ec8a1c7e2ecb934371b25213151197ac5e9dfbf",
+      "designatedMainSourceSha256": "6847b0898af3e346471cd6b01ec8a1c7e2ecb934371b25213151197ac5e9dfbf"
+    },
+    {
+      "path": "web/src/svg-export.js",
+      "retainedRenderSourceSha256": "de375e635d658c7dccd331c26e318ed8a6b714b37ba27fa6fa220e51d22502c0",
+      "designatedMainSourceSha256": "de375e635d658c7dccd331c26e318ed8a6b714b37ba27fa6fa220e51d22502c0"
+    }
+  ],
+  "retainedProvenance": [
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/reference-comparison.json",
+      "sha256": "f65f67f1785ae328210a16d01ab3c246a46a302d7f6d42a2239ae0021ebd78a9"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/source-bindings.json",
+      "sha256": "52b3d3b457baea5dee880625f1e1ba1431e000700df6b0e5956288ae5d2b6839"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/render_python.py",
+      "sha256": "a80126a554ac7ab9654fb37b08f8fb01b065d7e73eddf7f3b80191c026f6f3b4"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/render_canvas.cjs",
+      "sha256": "3db05502cf4e449b0b180b5be4edd230250ce3c21bfc00f1c7df5327356934d9"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/grayscale.py",
+      "sha256": "ca43732808ee94a40541253b9599feddc84ac28b24f20bb66aa3be4e02d431ce"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/transport.json",
+      "sha256": "d5980769dc66904fad5f1f65aeec04b05d83497872e520af93da8a44f0027ba4"
+    },
+    {
+      "artifact": "FIGURESTEAD_REFERENCE_THEME_FREEZE_03/dataset.json",
+      "sha256": "e2138939692318a5ffb28258eb27260d193395c7c63be19dcb25a8e665cdb055"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_SERIES_SLOTS_REVIEW_01/default-compatibility.json",
+      "sha256": "1a7667032e08d952a8aaf995d67792371d39a221fe285bdaf228b1259d2f98f9"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_R1_CORRECTION_01/reference-view-preservation.json",
+      "sha256": "a9fdc6fd99be638f76fe920559031f66140e50b15c4f8f51ad1c06b3ed4c6de5"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/python/lavender_fog_notebook/instrument.json",
+      "sha256": "a7e97ba306e58f17454498bec76af8864edab03d1446106146140c6549bef7af"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/python/ultraviolet_laboratory/instrument.json",
+      "sha256": "2f9c5995f7dd87f91f67f0f7a432dfeea7c8f1f78cf315fa75868f269fa39420"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/canvas/lavender_fog_notebook/instrument.json",
+      "sha256": "8a569887da5b40e0b273c54efbab59715905f11ce266968c9c2a558bbad8e3b3"
+    },
+    {
+      "artifact": "FIGURESTEAD_B2_IDENTITY_REVIEW_01/views/canvas/ultraviolet_laboratory/instrument.json",
+      "sha256": "5f27e250447ececbeb24bef41e4ba4842ca2ce1390f5969140f787c0aab40ce6"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "matplotlib": "3.11.2",
+    "canvasChromium": "151.0.7922.34"
+  },
+  "grayscale": "Complete-image linear-light Rec.709 luminance (0.2126, 0.7152, 0.0722), sRGB re-encoding, nearest 8-bit rounding; alpha retained.",
+  "externalDesignationDecision": {
+    "result": "REFERENCE_PAIR_READY_FOR_BOUNDED_DESIGNATION",
+    "authority": "External design/evidence review reported by project owner in documentation commission; not a new human or accessibility study."
+  }
+}
