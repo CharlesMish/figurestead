@@ -340,6 +340,11 @@ jobs:
           EXPECTED_VERSION="$version" node npm-package-smoke.mjs
           node "$GITHUB_WORKSPACE/ci/npm-types-theme-smoke.mjs" "$RUNNER_TEMP/npm-dist/$packed"
 
+      - name: Verify retained Python candidate integrity
+        run: |
+          python release/python/verify_candidate.py --version 0.9.0a2
+          python release/python/test_candidate.py
+
       - name: Verify npm retained-candidate integrity
         run: npm run test:npm-release-integrity
 

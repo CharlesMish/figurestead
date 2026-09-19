@@ -1,7 +1,9 @@
 # @figurestead/web experimental public alpha
 
+This README targets `0.9.0-alpha.3`. Registry commands require that exact version to be available; review candidates are installed from their retained tarball. To follow the prerelease channel intentionally, use `npm install @figurestead/web@alpha`; an unqualified install follows `latest`, not necessarily this alpha.
+
 ```sh
-npm install @figurestead/web@0.9.0-alpha.2
+npm install @figurestead/web@0.9.0-alpha.3
 ```
 
 The package root provides Figurestead's accepted core rendering and custom
@@ -24,7 +26,7 @@ files after installing `@figurestead/web` and run them through a normal ESM
 browser tool such as Vite.
 
 ```sh
-npm install @figurestead/web@0.9.0-alpha.2
+npm install @figurestead/web@0.9.0-alpha.3
 ```
 
 <!-- figurestead-npm-first-success:index.html -->
@@ -100,13 +102,23 @@ curated subpaths are `registration-ink`, `ultraviolet-laboratory`,
 `deep-observatory-sage-core` under `@figurestead/web/themes/`.
 
 The declarations and all six curated-theme subpaths above are included in
-`@figurestead/web@0.9.0-alpha.2`.
+`@figurestead/web@0.9.0-alpha.3`.
 
 Python and browser surfaces share normalized contract vocabulary and selected
 theme definitions. Shared semantics do not imply pixel-identical output or
 identical renderer coverage. In particular, the populated categorical matrix
 is currently Python-rendered; this package does not claim a browser categorical
 matrix renderer.
+
+## Line identity and direct labels
+
+Default line series combine color with persistent open **circle (S1), square (S2), and upright triangle (S3)** markers and matching line-and-marker legends. Line rhythm remains an independent semantic channel. `setData` retains established keyed identity through supported filtering/reordering and partial style overrides. `setConfig` replaces the contract.
+
+Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/main/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Product defaults are unchanged.
+
+Opt in with `style: { ...contract.style, directLabels: true }` (`style.directLabels: true`). Direct labels reuse the actual body marker identity beside the traces. V1 covers ordinary one-panel, 2–3-series line figures with single-line printable ASCII labels. Unsupported or insufficient layouts fall back atomically to the ordinary legend. This treatment does not support Unicode, multiline or math interpretation; printable ASCII math punctuation is literal. Active browser transitions use ordinary treatment until settled, and exports without trustworthy measurement retain the ordinary legend.
+
+See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/main/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/main/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/main/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
 
 ## Controller failures
 
@@ -180,7 +192,7 @@ preferred height is never inferred as the next baseline by Figurestead.
 Height negotiation applies only to live Canvas rendering. SVG, paper, and
 explicitly dimensioned exports retain their requested dimensions.
 
-Version 0.9.0-alpha.2. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
+Version 0.9.0-alpha.3. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
 
 ## Rendered series contrast
 

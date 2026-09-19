@@ -4,7 +4,11 @@ This directory defines the retained-candidate lifecycle for
 `@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
 already-published first alpha used this repaired process.
 
-## Current retained state
+## Next candidate (preparation only)
+
+`0.9.0-alpha.3` is retained separately under its versioned directory for independent review, not publication. Its approved future channel is `alpha`; no `latest` change is proposed. The existing parameterized publication workflow and exact candidate verifier are unchanged. See [coordinated notes](../notes/0.9.0a2-web-alpha.3.md).
+
+## Historical published alpha.2 state
 
 `@figurestead/web@0.9.0-alpha.2` is published. Its accepted candidate is
 retained at

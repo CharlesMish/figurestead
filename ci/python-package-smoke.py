@@ -11,7 +11,7 @@ from figurestead import line
 
 
 checks = []
-checks.append(importlib.metadata.version("figurestead") == "0.9.0a1")
+checks.append(importlib.metadata.version("figurestead") == "0.9.0a2")
 checks.append(callable(line))
 with tempfile.TemporaryDirectory(prefix="figurestead-packed-smoke-") as temporary:
     output = Path(temporary) / "packed-smoke.png"

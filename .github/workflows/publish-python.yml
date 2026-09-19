@@ -1,7 +1,7 @@
 name: Publish accepted Figurestead Python artifacts
 
 run-name: >-
-  Figurestead 0.9.0a1 → ${{ inputs.destination }}
+  Figurestead 0.9.0a2 → ${{ inputs.destination }}
 
 on:
   workflow_dispatch:
@@ -59,10 +59,10 @@ jobs:
 
           case "$DESTINATION" in
             testpypi)
-              expected_confirmation="publish figurestead 0.9.0a1 to testpypi"
+              expected_confirmation="publish figurestead 0.9.0a2 to testpypi"
               ;;
             pypi)
-              expected_confirmation="publish figurestead 0.9.0a1 to pypi"
+              expected_confirmation="publish figurestead 0.9.0a2 to pypi"
               ;;
             *)
               exit 64
@@ -70,13 +70,16 @@ jobs:
           esac
           test "$CONFIRMATION" = "$expected_confirmation"
 
-          release_dir="release/python/0.9.0a1"
+          echo "7bf258246f925d91a480450dc66624acce391a69a70cf9d0b4491085597b8aca  release/python/0.9.0a2/SOURCE_INPUTS.json" | sha256sum --check -
+          python release/python/verify_candidate.py --version 0.9.0a2
+
+          release_dir="release/python/0.9.0a2"
           dist_dir="$release_dir/dist"
 
           mapfile -t members < <(find "$dist_dir" -maxdepth 1 -type f -printf '%f\n' | LC_ALL=C sort)
           expected_members=(
-            "figurestead-0.9.0a1-py3-none-any.whl"
-            "figurestead-0.9.0a1.tar.gz"
+            "figurestead-0.9.0a2-py3-none-any.whl"
+            "figurestead-0.9.0a2.tar.gz"
           )
           test "${#members[@]}" -eq "${#expected_members[@]}"
           test "${members[*]}" = "${expected_members[*]}"
@@ -84,15 +87,15 @@ jobs:
           (
             cd "$dist_dir"
             sha256sum --check ../SHA256SUMS.txt
-            python -m zipfile --test "figurestead-0.9.0a1-py3-none-any.whl"
-            tar -tzf "figurestead-0.9.0a1.tar.gz" >/dev/null
+            python -m zipfile --test "figurestead-0.9.0a2-py3-none-any.whl"
+            tar -tzf "figurestead-0.9.0a2.tar.gz" >/dev/null
           )
 
       - name: Stage exact distributions between jobs
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
-          name: figurestead-python-0.9.0a1
-          path: release/python/0.9.0a1/dist/
+          name: figurestead-python-0.9.0a2
+          path: release/python/0.9.0a2/dist/
           if-no-files-found: error
           compression-level: 0
           retention-days: 1
@@ -113,15 +116,15 @@ jobs:
       - name: Download authenticated distributions
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
         with:
-          name: figurestead-python-0.9.0a1
+          name: figurestead-python-0.9.0a2
           path: dist/
 
       - name: Recheck exact bytes before OIDC minting
         shell: bash
         run: |
           set -euo pipefail
-          echo "29bdfb3f38d0933a237248fc9cdf5e6b92ebf1dff47a734fc363f07061e4ddb5  dist/figurestead-0.9.0a1-py3-none-any.whl" | sha256sum --check -
-          echo "935d3344ceb1e6e43fbe96215115079dda9783320c7c53d16e03a08dc75570bb  dist/figurestead-0.9.0a1.tar.gz" | sha256sum --check -
+          echo "4050ca02f4c0293929818084b7820623219c1413c8e16980eb0060a6c622d2a6  dist/figurestead-0.9.0a2-py3-none-any.whl" | sha256sum --check -
+          echo "ab91df78fbd0ce6457317087fe92a5c5fc65da0b4882b22dcade16bf2af499a9  dist/figurestead-0.9.0a2.tar.gz" | sha256sum --check -
 
       - name: Publish to TestPyPI with Trusted Publishing
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1, resolved 2026-08-08
@@ -151,8 +154,8 @@ jobs:
           python release/python/verify_index_release.py
           --index https://test.pypi.org
           --project figurestead
-          --version 0.9.0a1
-          --manifest release/python/0.9.0a1/SHA256SUMS.txt
+          --version 0.9.0a2
+          --manifest release/python/0.9.0a2/SHA256SUMS.txt
 
   require-testpypi-before-pypi:
     name: Require identical verified TestPyPI release
@@ -173,8 +176,8 @@ jobs:
           python release/python/verify_index_release.py
           --index https://test.pypi.org
           --project figurestead
-          --version 0.9.0a1
-          --manifest release/python/0.9.0a1/SHA256SUMS.txt
+          --version 0.9.0a2
+          --manifest release/python/0.9.0a2/SHA256SUMS.txt
 
   publish-pypi:
     name: Publish exact files to PyPI
@@ -194,15 +197,15 @@ jobs:
       - name: Download authenticated distributions
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
         with:
-          name: figurestead-python-0.9.0a1
+          name: figurestead-python-0.9.0a2
           path: dist/
 
       - name: Recheck exact bytes before OIDC minting
         shell: bash
         run: |
           set -euo pipefail
-          echo "29bdfb3f38d0933a237248fc9cdf5e6b92ebf1dff47a734fc363f07061e4ddb5  dist/figurestead-0.9.0a1-py3-none-any.whl" | sha256sum --check -
-          echo "935d3344ceb1e6e43fbe96215115079dda9783320c7c53d16e03a08dc75570bb  dist/figurestead-0.9.0a1.tar.gz" | sha256sum --check -
+          echo "4050ca02f4c0293929818084b7820623219c1413c8e16980eb0060a6c622d2a6  dist/figurestead-0.9.0a2-py3-none-any.whl" | sha256sum --check -
+          echo "ab91df78fbd0ce6457317087fe92a5c5fc65da0b4882b22dcade16bf2af499a9  dist/figurestead-0.9.0a2.tar.gz" | sha256sum --check -
 
       - name: Publish to PyPI with Trusted Publishing
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1, resolved 2026-08-08
@@ -231,8 +234,8 @@ jobs:
           python release/python/verify_index_release.py
           --index https://pypi.org
           --project figurestead
-          --version 0.9.0a1
-          --manifest release/python/0.9.0a1/SHA256SUMS.txt
+          --version 0.9.0a2
+          --manifest release/python/0.9.0a2/SHA256SUMS.txt
 
   clean-install-pypi:
     name: Clean PyPI install — Python ${{ matrix.python }}
@@ -259,5 +262,5 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --disable-pip-version-check --no-cache-dir "figurestead==0.9.0a1"
+          python -m pip install --disable-pip-version-check --no-cache-dir "figurestead==0.9.0a2"
           python -c "import figurestead; print(figurestead.__file__)"
