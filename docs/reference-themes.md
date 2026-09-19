@@ -6,7 +6,7 @@ Here, **reference** means a maintained, evidence-backed exemplar of a specified 
 
 ## Source authority, not a release or default selection
 
-This designation applies to repository revision [`2a0509b9df88753dd9bcf881a546b4cd7806b1eb`](https://github.com/CharlesMish/figurestead/commit/2a0509b9df88753dd9bcf881a546b4cd7806b1eb), containing merged [PR #25](https://github.com/CharlesMish/figurestead/pull/25). It does not assert that an already-published Python or npm release contains this exact B2/reference-profile behavior, and it does not select or change product defaults. The external design/evidence review concluded `REFERENCE_PAIR_READY_FOR_BOUNDED_DESIGNATION`; this document records that bounded decision, not a new qualification campaign.
+This designation applies to repository revision [`2a0509b9df88753dd9bcf881a546b4cd7806b1eb`](https://github.com/CharlesMish/figurestead/commit/2a0509b9df88753dd9bcf881a546b4cd7806b1eb), containing merged [PR #25](https://github.com/CharlesMish/figurestead/pull/25). It does not assert that an already-published Python or npm release contains this exact B2/reference-profile behavior, and it does not select or change product defaults. The external review supports this bounded designation; this document records the decision, not a new qualification campaign.
 
 The designation belongs to the profile, source revision and recorded specimens together. A theme name alone does not carry this evidence through arbitrary changes to opacity, substrate, marker treatment, pose, density or viewing geometry.
 
