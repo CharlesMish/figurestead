@@ -1,0 +1,41 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { compileTerminalScene, resolveTerminalScene, exportFigureSvg } from "../src/index.js";
+import { composeResolvedScene } from "../src/composition.js";
+import { resolveSeriesStyles } from "../src/series-style.js";
+import { lineMarkerGeometry } from "../src/line-identity.js";
+import { lineIdentityContract } from "../../ci/fixtures/line-identity.js";
+
+const theme = JSON.parse(fs.readFileSync("src/figurestead/themes/lavender_fog_notebook.json")).themes.lavender_fog_notebook;
+const input = lineIdentityContract(theme);
+const scene = compileTerminalScene(input);
+assert.deepEqual(Object.values(scene.seriesStyles).map(s => s.glyph), ["ring", "square", "triangle"]);
+assert.deepEqual(Object.values(scene.seriesStyles).map(s => s.lineStyle), ["solid", "solid", "solid"]);
+assert.equal(new Set(Object.values(scene.seriesStyles).map(s => s.lineWidth)).size, 1);
+const dashed = structuredClone(input); dashed.style.series.S1 = { lineStyle: "dash" };
+assert.equal(compileTerminalScene(dashed).seriesStyles.S1.glyph, "ring");
+assert.equal(compileTerminalScene(dashed).seriesStyles.S1.lineStyle, "dash");
+const filtered = structuredClone(input);
+filtered.style.series = structuredClone(scene.seriesStyles);
+filtered.panels[0].data.series = [input.panels[0].data.series[2], input.panels[0].data.series[1]];
+const surviving = resolveSeriesStyles(filtered);
+assert.deepEqual(surviving.S2, scene.seriesStyles.S2);
+assert.deepEqual(surviving.S3, scene.seriesStyles.S3);
+const panel = composeResolvedScene(resolveTerminalScene(scene, { width: 760, height: 520 })).panels[0];
+for (const mark of panel.marks.filter(m => m.kind === "point")) {
+  const expected = lineMarkerGeometry(mark.style, panel.layout.scale, panel.presentation.markerScale);
+  assert.equal(mark.geometry.radius, expected.radius);
+  assert.equal(mark.geometry.outlineWidth, expected.outlineWidth);
+  assert.equal(mark.lineIdentity, true);
+  assert.deepEqual(panel.legend.find(l => l.key === mark.series).style, mark.style);
+}
+assert.ok(panel.layout.legend.entries.every(e => e.markerX < e.textX && e.textAnchor === "start"));
+const entries = panel.layout.legend.entries;
+const maxRadius = Math.max(...panel.marks.filter(m => m.lineIdentity).map(m => m.geometry.radius + m.geometry.outlineWidth / 2));
+for (let i = 1; i < entries.length; i++) assert.ok(entries[i].y - entries[i - 1].y > 2 * maxRadius);
+const svg = exportFigureSvg(input, { width: 760, height: 520 });
+assert.match(svg, /mask-type="luminance"/);
+assert.match(svg, /data-layer="legend"[^]*-legend-0/);
+assert.match(svg, /fill="black" stroke="none"/);
+assert.match(exportFigureSvg(dashed), /stroke-dasharray="7 4"/);
+console.log(JSON.stringify({ suite: "line-identity", result: "PASS", checks: ["identities", "solid-equal-width", "independent-rhythm", "keyed-filter-reorder", "body-legend-geometry", "sample-before-label", "own-line-svg-mask"] }));

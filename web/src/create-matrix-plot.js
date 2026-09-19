@@ -127,7 +127,20 @@ export function createFigurestead(canvas, input, options = {}) {
   };
   return Object.freeze({
     play() { if (isReduced()) clock.settle(); else clock.play(); }, pause() { clock.pause(); }, replay() { if (isReduced()) clock.settle(); else clock.replay(); },
-    setData(data) { if (contract.panels.length !== 1) throw new TypeError("setData is available only for single-panel figures; use setConfig for multi-panel figures"); const next = cloneValue(contract); next.panels[0].data = cloneValue(data); replace(next); },
+    setData(data) {
+      if (contract.panels.length !== 1) throw new TypeError("setData is available only for single-panel figures; use setConfig for multi-panel figures");
+      const next = cloneValue(contract);
+      // Data-only updates retain established line identities, including filtered keys.
+      // setConfig remains an explicit new style/theme contract.
+      if (contract.panels[0].renderer === "line") {
+        // Merge each override onto its complete established style, not over the key.
+        // Entries absent from this scene retain their saved style (or future override).
+        const retained = Object.fromEntries(Object.entries(scene.seriesStyles).map(([key, style]) =>
+          [key, { ...style, ...next.style.series[key] }]));
+        next.style.series = { ...next.style.series, ...retained };
+      }
+      next.panels[0].data = cloneValue(data); replace(next);
+    },
     setConfig(next) { replace(next); },
     setReducedMotion(value) { if (value !== null && typeof value !== "boolean") throw new TypeError("reduced motion must be true, false, or null"); reducedOverride = value; isReduced() ? clock.settle() : clock.render(clock.progress); },
     resize,

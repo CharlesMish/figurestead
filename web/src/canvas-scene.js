@@ -1,13 +1,11 @@
+import { appendMarkerPath, clipOwnLine, lineMarkerGeometry } from "./line-identity.js";
 import { partitionPanelMarks, withCanvasPlotClip } from "./render-layers.js";
 
 const FONT_STACK = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace";
 
 function markerPath(context, glyph, x, y, radius) {
   context.beginPath();
-  if (glyph === "square") context.rect(x - radius, y - radius, radius * 2, radius * 2);
-  else if (glyph === "triangle") { context.moveTo(x, y - radius); context.lineTo(x + radius, y + radius); context.lineTo(x - radius, y + radius); context.closePath(); }
-  else if (glyph === "diamond") { context.moveTo(x, y - radius); context.lineTo(x + radius, y); context.lineTo(x, y + radius); context.lineTo(x - radius, y); context.closePath(); }
-  else context.arc(x, y, radius, 0, Math.PI * 2);
+  appendMarkerPath(context, glyph, x, y, radius);
 }
 
 function mixPoint(a, b, t) { return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }; }
@@ -82,8 +80,17 @@ function drawLegend(context, panel, theme) {
     const x = entry?.markerX ?? (outside ? layout.legend.left : layout.plot.right - 24 * layout.scale);
     const textX = entry?.textX ?? (outside ? x + 12 * layout.scale : x - 10 * layout.scale);
     const y = entry?.y ?? (outside ? layout.legend.top + (14 + index * 20) * layout.scale : insideTop + index * 20 * layout.scale);
-    context.strokeStyle = style.edge ?? style.color ?? theme.series[item.colorIndex % theme.series.length]; context.lineWidth = Math.max(1, 1.2 * layout.scale);
-    markerPath(context, style.glyph ?? "ring", x, y, 4 * layout.scale); context.stroke();
+    if (panel.renderer === "line") {
+      const geometry = { cx: x, cy: y, ...lineMarkerGeometry(style, layout.scale, panel.presentation?.markerScale ?? 1) };
+      const point = { lineIdentity: true, style, geometry, motion: { opacity: 1, scaleX: 1, scaleY: 1, translateX: 0, translateY: 0 } };
+      const half = 12 * Math.max(1, layout.scale);
+      drawLine(context, { style, geometry: { x1: x - half, y1: y, x2: x + half, y2: y }, motion: { opacity: 1, clip: 1 } }, theme, [point],
+        { left: x - half - 3, right: x + half + 3, top: y - 10, bottom: y + 10 });
+      drawPoint(context, point);
+    } else {
+      context.strokeStyle = style.edge ?? style.color ?? theme.series[item.colorIndex % theme.series.length]; context.lineWidth = Math.max(1, 1.2 * layout.scale);
+      markerPath(context, style.glyph ?? "ring", x, y, 4 * layout.scale); context.stroke();
+    }
     context.fillStyle = theme.label;
     context.textAlign = entry?.textAnchor ?? (outside ? "left" : "right"); context.fillText(entry?.displayLabel ?? item.label, textX, y);
   });
@@ -166,16 +173,29 @@ function drawBandKey(context, panel, theme) {
 
 function drawPoint(context, mark) {
   const motion = mark.motion, g = mark.geometry, x = g.cx + motion.translateX, y = g.cy + motion.translateY, radius = g.radius * Math.min(motion.scaleX, motion.scaleY);
-  context.save(); context.globalAlpha = motion.opacity; context.strokeStyle = mark.style.edge ?? mark.style.color; context.lineWidth = Math.max(1.6, radius * 0.58);
+  context.save(); context.globalAlpha = motion.opacity;
+  if (mark.lineIdentity) {
+    context.setLineDash([]);
+    context.strokeStyle = mark.style.edge ?? mark.style.color;
+    context.lineWidth = g.outlineWidth + (mark.style.edge ? 1.3 : 0);
+    markerPath(context, mark.style.glyph, x, y, radius); context.stroke();
+    if (mark.style.edge) {
+      context.strokeStyle = mark.style.color; context.lineWidth = g.outlineWidth;
+      markerPath(context, mark.style.glyph, x, y, radius); context.stroke();
+    }
+    context.restore(); return;
+  }
+  context.strokeStyle = mark.style.edge ?? mark.style.color; context.lineWidth = Math.max(1.6, radius * 0.58);
   markerPath(context, mark.style.glyph, x, y, radius); context.stroke();
   context.strokeStyle = mark.style.color; context.lineWidth = Math.max(0.9, radius * 0.24); markerPath(context, mark.style.glyph, x, y, radius); context.stroke();
   if (motion.glow > 0) { context.globalAlpha = motion.glow; context.lineWidth = radius; markerPath(context, mark.style.glyph, x, y, radius * 1.45); context.stroke(); }
   context.restore();
 }
 
-function drawLine(context, mark, theme) {
+function drawLine(context, mark, theme, markers = [], plot = null) {
   const motion = mark.motion;
   context.save(); context.globalAlpha = motion.opacity * (theme.mode === "paper" ? 1 : 0.78); context.strokeStyle = mark.style.edge ?? mark.style.color;
+  if (markers.length) clipOwnLine(context, markers, plot);
   context.lineWidth = Math.max(1, (mark.style.lineWidth ?? 1.6) + (mark.style.edge ? 1.3 : 0));
   context.setLineDash?.(mark.style.lineStyle === "dash" ? [7, 4] : mark.style.lineStyle === "dot" ? [2, 4] : mark.style.lineStyle === "dash-dot" ? [8, 3, 2, 3] : []);
   strokeSegment(context, mark.geometry, motion.clip);
@@ -298,7 +318,9 @@ export function drawResolvedPanel(context, frame, panelIndex) {
   const drawMark = (mark) => {
     if (!mark.geometry || mark.motion.opacity <= 0) return;
     if (mark.kind === "point") drawPoint(context, mark);
-    else if (["segment", "summary-line"].includes(mark.kind)) drawLine(context, mark, theme);
+    else if (["segment", "summary-line"].includes(mark.kind)) drawLine(context, mark, theme,
+      panel.renderer === "line" ? panel.marks.filter(p => p.lineIdentity && p.series === mark.series) : [],
+      panel.axes.plot ?? panel.layout.plot);
     else if (mark.kind === "median-rule") drawLine(context, mark, theme);
     else if (mark.kind === "bar") drawBar(context, mark, theme);
     else if (mark.kind === "cell") drawCell(context, mark, theme, panel.layout.font.axis);

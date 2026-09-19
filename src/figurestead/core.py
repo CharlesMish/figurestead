@@ -163,9 +163,9 @@ def draw_summary_line(ax, x0, x1, y, *, theme: Theme, profile: Profile):
             alpha=0.96, solid_capstyle="butt", zorder=6)
 
 
-def style_legend(ax, theme: Theme, *, location="best"):
+def style_legend(ax, theme: Theme, *, location="best", handler_map=None):
     legend = ax.legend(frameon=False, fontsize=7, labelcolor=theme.label,
-                       handletextpad=0.5, borderaxespad=0.3, loc=location)
+                       handletextpad=0.5, borderaxespad=0.3, loc=location, handler_map=handler_map)
     return legend
 
 

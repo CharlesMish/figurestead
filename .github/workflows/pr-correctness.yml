@@ -64,6 +64,9 @@ jobs:
       - name: Verify direct Python plotting input boundary
         run: python audit/current-head-hardening/test_python_plot_inputs.py
 
+      - name: Verify open line identity
+        run: python audit/current-head-hardening/test_line_identity.py
+
       - name: Verify Python motion input boundary
         run: python audit/current-head-hardening/test_python_motion_inputs.py
 
@@ -206,6 +209,9 @@ jobs:
 
       - name: Verify rendered line-segment context facts
         run: npm run test:browser-rendered-contrast
+
+      - name: Verify native B2 line identity
+        run: node ci/check-line-identity.cjs
 
       - name: Verify controller transactionality and runtime errors
         run: npm run test:browser-controller-integrity

@@ -1,3 +1,4 @@
+import { lineMarkerGeometry } from "./line-identity.js";
 import { CORE_REGISTRY } from "./core-renderers.js";
 import { compileTerminalScene, evidenceFingerprint } from "./terminal-scene.js";
 import { resolveTerminalScene } from "./resolved-scene.js";
@@ -28,17 +29,29 @@ function svgNamespace(composed, scene, options) {
 }
 
 function dash(style) { return style === "dash" ? "7 4" : style === "dot" ? "2 4" : style === "dash-dot" ? "8 3 2 3" : null; }
-function marker(mark) {
-  const { cx, cy, radius } = mark.geometry, common = { "data-mark-id": mark.id, fill: "none", stroke: mark.style.color, "stroke-width": 1.5 };
+function marker(mark, appearance = null) {
+  const { cx, cy, radius } = mark.geometry, common = { "data-mark-id": mark.id, fill: "none", stroke: mark.style.color, "stroke-width": mark.lineIdentity ? mark.geometry.outlineWidth : 1.5, ...appearance };
   if (mark.style.glyph === "square") return `<rect ${attrs({ ...common, x: cx - radius, y: cy - radius, width: radius * 2, height: radius * 2 })}/>`;
   if (mark.style.glyph === "triangle") return `<path ${attrs({ ...common, d: `M ${cx} ${cy - radius} L ${cx + radius} ${cy + radius} L ${cx - radius} ${cy + radius} Z` })}/>`;
   if (mark.style.glyph === "diamond") return `<path ${attrs({ ...common, d: `M ${cx} ${cy - radius} L ${cx + radius} ${cy} L ${cx} ${cy + radius} L ${cx - radius} ${cy} Z` })}/>`;
   return `<circle ${attrs({ ...common, cx, cy, r: radius })}/>`;
 }
 
-function segment(mark) {
+function segment(mark, extra = {}) {
   const g = mark.geometry, d = g.c1x == null ? `M ${g.x1} ${g.y1} L ${g.x2} ${g.y2}` : `M ${g.x1} ${g.y1} C ${g.c1x} ${g.c1y} ${g.c2x} ${g.c2y} ${g.x2} ${g.y2}`;
-  return `<path ${attrs({ "data-mark-id": mark.id, d, fill: "none", stroke: mark.style.color, "stroke-width": mark.style.lineWidth ?? 1.6, "stroke-dasharray": dash(mark.style.lineStyle), "stroke-linecap": "round" })}/>`;
+  return `<path ${attrs({ "data-mark-id": mark.id, d, fill: "none", stroke: mark.style.color, "stroke-width": mark.style.lineWidth ?? 1.6, "stroke-dasharray": dash(mark.style.lineStyle), "stroke-linecap": "round", ...extra })}/>`;
+}
+
+function linePoint(mark) {
+  const edge = mark.style.edge ? marker(mark, { stroke: mark.style.edge, "stroke-width": mark.geometry.outlineWidth + 1.3 }) : "";
+  return edge + marker(mark);
+}
+
+function maskedLine(mark, points, bounds, id) {
+  // Luminance mask is applied only to this series' line (never the panel/grid).
+  const mask = `<mask ${attrs({ id, maskUnits: "userSpaceOnUse", x: bounds.left, y: bounds.top, width: bounds.right - bounds.left, height: bounds.bottom - bounds.top, "mask-type": "luminance" })}><rect ${attrs({ x: bounds.left, y: bounds.top, width: bounds.right - bounds.left, height: bounds.bottom - bounds.top, fill: "white" })}/>${points.map(p => marker(p, { fill: "black", stroke: "none", "data-mark-id": null })).join("")}</mask>`;
+  const edge = mark.style.edge ? segment(mark, { stroke: mark.style.edge, "stroke-width": mark.style.lineWidth + 1.3 }) : "";
+  return `<defs>${mask}</defs><g mask="url(#${esc(id)})">${edge}${segment(mark)}</g>`;
 }
 
 function bar(mark, theme) {
@@ -156,7 +169,7 @@ function axes(panel, theme) {
   return pieces.join("");
 }
 
-function legend(panel, theme) {
+function legend(panel, theme, namespace) {
   if (panel.presentation?.legend === "none") return "";
   const insideTop = panel.layout.plot.bottom - Math.max(14, 14 + (panel.legend.length - 1) * 20) * panel.layout.scale;
   return panel.legend.map((item, index) => {
@@ -164,7 +177,14 @@ function legend(panel, theme) {
     const x = entry?.markerX ?? (panel.layout.legend.outside ? panel.layout.legend.left : panel.layout.plot.right - 24 * panel.layout.scale);
     const textX = entry?.textX ?? (panel.layout.legend.outside ? x + 12 * panel.layout.scale : x - 10 * panel.layout.scale);
     const y = entry?.y ?? (panel.layout.legend.outside ? panel.layout.legend.top + (14 + index * 20) * panel.layout.scale : insideTop + index * 20 * panel.layout.scale), style = item.style ?? {};
-    const point = `<circle ${attrs({ cx: x, cy: y, r: 4 * panel.layout.scale, fill: "none", stroke: style.color ?? theme.series[item.colorIndex % theme.series.length] })}/>`;
+    let point = `<circle ${attrs({ cx: x, cy: y, r: 4 * panel.layout.scale, fill: "none", stroke: style.color ?? theme.series[item.colorIndex % theme.series.length] })}/>`;
+    if (panel.renderer === "line") {
+      const mark = { id: `${panel.id}-legend-${index}`, lineIdentity: true, style,
+        geometry: { cx: x, cy: y, ...lineMarkerGeometry(style, panel.layout.scale, panel.presentation?.markerScale ?? 1) } };
+      const half = 12 * Math.max(1, panel.layout.scale);
+      point = maskedLine({ ...mark, geometry: { x1: x - half, y1: y, x2: x + half, y2: y } }, [mark],
+        { left: x - half - 3, right: x + half + 3, top: y - 10, bottom: y + 10 }, `${namespace}-${safeId(panel.id)}-legend-${index}`) + linePoint(mark);
+    }
     const label = entry?.displayLabel ?? item.label;
     return `${point}<text ${attrs({ x: textX, y, fill: theme.label, "font-size": panel.layout.font.legend, "text-anchor": entry?.textAnchor ?? (panel.layout.legend.outside ? "start" : "end"), "dominant-baseline": "middle", "data-full-label": item.label })}><title>${esc(item.label)}</title>${esc(label)}</text>`;
   }).join("");
@@ -198,7 +218,10 @@ function panelHeaderSvg(panel, theme, responsive) {
 
 function panelSvg(panel, theme, profile, namespace, responsive = null) {
   if (!panel.resolved) throw new TypeError(`SVG export requires a scene-aware renderer; ${panel.renderer} remains on the compatibility path`);
-  const render = (mark) => mark.kind === "point" ? marker(mark)
+  const render = (mark) => panel.renderer === "line" && mark.kind === "segment"
+    ? maskedLine(mark, panel.marks.filter(p => p.lineIdentity && p.series === mark.series), plotClipRect(panel), `${namespace}-${safeId(panel.id)}-${hashText(mark.id)}-identity`)
+    : mark.lineIdentity ? linePoint(mark)
+    : mark.kind === "point" ? marker(mark)
     : ["segment", "summary-line"].includes(mark.kind) ? segment(mark)
       : mark.kind === "median-rule" ? segment(mark)
       : mark.kind === "bar" ? bar(mark, theme)
@@ -220,7 +243,7 @@ function panelSvg(panel, theme, profile, namespace, responsive = null) {
   const title = panelHeaderSvg(panel, theme, responsive);
   const provenance = theme.mode !== "paper" && panel.spec.signature && (panel.layout.panelIndex ?? 0) === 0
     ? `<text ${attrs({ x: panel.layout.provenance?.left ?? panel.layout.plot.left, y: panel.layout.provenance?.y ?? panel.layout.rect.bottom - 8 * panel.layout.scale, fill: theme.faint, "font-size": panel.layout.font.signature, "text-anchor": "start", "data-layer": "provenance" })}>${esc(panel.spec.signature)}</text>` : "";
-  return `<g ${attrs({ "data-panel-id": panel.id, "data-renderer": panel.renderer, "data-denominator": panel.denominator == null ? null : JSON.stringify(panel.denominator), "data-x-category-order": panel.categories.x?.join("|"), "data-y-category-order": panel.categories.y?.join("|") })}><defs><clipPath id="${esc(clipId)}" clipPathUnits="userSpaceOnUse"><rect ${attrs({ x: plot.left, y: plot.top, width: plot.right - plot.left, height: plot.bottom - plot.top })}/></clipPath></defs><g data-layer="surface">${panelSurface(panel, theme)}</g><g data-layer="grid">${grid(panel, theme, profile)}</g>${renderLayer("reference", layers.reference)}${renderLayer("data", dataMarks)}${renderLayer("summary", layers.summary)}<g data-layer="axes">${title}${axes(panel, theme)}${provenance}</g><g data-layer="annotations">${dataLabels}${annotations(panel, theme)}</g><g data-layer="legend">${legend(panel, theme)}${matrixLegend(panel, theme, namespace)}${denominator}</g></g>`;
+  return `<g ${attrs({ "data-panel-id": panel.id, "data-renderer": panel.renderer, "data-denominator": panel.denominator == null ? null : JSON.stringify(panel.denominator), "data-x-category-order": panel.categories.x?.join("|"), "data-y-category-order": panel.categories.y?.join("|") })}><defs><clipPath id="${esc(clipId)}" clipPathUnits="userSpaceOnUse"><rect ${attrs({ x: plot.left, y: plot.top, width: plot.right - plot.left, height: plot.bottom - plot.top })}/></clipPath></defs><g data-layer="surface">${panelSurface(panel, theme)}</g><g data-layer="grid">${grid(panel, theme, profile)}</g>${renderLayer("reference", layers.reference)}${renderLayer("data", dataMarks)}${renderLayer("summary", layers.summary)}<g data-layer="axes">${title}${axes(panel, theme)}${provenance}</g><g data-layer="annotations">${dataLabels}${annotations(panel, theme)}</g><g data-layer="legend">${legend(panel, theme, namespace)}${matrixLegend(panel, theme, namespace)}${denominator}</g></g>`;
 }
 
 export function resolvedSceneToSvg(resolved, options = {}) {

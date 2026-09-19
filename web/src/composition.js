@@ -54,14 +54,22 @@ function fitText(value, maxWidth, fontSize) {
   return `${text.slice(0, Math.max(1, maxChars - 1))}…`;
 }
 
+function lineLegendStep(panel) {
+  // Body-sized markers need unscaled clearance even in compact layouts.
+  const halfHeight = panel.marks.filter(mark => mark.lineIdentity)
+    .reduce((size, mark) => Math.max(size, mark.geometry.radius + mark.geometry.outlineWidth / 2), 0);
+  return 2 * halfHeight + 4;
+}
+
 function legendDimensions(panel) {
   const scale = panel.layout.scale;
   const font = panel.layout.font.legend;
   const plot = panel.axes.plot ?? panel.layout.plot;
   const labelWidth = panel.legend.reduce((width, item) => Math.max(width, String(item.label).length * font * 0.62), 0);
   return {
-    width: Math.min(Math.max(72 * scale, labelWidth + 34 * scale), Math.max(24, plot.right - plot.left - 24 * scale)),
-    height: Math.min(Math.max(18 * scale, (12 + Math.max(0, panel.legend.length - 1) * 20) * scale), Math.max(18, plot.bottom - plot.top - 24 * scale)),
+    width: Math.min(Math.max(72 * scale, labelWidth + (panel.renderer === "line" ? 56 * Math.max(1, scale) : 34 * scale)), Math.max(24, plot.right - plot.left - 24 * scale)),
+    height: Math.min(panel.renderer === "line" ? lineLegendStep(panel) * panel.legend.length
+      : Math.max(18 * scale, (12 + Math.max(0, panel.legend.length - 1) * 20) * scale), Math.max(18, plot.bottom - plot.top - 24 * scale)),
   };
 }
 
@@ -83,14 +91,15 @@ function legendScore(panel, box) {
 function legendEntries(panel, box, position, outside) {
   const scale = panel.layout.scale, right = position.endsWith("right"), markerInset = 8 * scale;
   const count = panel.legend.length;
-  const topInset = Math.min(12 * scale, box.height / 2);
-  const bottomInset = Math.min(8 * scale, box.height / 2);
-  const step = count > 1 ? Math.min(20 * scale, Math.max(1, (box.height - topInset - bottomInset) / (count - 1))) : 0;
+  const lineStep = panel.renderer === "line" ? lineLegendStep(panel) : null;
+  const topInset = Math.min(lineStep == null ? 12 * scale : lineStep / 2, box.height / 2);
+  const bottomInset = Math.min(lineStep == null ? 8 * scale : lineStep / 2, box.height / 2);
+  const step = count > 1 ? Math.min(lineStep ?? 20 * scale, Math.max(1, (box.height - topInset - bottomInset) / (count - 1))) : 0;
   return panel.legend.map((item, index) => {
     const y = clamp(box.top + topInset + index * step, box.top, box.bottom);
-    const textAnchor = outside || !right ? "start" : "end";
-    const markerX = textAnchor === "start" ? box.left + markerInset : box.right - markerInset;
-    const textX = textAnchor === "start" ? box.left + 20 * scale : box.right - 20 * scale;
+    const textAnchor = panel.renderer === "line" || outside || !right ? "start" : "end";
+    const markerX = panel.renderer === "line" ? box.left + 18 * Math.max(1, scale) : textAnchor === "start" ? box.left + markerInset : box.right - markerInset;
+    const textX = panel.renderer === "line" ? box.left + 36 * Math.max(1, scale) : textAnchor === "start" ? box.left + 20 * scale : box.right - 20 * scale;
     const maxTextWidth = Math.max(8, textAnchor === "start" ? box.right - textX : textX - box.left);
     return { markerX, textX, y, textAnchor, displayLabel: fitText(item.label, maxTextWidth, panel.layout.font.legend) };
   });
