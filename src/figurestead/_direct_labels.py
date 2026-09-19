@@ -158,7 +158,9 @@ class DirectLabels(Artist):
             if not(base.x0+half<=anchor[0]<=base.x1-half and base.y0+half<=anchor[1]<=base.y1-half):
                 self.fail('terminal-marker-clipped'); return
             try:
-                text=Text(0,0,label,fontproperties=self.legend.get_texts()[0].get_fontproperties(),
+                # Legend.prop is resolved even when automatic underscore filtering
+                # leaves no text rows; it is also the font source for those rows.
+                text=Text(0,0,label,fontproperties=self.legend.prop.copy(),
                           color=self.theme.label,ha='left',va='baseline',parse_math=False,usetex=False,transform=IdentityTransform())
                 text.set_figure(fig); box=text.get_window_extent(renderer)
                 # Include glyph overhang from actual font outlines, explicitly literal.

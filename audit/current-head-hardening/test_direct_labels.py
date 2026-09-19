@@ -1,5 +1,7 @@
 """Bounded direct-label contracts; real Agg measurements, no rendering harness."""
-import io,json,sys,unittest
+import io,json,sys,unittest,warnings
+import xml.etree.ElementTree as ET
+from matplotlib.collections import PathCollection
 from dataclasses import replace
 from pathlib import Path
 from unittest.mock import patch
@@ -53,6 +55,75 @@ class DirectLabelTests(unittest.TestCase):
             self.assertEqual(count,len(a.get_children()))
         b=io.BytesIO();f.savefig(b,format='png',dpi=180);self.assertEqual(d.result['status'],'placed')
         f.canvas.draw();self.assertEqual(rect,a.get_position().bounds)
+    def test_literal_underscore_labels_draw_and_export_without_legend_rows(self):
+        for labels in (['_A','_B','_C'],['_nolegend_']*3,['A','_B','_C']):
+            with self.subTest(labels=labels), warnings.catch_warnings(record=True):
+                warnings.simplefilter('always')
+                f,a=self.make(labels=labels);legend=a.get_legend();d=a._figurestead_direct_labels
+                self.assertEqual([t.get_text() for t in legend.get_texts()], [t for t in labels if not t.startswith('_')])
+                font=legend.prop.copy();count=len(a.get_children())
+                # No visible or fake legend text row may provide direct typography.
+                with patch.object(legend,'get_texts',side_effect=AssertionError('legend row accessed')):
+                    f.canvas.draw()
+                    png=self.png(f);self.assertTrue(png.startswith(b'\x89PNG\r\n\x1a\n'))
+                    outlined=io.BytesIO();f.savefig(outlined,format='svg')
+                    self.assertIn(b'<svg',outlined.getvalue())
+                    svg=io.BytesIO()
+                    with matplotlib.rc_context({'svg.fonttype':'none'}):f.savefig(svg,format='svg')
+                    text=[e.text for e in ET.fromstring(svg.getvalue()).iter('{http://www.w3.org/2000/svg}text')]
+                    for label in set(labels):self.assertEqual(text.count(label),labels.count(label))
+                    f.canvas.draw();self.assertEqual(png,self.png(f))
+                self.assertEqual(d.result['status'],'placed');self.assertEqual(count,len(a.get_children()))
+                texts=[t for t in d.artists if isinstance(t,Text)]
+                self.assertCountEqual([t.get_text() for t in texts],labels)
+                self.assertTrue(all(t.get_fontproperties()==font and not t.get_parse_math() for t in texts))
+                self.assertEqual([l.identity_marker for l in a.lines],['o','s','^'])
+                markers=[m for m in d.artists if isinstance(m,PathCollection)]
+                for record,marker in zip(d.result['entries'],markers):
+                    body=a.lines[record['rank']].identity_points
+                    np.testing.assert_array_equal(marker.get_paths()[0].vertices,body.get_paths()[0].vertices)
+                    np.testing.assert_array_equal(marker.get_sizes(),body.get_sizes())
+                    np.testing.assert_array_equal(marker.get_edgecolors(),body.get_edgecolors())
+                plt.close(f)
+    def test_underscore_disabled_preserves_ordinary_legend(self):
+        for labels in (['_A','_B','_C'],['_nolegend_']*3,['A','_B','_C']):
+            figures=[];observations=[]
+            for options in ({},{'direct_labels':False}):
+                with warnings.catch_warnings(record=True) as caught:
+                    warnings.simplefilter('always')
+                    f,a=line([0,1,2],[[1,2,3],[2,3,3.05],[3,4,3.1]],labels=labels,
+                             theme='lavender_fog_notebook',**options)
+                    png=self.png(f)
+                self.assertFalse(hasattr(a,'_figurestead_direct_labels'))
+                self.assertEqual([t.get_text() for t in a.get_legend().get_texts()], [t for t in labels if not t.startswith('_')])
+                observations.append((png,[(w.category.__name__,str(w.message)) for w in caught]))
+                figures.append(f)
+            self.assertEqual(observations[0],observations[1])
+            if all(t.startswith('_') for t in labels):
+                self.assertTrue(any('No artists with labels' in message for _,message in observations[0][1]))
+            for f in figures:plt.close(f)
+    def test_underscore_fallback_restores_ordinary_draw_export_lifecycle(self):
+        with warnings.catch_warnings(record=True):
+            warnings.simplefilter('always')
+            f,a=self.make(labels=['_A','_B','_C']);g,b=self.make(labels=['_A','_B','_C'],direct_labels=False)
+        original=a.get_xlim();baseline=b.get_position().bounds;count=len(a.get_children())
+        for _ in range(2):
+            a.set_xlim(*original);f.canvas.draw();self.assertEqual(a._figurestead_direct_labels.result['status'],'placed')
+            # Admitted point centers, but legitimately clipped terminal marker ink.
+            a.set_xlim(0,2);b.set_xlim(0,2);f.canvas.draw()
+            d=a._figurestead_direct_labels
+            self.assertEqual(d.result['reason'],'terminal-marker-clipped');self.assertEqual(d.artists,[])
+            self.assertEqual(a.get_position().bounds,baseline);self.assertTrue(a.get_legend().get_visible())
+            self.assertEqual(a.get_legend().get_texts(),[]);self.assertEqual(self.png(f),self.png(g))
+            x,y=io.BytesIO(),io.BytesIO()
+            with matplotlib.rc_context({'svg.hashsalt':'underscore-fallback'}):
+                f.savefig(x,format='svg',metadata={'Date':None});g.savefig(y,format='svg',metadata={'Date':None})
+            self.assertEqual(x.getvalue(),y.getvalue());self.assertEqual(count,len(a.get_children()))
+        # Unavailable font configuration follows the existing measurement fallback.
+        a.set_xlim(*original)
+        with patch.object(a.get_legend(),'prop',None):d.draw(f.canvas.get_renderer())
+        self.assertEqual(d.result['reason'],'unsupported-layout');self.assertEqual(d.artists,[])
+
     def test_slots_ties_and_rhythm(self):
         for slots in ([1,2],[2,0,1]):
             f,a=line([0,1,2],[[1,2,3]]*len(slots),labels=['duplicate']*len(slots),series_slots=slots,theme='lavender_fog_notebook',direct_labels=True)
