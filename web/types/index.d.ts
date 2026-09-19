@@ -162,6 +162,8 @@ export interface SeriesStyleOverride {
 }
 
 export interface FiguresteadStyle {
+  /** Opt-in single-panel terminal line labels; ordinary legend on unsupported/failed fit. */
+  directLabels?: boolean;
   glyphs: MarkerGlyph[];
   lineStyles: LineStyle[];
   series: Record<string, SeriesStyleOverride>;
@@ -529,7 +531,7 @@ export function evidenceFingerprint(scene: TerminalScene): string;
 export const RESOLVED_SCENE_VERSION: "figurestead.resolved-scene/1";
 export const RESOLVED_RENDERERS: readonly string[];
 export function isResolvedRenderer(renderer: string): boolean;
-export function resolveTerminalScene(scene: TerminalScene, options?: { width?: number; height?: number; measureText?: (text: string, fontSize: number) => { width: number; ascent?: number; descent?: number } }): ResolvedScene;
+export function resolveTerminalScene(scene: TerminalScene, options?: { width?: number; height?: number; measureText?: (text: string, fontSize: number) => { width: number; ascent?: number; descent?: number; left?: number; right?: number } }): ResolvedScene;
 export function resolveSceneFrame(scene: ResolvedScene, progress?: number): ResolvedScene;
 export function resolveSceneFrame(scene: ComposedScene, progress?: number): ComposedScene;
 export function resolvedTerminalGeometry(scene: ResolvedScene | ComposedScene): UnknownRecord[];

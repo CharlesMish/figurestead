@@ -203,6 +203,7 @@ export function composeResolvedScene(resolvedScene) {
     ...resolvedScene,
     schemaVersion: COMPOSED_SCENE_VERSION,
     resolvedSceneVersion: resolvedScene.schemaVersion,
+    ...(resolvedScene.fallbackScene ? { fallbackScene: composeResolvedScene(resolvedScene.fallbackScene) } : {}),
     panels,
   };
   result.compositionAudit = auditComposition(result);

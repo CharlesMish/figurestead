@@ -1,3 +1,4 @@
+import { DIRECT_FONT } from "./direct-labels.js";
 import { lineMarkerGeometry } from "./line-identity.js";
 import { CORE_REGISTRY } from "./core-renderers.js";
 import { compileTerminalScene, evidenceFingerprint } from "./terminal-scene.js";
@@ -170,6 +171,11 @@ function axes(panel, theme) {
 }
 
 function legend(panel, theme, namespace) {
+  if (panel.directLabelPlan?.status === "placed") return panel.directLabelPlan.entries.map(e => {
+    const l=e.leader;
+    return (l ? `<path ${attrs({d:`M ${l.x1} ${l.y1} L ${l.x2} ${l.y2}`,fill:"none",stroke:l.color,"stroke-width":.7})}/>` : "")
+      + linePoint(e.marker) + `<text ${attrs({x:e.textX,y:e.textY,fill:theme.label,"font-family":DIRECT_FONT,"font-size":panel.directLabelPlan.font,"xml:space":"preserve"})}>${esc(e.label)}</text>`;
+  }).join("");
   if (panel.presentation?.legend === "none") return "";
   const insideTop = panel.layout.plot.bottom - Math.max(14, 14 + (panel.legend.length - 1) * 20) * panel.layout.scale;
   return panel.legend.map((item, index) => {

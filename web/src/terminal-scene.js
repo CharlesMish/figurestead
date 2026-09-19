@@ -3,7 +3,7 @@ import { CORE_REGISTRY } from "./core-renderers.js";
 import { panelContract } from "./figure.js";
 import { resolvePanelDomains } from "./figure.js";
 import { resolveApplicationProfile } from "./application-profiles.js";
-import { legendWithStyles, resolveSeriesStyles } from "./series-style.js";
+import { collectSeriesKeys, legendWithStyles, resolveSeriesStyles } from "./series-style.js";
 import { compileMotionPlan, assertTerminalMotionIdentity } from "./motion-plan.js";
 import { auditPaperTheme, themeResolutionForProfile } from "./paper-profile.js";
 import { validateEvidenceCoverage } from "./evidence-coverage.js";
@@ -117,6 +117,9 @@ export function compileFigureModel(input, options = {}) {
     ...panel,
     presentation: { ...profilePresentation(applicationProfile), ...(panel.presentation ?? {}) },
   }));
+  if (contract.style.directLabels && contract.panels.some(p => p.presentation.legend === "none")) throw new TypeError("directLabels requires the ordinary legend for fallback");
+  const directRanks = new Map(options.directRanks ?? []);
+  if (contract.style.directLabels) for (const key of collectSeriesKeys(contract)) if (!directRanks.has(key)) directRanks.set(key, directRanks.size);
   const styles = resolveSeriesStyles(contract);
   contract.seriesStyles = styles;
   contract.appearanceReport = applicationProfile.key === "paper" ? {
@@ -149,10 +152,15 @@ export function compileFigureModel(input, options = {}) {
       notes: [child.spec.note, ...(child.annotations ?? []).filter((item) => item?.type === "scientific_note").map((item) => item.text)].filter(Boolean),
       legend: compiled.legend ?? legendWithStyles(legend, keys, styles),
       meta: compiled.meta ?? null,
+      ...(contract.style.directLabels ? { directLabelsInput: { data: panel.renderer === "line" ? { ...child.data, series: child.data.series.map((s,i) => {
+        const authored = (input.panels?.[panelIndex]?.data ?? input.data)?.series?.[i];
+        return { ...s, label: authored && Object.hasOwn(authored,"label") ? authored.label : s.label };
+      }) } : child.data, ranks: Object.fromEntries(directRanks), pose: !!panel.presentation.curve && panel.presentation.curve !== "linear" || !!panel.presentation.seriesMarkers } } : {}),
       marks: defaultMarks,
     };
   });
   const scene = {
+    ...(contract.style.directLabels ? { directLabels: true, directRanks: Object.fromEntries(directRanks) } : {}),
     schemaVersion: TERMINAL_SCENE_VERSION,
     contractSchemaVersion: contract.schemaVersion,
     rendererApiVersion: contract.rendererApiVersion,
