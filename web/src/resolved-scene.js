@@ -1,3 +1,4 @@
+import { planDirectLabels } from "./direct-labels.js";
 import { lineMarkerGeometry } from "./line-identity.js";
 import { deriveFigureLayout } from "./figure-layout.js";
 import { refineScientificLayout } from "./scientific-layout.js";
@@ -269,11 +270,24 @@ export function resolveTerminalScene(scene, options = {}) {
     const evidenceFrame = cloneRect(plots ? resolvedLayout.plot : (axes.plot ?? resolvedLayout.plot));
     return { ...panel, layout: resolvedLayout, axes, plots, evidenceFrame, marks, resolved: isResolvedRenderer(panel.renderer) };
   });
-  return deepFreeze({ schemaVersion: RESOLVED_SCENE_VERSION, sourceSceneVersion: scene.schemaVersion, width, height, theme: scene.theme, spec: scene.spec, profile: scene.profile, applicationProfile: scene.applicationProfile, view: scene.view, layout, panels, motionPlan: scene.motionPlan });
+  const result = { schemaVersion: RESOLVED_SCENE_VERSION, sourceSceneVersion: scene.schemaVersion, width, height, theme: scene.theme, spec: scene.spec, profile: scene.profile, applicationProfile: scene.applicationProfile, view: scene.view, layout, panels, motionPlan: scene.motionPlan };
+  if (scene.directLabels && !options.directPass) {
+    const plan = planDirectLabels(scene, result, options.measureText);
+    if (plan.status === "placed") {
+      const baseline = deepFreeze(result), p = panels[0];
+      const adjusted = { ...p.layout, plot: plan.plot };
+      const proposal = resolveTerminalScene(scene, { ...options, layout: { ...layout, panels: [adjusted] }, refineLayout: false, directPass: true });
+      return deepFreeze({ ...proposal, directLabelPlan: plan, fallbackScene: baseline,
+        panels: proposal.panels.map(panel => ({ ...panel, directLabelPlan: plan })) });
+    }
+    result.directLabelPlan = plan;
+  }
+  return deepFreeze(result);
 }
 
 export function resolveSceneFrame(resolvedScene, progress = 1) {
   const p = clamp01(progress);
+  if (p < 1 && resolvedScene.fallbackScene) resolvedScene = { ...resolvedScene.fallbackScene, directLabelPlan: { status: "fallback", reason: "unsupported-layout" } };
   return {
     ...resolvedScene,
     progress: p,

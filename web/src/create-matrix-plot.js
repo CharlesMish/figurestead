@@ -25,8 +25,8 @@ export function createFigurestead(canvas, input, options = {}) {
   const media = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)");
   const isReduced = () => reducedOverride == null ? Boolean(media?.matches) : Boolean(reducedOverride);
 
-  const prepareModel = (candidate) => {
-    const model = compileFigureModel(candidate, { registry });
+  const prepareModel = (candidate, retainRanks = true) => {
+    const model = compileFigureModel(candidate, { registry, directRanks: retainRanks ? Object.entries(scene?.directRanks ?? {}) : [] });
     return { ...model, atmosphere: model.contract.view.ambient === "matrix" ? prepareAtmosphere(model.contract.motion) : [] };
   };
   const applyModel = (model) => {
@@ -37,9 +37,10 @@ export function createFigurestead(canvas, input, options = {}) {
     surface.context.save();
     const prefix = style === "italic" ? "italic " : style === "500" ? "500 " : "";
     surface.context.font = `${prefix}${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace`;
+    surface.context.textAlign = "left"; surface.context.textBaseline = "alphabetic"; surface.context.direction = "ltr";
     const value = surface.context.measureText(String(text));
     surface.context.restore();
-    return { width: value.width, ascent: value.actualBoundingBoxAscent, descent: value.actualBoundingBoxDescent };
+    return { width: value.width, ascent: value.actualBoundingBoxAscent, descent: value.actualBoundingBoxDescent, left: value.actualBoundingBoxLeft, right: value.actualBoundingBoxRight };
   };
   const observedBox = () => {
     const rect = canvas.getBoundingClientRect();
@@ -79,7 +80,7 @@ export function createFigurestead(canvas, input, options = {}) {
     const frame = resolveSceneFrame(composedScene, p);
     preparedPanels.forEach((state, index) => {
       const resolved = isResolvedRenderer(state.panel.renderer);
-      const env = { contract: state.contract, prepared: state.prepared, layout: resolved ? composedScene.panels[index].layout : surface.layout.panels[index], domains: domains[index], progress: p, settled, panel: state.panel, figure: contract, scenePanel: scene.panels[index], motionPlan: scene.motionPlan.panels[index], reducedMotion: isReduced() };
+      const env = { contract: state.contract, prepared: state.prepared, layout: resolved ? frame.panels[index].layout : surface.layout.panels[index], domains: domains[index], progress: p, settled, panel: state.panel, figure: contract, scenePanel: scene.panels[index], motionPlan: scene.motionPlan.panels[index], reducedMotion: isReduced() };
       drawPanelSurface(surface.context, env);
       const scales = resolved ? drawResolvedPanel(surface.context, frame, index) : state.definition.draw(surface.context, env);
       if (!resolved) drawPresentationAnnotations(surface.context, { ...env, scales });
@@ -109,8 +110,8 @@ export function createFigurestead(canvas, input, options = {}) {
   const mediaChange = () => { if (reducedOverride == null) isReduced() ? clock.settle() : clock.render(clock.progress); };
   document.addEventListener("visibilitychange", visibility); media?.addEventListener?.("change", mediaChange);
 
-  const replace = (next) => {
-    const nextModel = prepareModel(next);
+  const replace = (next, retainRanks = true) => {
+    const nextModel = prepareModel(next, retainRanks);
     const box = observedBox();
     const baseline = box.visible ? heightNegotiator.baseline(box.width, box.height) : { value: null, error: null };
     const nextResolution = prepareResolution(nextModel.scene, surface.layout.width, surface.layout.height, baseline);
@@ -141,7 +142,7 @@ export function createFigurestead(canvas, input, options = {}) {
       }
       next.panels[0].data = cloneValue(data); replace(next);
     },
-    setConfig(next) { replace(next); },
+    setConfig(next) { replace(next, false); },
     setReducedMotion(value) { if (value !== null && typeof value !== "boolean") throw new TypeError("reduced motion must be true, false, or null"); reducedOverride = value; isReduced() ? clock.settle() : clock.render(clock.progress); },
     resize,
     destroy() { if (destroyed) return; destroyed = true; heightNegotiator.destroy(); clock.destroy(); resizeObserver?.disconnect(); intersectionObserver?.disconnect(); document.removeEventListener("visibilitychange", visibility); media?.removeEventListener?.("change", mediaChange); companion.destroy(); },

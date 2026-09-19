@@ -247,8 +247,17 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
 
 
 def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
-         profile="deep_scope", ax=None, pose=None, focus: FocusAnnotation | None = None):
+         profile="deep_scope", ax=None, pose=None, focus: FocusAnnotation | None = None,
+         direct_labels=False):
     """Draw one or more finite numeric series sharing one x vector.
+
+    ``direct_labels=True`` requests an atomic right-gutter replacement for the
+    ordinary legend on 2–3 default-line series. It requires strictly increasing
+    shared x, printable single-line ASCII, linear axes, all observations inside
+    both resolved domains and fully contained terminal markers. Unsupported
+    geometry/text/layout or insufficient measured space uses the ordinary legend.
+    Tight/constrained layout, custom clipping and explicit poses are unsupported.
+    The private ``ax._figurestead_direct_labels.result`` records each draw's plan.
 
     ``series_slots`` optionally supplies one zero-based, nonnegative integer per
     input series (Python or NumPy integers, not booleans). Omission uses row
@@ -263,6 +272,8 @@ def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
     rule, not a claim of distinguishability for additional series. Slots do not
     select line rhythm; ordinary Matplotlib line-style overrides remain separate.
     """
+    if not isinstance(direct_labels, bool):
+        raise _input_error("line.direct_labels", "must be boolean")
     x = _numeric_array(x, path="line.x", dimensions=(1,))
     ys = _numeric_array(ys, path="line.ys", dimensions=(1, 2))
     ys = np.atleast_2d(ys)
@@ -286,6 +297,7 @@ def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
     presentation = resolve_pose(pose)
     fig, ax = ensure_axes(ax)
     style_axes(ax, theme, profile, spec, panel_surface=presentation.panel_surface if presentation else False, frame=presentation.frame if presentation else False)
+    identity_lines = []
     for series_index, y, label in zip(slots, ys, labels):
         color = theme.series[series_index % len(theme.series)]
         draw_x, draw_y = monotone_curve(x, y) if presentation and presentation.curve == "monotone" else (x, y)
@@ -298,6 +310,7 @@ def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
             path = IdentityLine(draw_x, draw_y, color=color, linewidth=width,
                                 alpha=0.88, label=label, zorder=3)
             ax.add_line(path)
+        identity_lines.append(path)
         if theme.series_edges:
             path.set_path_effects([pe.Stroke(linewidth=width + 1.45, foreground=theme.series_edges[series_index % len(theme.series_edges)], alpha=0.75), pe.Normal()])
         if presentation:
@@ -321,6 +334,9 @@ def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
     if focus is not None:
         draw_focus_annotation(ax, focus, theme)
     add_note(ax, spec, theme)
+    if direct_labels:
+        from ._direct_labels import DirectLabels
+        DirectLabels(ax, identity_lines, labels, slots, theme, unsupported=presentation is not None or focus is not None)
     return fig, ax
 
 

@@ -1,3 +1,4 @@
+import { DIRECT_FONT } from "./direct-labels.js";
 import { appendMarkerPath, clipOwnLine, lineMarkerGeometry } from "./line-identity.js";
 import { partitionPanelMarks, withCanvasPlotClip } from "./render-layers.js";
 
@@ -70,7 +71,18 @@ function drawAxes(context, panel, theme) {
   context.restore();
 }
 
+function drawDirectLabels(context, plan, theme) {
+  context.save(); context.font = `${plan.font}px ${DIRECT_FONT}`; context.textAlign = "left"; context.textBaseline = "alphabetic"; context.direction = "ltr";
+  for (const e of plan.entries) {
+    if (e.leader) { const l=e.leader;context.globalAlpha=1;context.strokeStyle=l.color;context.lineWidth=.7;context.setLineDash([]);context.beginPath();context.moveTo(l.x1,l.y1);context.lineTo(l.x2,l.y2);context.stroke(); }
+    drawPoint(context, {...e.marker, motion:{opacity:1,scaleX:1,scaleY:1,translateX:0,translateY:0}});
+    context.globalAlpha=1;context.fillStyle=theme.label;context.fillText(e.label,e.textX,e.textY);
+  }
+  context.restore();
+}
+
 function drawLegend(context, panel, theme) {
+  if (panel.directLabelPlan?.status === "placed") return drawDirectLabels(context, panel.directLabelPlan, theme);
   if (panel.presentation?.legend === "none" || !panel.legend.length) return;
   const { layout } = panel, outside = layout.legend.outside;
   context.save(); context.font = `${layout.font.legend}px ${FONT_STACK}`; context.textBaseline = "middle";
