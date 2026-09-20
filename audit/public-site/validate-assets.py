@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the accepted R3 frozen-site bytes and lossless delivery mapping."""
+"""Check current presentation bytes and retained historical asset/pixel bindings."""
 
 from __future__ import annotations
 
@@ -13,8 +13,13 @@ import zlib
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
+CURRENT_SPECIMENS = {
+    "lavender-python-ordinary.png", "lavender-python-direct.png",
+    "ultraviolet-canvas-ordinary.png", "ultraviolet-canvas-direct.png",
+}
 ACCEPTED_FILES = {
-    "index.html": "300db99780d7348daf819cac6c422fabb836c9b43432d1b75f96b5191bc7f10e",
+    "current-alpha/manifest.json": "f59b8f0215a844444223bf9845f96c1154259d043822f3aa8bd6ea54f793563b",
+    "index.html": "f12e29c282e98a22186213e78a7849f770a01b78914b9681dd471fe5d7d17623",
     "evidence/index.html": "e9bf28929af0e1210f749cbc7686c2106f6f8eae66dbd33a45b19bb36db3641f",
     "styles.css": "281d7261c7663621d9e6632fcafb1cbc4d5a5a4550546b31fc7c3c9cbdd89b59",
     "README.md": "e089b27769a66923d11d7e873912f847fcb36fc43d0b5d0534184a77e006419c",
@@ -90,6 +95,7 @@ def main() -> int:
         "site/styles.css",
         "site/WEB_ASSET_MANIFEST.json",
     }
+    accepted_changed_files.update({"site/current-alpha/manifest.json", *("site/current-alpha/" + name for name in CURRENT_SPECIMENS)})
     unexpected = [
         relative for relative in changed
         if relative not in accepted_changed_files and not relative.startswith("site/assets/web/")
@@ -167,7 +173,17 @@ def main() -> int:
         "savingPercent": 96.934,
     }
     checks += 2
-    expected_checks = 62
+    current = json.loads((SITE / "current-alpha/manifest.json").read_text(encoding="utf-8"))
+    assert {entry["file"] for entry in current["images"]} == CURRENT_SPECIMENS
+    assert {path.name for path in (SITE / "current-alpha").iterdir()} == CURRENT_SPECIMENS | {"manifest.json"}
+    checks += 1
+    for entry in current["images"]:
+        payload = (SITE / "current-alpha" / entry["file"]).read_bytes()
+        assert len(payload) == entry["bytes"] and sha256(payload) == entry["sha256"], entry["file"]
+        assert payload[:8] == b"\x89PNG\r\n\x1a\n"
+        assert struct.unpack(">II", payload[16:24]) == (entry["width"], entry["height"])
+        checks += 1
+    expected_checks = 68
     assert checks == expected_checks, f"expected {expected_checks} site checks, executed {checks}"
     print(json.dumps({"suite": "public-r3-assets", "expectedCheckCount": expected_checks, "executedCheckCount": checks, "result": "PASS"}))
     return 0

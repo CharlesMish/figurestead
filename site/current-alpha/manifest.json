@@ -1,0 +1,256 @@
+{
+  "purpose": "Current published alpha presentation specimens, not new reference qualification. Ordinary/direct pairs use identical data and dimensions within each runtime; no cross-runtime pixel-equivalence claim.",
+  "release": "https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.3",
+  "sourceCommit": "b8cffcbaa3b269acbcab2898fafdc0cc28d6e85c",
+  "sourceTree": "72fec695b67b51b90be0e97b2bdeb34e0c3a3aa5",
+  "python": {
+    "version": "0.9.0a2",
+    "wheelSha256": "4050ca02f4c0293929818084b7820623219c1413c8e16980eb0060a6c622d2a6",
+    "runtime": "3.12.13",
+    "matplotlib": "3.11.2",
+    "dpi": 120,
+    "inches": [
+      8.4,
+      5.2
+    ]
+  },
+  "browser": {
+    "version": "0.9.0-alpha.3",
+    "tarballSha256": "5b0af64e14cf89b79a76558972217c3b1f4ca9cf96fb2edab7af3c46ecf26290",
+    "chromium": "151.0.7922.34",
+    "playwright": "1.62.0",
+    "dpr": 1,
+    "state": "settled terminal Canvas"
+  },
+  "recipe": {
+    "source": "New deterministic synthetic website fixture; public examples/direct-series-labels remains unchanged. Historical PNGs were inspected, but no cleanly bound historical response generator was established in the bounded search.",
+    "observationCount": 29,
+    "fixtureSha256": "77a83b7b4696688bc4b9e876d06313c4baaa8485135c67abcba5a9f32df04a85",
+    "fixture": {
+      "title": "Synthetic response trajectories",
+      "xLabel": "Time (a.u.)",
+      "yLabel": "Response (a.u.)",
+      "x": [
+        0.0,
+        0.428571428571,
+        0.857142857143,
+        1.285714285714,
+        1.714285714286,
+        2.142857142857,
+        2.571428571429,
+        3.0,
+        3.428571428571,
+        3.857142857143,
+        4.285714285714,
+        4.714285714286,
+        5.142857142857,
+        5.571428571429,
+        6.0,
+        6.428571428571,
+        6.857142857143,
+        7.285714285714,
+        7.714285714286,
+        8.142857142857,
+        8.571428571429,
+        9.0,
+        9.428571428571,
+        9.857142857143,
+        10.285714285714,
+        10.714285714286,
+        11.142857142857,
+        11.571428571429,
+        12.0
+      ],
+      "ys": [
+        [
+          1.616459569117,
+          1.921142815902,
+          2.222773142417,
+          2.50462503563,
+          2.752249600905,
+          2.954297412197,
+          3.103050207527,
+          3.194645587537,
+          3.229005960643,
+          3.209506826516,
+          3.142438101277,
+          3.036324193643,
+          2.901173304927,
+          2.747724069161,
+          2.586749002228,
+          2.428460706377,
+          2.282050205806,
+          2.155369196794,
+          2.054751385198,
+          1.984954221918,
+          1.949192583094,
+          1.949231080557,
+          1.98550191995,
+          2.057220128536,
+          2.162476588118,
+          2.298300250582,
+          2.460692557791,
+          2.644647756178,
+          2.844180958365
+        ],
+        [
+          1.905634706944,
+          2.044352894578,
+          2.17973151499,
+          2.310128088298,
+          2.433876761573,
+          2.549035926925,
+          2.653227617217,
+          2.743601451381,
+          2.816938345588,
+          2.869889784124,
+          2.89932941111,
+          2.902777255645,
+          2.878844938,
+          2.827644127097,
+          2.751101091714,
+          2.653127450239,
+          2.539610492569,
+          2.418204385995,
+          2.297924334056,
+          2.18856716148,
+          2.100001581114,
+          2.041387431393,
+          2.020393686702,
+          2.04248881524,
+          2.110373541691,
+          2.223615453973,
+          2.378528086439,
+          2.568315664821,
+          2.783480644983
+        ],
+        [
+          1.324481685358,
+          1.508310782156,
+          1.733348635918,
+          1.986999296352,
+          2.254203414069,
+          2.51859517755,
+          2.763773974727,
+          2.974582766334,
+          3.138285450538,
+          3.245545398879,
+          3.291125791274,
+          3.274257539329,
+          3.19865004416,
+          3.072151023295,
+          2.906091318121,
+          2.714376306984,
+          2.512405083338,
+          2.315910331543,
+          2.139815030598,
+          1.997196747192,
+          1.898437152374,
+          1.850615017907,
+          1.857177358873,
+          1.917897948735,
+          2.029107583505,
+          2.184158497221,
+          2.374068140072,
+          2.588276482934,
+          2.815446803235
+        ]
+      ],
+      "labels": [
+        "Control",
+        "Treatment",
+        "Model"
+      ],
+      "generator": {
+        "common": "2 + 0.08*x + 0.8*sin(0.55*x - 0.5)",
+        "seriesOffset": "(0.30*(1-x/12) + 0.035)*sin(0.7*x + phase)",
+        "phases": [
+          0,
+          2.1,
+          4.2
+        ],
+        "sampling": "29 equally spaced observations on [0,12]; x and y rounded to 12 decimal places",
+        "randomness": false
+      }
+    },
+    "pythonAdapterSha256": "8a490f1a5a2f604a063d49210468604a3c4a45805dccaf4e500fd503a6688bc4",
+    "browserAdapterSha256": "a2c00557c4a4b031c1aa37d7c87c2f70e7f2083c8c114dab5f6beb45d542c700",
+    "adaptations": "Published alpha packages; only website input data/title/axis labels replaced. Ordinary/direct inputs, dimensions, domains, labels, theme and identity are identical within each runtime. No smoothing, random noise or pixel editing."
+  },
+  "checks": {
+    "installedSourceMatchesApprovedArtifacts": true,
+    "bodyIdentities": [
+      "open circle",
+      "open square",
+      "open upright triangle"
+    ],
+    "lines": "solid",
+    "bothDirectPlans": "placed",
+    "pairDomains": {
+      "python": [
+        [
+          -0.6000000000000001,
+          12.6
+        ],
+        [
+          1.2261494800622,
+          3.3894579965698
+        ]
+      ],
+      "canvas": {
+        "x": [
+          -0.96,
+          12.96
+        ],
+        "y": [
+          1.1671501568847198,
+          3.44845731974728
+        ]
+      }
+    },
+    "pairDomainsIdentical": true
+  },
+  "limitation": "The three final observations remain close. Direct labels separate names, not the observations themselves. Responsive page reductions are presentation, not readability qualification.",
+  "images": [
+    {
+      "file": "lavender-python-ordinary.png",
+      "theme": "lavender_fog_notebook",
+      "runtime": "Python",
+      "treatment": "ordinary",
+      "width": 1008,
+      "height": 624,
+      "sha256": "ef840eca305c427836954a5025e98b6008b4fbe47f263d6e5b38cb7ceac6cb39",
+      "bytes": 78918
+    },
+    {
+      "file": "lavender-python-direct.png",
+      "theme": "lavender_fog_notebook",
+      "runtime": "Python",
+      "treatment": "direct",
+      "width": 1008,
+      "height": 624,
+      "sha256": "05c05438eeb805d2657b903aa73faa057139126dfdcf8a0a252310c194d4184b",
+      "bytes": 79526
+    },
+    {
+      "file": "ultraviolet-canvas-ordinary.png",
+      "theme": "ultraviolet_laboratory",
+      "runtime": "terminal Canvas",
+      "treatment": "ordinary",
+      "width": 760,
+      "height": 520,
+      "sha256": "c9cd3d1da31143299f2b7b27aef4a02c82a69d93bc7b67f9e6101eb75e8416c2",
+      "bytes": 68892
+    },
+    {
+      "file": "ultraviolet-canvas-direct.png",
+      "theme": "ultraviolet_laboratory",
+      "runtime": "terminal Canvas",
+      "treatment": "direct",
+      "width": 760,
+      "height": 520,
+      "sha256": "43be1331eb2bd6b33b5a3d014303fbe36d94c7aa724d85d9a59201385f98a3e8",
+      "bytes": 68066
+    }
+  ]
+}

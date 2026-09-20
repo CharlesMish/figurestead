@@ -355,7 +355,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD:site)" = "7a8f55c4f62c315a506e0f0df1eaefb31b09aa22"
+          test "$(git rev-parse HEAD:site)" = "7ef948975e411adc3724bfefc0dacda79072dcab"
           test "$(git rev-parse HEAD:technical-showcase)" = "58bd350a4351133946162390bc7a9d5294d2f072"
           echo "23fab59113a21c89eac89cfed7eff8cd47786b4570c1e38745035f4ce1374899  docs/assets/readme/github-social-preview.png" | sha256sum --check -
           echo "2f7e4c5b1ff0038e0020064e800dfe9856a18ad55dfbde4af78f3bcabe63dcc1  docs/assets/readme/figurestead-at-a-glance.png" | sha256sum --check -
