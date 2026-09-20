@@ -1,0 +1,111 @@
+{
+  "purpose": "Current published alpha presentation specimens, not new reference qualification. Ordinary/direct pairs use identical data and dimensions within each runtime; no cross-runtime pixel-equivalence claim.",
+  "release": "https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.3",
+  "sourceCommit": "b8cffcbaa3b269acbcab2898fafdc0cc28d6e85c",
+  "sourceTree": "72fec695b67b51b90be0e97b2bdeb34e0c3a3aa5",
+  "python": {
+    "version": "0.9.0a2",
+    "wheelSha256": "4050ca02f4c0293929818084b7820623219c1413c8e16980eb0060a6c622d2a6",
+    "runtime": "3.12.13",
+    "matplotlib": "3.11.2",
+    "dpi": 120,
+    "inches": [
+      8.4,
+      5.2
+    ]
+  },
+  "browser": {
+    "version": "0.9.0-alpha.3",
+    "tarballSha256": "5b0af64e14cf89b79a76558972217c3b1f4ca9cf96fb2edab7af3c46ecf26290",
+    "chromium": "151.0.7922.34",
+    "playwright": "1.62.0",
+    "dpr": 1,
+    "state": "settled terminal Canvas"
+  },
+  "recipe": {
+    "source": "examples/direct-series-labels at sourceCommit",
+    "pythonExampleSha256": "667b03566e1a551556005a638e337092d43dccc6c5d8e2bfa1f55f2320b3b25c",
+    "browserContractSha256": "e66c1fe4469fdbf9b12e89d54cf7e8a795104306b20fee59e911fa56f87dda18",
+    "adaptations": "Python example unchanged; browser example changes only theme to ultraviolet_laboratory. Each is rendered once with direct labels disabled and once enabled. No image resizing, editing or post-processing.",
+    "x": [
+      0,
+      1,
+      2
+    ],
+    "ys": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        2,
+        3,
+        3.05
+      ],
+      [
+        3,
+        4,
+        3.1
+      ]
+    ],
+    "labels": [
+      "Control",
+      "Treatment",
+      "Model"
+    ]
+  },
+  "checks": {
+    "installedSourceMatchesApprovedArtifacts": true,
+    "bodyIdentities": [
+      "open circle",
+      "open square",
+      "open upright triangle"
+    ],
+    "lines": "solid",
+    "bothDirectPlans": "placed"
+  },
+  "limitation": "The three final observations remain close. Direct labels separate names, not the observations themselves. Responsive page reductions are presentation, not readability qualification.",
+  "images": [
+    {
+      "file": "lavender-python-ordinary.png",
+      "theme": "lavender_fog_notebook",
+      "runtime": "Python",
+      "treatment": "ordinary",
+      "width": 1008,
+      "height": 624,
+      "sha256": "acfac4706f41c5866a5c4ca364cabcdaaafe9890d62b700de61d30d9665eb3ac",
+      "bytes": 50480
+    },
+    {
+      "file": "lavender-python-direct.png",
+      "theme": "lavender_fog_notebook",
+      "runtime": "Python",
+      "treatment": "direct",
+      "width": 1008,
+      "height": 624,
+      "sha256": "8a7549bbbefa89610dae432a1a176bf830562b050551403740c6416c19937a4d",
+      "bytes": 47025
+    },
+    {
+      "file": "ultraviolet-canvas-ordinary.png",
+      "theme": "ultraviolet_laboratory",
+      "runtime": "terminal Canvas",
+      "treatment": "ordinary",
+      "width": 760,
+      "height": 520,
+      "sha256": "ab204269d3abecd5826146357f7f85d9eb3f4beb80d20c6e577218cf073bf839",
+      "bytes": 52622
+    },
+    {
+      "file": "ultraviolet-canvas-direct.png",
+      "theme": "ultraviolet_laboratory",
+      "runtime": "terminal Canvas",
+      "treatment": "direct",
+      "width": 760,
+      "height": 520,
+      "sha256": "ad3f1c9719b8b5019a4417a292163d7620a0cc41582eafee231839cef7820c2f",
+      "bytes": 43449
+    }
+  ]
+}
