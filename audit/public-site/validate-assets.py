@@ -19,7 +19,8 @@ CURRENT_SPECIMENS = {
 }
 ACCEPTED_FILES = {
     "current-alpha/manifest.json": "f59b8f0215a844444223bf9845f96c1154259d043822f3aa8bd6ea54f793563b",
-    "index.html": "f12e29c282e98a22186213e78a7849f770a01b78914b9681dd471fe5d7d17623",
+    "index.html": "28e63b0f62f3ba3dbc38cbda58858ae7b4c3d4fad072173d08c7625e74c9c70a",
+    "earlier-alpha.html": "a2942f3f04a892cd67a60e2011c96bca6e8cc70dcafd01bd3df4dbf1a1d0e8a3",
     "evidence/index.html": "e9bf28929af0e1210f749cbc7686c2106f6f8eae66dbd33a45b19bb36db3641f",
     "styles.css": "281d7261c7663621d9e6632fcafb1cbc4d5a5a4550546b31fc7c3c9cbdd89b59",
     "README.md": "e089b27769a66923d11d7e873912f847fcb36fc43d0b5d0534184a77e006419c",
@@ -91,6 +92,7 @@ def main() -> int:
         "site/README.md",
         "site/evidence/index.html",
         "site/index.html",
+        "site/earlier-alpha.html",
         "site/public-alpha-set.json",
         "site/styles.css",
         "site/WEB_ASSET_MANIFEST.json",
@@ -183,7 +185,7 @@ def main() -> int:
         assert payload[:8] == b"\x89PNG\r\n\x1a\n"
         assert struct.unpack(">II", payload[16:24]) == (entry["width"], entry["height"])
         checks += 1
-    expected_checks = 68
+    expected_checks = 69
     assert checks == expected_checks, f"expected {expected_checks} site checks, executed {checks}"
     print(json.dumps({"suite": "public-r3-assets", "expectedCheckCount": expected_checks, "executedCheckCount": checks, "result": "PASS"}))
     return 0
