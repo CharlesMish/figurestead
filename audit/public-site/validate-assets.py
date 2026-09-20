@@ -18,7 +18,7 @@ CURRENT_SPECIMENS = {
     "ultraviolet-canvas-ordinary.png", "ultraviolet-canvas-direct.png",
 }
 ACCEPTED_FILES = {
-    "current-alpha/manifest.json": "a2b12c1c16d464cbaa01d9d4ed60b82dd921c2a2e779b80ca40a195f0143eb2c",
+    "current-alpha/manifest.json": "f59b8f0215a844444223bf9845f96c1154259d043822f3aa8bd6ea54f793563b",
     "index.html": "f12e29c282e98a22186213e78a7849f770a01b78914b9681dd471fe5d7d17623",
     "evidence/index.html": "e9bf28929af0e1210f749cbc7686c2106f6f8eae66dbd33a45b19bb36db3641f",
     "styles.css": "281d7261c7663621d9e6632fcafb1cbc4d5a5a4550546b31fc7c3c9cbdd89b59",
