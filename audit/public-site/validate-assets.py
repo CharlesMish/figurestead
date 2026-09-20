@@ -14,7 +14,7 @@ import zlib
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
 ACCEPTED_FILES = {
-    "index.html": "572120e037d96209c507f1f23a00e070e9a649ca3015f8121734276f9d6d62ca",
+    "index.html": "300db99780d7348daf819cac6c422fabb836c9b43432d1b75f96b5191bc7f10e",
     "evidence/index.html": "e9bf28929af0e1210f749cbc7686c2106f6f8eae66dbd33a45b19bb36db3641f",
     "styles.css": "281d7261c7663621d9e6632fcafb1cbc4d5a5a4550546b31fc7c3c9cbdd89b59",
     "README.md": "e089b27769a66923d11d7e873912f847fcb36fc43d0b5d0534184a77e006419c",

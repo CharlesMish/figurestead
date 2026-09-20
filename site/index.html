@@ -14,6 +14,10 @@
     <nav aria-label="Primary"><a href="#themes">Themes</a><a href="evidence/index.html">Evidence</a><a href="#start">Start</a><a href="#limits">Limits</a></nav>
   </header>
   <main id="main" tabindex="-1">
+    <aside class="wrap" aria-label="Current alpha and retained gallery">
+      <p><strong>Current alpha:</strong> Figurestead now publishes Python <code>0.9.0a2</code> and <code>@figurestead/web@0.9.0-alpha.3</code>. This page retains an earlier-alpha gallery and its historical specimens. For current installation, line-series identity, and direct labels, see the <a href="https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.3">current release</a> and <a href="https://github.com/CharlesMish/figurestead/blob/main/README.md">repository start instructions</a>.</p>
+      <p>Lavender Fog Notebook and Ultraviolet Laboratory are now the reference light and dark themes for the <a href="https://github.com/CharlesMish/figurestead/blob/main/docs/reference-themes.md">documented bounded three-series line profile</a>. This designation is not universal accessibility, CVD, or print qualification; the historical specimens below are not current-profile evidence.</p>
+    </aside>
     <section class="intro wrap">
       <p class="eyebrow" data-dom="alpha-status">Experimental public alpha</p>
       <h1>Evidence, given a disciplined visual voice.</h1>
@@ -71,6 +75,7 @@
 
     <section class="start wrap" id="start">
       <header class="section-head"><p class="index">03</p><div><h2>One theme, two runtimes</h2><p>Python and browser surfaces share the normalized figure-contract vocabulary and selected theme definitions. Each surface renders through its own runtime implementation; shared semantics do not imply pixel-identical output.</p></div></header>
+      <p class="method-note"><strong>Historical installation examples:</strong> The alpha.1 commands below are retained with this earlier-alpha showcase. Use the <a href="https://github.com/CharlesMish/figurestead/blob/main/README.md">current installation guidance</a> for the published packages.</p>
       <div class="quick-grid">
         <article><h3 data-dom="python-first-success">Python</h3><p class="runtime-link"><a href="https://pypi.org/project/figurestead/">figurestead on PyPI</a></p><pre><code>python -m pip install "figurestead==0.9.0a1"</code></pre><pre><code>from figurestead import line
 figure, axes = line([0, 1, 2], [[0, 1, 0]])
