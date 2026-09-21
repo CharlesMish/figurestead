@@ -208,4 +208,54 @@ class DirectLabelTests(unittest.TestCase):
         self.assertEqual(a._figurestead_direct_labels.result['status'],'placed');f.canvas.draw();self.assertEqual(a._figurestead_direct_labels.result['status'],'placed')
         f,a=self.make();f.set_size_inches(2,4);f.canvas.draw();self.assertIn(a._figurestead_direct_labels.result['reason'],('horizontal-capacity','terminal-marker-clipped'))
 
+    def test_public_rhythm_samples_and_lifecycle(self):
+        from matplotlib.lines import Line2D
+        for mapping in ({'model':'dash'},{'control':'dash'},{'model':'dot'},{'model':'dash-dot'}):
+            options=dict(labels=['Control','Treatment','Model'],series_keys=['control','treatment','model'],line_styles=mapping)
+            f,a=self.make(**options);f.canvas.draw();d=a._figurestead_direct_labels
+            self.assertEqual(d.result['status'],'placed');self.assertTrue(d.result['lineSamplesRequired'])
+            self.assertEqual(len(d.result['entries']),3)
+            lines=[v for v in d.artists if isinstance(v,Line2D)]
+            for e in d.result['entries']:
+                body=a.lines[e['rank']];sample=e['lineSample']
+                artist=next(v for v in lines if list(v.get_xdata())==[sample['x1'],sample['x2']])
+                lines.remove(artist)
+                self.assertEqual(artist.get_linestyle(),body.get_linestyle())
+                self.assertEqual(artist._dash_pattern,body._dash_pattern)
+                self.assertEqual(artist.get_color(),body.get_color());self.assertEqual(artist.get_alpha(),body.get_alpha())
+                self.assertEqual(artist.get_linewidth(),body.get_linewidth())
+                self.assertEqual(artist.get_path_effects(),body.get_path_effects())
+                self.assertGreaterEqual(sample['x1'],e['box'][0])
+                if e['leader']:self.assertLess(e['leader']['x2'],e['box'][0])
+            for leader in lines:
+                self.assertEqual(leader.get_linestyle(),'-');self.assertEqual(leader.get_alpha(),1)
+                self.assertIn(leader.get_color(),[d.theme.secondary,d.theme.label])
+            png=self.png(f);box=a.get_position().bounds;count=len(a.get_children())
+            for _ in range(2):
+                f.set_size_inches(2.8,5.2);f.canvas.draw()
+                self.assertEqual(d.result['reason'],'horizontal-capacity');self.assertTrue(d.result['lineSamplesRequired'])
+                self.assertEqual(d.artists,[]);self.assertTrue(a.get_legend().get_visible())
+                g,b=self.make(direct_labels=False,**options);g.set_size_inches(2.8,5.2)
+                self.assertEqual(self.png(f),self.png(g));plt.close(g)
+                f.set_size_inches(8.4,5.2);self.assertEqual(self.png(f),png)
+                self.assertEqual(a.get_position().bounds,box);self.assertEqual(len(a.get_children()),count)
+            svg=io.BytesIO();f.savefig(svg,format='svg');self.assertEqual(d.result['status'],'placed')
+    def test_rhythm_sample_copies_resolved_edge_stroke(self):
+        from matplotlib.lines import Line2D
+        theme=get_theme('lavender_fog_notebook')
+        theme=replace(theme,series_edges=tuple([theme.label]*len(theme.series)))
+        f,a=self.make(theme=theme,series_keys=['c','t','m'],line_styles={'m':'dash'})
+        f.canvas.draw();d=a._figurestead_direct_labels
+        self.assertEqual(d.result['status'],'placed')
+        for e in d.result['entries']:
+            sample=e['lineSample']
+            artist=next(v for v in d.artists if isinstance(v,Line2D) and list(v.get_xdata())==[sample['x1'],sample['x2']] and v.get_ydata()[0]==f.bbox.height-e['center'])
+            self.assertEqual(artist.get_path_effects(),a.lines[e['rank']].get_path_effects())
+            self.assertTrue(artist.get_path_effects())
+
+    def test_all_solid_has_no_samples(self):
+        f,a=self.make(series_keys=['c','t','m']);f.canvas.draw();d=a._figurestead_direct_labels
+        self.assertNotIn('lineSamplesRequired',d.result)
+        self.assertTrue(all('lineSample' not in e for e in d.result['entries']))
+
 if __name__=='__main__':unittest.main()

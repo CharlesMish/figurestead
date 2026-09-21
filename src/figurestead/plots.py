@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Sequence, Mapping
 
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
@@ -246,7 +246,7 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
     return fig, ax
 
 
-def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
+def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles=None, spec=None, theme="slipware",
          profile="deep_scope", ax=None, pose=None, focus: FocusAnnotation | None = None,
          direct_labels=False):
     """Draw one or more finite numeric series sharing one x vector.
@@ -270,7 +270,13 @@ def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
     cycle is circle, square, upright triangle, diamond. An explicit pose keeps
     its own marker cycle, indexed by the same slots. Cycling is a style-selection
     rule, not a claim of distinguishability for additional series. Slots do not
-    select line rhythm; ordinary Matplotlib line-style overrides remain separate.
+    select line rhythm. Python slots carry marker/color identity; Python keys
+    address authored line rhythm. Optional ``series_keys`` must be unique,
+    nonblank strings aligned with rows. ``line_styles`` maps these keys to
+    solid/dash/dot/dash-dot; missing active keys resolve to solid and inactive
+    keys may remain in the mapping. Carry keys AND slots when rebuilding rows.
+    Labels are never parsed as keys; rhythm has no inferred scientific meaning.
+    Authored rhythm is supported only on the ordinary (non-pose) line route.
     """
     if not isinstance(direct_labels, bool):
         raise _input_error("line.direct_labels", "must be boolean")
@@ -292,13 +298,34 @@ def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
         if isinstance(slot, (bool, np.bool_)) or not isinstance(slot, (int, np.integer)) or slot < 0:
             raise _input_error(f"line.series_slots[{index}]", "must be a nonnegative integer (not boolean)")
     slots = [int(slot) for slot in slots]
+    keys = None if series_keys is None else _metadata(series_keys, path="line.series_keys", expected=len(ys))
+    if keys is not None:
+        if any(not isinstance(key, str) or not key.strip() for key in keys):
+            raise _input_error("line.series_keys", "must contain unique nonblank strings; keys address rhythm, not marker/color slots")
+        if len(set(keys)) != len(keys):
+            raise _input_error("line.series_keys", "must be unique")
+    if line_styles is not None and keys is None:
+        raise _input_error("line.line_styles", "requires series_keys; slots carry marker/color identity, keys address rhythm")
+    rhythms = {"solid": "-", "dash": "--", "dot": ":", "dash-dot": "-."}
+    if line_styles is not None:
+        if not isinstance(line_styles, Mapping):
+            raise _input_error("line.line_styles", "must be a mapping from series keys to named rhythms")
+        for key, style in line_styles.items():
+            if not isinstance(key, str) or not key.strip():
+                raise _input_error("line.line_styles", "keys must be nonblank strings")
+            if not isinstance(style, str) or style not in rhythms:
+                raise _input_error("line.line_styles", "styles must be solid, dash, dot or dash-dot")
+    resolved_rhythms = ([{} for _ in ys] if keys is None else
+                        [{"linestyle": rhythms[(line_styles or {}).get(key, "solid")]} for key in keys])
     spec = spec or PlotSpec("Line")
     theme, profile = resolve(theme, profile)
     presentation = resolve_pose(pose)
+    if line_styles is not None and presentation is not None:
+        raise _input_error("line.line_styles", "authored rhythm is unsupported with explicit presentation poses")
     fig, ax = ensure_axes(ax)
     style_axes(ax, theme, profile, spec, panel_surface=presentation.panel_surface if presentation else False, frame=presentation.frame if presentation else False)
     identity_lines = []
-    for series_index, y, label in zip(slots, ys, labels):
+    for series_index, y, label, rhythm in zip(slots, ys, labels, resolved_rhythms):
         color = theme.series[series_index % len(theme.series)]
         draw_x, draw_y = monotone_curve(x, y) if presentation and presentation.curve == "monotone" else (x, y)
         width = presentation.line_width if presentation else 1.45
@@ -308,7 +335,7 @@ def line(x, ys, *, labels=None, series_slots=None, spec=None, theme="slipware",
             path, = ax.plot(draw_x, draw_y, color=color, linewidth=width, alpha=0.92, label=label, zorder=3)
         else:
             path = IdentityLine(draw_x, draw_y, color=color, linewidth=width,
-                                alpha=0.88, label=label, zorder=3)
+                                alpha=0.88, label=label, zorder=3, **rhythm)
             ax.add_line(path)
         identity_lines.append(path)
         if theme.series_edges:

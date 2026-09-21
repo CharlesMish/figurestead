@@ -14,9 +14,14 @@ export function solveDirectLabels(entries, lo, hi, height, gap = 4) {
   return ordered.map((e,i)=>({...e,center:z[i]+i*s}));
 }
 export function literalLabel(t) {return typeof t==='string' && !!t.trim() && /^[\x20-\x7e]+$/.test(t);}
-function contrast(a,b) {
+function contrast(a,b,opacity=1) {
   const lum=c=>{const v=c.slice(1).match(/../g).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);return v[0]*.2126+v[1]*.7152+v[2]*.0722;};
-  const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);
+  let x=lum(a);const y=lum(b);
+  if(opacity!==1){const rgb=c=>c.slice(1).match(/../g).map(v=>parseInt(v,16)/255);
+    const back=rgb(b),mixed=rgb(a).map((v,i)=>v*opacity+back[i]*(1-opacity));
+    x=mixed.map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((v,c,i)=>v+c*[.2126,.7152,.0722][i],0);
+  }
+  return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);
 }
 const fail=reason=>({status:'fallback',reason});
 export function planDirectLabels(scene, resolved, measure) {
@@ -30,7 +35,14 @@ export function planDirectLabels(scene, resolved, measure) {
     ||p.domain.x[0]>=p.domain.x[1]||p.domain.y[0]>=p.domain.y[1]) return fail('unsupported-geometry');
   if(!data.series.every(s=>literalLabel(s.label)))return fail('unsupported-text');
   if(p.annotations.length || !measure || p.layout.headerText || resolved.width<=480) return fail('unsupported-layout');
-  const entries=[];let markerHalf=0,textWidth=0,height=0;
+  const bodyLines=data.series.map(s=>p.marks.find(m=>m.kind==='segment'&&m.series===s.key));
+  if(bodyLines.some(m=>!m))return fail('unsupported-geometry');
+  const samples=bodyLines.some(m=>m.style.lineStyle!=='solid');
+  // Two full cycles of the longest supported browser rhythm (dash-dot: 16px).
+  const sampleWidth=samples?32:0;
+  const sampleHalf=samples?Math.max(...bodyLines.map(m=>Math.max(1,(m.style.lineWidth??1.6)+(m.style.edge?1.3:0))/2)):0;
+  const sampleSpace=samples?sampleWidth+2*sampleHalf+6:0;
+  const entries=[];let markerHalf=0,textWidth=0,height=samples?2*sampleHalf:0;
   for(const s of data.series) {
     const x=data.x.at(-1),y=s.y.at(-1);
     // Ordinary compileFigureModel evidence coverage has already admitted all observations.
@@ -47,15 +59,23 @@ export function planDirectLabels(scene, resolved, measure) {
     const inks=[point.style.color,point.style.edge,scene.theme.label].filter(Boolean);
     if(inks.some(c=>!/^#[0-9a-f]{6}$/i.test(c))) return fail('unsupported-geometry');
     if(inks.some(c=>contrast(c,scene.theme.field)<3))return fail('ink-contrast');
-    entries.push({key:s.key,label:s.label,anchor:g.cy,rank:input.ranks[s.key],point,text:t,half});
+    const line=bodyLines.find(m=>m.series===s.key);
+    if(samples){
+      if(!['solid','dash','dot','dash-dot'].includes(line.style.lineStyle))return fail('unsupported-geometry');
+      // Canvas terminal strokes use .78 (opaque paper); SVG's same stroke is opaque.
+      // Require ink on the actual gutter for both render paths, including edge ink.
+      if([line.style.color,line.style.edge].filter(Boolean).some(c=>
+        contrast(c,scene.theme.field,scene.theme.mode==='paper'?1:.78)<3 || contrast(c,scene.theme.field)<3))return fail('ink-contrast');
+    }
+    entries.push({key:s.key,label:s.label,anchor:g.cy,rank:input.ranks[s.key],point,text:t,half,...(samples?{bodyLine:line}:{})});
     markerHalf=Math.max(markerHalf,half);textWidth=Math.max(textWidth,t.left+t.right,t.width);height=Math.max(height,t.ascent+t.descent,half*2);
   }
-  const H=height+4,required=12+markerHalf*2+6+textWidth+4;
+  const H=height+4,required=12+sampleSpace+markerHalf*2+6+textWidth+4;
   const right=p.layout.rect.right-2,shrink=Math.max(0,required-(right-plot.right));
-  if(shrink>.25*(plot.right-plot.left)||plot.right-shrink-plot.left<160)return fail('horizontal-capacity');
+  if(shrink>.25*(plot.right-plot.left)||plot.right-shrink-plot.left<160)return {...fail('horizontal-capacity'),...(samples?{lineSamplesRequired:true,sampleWidth}:{})};
   const planned=solveDirectLabels(entries,plot.top,plot.bottom,H);
   if(!planned)return fail('vertical-capacity');
-  const newRight=plot.right-shrink, markerX=newRight+12+markerHalf+2,textX=markerX+markerHalf+6;
+  const newRight=plot.right-shrink, sampleX=newRight+12+2+sampleHalf, markerX=newRight+12+sampleSpace+markerHalf+2,textX=markerX+markerHalf+6;
   const substrates=[scene.theme.field,p.presentation.panelSurface?scene.theme.panel:scene.theme.field];
   const leaderColor=[scene.theme.secondary,scene.theme.label].find(c=>substrates.every(b=>contrast(c,b)>=3));
   const output=[];
@@ -66,8 +86,9 @@ export function planDirectLabels(scene, resolved, measure) {
     if(moved&&!leaderColor)return fail('ink-contrast');
     output.push({...e,markerX,textX:textX+e.text.left,textY:e.center+(e.text.ascent-e.text.descent)/2,
       marker:{...e.point,id:e.point.id+'/direct-label',geometry:{...e.point.geometry,cx:markerX,cy:e.center}},
-      leader:moved?{x1:anchorX+markerHalf+2,y1:e.anchor,x2:markerX-markerHalf-3,y2:e.center,color:leaderColor}:null,
-      box:{left:markerX-markerHalf-2,top:e.center-H/2,right:textX+textWidth+2,bottom:e.center+H/2}});
+      leader:moved?{x1:anchorX+markerHalf+2,y1:e.anchor,x2:markerX-markerHalf-3-sampleSpace,y2:e.center,color:leaderColor}:null,
+      ...(samples?{lineSample:{...e.bodyLine,id:e.bodyLine.id+'/direct-sample',geometry:{x1:sampleX,y1:e.center,x2:sampleX+sampleWidth,y2:e.center},motion:{opacity:1,clip:1}}}:{}),
+      box:{left:markerX-markerHalf-2-sampleSpace,top:e.center-H/2,right:textX+textWidth+2,bottom:e.center+H/2}});
   }
-  return {status:'placed',reason:null,entries:output,shrink,plot:{...plot,right:newRight},height:H,font:p.layout.font.legend};
+  return {status:'placed',reason:null,entries:output,shrink,plot:{...plot,right:newRight},height:H,font:p.layout.font.legend,...(samples?{lineSamplesRequired:true,sampleWidth}:{})};
 }

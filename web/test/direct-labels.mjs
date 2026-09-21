@@ -69,4 +69,27 @@ test('measured overhang, actual-context leader fallback and invalid options',()=
  fallback(()=>{},'unsupported-layout',t=>t.startsWith('S')?{width:20}:metric(t));
  fallback(c=>{c.panels.push({...structuredClone(c.panels[0]),id:'second'});},'unsupported-layout');
 });
+test('orthogonal rhythms activate actual stroke samples on every row',()=>{
+ for(const [key,rhythm] of [['S3','dash'],['S1','dash'],['S3','dot'],['S3','dash-dot']]){
+  const c=input();c.style.series[key]={lineStyle:rhythm};const r=resolved(c),p=r.directLabelPlan;
+  assert.equal(p.status,'placed');assert.equal(p.lineSamplesRequired,true);assert.equal(p.sampleWidth,32);
+  for(const e of p.entries){
+   const body=r.panels[0].marks.find(m=>m.kind==='segment'&&m.series===e.key);
+   assert.deepEqual(e.lineSample.style,body.style);assert.equal(e.lineSample.geometry.x2-e.lineSample.geometry.x1,32);
+   assert.equal(e.marker.style.glyph,{S1:'ring',S2:'square',S3:'triangle'}[e.key]);
+   assert(e.lineSample.geometry.x1>=e.box.left);if(e.leader)assert(e.leader.x2<e.box.left);
+  }
+  const svg=resolvedSceneToSvg(r);for(const e of p.entries)assert(svg.includes(e.lineSample.id));
+  c.style.directLabels=false;const ordinary=resolved(c);
+  for(const item of ordinary.panels[0].legend)assert.equal(item.style.lineStyle,ordinary.panels[0].marks.find(m=>m.kind==='segment'&&m.series===item.key).style.lineStyle);
+ }
+ const control=resolved(input()).directLabelPlan;assert(!control.lineSamplesRequired);assert(control.entries.every(e=>!e.lineSample));
+});
+test('sample width participates in atomic capacity failure',()=>{
+ const c=input();c.style.series.S3={lineStyle:'dash'};for(const s of c.panels[0].data.series)s.label='Long authored series name';
+ const r=composeResolvedScene(resolveTerminalScene(compileTerminalScene(c),{width:520,height:520,measureText:metric}));
+ assert.equal(r.directLabelPlan.reason,'horizontal-capacity');assert.equal(r.directLabelPlan.lineSamplesRequired,true);
+ delete c.style.directLabels;const b=composeResolvedScene(resolveTerminalScene(compileTerminalScene(c),{width:520,height:520,measureText:metric}));
+ assert.deepEqual(r.panels[0].layout,b.panels[0].layout);assert.deepEqual(r.panels[0].marks,b.panels[0].marks);
+});
 console.log(JSON.stringify({suite:'direct-labels',checks,result:'PASS'}));

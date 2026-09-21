@@ -1,8 +1,8 @@
 // Direct native Canvas regressions; existing CI server, no qualification harness.
-const { chromium } = require('playwright');
+const engine = require('playwright')[process.env.FIGURESTEAD_BROWSER || 'chromium'];
 const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
 (async () => {
-  const browser = await chromium.launch({ headless: true, ...(process.env.FIGURESTEAD_BROWSER_EXECUTABLE ? { executablePath: process.env.FIGURESTEAD_BROWSER_EXECUTABLE } : {}) });
+  const browser = await engine.launch({ headless: true, ...(process.env.FIGURESTEAD_BROWSER_EXECUTABLE ? { executablePath: process.env.FIGURESTEAD_BROWSER_EXECUTABLE } : {}) });
   try {
     const page = await browser.newPage({ viewport: { width: 1000, height: 700 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
     // Optional socket-free local development transport; product bytes unmodified.
@@ -32,7 +32,7 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
           const first=o.figure.getComposedScene();assert(first.directLabelPlan.status==='placed','initial placed');
           const styles=structuredClone(o.figure.getScene().seriesStyles),ranks=structuredClone(o.figure.getScene().directRanks);
           const validate=()=>{const r=o.figure.getComposedScene(),p=r.directLabelPlan;assert(p.status==='placed','update placed');
-            for(const e of p.entries){const m=r.panels[0].marks.filter(m=>m.kind==='point'&&m.series===e.key).at(-1);same(e.marker.style,m.style,'body style');same(e.marker.style,styles[e.key],'retained style');assert(e.rank===ranks[e.key],'retained rank');assert(e.anchor===m.geometry.cy,'terminal height');assert(e.box.right<=760,'gutter inside');}
+            for(const e of p.entries){const m=r.panels[0].marks.filter(m=>m.kind==='point'&&m.series===e.key).at(-1);same(e.marker.style,m.style,'body style');same(e.marker.style,styles[e.key],'retained style');assert(e.rank===ranks[e.key],'retained rank');assert(e.anchor===m.geometry.cy,'terminal height');assert(e.box.right<=760,'gutter inside');if(p.lineSamplesRequired)same(e.lineSample.style,r.panels[0].marks.find(m=>m.kind==='segment'&&m.series===e.key).style,'retained body sample style');}
             same(p.entries.map(e=>e.rank),p.entries.map(e=>e.rank).sort((a,b)=>a-b),'stable exact ties');
           };
           const data=c.panels[0].data,[a,b,d]=data.series;
@@ -86,6 +86,37 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
       ]) {
         const c=input();mutate(c);const ordinary=structuredClone(c);delete ordinary.style.directLabels;
         const a=create(c),b=create(ordinary);try {assert(a.figure.getComposedScene().directLabelPlan.reason===reason,name+' reason');assert(a.canvas.toDataURL()===b.canvas.toDataURL(),name+' fallback pixels');checks.push(name+' fallback');} finally {dispose(a);dispose(b);}
+      }
+      // Authored rhythm is sampled from body strokes; setConfig remains replacement.
+      for(const key of ['S3','S1']) {
+        const c=input();c.style.series[key]={lineStyle:'dash'};const o=create(c);
+        try {
+          const ctx=o.canvas.getContext('2d'),calls=[],stroke=ctx.stroke;
+          ctx.stroke=function(...args){const stack=new Error().stack;if(stack.includes('drawDirectLabels'))calls.push({stack,dash:this.getLineDash(),color:this.strokeStyle,alpha:this.globalAlpha});return stroke.apply(this,args);};
+          o.figure.resize();const r=o.figure.getComposedScene(),p=r.directLabelPlan;
+          assert(p.status==='placed'&&p.lineSamplesRequired,'rhythm plan placed');
+          const samples=calls.filter(s=>s.stack.includes('drawLine'));
+          assert(samples.length===3,'all rows use body line helper');
+          assert(samples.filter(s=>s.dash.join(',')==='7,4').length===1,'one actual dashed sample');
+          assert(samples.every(s=>Math.abs(s.alpha-.78)<1e-6),'actual Canvas stroke opacity');
+          for(const call of calls.filter(s=>!s.stack.includes('drawLine')&&!s.stack.includes('drawPoint'))){assert(call.dash.length===0&&call.alpha===1,'neutral solid leaders');}
+          const svg=api.resolvedSceneToSvg(r),doc=new DOMParser().parseFromString(svg,'image/svg+xml');
+          for(const e of p.entries){const path=doc.querySelector(`[data-mark-id="${e.lineSample.id}"]`);assert(path,'SVG same composed sample');assert(path.getAttribute('stroke-dasharray')===(e.key===key?'7 4':null),'SVG actual rhythm');}
+          const png=o.canvas.toDataURL(),box=JSON.stringify(r.panels[0].layout.plot);
+          o.canvas.style.width='490px';o.figure.resize();
+          // Force the same documented capacity case using measured long labels.
+          const crowded=structuredClone(c);for(const row of crowded.panels[0].data.series)row.label='Long authored series name';
+          o.figure.setConfig(crowded);assert(o.figure.getComposedScene().directLabelPlan.reason==='horizontal-capacity','sample capacity fallback');
+          const plain=structuredClone(crowded);plain.style.directLabels=false;const b=create(plain);b.canvas.style.width='490px';b.figure.resize();
+          assert(o.canvas.toDataURL()===b.canvas.toDataURL(),'rhythm fallback ordinary pixels');dispose(b);
+          o.canvas.style.width='760px';o.figure.setConfig(c);o.figure.resize();assert(o.canvas.toDataURL()===png,'place fallback place pixels');assert(JSON.stringify(o.figure.getComposedScene().panels[0].layout.plot)===box,'no allocation accumulation');
+          const full=structuredClone(c);full.style.series[key]={...o.figure.getScene().seriesStyles[key],color:theme.series[0]};o.figure.setConfig(full);
+          assert(o.figure.getScene().seriesStyles[key].lineStyle==='dash','complete replacement retains rhythm');
+          const partial=structuredClone(c);partial.style.series[key]={color:theme.series[0]};o.figure.setConfig(partial);
+          assert(o.figure.getScene().seriesStyles[key].lineStyle==='solid','replacement omission restores default');
+          assert(!o.figure.getComposedScene().directLabelPlan.lineSamplesRequired,'solid replacement compact control');
+          checks.push('rhythm samples, capacity lifecycle, replacement '+key);
+        } finally {dispose(o);}
       }
       const moving=input();moving.view.motion='semantic';moving.view.strategy='auto';const plain=structuredClone(moving);delete plain.style.directLabels;
       const a=create(moving,{reducedMotion:false}),b=create(plain,{reducedMotion:false});

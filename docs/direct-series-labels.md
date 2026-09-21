@@ -34,6 +34,8 @@ Ordering is screen-down terminal height, then stable identity rank. Let `H` be t
 
 Text measurements use the actual renderer/font, not character estimates. Python includes font-outline overhang and renderer bounds; Canvas records advance, left/right ink overhang, ascent and descent in the font it draws. Copied marker extents include outline/edge, including the native Canvas/SVG polygon miter tips; Python uses its actual round-join path bounds. Common row boxes include marker-to-text space and outer padding. Missing trustworthy measurement falls back. Identical resolved measurements/geometry have the same capacity and solver semantics across runtimes; real fonts and geometry can legitimately produce different capacity outcomes.
 
+For authored non-solid rhythm, see [orthogonal line semantics](line-series-semantics.md). All-solid figures keep the compact marker/text treatment. If any body line is non-solid, every row adds an actual-body line sample before its marker. Samples and their stroke/edge extent participate in measurement, collision boxes and gutter capacity; leaders stay neutral and solid. `horizontal-capacity` with `lineSamplesRequired: true` means the complete sampled treatment did not fit, so the ordinary legend is restored.
+
 ## Gutter, leaders and lifecycle
 
 Output size, domains, scientific coordinates, plot height and font size remain fixed. Planning starts with the ordinary layout, uses available right margin first, then proposes at most a 25% reduction of baseline plot width. The browser's existing 160 CSS-px minimum is retained; Python uses a 160 logical-pixel v1 floor at 96 dpi, scaled for output DPI. No text is truncated, ellipsized or shrunk. Failed proposals restore the ordinary legend and layout.
