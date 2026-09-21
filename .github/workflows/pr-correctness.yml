@@ -70,6 +70,9 @@ jobs:
       - name: Verify opt-in direct line labels
         run: python audit/current-head-hardening/test_direct_labels.py
 
+      - name: Verify subtitle containment
+        run: python audit/current-head-hardening/test_subtitle.py
+
       - name: Verify Python motion input boundary
         run: python audit/current-head-hardening/test_python_motion_inputs.py
 

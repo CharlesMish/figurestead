@@ -82,9 +82,11 @@ def style_axes(ax, theme: Theme, profile: Profile, spec: PlotSpec, *, atmosphere
     if theme.primary_edge:
         title_artist.set_path_effects([pe.Stroke(linewidth=1.4, foreground=theme.primary_edge), pe.Normal()])
     if spec.subtitle:
-        ax.text(0.0, 1.015, spec.subtitle, transform=ax.transAxes,
+        subtitle_artist = ax.text(0.0, 1.015, spec.subtitle, transform=ax.transAxes,
                 ha="left", va="bottom", color=theme.secondary, fontsize=7.1,
                 fontfamily="DejaVu Sans Mono", style="italic")
+        from ._subtitle import SubtitleLayout
+        SubtitleLayout(ax, subtitle_artist, title_artist)
     if spec.signature:
         ax.text(0.005 if panel_surface else 0.995, 0.012, spec.signature, transform=ax.transAxes,
                 ha="left" if panel_surface else "right", va="bottom", color=theme.faint, fontsize=5.4,
