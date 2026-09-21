@@ -1,6 +1,8 @@
 """Public draw/resize/export coverage for measured subtitle containment."""
 import io, sys, unittest
 import xml.etree.ElementTree as ET
+from unittest.mock import patch
+import numpy as np
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'src'))
 import matplotlib
@@ -136,5 +138,81 @@ class SubtitleTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'PlotSpec.subtitle: insufficient header height'):
                 self.export(g,fmt,bbox_inches='tight',pad_inches=0)
             self.assertEqual(other.text.get_text(),other.authored)
+
+    def test_sc3_first_paint_geometry_and_round_trips(self):
+        # A row-count boundary: allocation at the old width sees three rows,
+        # but final drawing at the allocated width needs only two. Text/count
+        # assertions alone missed the previous 15-pixel plot-height change.
+        for engine_name in ['tight','constrained']:
+            f,a,l=self.make_header('word '*24);f.set_layout_engine(engine_name)
+            engine=f.get_layout_engine();execute=engine.execute
+            counts=(len(f.artists),len(a.texts),len(a.get_children()))
+            first=None
+            for width,dpi in [(4.5,120),(4.5,120),(4.5,120),(10,120),
+                              (4.5,120),(4.5,180),(4.5,120)]:
+                f.set_size_inches(width,5.2);f.set_dpi(dpi)
+                with patch.object(f,'draw',wraps=f.draw) as paint:
+                    f.canvas.draw()
+                    self.assertEqual(paint.call_count,1)  # no hidden draw retry
+                self.assertEqual(engine.execute,execute)
+                self.assert_header(f,a,l)
+                r=f.canvas.get_renderer()
+                geometry=np.array([*a.bbox.bounds,*l.text.get_window_extent(r).bounds,
+                                   *l.title.get_window_extent(r).bounds])
+                pixels=bytes(f.canvas.buffer_rgba())
+                if width==4.5 and dpi==120:
+                    if first is None:first=(geometry,l.text.get_text(),pixels)
+                    # 1e-6 display pixels is the test ceiling, NOT exact float
+                    # equality and not permission for visible allocation drift.
+                    np.testing.assert_allclose(geometry,first[0],rtol=0,atol=1e-6)
+                    self.assertEqual(l.text.get_text(),first[1])
+                    self.assertEqual(pixels,first[2])
+                before=l._state()
+                for _ in range(2):
+                    a.get_tightbbox(r);self.assertEqual(l._state(),before)
+                for fmt in ['png','svg']:
+                    ordinary=self.export(f,fmt)
+                    for pad in [0,.01]:self.export(f,fmt,bbox_inches='tight',pad_inches=pad)
+                    after=self.export(f,fmt)
+                    if fmt=='png':self.assertEqual(ordinary,after)
+                    self.assertFalse(l.tight_export or l.export_prepared or l.tight_header_included)
+                self.assertEqual((len(f.artists),len(a.texts),len(a.get_children())),counts)
+            plt.close(f)
+
+    def test_sc3_nonconvergence_is_bounded_and_transactional(self):
+        from figurestead._subtitle import _LAYOUT_PASSES
+        f,a,l=self.make_header('word '*24);f.set_layout_engine('tight')
+        engine=f.get_layout_engine();state=l._state()
+        position=a.get_position().bounds;in_layout=a.get_in_layout()
+        subplot=vars(f.subplotpars).copy()
+        def oscillate(figure):
+            a.set_position([.1,.1,.7 if moving.call_count%2 else .6,.7])
+            figure.subplotpars.update(top=.8)
+        with patch.object(engine,'execute',side_effect=oscillate) as moving:
+            for _ in range(2):
+                moving.reset_mock()
+                with patch.object(a,'draw',wraps=a.draw) as paint:
+                    with self.assertRaisesRegex(RuntimeError,'did not converge within 12 allocation passes'):
+                        f.canvas.draw()
+                    self.assertEqual(paint.call_count,0)
+                self.assertEqual(moving.call_count,_LAYOUT_PASSES)
+                self.assertIs(engine.execute,moving)
+                self.assertEqual(l._state(),state)
+                self.assertEqual(a.get_position().bounds,position)
+                self.assertEqual(a.get_in_layout(),in_layout)
+                self.assertEqual(vars(f.subplotpars),subplot)
+
+    def test_sc3_engine_failure_cannot_be_swallowed_or_leave_allocation(self):
+        f,a,l=self.make_header();f.set_layout_engine('constrained')
+        engine=f.get_layout_engine();state=l._state();position=a.get_position().bounds
+        def fail(figure):
+            a.set_position([.2,.2,.5,.5])
+            raise ValueError('injected allocation failure')
+        with patch.object(engine,'execute',side_effect=fail) as execute:
+            with self.assertRaisesRegex(ValueError,'injected allocation failure'):f.canvas.draw()
+            self.assertIs(engine.execute,execute)
+            self.assertEqual(l._state(),state)
+            self.assertEqual(a.get_position().bounds,position)
+        f.canvas.draw();self.assert_header(f,a,l)
 
 if __name__=='__main__':unittest.main()
