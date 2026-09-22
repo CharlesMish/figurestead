@@ -108,7 +108,10 @@ function lineGeometry(panel, axes, scale) {
   // Keep every observation for domain validation and curve/segment geometry.
   // Only the displayed marker set is reduced; Canvas/SVG and their own-line
   // masks consume this same resolved set (including the terminal observation).
-  return panel.marks.map((mark) => {
+  return panel.marks.map((mark, motionOrder) => {
+    // Carry the original numeric order through cadence filtering. Mark IDs are
+    // sanitized for output and are not unique identities for motion scheduling.
+    mark = { ...mark, motionOrder };
     if (mark.kind === "point") {
       const marker = lineMarkerGeometry(mark.style, scale, panel.presentation?.markerScale ?? 1);
       return { ...mark, lineIdentity: true, geometry: { ...pointGeometry(mark, axes, marker.radius), outlineWidth: marker.outlineWidth } };
@@ -297,10 +300,10 @@ export function resolveSceneFrame(resolvedScene, progress = 1) {
     panels: resolvedScene.panels.map((panel) => {
       const plan = resolvedScene.motionPlan.panels.find((item) => item.panelId === panel.id);
       // Sparse marker display must not retime the retained line segments.
-      const orders = panel.renderer === "line" && plan ? new Map(plan.targets.map(t => [t.id, t.order])) : null;
+      const lineMotion = panel.renderer === "line" && plan;
       return { ...panel, marks: panel.marks.map((mark, index) => ({
         ...mark,
-        motion: markMotionState(mark, orders?.get(mark.id) ?? index, orders ? plan.targets.length : panel.marks.length, p, plan?.strategy ?? "none"),
+        motion: markMotionState(mark, lineMotion ? mark.motionOrder ?? index : index, lineMotion ? plan.targets.length : panel.marks.length, p, plan?.strategy ?? "none"),
       })) };
     }),
   };

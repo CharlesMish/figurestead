@@ -3,6 +3,7 @@ import fs from "node:fs";
 import { compileTerminalScene, resolveTerminalScene, resolveSceneFrame, exportFigureSvg } from "../src/index.js";
 import { composeResolvedScene } from "../src/composition.js";
 import { resolveSeriesStyles } from "../src/series-style.js";
+import { markMotionState } from "../src/motion-plan.js";
 import { lineMarkerGeometry } from "../src/line-identity.js";
 import { lineIdentityContract } from "../../ci/fixtures/line-identity.js";
 
@@ -93,3 +94,41 @@ for(const progress of [0,.25,.75,1]) {
   const segments=c=>resolveSceneFrame(compose(c),progress).panels[0].marks.filter(m=>m.kind==='segment');
   assert.deepEqual(segments(moving),segments(denseMoving),'cadence must not retime or reshape segments');
 }
+
+// MC1: distinct valid authored keys may share sanitized output IDs. Scheduling
+// must use original numeric position, never an ID-keyed map (or display order).
+const collision=cadence(10);
+collision.panels[0].data.series.forEach((s,i)=>{s.key=['A B','A/B','C'][i];});
+collision.view.motion='semantic';collision.view.strategy='auto';
+const originalMarks=compileTerminalScene(collision).panels[0].marks;
+assert.equal(originalMarks[10].id,originalMarks[29].id,'fixture must collide');
+const collisionResults=[];
+for(const stride of [undefined,1,4]) {
+  const c=structuredClone(collision);if(stride!==undefined)c.style.markerStride=stride;
+  const r=compose(c);
+  const expected=originalMarks.map((mark,order)=>({mark,order})).filter(({mark})=>
+    mark.kind!=='point'||stride!==4||[0,4,8,9].includes(mark.x));
+  assert.deepEqual(r.panels[0].marks.map(m=>m.motionOrder),expected.map(e=>e.order));
+  assert.equal(r.panels[0].marks.filter(m=>m.kind==='point').length,stride===4?12:30);
+  for(const progress of [.25,.6,.8]) {
+    const marks=resolveSceneFrame(r,progress).panels[0].marks;
+    assert.equal(marks.length,expected.length);
+    marks.forEach((mark,i)=>{
+      const source=expected[i];
+      assert.equal(mark.series,source.mark.series);
+      assert.deepEqual(mark.motion,markMotionState(source.mark,source.order,originalMarks.length,progress,'points_then_connect'),
+        `${stride??'omitted'} ${progress}: original order ${source.order}`);
+    });
+    if(progress===.6) {
+      const first=marks.find(m=>m.kind==='segment'&&m.series==='A B');
+      const later=marks.find(m=>m.kind==='segment'&&m.series==='A/B');
+      // Golden values independently reproduced against exact pre-cadence main.
+      assert.equal(first.motion.opacity,0.17264050491210844);
+      assert.equal(first.motion.clip,0.17264050491210844);
+      assert.equal(later.motion.opacity,0.047064432452701845);
+      assert.equal(later.motion.clip,0.047064432452701845);
+      collisionResults.push({stride:stride??'omitted',first:first.motion,later:later.motion});
+    }
+  }
+}
+console.log(JSON.stringify({suite:'MC1-motion-order-collision',result:'PASS',progress:[.25,.6,.8],cases:collisionResults}));
