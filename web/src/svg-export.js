@@ -174,6 +174,7 @@ function legend(panel, theme, namespace) {
   if (panel.directLabelPlan?.status === "placed") return panel.directLabelPlan.entries.map(e => {
     const l=e.leader;
     return (l ? `<path ${attrs({d:`M ${l.x1} ${l.y1} L ${l.x2} ${l.y2}`,fill:"none",stroke:l.color,"stroke-width":.7})}/>` : "")
+      + (e.lineSample ? (e.lineSample.style.edge ? segment(e.lineSample, {stroke:e.lineSample.style.edge,"stroke-width":e.lineSample.style.lineWidth+1.3}) : "") + segment(e.lineSample) : "")
       + linePoint(e.marker) + `<text ${attrs({x:e.textX,y:e.textY,fill:theme.label,"font-family":DIRECT_FONT,"font-size":panel.directLabelPlan.font,"xml:space":"preserve"})}>${esc(e.label)}</text>`;
   }).join("");
   if (panel.presentation?.legend === "none") return "";

@@ -182,5 +182,46 @@ class LineIdentityTests(unittest.TestCase):
             np.testing.assert_array_equal(points.get_paths()[0].vertices, expected)
 
 
+class AuthoredRhythmTests(unittest.TestCase):
+    def tearDown(self): plt.close('all')
+    def make(self, **kw):
+        return line([0,1,2], [[1,2,3]]*3, labels=['duplicate']*3,
+                    theme='lavender_fog_notebook', **kw)
+    def test_omission_and_solid_mapping_bytes(self):
+        images=[]
+        for options in ({}, {'series_keys':['c','t','m']}, {'series_keys':['c','t','m'], 'line_styles':{}}):
+            f,a=self.make(**options); b=BytesIO();f.savefig(b,format='png');images.append(b.getvalue())
+            self.assertEqual([l.get_linestyle() for l in a.lines], ['-']*3)
+        self.assertEqual(images[0],images[1]);self.assertEqual(images[0],images[2])
+    def test_authored_rhythm_and_truthful_legend(self):
+        for styles,expected in [({'m':'dash'},['-','-','--']),({'c':'dash'},['--','-','-']),
+                                ({'c':'dot','t':'dash-dot','inactive':'dash'},[':','-.','-'])]:
+            f,a=self.make(series_keys=['c','t','m'],line_styles=styles);f.canvas.draw()
+            self.assertEqual([l.get_linestyle() for l in a.lines],expected)
+            self.assertEqual([l.identity_marker for l in a.lines],['o','s','^'])
+            samples=a.get_legend().findobj(IdentityLine)
+            self.assertEqual([l.get_linestyle() for l in samples],expected)
+            for body,sample in zip(a.lines,samples):
+                self.assertEqual(body.identity_marker,sample.identity_marker)
+                self.assertEqual(body.get_color(),sample.get_color())
+                self.assertEqual(body.get_alpha(),sample.get_alpha())
+    def test_carried_keys_slots_and_repeated_slots(self):
+        for slots,keys,expected in [([2,0,1],['m','c','t'],['-','--','-']),
+                                    ([1,2],['t','m'],['-','-']),
+                                    ([0,0],['c','m'],['--','-'])]:
+            f,a=line([0,1,2],[[1,2,3]]*len(slots),labels=['arbitrary']*len(slots),
+                     series_slots=slots,series_keys=keys,line_styles={'c':'dash'},theme='lavender_fog_notebook')
+            self.assertEqual([l.get_linestyle() for l in a.lines],expected)
+            self.assertEqual([l.identity_marker for l in a.lines],[['o','s','^'][i] for i in slots])
+            if slots==[0,0]:self.assertEqual(a.lines[0].get_color(),a.lines[1].get_color())
+    def test_validation(self):
+        for options in [dict(line_styles={}),dict(series_keys=['c','c','m']),dict(series_keys=['c',' ','m']),
+                        dict(series_keys=['c','m']),dict(series_keys=['c',1,'m']),
+                        dict(series_keys=['c','t','m'],line_styles={'c':'dashed'}),
+                        dict(series_keys=['c','t','m'],line_styles={'':'dash'}),
+                        dict(series_keys=['c','t','m'],line_styles=[]),
+                        dict(series_keys=['c','t','m'],line_styles={'c':'dash'},pose='scientific')]:
+            with self.subTest(options=options),self.assertRaises(ValueError):self.make(**options)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -129,6 +129,25 @@ class DirectLabels(Artist):
                 self.fail('outside-common-admission-profile'); return
         scale=renderer.points_to_pixels(1); base=ax.bbox.frozen(); figbox=fig.bbox
         entries=[]; marker_half=0.; text_width=0.; height=0.
+        samples = any(line.get_linestyle() != '-' for line in self.lines)
+        sample_width = 0.
+        if samples:
+            for line in self.lines:
+                if line.get_linestyle() not in ('-', '--', ':', '-.'):
+                    self.fail('unsupported-geometry'); return
+                offset, dashes = line._dash_pattern
+                sample_width = max(sample_width, 24 * fig.dpi / 96,
+                                   2 * sum(dashes or []) * scale)
+                height = max(height, line.get_linewidth()*scale)
+                inks = [to_rgba(line.get_color(), line.get_alpha())]
+                for effect in line.get_path_effects() or []:
+                    gc = getattr(effect, '_gc', {})
+                    if type(effect).__name__ not in ('Stroke','Normal'):
+                        self.fail('unsupported-geometry'); return
+                    height = max(height, gc.get('linewidth', line.get_linewidth())*scale)
+                    if 'foreground' in gc: inks.append(to_rgba(gc['foreground'],gc.get('alpha',line.get_alpha())))
+                if any(contrast(c, fig.get_facecolor()) < 3 for c in inks):
+                    self.fail('ink-contrast'); return
         for line,label,rank in zip(self.lines,self.labels,self.slots):
             points=getattr(line,'identity_points',None); xy=line.get_xydata()
             if (not isinstance(line,IdentityLine) or points is None or not line.get_visible() or not points.get_visible()
@@ -178,18 +197,23 @@ class DirectLabels(Artist):
                 self.fail('unsupported-layout'); return
             if any(contrast(c,fig.get_facecolor())<3 for c in inks) or contrast(self.theme.label,fig.get_facecolor())<3:
                 self.fail('ink-contrast'); return
-            entries.append({'anchor':ay,'rank':rank,'text':text,'box':box,'half':half,'points':points,'xy':xy[-1].copy()})
+            entries.append({'anchor':ay,'rank':rank,'text':text,'box':box,'half':half,'points':points,'xy':xy[-1].copy(),'line':line})
             marker_half=max(marker_half,half);text_width=max(text_width,box.width);height=max(height,box.height,2*half)
         unit=fig.dpi/96; pad=PAD*unit; corridor=CORRIDOR*unit
-        H=height+2*pad; required=corridor+2*marker_half+MARKER_TEXT*unit+text_width+2*pad
+        sample_space=sample_width+MARKER_TEXT*unit if samples else 0.
+        H=height+2*pad; required=corridor+sample_space+2*marker_half+MARKER_TEXT*unit+text_width+2*pad
         available=figbox.x1-base.x1-pad; shrink=max(0.,required-available)
         # Matplotlib has no product minimum width: v1 uses the same 160px layout floor as browser.
-        if shrink>.25*base.width or base.width-shrink<160*unit: self.fail('horizontal-capacity'); return
+        if shrink>.25*base.width or base.width-shrink<160*unit:
+            self.fail('horizontal-capacity')
+            if samples: self.result['lineSamplesRequired']=True; self.result['sampleWidth']=sample_width
+            return
         plan=solve(entries,figbox.height-base.y1,figbox.height-base.y0,H,GAP*unit)
         if plan is None: self.fail('vertical-capacity'); return
         box=Bbox.from_bounds(self.baseline.x0,self.baseline.y0,self.baseline.width-shrink/figbox.width,self.baseline.height)
         self.position(box)
-        marker_x=ax.bbox.x1+corridor+marker_half+pad; text_x=marker_x+marker_half+MARKER_TEXT*unit
+        sample_x=ax.bbox.x1+corridor+pad
+        marker_x=sample_x+sample_space+marker_half; text_x=marker_x+marker_half+MARKER_TEXT*unit
         colors=[self.theme.secondary,self.theme.label]
         leader=next((c for c in colors if all(contrast(c,b)>=3 for b in (ax.get_facecolor(),fig.get_facecolor()))),None)
         # Only annotations intersecting the reserved association corridor/rows interfere.
@@ -207,19 +231,31 @@ class DirectLabels(Artist):
             if abs(e['center']-e['anchor'])>LEADER_TOLERANCE*unit:
                 if leader is None: self.fail('ink-contrast'); return
                 # Horizontal clearance out of the terminal marker, then reserved corridor.
-                artists.append(Line2D([anchor[0]+marker_half+pad,marker_x-marker_half-pad-unit],[anchor[1],y],
-                                      linewidth=.7,color=leader,alpha=1,transform=IdentityTransform(),clip_on=False))
+                artists.append(Line2D([anchor[0]+marker_half+pad,marker_x-marker_half-pad-unit-sample_space],[anchor[1],y],
+                                      linewidth=.7,color=leader,alpha=1,transform=IdentityTransform(),clip_on=False,
+                                      **({"linestyle":"-"} if samples else {})))
+            sample_record = None
+            if samples:
+                sample=Line2D([sample_x,sample_x+sample_width],[y,y])
+                sample.update_from(e['line']); sample.set_transform(IdentityTransform()); sample.set_clip_on(False)
+                sample.set_solid_capstyle('butt'); sample.set_dash_capstyle('butt'); sample.set_marker('None')
+                artists.append(sample)
+                sample_record={'x1':sample_x,'x2':sample_x+sample_width,'y':e['center'],
+                               'lineStyle':e['line'].get_linestyle(),'color':e['line'].get_color(),
+                               'linewidth':e['line'].get_linewidth(),'alpha':e['line'].get_alpha()}
             points=e['points']; marker=PathCollection(points.get_paths(),sizes=points.get_sizes(),offsets=[(marker_x,y)],
                 offset_transform=IdentityTransform(),facecolors='none',edgecolors=points.get_edgecolors(),
                 linewidths=points.get_linewidths(),alpha=points.get_alpha(),transform=IdentityTransform(),clip_on=False)
             marker.set_path_effects(points.get_path_effects()); artists.append(marker)
             text=e['text']; b=e['box'];text.set_position((text_x-b.x0,y-(b.y0+b.y1)/2));artists.append(text)
             records.append({'rank':e['rank'],'anchor':e['anchor'],'center':e['center'],'markerPath':points.get_paths()[0].vertices.tolist(),
-                            'leader': None if abs(e['center']-e['anchor'])<=LEADER_TOLERANCE*unit else {'x1':float(anchor[0]+marker_half+pad),'y1':float(e['anchor']),'x2':marker_x-marker_half-pad-unit,'y2':e['center'],'color':leader},
-                            'box':[marker_x-marker_half-pad,e['center']-H/2,text_x+text_width+pad,e['center']+H/2]})
+                            'leader': None if abs(e['center']-e['anchor'])<=LEADER_TOLERANCE*unit else {'x1':float(anchor[0]+marker_half+pad),'y1':float(e['anchor']),'x2':marker_x-marker_half-pad-unit-sample_space,'y2':e['center'],'color':leader},
+                            'box':[marker_x-marker_half-pad-sample_space,e['center']-H/2,text_x+text_width+pad,e['center']+H/2]})
+            if samples: records[-1]['lineSample']=sample_record
         for a in artists:a.set_figure(fig)
         self.artists=artists;self.legend.set_visible(False)
         self.result={'status':'placed','reason':None,'entries':records,'shrink':shrink,'baseline':list(base.bounds),'height':H}
+        if samples: self.result['lineSamplesRequired']=True; self.result['sampleWidth']=sample_width
 
 
 class _Overlay(Artist):
