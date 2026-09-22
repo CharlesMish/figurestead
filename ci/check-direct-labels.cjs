@@ -16,12 +16,13 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
       });
     }
     await page.goto(new URL('ci/fixtures/readability-micro-polish.html', base).href);
-    const result = await page.evaluate(async () => {
+    const results = [];
+    for (const markerStride of [1,4]) results.push(await page.evaluate(async markerStride => {
       const api=await import('/web/src/index.js');
       const {lineIdentityContract}=await import('/ci/fixtures/line-identity.js');
       const theme=(await(await fetch('/src/figurestead/themes/lavender_fog_notebook.json')).json()).themes.lavender_fog_notebook;
       const assert=(v,m)=>{if(!v)throw Error(m);},same=(a,b,m)=>assert(JSON.stringify(a)===JSON.stringify(b),m);
-      const input=()=>{const c=lineIdentityContract(theme);c.style.directLabels=true;c.panels[0].data.yDomain=[0,6];for(const s of c.panels[0].data.series)s.y=[1,2,3];return c;};
+      const input=()=>{const c=lineIdentityContract(theme);c.style.directLabels=true;c.style.markerStride=markerStride;c.panels[0].data.yDomain=[0,6];for(const s of c.panels[0].data.series)s.y=[1,2,3];return c;};
       const create=(c,options={})=>{const canvas=document.createElement('canvas');canvas.style.cssText='width:760px;height:520px';document.body.append(canvas);const figure=api.createFigurestead(canvas,c,{autoplay:false,reducedMotion:true,dprCap:1,...options});return {figure,canvas};};
       const dispose=o=>{o.figure.destroy();o.canvas.remove();};
       const checks=[];
@@ -121,8 +122,8 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
       const moving=input();moving.view.motion='semantic';moving.view.strategy='auto';const plain=structuredClone(moving);delete plain.style.directLabels;
       const a=create(moving,{reducedMotion:false}),b=create(plain,{reducedMotion:false});
       try{assert(a.canvas.toDataURL()===b.canvas.toDataURL(),'transitional ordinary pixels');a.figure.setReducedMotion(true);assert(a.figure.getComposedScene().directLabelPlan.status==='placed','settled plan');checks.push('motion ordinary fallback / settled placement');}finally{dispose(a);dispose(b);}
-      return {result:'PASS',checks};
-    });
-    console.log(JSON.stringify(result));
+      return {result:'PASS',markerStride,checks};
+    }, markerStride));
+    console.log(JSON.stringify(results));
   } finally {await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});

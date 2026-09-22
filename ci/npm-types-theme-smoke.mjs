@@ -85,7 +85,7 @@ try {
   const negativeCaseCount = (fixtureText.match(/@negative-case/g) ?? []).length;
   const expectedErrorCount = (fixtureText.match(/@ts-expect-error/g) ?? []).length;
   assert.equal(validCaseCount, 10, "packed TypeScript valid fixture count drifted");
-  assert.equal(negativeCaseCount, 10, "packed TypeScript negative fixture count drifted");
+  assert.equal(negativeCaseCount, 11, "packed TypeScript negative fixture count drifted");
   assert.equal(expectedErrorCount, negativeCaseCount, "each negative case must carry one expected compiler error");
 
   run(process.execPath, [path.join(repositoryRoot, "node_modules", "typescript", "bin", "tsc"), "--project", path.join(temporaryRoot, "tsconfig.json")], { cwd: temporaryRoot });

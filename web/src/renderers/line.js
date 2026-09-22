@@ -3,7 +3,11 @@ import { clamp01, drawAxes, drawScopePoint, drawText, pointMotionState, smooth }
 import { styleForSeries } from "../series-style.js";
 
 export function prepareLine(contract) {
-  const points = contract.data.series.flatMap((series, colorIndex) => contract.data.x.map((x, index) => ({ x, y: series.y[index], colorIndex, series: series.key, index })));
+  const stride = contract.style?.markerStride ?? 1;
+  const points = contract.data.series.flatMap((series, colorIndex) => contract.data.x.map((x, index) => ({
+    x, y: series.y[index], colorIndex, series: series.key, index,
+    ...(index % stride !== 0 && index !== contract.data.x.length - 1 ? { markerVisible: false } : {}),
+  })));
   return { points: arrival(points, contract, contract.data.revealOrder), legend: contract.data.series.map((s, colorIndex) => ({ label: s.label, colorIndex })) };
 }
 
@@ -116,7 +120,7 @@ export function drawLine(context, env) {
       context.restore();
     }
   });
-  prepared.points.forEach((point) => {
+  prepared.points.filter(point => point.markerVisible !== false).forEach((point) => {
     const style = styleForSeries(env, point.series, point.colorIndex), state = pointMotionState(point, progress, scales, layout.plot);
     if (contract.view?.motion === "semantic") { state.y = state.finalY; state.x = state.finalX; }
     drawScopePoint(context, state, {

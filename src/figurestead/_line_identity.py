@@ -12,6 +12,14 @@ from matplotlib.transforms import IdentityTransform
 LINE_IDENTITIES = (("o", 6.0), ("s", 5.4), ("^", 7.0), ("D", 5.4))
 
 
+def marker_indices(count, stride):
+    """Authored observation indices; presentation density, never line sampling."""
+    indices = list(range(0, count, stride))
+    if count and indices[-1] != count - 1:
+        indices.append(count - 1)
+    return indices
+
+
 def visible_intervals(a, b, centers, marker, size, padding=0.):
     """Subtract the union of convex marker interiors from one display segment."""
     delta = b - a

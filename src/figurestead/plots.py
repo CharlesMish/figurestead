@@ -20,7 +20,7 @@ from .core import (
     style_axes,
     style_legend,
 )
-from ._line_identity import IdentityLine, IdentityLegend, LINE_IDENTITIES
+from ._line_identity import IdentityLine, IdentityLegend, LINE_IDENTITIES, marker_indices
 from .presentation import FocusAnnotation, draw_focus_annotation, monotone_curve, resolve_pose
 
 
@@ -248,7 +248,7 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
 
 def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles=None, spec=None, theme="slipware",
          profile="deep_scope", ax=None, pose=None, focus: FocusAnnotation | None = None,
-         direct_labels=False):
+         direct_labels=False, marker_stride=1):
     """Draw one or more finite numeric series sharing one x vector.
 
     ``direct_labels=True`` requests an atomic right-gutter replacement for the
@@ -277,7 +277,17 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     keys may remain in the mapping. Carry keys AND slots when rebuilding rows.
     Labels are never parsed as keys; rhythm has no inferred scientific meaning.
     Authored rhythm is supported only on the ordinary (non-pose) line route.
+
+    ``marker_stride`` is a positive Python/NumPy integer (not bool or float),
+    default 1. Mark indices 0, N, 2N, ... and the final observation, once each.
+    This ordinary-line presentation control follows authored order, not x
+    distance. It leaves all data/segments intact; unmarked observations lose
+    their explicit point glyph. Cadence has no scientific meaning by itself.
+    Sparse cadence is unsupported with explicit poses.
     """
+    if isinstance(marker_stride, (bool, np.bool_)) or not isinstance(marker_stride, (int, np.integer)) or marker_stride < 1:
+        raise _input_error("line.marker_stride", "must be a positive integer (not boolean)")
+    marker_stride = int(marker_stride)
     if not isinstance(direct_labels, bool):
         raise _input_error("line.direct_labels", "must be boolean")
     x = _numeric_array(x, path="line.x", dimensions=(1,))
@@ -322,6 +332,9 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     presentation = resolve_pose(pose)
     if line_styles is not None and presentation is not None:
         raise _input_error("line.line_styles", "authored rhythm is unsupported with explicit presentation poses")
+    if marker_stride != 1 and presentation is not None:
+        raise _input_error("line.marker_stride", "sparse cadence is unsupported with explicit presentation poses")
+    selected = marker_indices(len(x), marker_stride)
     fig, ax = ensure_axes(ax)
     style_axes(ax, theme, profile, spec, panel_surface=presentation.panel_surface if presentation else False, frame=presentation.frame if presentation else False)
     identity_lines = []
@@ -349,11 +362,12 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
                        edgecolors=color, linewidths=1.2, alpha=0.96, zorder=4.2)
         else:
             marker, size = LINE_IDENTITIES[series_index % len(LINE_IDENTITIES)]
-            points = ax.scatter(x, y, s=size ** 2, marker=marker, facecolors="none",
+            points = ax.scatter(x[selected], y[selected], s=size ** 2, marker=marker, facecolors="none",
                                 edgecolors=color, linewidths=1., alpha=1., zorder=4)
             if theme.series_edges:
                 points.set_path_effects([pe.Stroke(linewidth=2.1, foreground=theme.series_edges[series_index % len(theme.series_edges)]), pe.Normal()])
             path.identity_marker, path.identity_points = marker, points
+            path.identity_stride = marker_stride
             path.identity_edge_width = 1.45 if theme.series_edges else 0.
     if len(ys) > 1:
         style_legend(ax, theme, location=presentation.legend_location if presentation else "best",

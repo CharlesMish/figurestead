@@ -105,6 +105,9 @@ function lineGeometry(panel, axes, scale) {
     values?.forEach((value, index) => controls.set(`${key}\u0000${index}`, value));
   });
   const segmentIndex = new Map();
+  // Keep every observation for domain validation and curve/segment geometry.
+  // Only the displayed marker set is reduced; Canvas/SVG and their own-line
+  // masks consume this same resolved set (including the terminal observation).
   return panel.marks.map((mark) => {
     if (mark.kind === "point") {
       const marker = lineMarkerGeometry(mark.style, scale, panel.presentation?.markerScale ?? 1);
@@ -117,7 +120,7 @@ function lineGeometry(panel, axes, scale) {
       x1: axes.x(mark.from.x), y1: axes.y(mark.from.y), x2: axes.x(mark.to.x), y2: axes.y(mark.to.y),
       ...(control ? { c1x: axes.x(control.c1.x), c1y: axes.y(control.c1.y), c2x: axes.x(control.c2.x), c2y: axes.y(control.c2.y) } : {}),
     } };
-  });
+  }).filter(mark => mark.markerVisible !== false);
 }
 
 function scatterGeometry(panel, axes, radius) {
@@ -293,9 +296,11 @@ export function resolveSceneFrame(resolvedScene, progress = 1) {
     progress: p,
     panels: resolvedScene.panels.map((panel) => {
       const plan = resolvedScene.motionPlan.panels.find((item) => item.panelId === panel.id);
+      // Sparse marker display must not retime the retained line segments.
+      const orders = panel.renderer === "line" && plan ? new Map(plan.targets.map(t => [t.id, t.order])) : null;
       return { ...panel, marks: panel.marks.map((mark, index) => ({
         ...mark,
-        motion: markMotionState(mark, index, panel.marks.length, p, plan?.strategy ?? "none"),
+        motion: markMotionState(mark, orders?.get(mark.id) ?? index, orders ? plan.targets.length : panel.marks.length, p, plan?.strategy ?? "none"),
       })) };
     }),
   };

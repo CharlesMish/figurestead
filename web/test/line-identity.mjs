@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { compileTerminalScene, resolveTerminalScene, exportFigureSvg } from "../src/index.js";
+import { compileTerminalScene, resolveTerminalScene, resolveSceneFrame, exportFigureSvg } from "../src/index.js";
 import { composeResolvedScene } from "../src/composition.js";
 import { resolveSeriesStyles } from "../src/series-style.js";
 import { lineMarkerGeometry } from "../src/line-identity.js";
@@ -39,3 +39,57 @@ assert.match(svg, /data-layer="legend"[^]*-legend-0/);
 assert.match(svg, /fill="black" stroke="none"/);
 assert.match(exportFigureSvg(dashed), /stroke-dasharray="7 4"/);
 console.log(JSON.stringify({ suite: "line-identity", result: "PASS", checks: ["identities", "solid-equal-width", "independent-rhythm", "keyed-filter-reorder", "body-legend-geometry", "sample-before-label", "own-line-svg-mask"] }));
+
+// Cadence resolves presentation markers once, without reducing evidence/segments.
+const cadence = (n, stride) => {
+  const c = lineIdentityContract(theme);
+  if (stride !== undefined) c.style.markerStride = stride;
+  c.panels[0].data.x = Array.from({length:n}, (_,i) => i);
+  c.panels[0].data.series.forEach((s,i) => { s.y = Array(n).fill(i+1); });
+  return c;
+};
+const compose = c => composeResolvedScene(resolveTerminalScene(compileTerminalScene(c), {width:760,height:520}));
+for (const [n,stride,indices] of [[29,4,[0,4,8,12,16,20,24,28]],[10,4,[0,4,8,9]],[1,4,[0]],[2,4,[0,1]],[5,99,[0,4]],[4,1,[0,1,2,3]]]) {
+  const c=cadence(n,stride), ordinary=compose(cadence(n)), scene=compileTerminalScene(c), sparse=compose(c);
+  // All evidence remains available to validation, even where glyphs are omitted.
+  assert.equal(scene.panels[0].marks.filter(m=>m.kind==='point').length,n*3);
+  for (const key of ['S1','S2','S3']) {
+    const marks=sparse.panels[0].marks.filter(m=>m.series===key);
+    assert.deepEqual(marks.filter(m=>m.kind==='point').map(m=>Number(m.id.split('/').at(-1))),indices);
+    assert.deepEqual(marks.filter(m=>m.kind==='segment'),ordinary.panels[0].marks.filter(m=>m.kind==='segment'&&m.series===key));
+    assert.deepEqual(sparse.panels[0].legend,ordinary.panels[0].legend);
+  }
+  const svg=exportFigureSvg(c, {width:760,height:520});
+  assert.equal((svg.match(/data-mark-id="line\/point\//g)??[]).length,indices.length*3);
+  for(const mask of svg.matchAll(/<mask [^]*?<\/mask>/g)) {
+    const holes=(mask[0].match(/fill="black"/g)??[]).length;
+    // Body masks use only selected points; each legend mask uses one sample.
+    assert.ok(holes===indices.length || holes===1);
+  }
+}
+assert.deepEqual(compileTerminalScene(cadence(10,1)),compileTerminalScene(cadence(10)));
+assert.equal(exportFigureSvg(cadence(10,1)),exportFigureSvg(cadence(10)));
+for(const stride of [0,-1,true,false,1.5,'4',null,NaN,Infinity,Number.MAX_SAFE_INTEGER+1]) {
+  assert.throws(()=>compileTerminalScene(cadence(10,stride)),/markerStride.*positive safe integer/);
+}
+// Hidden observations still fail ordinary evidence coverage; repeated/nonmonotone
+// x is not sorted/deduplicated by cadence, and monotone controls use all points.
+const outside=cadence(10,4);outside.panels[0].data.yDomain=[0,4];outside.panels[0].data.series[0].y[2]=20;
+assert.throws(()=>compileTerminalScene(outside),/clipping may not hide evidence/);
+for(const x of [[0,3,2,2,4],[0,.1,1,7,9]]) {
+  const c=cadence(5,4);c.panels[0].data.x=x;c.panels[0].data.revealOrder="random";
+  const p=compose(c).panels[0];
+  assert.deepEqual(p.marks.filter(m=>m.kind==='segment'&&m.series==='S1').map(m=>[m.from.x,m.to.x]),x.slice(1).map((v,i)=>[x[i],v]));
+}
+const curve=cadence(10,4);curve.panels[0].encoding.interpolation='monotone';
+curve.panels[0].data.series.forEach(s=>{s.y=s.y.map((v,i)=>v+Math.sin(i));});
+const fullCurve=structuredClone(curve);delete fullCurve.style.markerStride;
+assert.deepEqual(compose(curve).panels[0].marks.filter(m=>m.kind==='segment'),compose(fullCurve).panels[0].marks.filter(m=>m.kind==='segment'));
+console.log(JSON.stringify({suite:'marker-cadence',result:'PASS',checks:['indices','full-evidence','unchanged-segments-controls','marker-only-masks','legend','stride-1-exact-control','validation','authored-order']}));
+
+const moving=cadence(10,4);moving.view.motion='semantic';moving.view.strategy='auto';
+const denseMoving=structuredClone(moving);delete denseMoving.style.markerStride;
+for(const progress of [0,.25,.75,1]) {
+  const segments=c=>resolveSceneFrame(compose(c),progress).panels[0].marks.filter(m=>m.kind==='segment');
+  assert.deepEqual(segments(moving),segments(denseMoving),'cadence must not retime or reshape segments');
+}

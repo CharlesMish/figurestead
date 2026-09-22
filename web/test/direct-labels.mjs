@@ -92,4 +92,18 @@ test('sample width participates in atomic capacity failure',()=>{
  delete c.style.directLabels;const b=composeResolvedScene(resolveTerminalScene(compileTerminalScene(c),{width:520,height:520,measureText:metric}));
  assert.deepEqual(r.panels[0].layout,b.panels[0].layout);assert.deepEqual(r.panels[0].marks,b.panels[0].marks);
 });
+
+test('sparse cadence retains terminal identity, rhythm plans and fallback',()=>{
+ for(const rhythm of [null,'dash','dot','dash-dot']) {
+  const c=input();c.style.markerStride=4;if(rhythm)c.style.series.S3={lineStyle:rhythm};
+  c.panels[0].data.x=Array.from({length:10},(_,i)=>i);
+  for(const s of c.panels[0].data.series)s.y=Array(10).fill(s.y[0]);
+  const r=resolved(c),p=r.directLabelPlan;assert.equal(p.status,'placed');assert.equal(!!p.lineSamplesRequired,!!rhythm);
+  const full=structuredClone(c);delete full.style.markerStride;assert.deepEqual(p,resolved(full).directLabelPlan);
+  for(const e of p.entries){const point=r.panels[0].marks.filter(m=>m.kind==='point'&&m.series===e.key).at(-1);assert(point.id.endsWith('/9'));assert.deepEqual(e.marker.style,point.style);if(rhythm)assert.deepEqual(e.lineSample.style,point.style);}
+  for(const s of c.panels[0].data.series)s.label='Long series name '.repeat(20);
+  const fail=resolved(c);assert.equal(fail.directLabelPlan.reason,'horizontal-capacity');
+  c.style.directLabels=false;assert.deepEqual(fail.panels[0].layout,resolved(c).panels[0].layout);assert.deepEqual(fail.panels[0].marks,resolved(c).panels[0].marks);
+ }
+});
 console.log(JSON.stringify({suite:'direct-labels',checks,result:'PASS'}));
