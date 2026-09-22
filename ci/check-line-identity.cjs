@@ -1,8 +1,8 @@
 // Direct native Canvas regressions; existing CI server, no qualification harness.
-const { chromium } = require('playwright');
+const engine = require('playwright')[process.env.FIGURESTEAD_BROWSER || 'chromium'];
 const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
 (async () => {
-  const browser = await chromium.launch({ headless: true, ...(process.env.FIGURESTEAD_BROWSER_EXECUTABLE ? { executablePath: process.env.FIGURESTEAD_BROWSER_EXECUTABLE } : {}) });
+  const browser = await engine.launch({ headless: true, ...(process.env.FIGURESTEAD_BROWSER_EXECUTABLE ? { executablePath: process.env.FIGURESTEAD_BROWSER_EXECUTABLE } : {}) });
   try {
     const page = await browser.newPage({ viewport: { width: 1000, height: 700 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
     // Optional socket-free local development transport; product bytes unmodified.
@@ -29,8 +29,9 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
         ['color-only', { color: '#334455' }],
         ['complete', { ...baseStyle, color: '#334455', edge: '#aabbcc', glyph: 'diamond', lineStyle: 'dot', lineWidth: 3 }],
       ];
-      for (const [name, override] of overrides) {
+      for (const stride of [1, 4]) for (const [name, override] of overrides) {
         const input = lineIdentityContract({ ...theme, seriesEdges: theme.series.map(() => '#223344') });
+        input.style.markerStride = stride;
         if (override !== null) input.style.series.S2 = override;
         // Fixed domains make actual Canvas body pixels comparable after filtering.
         input.panels[0].data.xDomain = [0, 2]; input.panels[0].data.yDomain = [0, 4];
@@ -90,8 +91,38 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
           const resetStyles = structuredClone(figure.getScene().seriesStyles);
           figure.setData(data);
           for (const key of ['S1', 'S2', 'S3']) same(figure.getScene().seriesStyles[key], resetStyles[key], `${name}: setData retains replacement identity`);
-          keyedCases.push({ name, stages, setConfigReplacement: true });
+          keyedCases.push({ name, stride, stages, setConfigReplacement: true });
         } finally { figure.destroy(); canvas.remove(); }
+      }
+      const cadenceChecks = [];
+      for (const glyph of ['ring', 'square', 'triangle']) {
+        const c=lineIdentityContract(theme);c.style.markerStride=4;c.style.series.S1={glyph};
+        c.panels[0].data.x=Array.from({length:10},(_,i)=>i);
+        c.panels[0].data.series.forEach((row,i)=>row.y=Array(10).fill(i+1));
+        c.panels[0].data.xDomain=[-1,10];c.panels[0].data.yDomain=[0,4];
+        const canvas=document.createElement('canvas');canvas.style.cssText='width:760px;height:520px';document.body.append(canvas);
+        const f=api.createFigurestead(canvas,c,{autoplay:false,reducedMotion:true,dprCap:1});
+        try {
+          const frame=api.resolveSceneFrame(f.getComposedScene(),1),p=frame.panels[0],ctx=canvas.getContext('2d');
+          const own=p.marks.filter(m=>m.series==='S1');
+          same(own.filter(m=>m.kind==='point').map(m=>Number(m.id.split('/').at(-1))),[0,4,8,9],'native selected indices');
+          if(own.filter(m=>m.kind==='segment').length!==9)throw Error('segments removed');
+          const doc=new DOMParser().parseFromString(api.resolvedSceneToSvg(f.getComposedScene()),'image/svg+xml');
+          for(let i=0;i<10;i++)if(!!doc.querySelector(`[data-mark-id="line/point/S1/${i}"]`)!==[0,4,8,9].includes(i))throw Error('SVG/Canvas marker plan mismatch');
+          for(const index of [2,4]) for(const under of ['background','grid','other-series']) {
+            const cx=p.axes.x(index),cy=p.axes.y(1);
+            const extra=under==='other-series'?[{...own.find(m=>m.kind==='segment'),id:'crossing',series:'unrelated',style:{...own[0].style,color:'#0000ff'},geometry:{x1:cx,y1:cy-25,x2:cx,y2:cy+25}}]:[];
+            const testPanel={...p,legend:[],composedAnnotations:[],axes:{...p.axes,xTicks:under==='grid'?[{value:index,label:String(index)}]:[],yTicks:[]}};
+            const testFrame={...frame,theme:{...frame.theme,grid:'#00ff00'},profile:{...frame.profile,gridX:true,gridY:false,gridAlpha:1}};
+            const draw=marks=>{ctx.clearRect(0,0,760,520);ctx.fillStyle='#ffffff';ctx.fillRect(0,0,760,520);drawResolvedPanel(ctx,{...testFrame,panels:[{...testPanel,marks}]},0);return [...ctx.getImageData(Math.floor(cx),Math.floor(cy),1,1).data];};
+            const baseline=draw(extra),actual=draw([...own,...extra]);
+            if(index===4)same(actual,baseline,'selected marker preserves '+under);
+            // At unmarked samples compare with a deliberately hole-free owning
+            // line: unrelated content keeps ordinary ordering and compositing.
+            else same(actual,draw([...own.filter(m=>m.kind!=='point'),...extra]),'unmarked sample has no hole '+under);
+          }
+          cadenceChecks.push({glyph,indices:[0,4,8,9],segments:9,svgAgreement:true});
+        } finally {f.destroy();canvas.remove();}
       }
       const input = lineIdentityContract(theme), canvas = document.createElement('canvas');
       canvas.style.cssText = 'width:760px;height:520px'; document.body.append(canvas);
@@ -124,7 +155,7 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
           }
           observations.push({ glyph, under, actual, baseline });
         }
-        return { result: 'PASS', observations, stableKeyChecks: 3, keyedCases };
+        return { result: 'PASS', observations, stableKeyChecks: 3, keyedCases, cadenceChecks };
       } finally { figure.destroy(); canvas.remove(); }
     });
     console.log(JSON.stringify(result));

@@ -223,5 +223,106 @@ class AuthoredRhythmTests(unittest.TestCase):
                         dict(series_keys=['c','t','m'],line_styles={'c':'dash'},pose='scientific')]:
             with self.subTest(options=options),self.assertRaises(ValueError):self.make(**options)
 
+class MarkerCadenceTests(unittest.TestCase):
+    def tearDown(self):
+        plt.close("all")
+
+    def make(self, n=10, **kw):
+        return line(np.arange(n), [np.arange(n) * .1 + i for i in range(3)],
+                    labels=["Control", "Treatment", "Model"], theme="lavender_fog_notebook", **kw)
+
+    def png(self, fig):
+        out = BytesIO(); fig.savefig(out, format="png"); return out.getvalue()
+
+    def test_indices_full_path_and_default_bytes(self):
+        for n, stride, selected in [(29,4,[0,4,8,12,16,20,24,28]), (10,4,[0,4,8,9]),
+                                   (1,4,[0]), (2,4,[0,1]), (5,99,[0,4]), (4,1,[0,1,2,3])]:
+            with self.subTest(n=n, stride=stride):
+                f,a=self.make(n); g,b=self.make(n,marker_stride=stride)
+                for body, sparse in zip(a.lines,b.lines):
+                    np.testing.assert_array_equal(body.get_xydata(),sparse.get_xydata())
+                    np.testing.assert_array_equal(sparse.identity_points.get_offsets(),body.get_xydata()[selected])
+                    self.assertEqual(body.identity_marker,sparse.identity_marker)
+                f.canvas.draw();g.canvas.draw()
+                for body,sample in zip(b.lines,b.get_legend().legend_handles):
+                    self.assertEqual(body.identity_marker,sample.identity_marker)
+                    self.assertEqual(len(sample.identity_points.get_offsets()),1)
+                plt.close(f);plt.close(g)
+        f,a=self.make();g,b=self.make(marker_stride=1)
+        self.assertEqual(self.png(f),self.png(g))
+        _,a=self.make(marker_stride=np.int64(4))
+        self.assertEqual(len(a.lines[0].identity_points.get_offsets()),4)
+
+    def test_authored_order_and_unmarked_extrema_remain_data(self):
+        x=[0,3,2,2,4,1];y=[0,1,100,2,-20,3]
+        f,a=line(x,y);g,b=line(x,y,marker_stride=4)
+        f.canvas.draw();g.canvas.draw()
+        np.testing.assert_array_equal(b.lines[0].get_xydata(),list(zip(x,y)))
+        np.testing.assert_array_equal(b.lines[0].identity_points.get_offsets(),np.array(list(zip(x,y)))[[0,4,5]])
+        self.assertEqual(a.get_xlim(),b.get_xlim());self.assertEqual(a.get_ylim(),b.get_ylim())
+
+    def test_invalid_stride(self):
+        for value in (0,-1,True,False,np.bool_(True),4.0,1.5,"4",None,[],float('inf')):
+            with self.subTest(value=value),self.assertRaisesRegex(ValueError,'line.marker_stride'):
+                self.make(marker_stride=value)
+        with self.assertRaisesRegex(ValueError,'explicit presentation poses'):
+            self.make(marker_stride=4,pose='scientific')
+
+    def test_carried_slots_keys_repeats_and_rhythms(self):
+        for slots,keys in [([0,1,2],['c','t','m']),([2,0,1],['m','c','t']),([1,2],['t','m']),([0,0],['c','m'])]:
+            for mapping in ({'m':'dash'},{'c':'dash'},{'m':'dot'},{'m':'dash-dot'}):
+                ys=[np.arange(10)*.1+i for i in slots]
+                opts=dict(series_slots=slots,series_keys=keys,line_styles=mapping,labels=['same']*len(slots))
+                f,a=line(np.arange(10),ys,**opts);g,b=line(np.arange(10),ys,marker_stride=4,**opts)
+                for control,body,sample in zip(a.lines,b.lines,b.get_legend().legend_handles):
+                    self.assertEqual(control.identity_marker,body.identity_marker)
+                    self.assertEqual(control.get_color(),body.get_color())
+                    self.assertEqual(control._dash_pattern,body._dash_pattern)
+                    self.assertEqual(sample._dash_pattern,body._dash_pattern)
+                    self.assertEqual(sample.identity_marker,body.identity_marker)
+                plt.close(f);plt.close(g)
+
+    def test_holes_only_at_drawn_markers_keep_underlying_ink(self):
+        for slot in range(3):
+            for under in (None,'#00ff00','#0000ff'):
+                f,a=line(np.arange(10),np.zeros(10),series_slots=[slot],marker_stride=4)
+                a.set(xlim=(-1,10),ylim=(-1,1),facecolor='white');a.set_axis_off();f.set_facecolor('white')
+                body=a.lines[0]
+                if under:a.axvline(4,color=under,linewidth=2,zorder=1 if under=='#00ff00' else 3.5)
+                def pixels():
+                    f.canvas.draw();image=np.asarray(f.canvas.buffer_rgba())
+                    return [image[int(f.bbox.height-y),int(x),:3].copy() for x,y in a.transData.transform([(2,0),(4,0)])]
+                body.set_visible(False);body.identity_points.set_visible(False);baseline=pixels()
+                body.set_visible(True);body.identity_points.set_visible(True);actual=pixels()
+                self.assertFalse(np.array_equal(actual[0],baseline[0]),'unmarked sample must retain owning stroke')
+                np.testing.assert_array_equal(actual[1],baseline[1])
+                self.assertEqual(len(body.get_path().vertices),10)
+                plt.close(f)
+
+    def test_sparse_direct_identity_samples_and_atomic_fallback(self):
+        from matplotlib.lines import Line2D
+        for mapping in ({},{'m':'dash'},{'c':'dash'},{'m':'dot'},{'m':'dash-dot'}):
+            opts=dict(series_keys=['c','t','m'],line_styles=mapping,marker_stride=4)
+            f,a=self.make(direct_labels=True,**opts);f.canvas.draw();d=a._figurestead_direct_labels
+            self.assertEqual(d.result['status'],'placed')
+            self.assertEqual(bool(d.result.get('lineSamplesRequired')),bool(mapping))
+            for e in d.result['entries']:
+                body=a.lines[e['rank']]
+                np.testing.assert_array_equal(body.identity_points.get_offsets()[-1],body.get_xydata()[-1])
+                np.testing.assert_array_equal(e['markerPath'],body.identity_points.get_paths()[0].vertices)
+                if mapping:
+                    sample=e['lineSample']
+                    artist=next(v for v in d.artists if isinstance(v,Line2D) and list(v.get_xdata())==[sample['x1'],sample['x2']] and v.get_ydata()[0]==f.bbox.height-e['center'])
+                    self.assertEqual(artist._dash_pattern,body._dash_pattern)
+            original=self.png(f);box=a.get_position().bounds
+            f.set_size_inches(2,5.2);f.canvas.draw()
+            self.assertEqual(d.result['status'],'fallback')
+            self.assertEqual(d.result['reason'],'horizontal-capacity')
+            g,b=self.make(direct_labels=False,**opts);g.set_size_inches(2,5.2)
+            self.assertEqual(self.png(f),self.png(g));self.assertEqual(d.artists,[])
+            f.set_size_inches(8.4,5.2);self.assertEqual(self.png(f),original);self.assertEqual(a.get_position().bounds,box)
+            out=BytesIO();f.savefig(out,format='svg');self.assertEqual(d.result['status'],'placed')
+            plt.close(f);plt.close(g)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -26,6 +26,7 @@ function lineMarks(panel, contract, prepared, styles) {
     points.forEach((point) => marks.push({
       id: markId(panel, "point", series.key, point.index), kind: "point", series: series.key,
       x: point.x, y: point.y, style,
+      ...(point.markerVisible === false ? { markerVisible: false } : {}),
     }));
     for (let index = 1; index < points.length; index += 1) marks.push({
       id: markId(panel, "segment", series.key, index - 1, index), kind: "segment", series: series.key,

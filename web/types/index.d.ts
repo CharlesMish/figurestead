@@ -164,6 +164,9 @@ export interface SeriesStyleOverride {
 export interface FiguresteadStyle {
   /** Opt-in single-panel terminal line labels; ordinary legend on unsupported/failed fit. */
   directLabels?: boolean;
+  /** Line markers at authored indices 0,N,2N,... and last. Positive safe integer;
+   * default 1. Full line geometry retained; no data reduction or implied meaning. */
+  markerStride?: number;
   glyphs: MarkerGlyph[];
   lineStyles: LineStyle[];
   series: Record<string, SeriesStyleOverride>;

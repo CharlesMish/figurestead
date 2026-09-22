@@ -48,3 +48,32 @@ For a first-three default line trace that default is solid. This example does no
 The sample copies the body's actual rhythm, color, weight, opacity and edge treatment in its renderer. Python reserves at least two complete resolved dash cycles (and at least 24 logical pixels); the browser reserves 32 CSS pixels, two cycles of its longest named pattern. Dash lengths need not match across runtimes. Sample stroke/edge extent and spacing count toward row boxes and the existing gutter cap. Samples are checked against the actual gutter substrate at the existing ink floor.
 
 Adding a rhythm can therefore turn a placed treatment into `horizontal-capacity` fallback. The internal result includes `lineSamplesRequired` and `sampleWidth` for that case. All rows then return to the ordinary legend with their marker and authored rhythm intact; samples are never selectively omitted or compressed to force a fit. Repeated Python slots still use ordinary legends under the existing direct-label tie-break restriction. The two-or-three-series scope, endpoint rules and reference-theme designation are unchanged.
+
+## Opt-in marker cadence
+
+Ordinary lines accept Python `line(..., marker_stride=4)` and browser
+`style: { ...style, markerStride: 4 }`. Omission (or 1) preserves a marker at
+**every observation**. A positive integer N marks authored indices 0, N, 2N, ...
+and always the final observation, without duplication. For 29 observations,
+stride 4 selects `[0, 4, 8, 12, 16, 20, 24, 28]`; for 10 it selects
+`[0, 4, 8, 9]`. Selection uses authored order, **not x-distance**.
+
+This is explicit presentation density, not sampling or data reduction. Every
+observation and line segment retains its coordinates; unmarked observations
+remain in the continuous line but lose their explicit sampling-location glyph.
+Only displayed markers clip their owning line. Other traces and grid content
+are not erased. Cadence has no scientific meaning by itself and does not select
+slots, keys, colors, shapes or rhythms. Stride 4 is an example, not a new default.
+
+Python accepts positive Python/NumPy integers and rejects floats, booleans,
+strings, zero and negatives; sparse cadence with an explicit pose is unsupported.
+Browser accepts positive safe integer numbers and rejects booleans, strings,
+null, fractional values, zero and negatives. JavaScript represents `4` and `4.0`
+as the same number. The setting affects line markers, not other plot families.
+
+Ordinary legends still show a full line sample, actual marker and display label;
+they teach identity, not marker frequency. Supported direct labels consume the
+actual terminal marker, which is always retained. Non-solid rhythms still add
+line samples to all direct-label rows, with the same measured-capacity rules and
+atomic ordinary-legend fallback. The 2–3-series direct-label scope, default
+marker grammar and existing higher-series overflow behavior are unchanged.

@@ -316,9 +316,10 @@ function normalizeStyle(value) {
   const lineStyles = style.lineStyles ?? ["solid", "dash", "dot", "dash-dot"];
   if (!Array.isArray(lineStyles) || !lineStyles.length || lineStyles.some((item) => !["solid", "dash", "dot", "dash-dot"].includes(item))) throw new FiguresteadConfigError("must contain supported line styles", "config.style.lineStyles");
   if (style.directLabels != null && typeof style.directLabels !== "boolean") throw new FiguresteadConfigError("must be boolean", "config.style.directLabels");
+  if (style.markerStride !== undefined && (!Number.isSafeInteger(style.markerStride) || style.markerStride < 1)) throw new FiguresteadConfigError("must be a positive safe integer", "config.style.markerStride");
   const series = style.series ?? {};
   requiredObject(series, "config.style.series");
-  return { glyphs: [...glyphs], lineStyles: [...lineStyles], series: cloneValue(series), ...(style.directLabels ? { directLabels: true } : {}) };
+  return { glyphs: [...glyphs], lineStyles: [...lineStyles], series: cloneValue(series), ...(style.directLabels ? { directLabels: true } : {}), ...(style.markerStride > 1 ? { markerStride: style.markerStride } : {}) };
 }
 
 function normalizePanel(panel, index, figureSpec, registry) {

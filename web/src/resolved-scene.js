@@ -105,7 +105,13 @@ function lineGeometry(panel, axes, scale) {
     values?.forEach((value, index) => controls.set(`${key}\u0000${index}`, value));
   });
   const segmentIndex = new Map();
-  return panel.marks.map((mark) => {
+  // Keep every observation for domain validation and curve/segment geometry.
+  // Only the displayed marker set is reduced; Canvas/SVG and their own-line
+  // masks consume this same resolved set (including the terminal observation).
+  return panel.marks.map((mark, motionOrder) => {
+    // Carry the original numeric order through cadence filtering. Mark IDs are
+    // sanitized for output and are not unique identities for motion scheduling.
+    mark = { ...mark, motionOrder };
     if (mark.kind === "point") {
       const marker = lineMarkerGeometry(mark.style, scale, panel.presentation?.markerScale ?? 1);
       return { ...mark, lineIdentity: true, geometry: { ...pointGeometry(mark, axes, marker.radius), outlineWidth: marker.outlineWidth } };
@@ -117,7 +123,7 @@ function lineGeometry(panel, axes, scale) {
       x1: axes.x(mark.from.x), y1: axes.y(mark.from.y), x2: axes.x(mark.to.x), y2: axes.y(mark.to.y),
       ...(control ? { c1x: axes.x(control.c1.x), c1y: axes.y(control.c1.y), c2x: axes.x(control.c2.x), c2y: axes.y(control.c2.y) } : {}),
     } };
-  });
+  }).filter(mark => mark.markerVisible !== false);
 }
 
 function scatterGeometry(panel, axes, radius) {
@@ -293,9 +299,11 @@ export function resolveSceneFrame(resolvedScene, progress = 1) {
     progress: p,
     panels: resolvedScene.panels.map((panel) => {
       const plan = resolvedScene.motionPlan.panels.find((item) => item.panelId === panel.id);
+      // Sparse marker display must not retime the retained line segments.
+      const lineMotion = panel.renderer === "line" && plan;
       return { ...panel, marks: panel.marks.map((mark, index) => ({
         ...mark,
-        motion: markMotionState(mark, index, panel.marks.length, p, plan?.strategy ?? "none"),
+        motion: markMotionState(mark, lineMotion ? mark.motionOrder ?? index : index, lineMotion ? plan.targets.length : panel.marks.length, p, plan?.strategy ?? "none"),
       })) };
     }),
   };
