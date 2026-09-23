@@ -58,3 +58,9 @@ Inspection uses private Python `ax._figurestead_direct_labels.result` or browser
 - `horizontal-capacity`, `vertical-capacity`, `ink-contrast`.
 
 Direct regressions: `audit/current-head-hardening/test_direct_labels.py`, `web/test/direct-labels.mjs`, and `ci/check-direct-labels.cjs`, using the existing Python/core/browser jobs. Visual examples remain development review, not a qualification or reference-status update.
+
+For current-source Python gapped lines, valid NaN y causes whole-treatment
+`missing-observations` fallback before gutter allocation. The ordinary legend
+remains truthful (marker-only for NaN-bearing all-isolated traces). Invalid
+ordinary input still raises. Browser missing-y support is not implemented; see
+[Python missing-y semantics](line-series-semantics.md#python-explicit-missing-y-current-source).

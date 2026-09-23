@@ -67,6 +67,9 @@ jobs:
       - name: Verify sequential heatmap ramp
         run: python audit/current-head-hardening/test_sequential_heatmap.py
 
+      - name: Verify Python gapped lines
+        run: python audit/current-head-hardening/test_gapped_lines.py
+
       - name: Verify open line identity
         run: python audit/current-head-hardening/test_line_identity.py
 

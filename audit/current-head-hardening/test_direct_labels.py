@@ -155,7 +155,9 @@ class DirectLabelTests(unittest.TestCase):
         f,a=self.make();a.lines[0].identity_points.set_visible(False);f.canvas.draw();self.assertEqual(a._figurestead_direct_labels.result['reason'],'unsupported-geometry')
         f,a=line([0,1,2],[[1,2,3]],direct_labels=True);f.canvas.draw();self.assertEqual(a._figurestead_direct_labels.result['reason'],'unsupported-series-count')
         with self.assertRaises(ValueError):self.make(direct_labels='yes')
-        with self.assertRaises(ValueError):line([0,1],[1,float('nan')],direct_labels=True)
+        f,a=line([0,1],[1,float('nan')],direct_labels=True);f.canvas.draw()
+        self.assertEqual(a._figurestead_direct_labels.result['reason'],'missing-observations')
+        with self.assertRaises(ValueError):line([0,1],[1,float('inf')],direct_labels=True)
     def test_ink_failure_and_geometry_restoration(self):
         f,a=self.make();base=a.get_position().bounds
         with patch('figurestead._direct_labels.contrast',return_value=1):f.canvas.draw()
