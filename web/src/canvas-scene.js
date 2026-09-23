@@ -211,6 +211,9 @@ function drawLine(context, mark, theme, markers = [], plot = null) {
   if (markers.length) clipOwnLine(context, markers, plot);
   context.lineWidth = Math.max(1, (mark.style.lineWidth ?? 1.6) + (mark.style.edge ? 1.3 : 0));
   context.setLineDash?.(mark.style.lineStyle === "dash" ? [7, 4] : mark.style.lineStyle === "dot" ? [2, 4] : mark.style.lineStyle === "dash-dot" ? [8, 3, 2, 3] : []);
+  // Positive offset consumes the distance travelled before this segment. Both
+  // edge and body use the same phase; masks hide ink without changing distance.
+  context.lineDashOffset = mark.pathDistance ?? 0;
   strokeSegment(context, mark.geometry, motion.clip);
   if (mark.style.edge) { context.strokeStyle = mark.style.color; context.lineWidth = Math.max(1, mark.style.lineWidth ?? 1.6); strokeSegment(context, mark.geometry, motion.clip); }
   context.restore();

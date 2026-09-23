@@ -219,6 +219,11 @@ jobs:
       - name: Verify native B2 line identity
         run: node ci/check-line-identity.cjs
 
+      - name: Verify line rhythm phase in Chromium and Firefox
+        run: |
+          node ci/check-line-rhythm-phase.cjs
+          FIGURESTEAD_BROWSER=firefox node ci/check-line-rhythm-phase.cjs
+
       - name: Verify native direct line labels
         run: node ci/check-direct-labels.cjs
 

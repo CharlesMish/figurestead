@@ -75,7 +75,7 @@ test('orthogonal rhythms activate actual stroke samples on every row',()=>{
   assert.equal(p.status,'placed');assert.equal(p.lineSamplesRequired,true);assert.equal(p.sampleWidth,32);
   for(const e of p.entries){
    const body=r.panels[0].marks.find(m=>m.kind==='segment'&&m.series===e.key);
-   assert.deepEqual(e.lineSample.style,body.style);assert.equal(e.lineSample.geometry.x2-e.lineSample.geometry.x1,32);
+   assert.equal(e.lineSample.pathDistance,0,"standalone samples start their own rhythm");assert.deepEqual(e.lineSample.style,body.style);assert.equal(e.lineSample.geometry.x2-e.lineSample.geometry.x1,32);
    assert.equal(e.marker.style.glyph,{S1:'ring',S2:'square',S3:'triangle'}[e.key]);
    assert(e.lineSample.geometry.x1>=e.box.left);if(e.leader)assert(e.leader.x2<e.box.left);
   }

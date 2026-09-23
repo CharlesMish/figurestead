@@ -1,3 +1,4 @@
+import { linePathLength } from "./line-path.js";
 import { planDirectLabels } from "./direct-labels.js";
 import { lineMarkerGeometry } from "./line-identity.js";
 import { deriveFigureLayout } from "./figure-layout.js";
@@ -97,14 +98,17 @@ function pointGeometry(mark, axes, radius) {
 }
 
 function lineGeometry(panel, axes, scale) {
-  const controls = new Map();
+  const controls = new Map(), lengthTolerances = new Map();
   const series = [...new Set(panel.marks.filter((mark) => mark.kind === "point").map((mark) => mark.series))];
   series.forEach((key) => {
     const points = panel.marks.filter((mark) => mark.kind === "point" && mark.series === key);
+    lengthTolerances.set(key, 0.001 / Math.max(1, points.length - 1));
     const values = panel.encoding.interpolation === "monotone" ? monotoneSegmentControls(points) : null;
     values?.forEach((value, index) => controls.set(`${key}\u0000${index}`, value));
   });
-  const segmentIndex = new Map();
+  const segmentIndex = new Map(), pathDistances = new Map();
+  // One small absolute display-pixel error budget per trace, independent of
+  // cadence. Full lengths are resolved before motion and marker filtering.
   // Keep every observation for domain validation and curve/segment geometry.
   // Only the displayed marker set is reduced; Canvas/SVG and their own-line
   // masks consume this same resolved set (including the terminal observation).
@@ -119,10 +123,13 @@ function lineGeometry(panel, axes, scale) {
     if (mark.kind !== "segment") return { ...mark };
     const index = segmentIndex.get(mark.series) ?? 0; segmentIndex.set(mark.series, index + 1);
     const control = controls.get(`${mark.series}\u0000${index}`);
-    return { ...mark, geometry: {
+    const geometry = {
       x1: axes.x(mark.from.x), y1: axes.y(mark.from.y), x2: axes.x(mark.to.x), y2: axes.y(mark.to.y),
       ...(control ? { c1x: axes.x(control.c1.x), c1y: axes.y(control.c1.y), c2x: axes.x(control.c2.x), c2y: axes.y(control.c2.y) } : {}),
-    } };
+    };
+    const pathDistance = pathDistances.get(mark.series) ?? 0;
+    pathDistances.set(mark.series, pathDistance + linePathLength(geometry, lengthTolerances.get(mark.series)));
+    return { ...mark, geometry, pathDistance };
   }).filter(mark => mark.markerVisible !== false);
 }
 
