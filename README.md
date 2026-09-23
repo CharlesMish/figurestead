@@ -73,6 +73,7 @@ Figurestead's two surfaces share a normalized contract vocabulary, selected them
 - [Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
 - [Python first-success example](examples/python-first-success.py)
 - [Browser first-success example](examples/browser-first-success/)
+- [Python sequential heatmap ramp](docs/sequential-heatmaps.md) — current-source color mapping; numeric normalization unchanged
 - [Static palette versus rendered-series contrast](docs/rendered-series-contrast.md)
 - [Reference light/dark themes for the bounded three-series line profile](docs/reference-themes.md) — current-source exemplars, not universal qualification
 - [Deterministic specimen corpus and local visual lab](specimen-study/README.md)

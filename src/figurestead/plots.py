@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Sequence, Mapping
 
-import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.patheffects as pe
@@ -20,6 +19,7 @@ from .core import (
     style_axes,
     style_legend,
 )
+from ._sequential import sequential_colormap
 from ._line_identity import IdentityLine, IdentityLegend, LINE_IDENTITIES, marker_indices
 from .presentation import FocusAnnotation, draw_focus_annotation, monotone_curve, resolve_pose
 
@@ -421,9 +421,7 @@ def heatmap(matrix, *, xlabels=None, ylabels=None, spec=None,
     # Rain is intentionally suppressed on dense color fields; the identity is
     # carried by typography, structure, and the semantic palette instead.
     style_axes(ax, theme, profile, spec, atmosphere=False)
-    cmap = mcolors.LinearSegmentedColormap.from_list(
-        f"figurestead_{theme.key}", [theme.field, theme.panel, theme.primary, theme.summary_core]
-    )
+    cmap = sequential_colormap(theme)
     image = ax.imshow(matrix, cmap=cmap, aspect="auto", interpolation="nearest")
     if xlabels is not None:
         ax.set_xticks(range(len(xlabels)), xlabels)
