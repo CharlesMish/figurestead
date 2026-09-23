@@ -87,7 +87,7 @@ export function planDirectLabels(scene, resolved, measure) {
     output.push({...e,markerX,textX:textX+e.text.left,textY:e.center+(e.text.ascent-e.text.descent)/2,
       marker:{...e.point,id:e.point.id+'/direct-label',geometry:{...e.point.geometry,cx:markerX,cy:e.center}},
       leader:moved?{x1:anchorX+markerHalf+2,y1:e.anchor,x2:markerX-markerHalf-3-sampleSpace,y2:e.center,color:leaderColor}:null,
-      ...(samples?{lineSample:{...e.bodyLine,id:e.bodyLine.id+'/direct-sample',geometry:{x1:sampleX,y1:e.center,x2:sampleX+sampleWidth,y2:e.center},motion:{opacity:1,clip:1}}}:{}),
+      ...(samples?{lineSample:{...e.bodyLine,pathDistance:0,id:e.bodyLine.id+'/direct-sample',geometry:{x1:sampleX,y1:e.center,x2:sampleX+sampleWidth,y2:e.center},motion:{opacity:1,clip:1}}}:{}),
       box:{left:markerX-markerHalf-2-sampleSpace,top:e.center-H/2,right:textX+textWidth+2,bottom:e.center+H/2}});
   }
   return {status:'placed',reason:null,entries:output,shrink,plot:{...plot,right:newRight},height:H,font:p.layout.font.legend,...(samples?{lineSamplesRequired:true,sampleWidth}:{})};

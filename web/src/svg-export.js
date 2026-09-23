@@ -40,7 +40,7 @@ function marker(mark, appearance = null) {
 
 function segment(mark, extra = {}) {
   const g = mark.geometry, d = g.c1x == null ? `M ${g.x1} ${g.y1} L ${g.x2} ${g.y2}` : `M ${g.x1} ${g.y1} C ${g.c1x} ${g.c1y} ${g.c2x} ${g.c2y} ${g.x2} ${g.y2}`;
-  return `<path ${attrs({ "data-mark-id": mark.id, d, fill: "none", stroke: mark.style.color, "stroke-width": mark.style.lineWidth ?? 1.6, "stroke-dasharray": dash(mark.style.lineStyle), "stroke-linecap": "round", ...extra })}/>`;
+  return `<path ${attrs({ "data-mark-id": mark.id, d, fill: "none", stroke: mark.style.color, "stroke-width": mark.style.lineWidth ?? 1.6, "stroke-dasharray": dash(mark.style.lineStyle), ...(dash(mark.style.lineStyle) && mark.pathDistance ? { "stroke-dashoffset": mark.pathDistance } : {}), "stroke-linecap": "round", ...extra })}/>`;
 }
 
 function linePoint(mark) {
