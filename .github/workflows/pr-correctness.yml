@@ -64,6 +64,9 @@ jobs:
       - name: Verify direct Python plotting input boundary
         run: python audit/current-head-hardening/test_python_plot_inputs.py
 
+      - name: Verify histogram median ownership
+        run: python audit/current-head-hardening/test_histogram_ownership.py
+
       - name: Verify sequential heatmap ramp
         run: python audit/current-head-hardening/test_sequential_heatmap.py
 

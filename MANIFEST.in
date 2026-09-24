@@ -2,6 +2,7 @@ include VERSIONING.md
 include docs/direct-series-labels.md
 include docs/line-series-semantics.md
 include docs/sequential-heatmaps.md
+include docs/histogram-medians.md
 include docs/rendered-series-contrast.md
 include docs/reference-themes.md
 recursive-include docs/assets/reference-themes *.png *.json
