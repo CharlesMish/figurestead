@@ -110,6 +110,8 @@ class DirectLabels(Artist):
         if not np.array_equal(current.bounds,self.installed.bounds):
             self.baseline=current; self.unsupported=True
         self.fail('unsupported-layout')
+        if any(np.isnan(line.get_ydata()).any() for line in self.lines):
+            self.fail('missing-observations'); return
         if fig.get_layout_engine() is not None or len(fig.axes)!=1 or ax.get_aspect()!='auto' or self.unsupported or self.export_unsupported:
             return
         if ax.get_facecolor()[3] != 1 or fig.get_facecolor()[3] != 1:

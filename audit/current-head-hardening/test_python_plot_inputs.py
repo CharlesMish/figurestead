@@ -270,6 +270,8 @@ class PythonPlotInputRegression(unittest.TestCase):
                 (lambda value=value: heatmap([[1, value]]), "heatmap.matrix"),
             )
             for invoke, path in cases:
+                if path == "line.ys" and math.isnan(value):
+                    continue  # NaN y is admitted only by the ordinary line route.
                 with self.subTest(value=value, path=path):
                     self.assert_rejected_before_allocation(invoke, rf"{path}: must contain only finite numbers")
 

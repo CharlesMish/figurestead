@@ -20,6 +20,22 @@ def marker_indices(count, stride):
     return indices
 
 
+def finite_runs(y):
+    """Half-open authored-index intervals; singletons are retained."""
+    changes = np.diff(np.r_[False, np.isfinite(y), False].astype(int))
+    return list(zip(np.flatnonzero(changes == 1), np.flatnonzero(changes == -1)))
+
+
+def line_marker_indices(y, stride):
+    """Finite original cadence indices plus the boundaries of each real run."""
+    if not np.isnan(y).any():
+        return marker_indices(len(y), stride)
+    selected = {i for i in range(0, len(y), stride) if np.isfinite(y[i])}
+    for start, stop in finite_runs(y):
+        selected.update((int(start), int(stop - 1)))
+    return sorted(selected)
+
+
 def visible_intervals(a, b, centers, marker, size, padding=0.):
     """Subtract the union of convex marker interiors from one display segment."""
     delta = b - a
@@ -85,6 +101,11 @@ class IdentityLine(Line2D):
         offset, dashes = self._unscaled_dash_pattern
         dash_scale = self.get_linewidth() if mpl.rcParams["lines.scale_dashes"] else 1.
         for a, b in zip(vertices, vertices[1:]):
+            if not (np.isfinite(a).all() and np.isfinite(b).all()):
+                # Missingness removes a connection. Unlike a marker hole, it
+                # contributes no path distance and the next run starts afresh.
+                travelled = 0.
+                continue
             length = np.linalg.norm(b - a)
             # Conservative stroke clearance also excludes oblique/self-crossing strokes,
             # not just the mathematical centerline. Existing edge strokes count too.
@@ -120,4 +141,7 @@ class IdentityLegend(HandlerBase):
         sample.identity_points = marker
         sample.identity_marker = orig.identity_marker
         sample.identity_edge_width = getattr(orig, "identity_edge_width", 0.)
+        ydata = orig.get_ydata()
+        if np.isnan(ydata).any() and all(stop - start == 1 for start, stop in finite_runs(ydata)):
+            return [marker]
         return [sample, marker]

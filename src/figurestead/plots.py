@@ -20,7 +20,7 @@ from .core import (
     style_legend,
 )
 from ._sequential import sequential_colormap
-from ._line_identity import IdentityLine, IdentityLegend, LINE_IDENTITIES, marker_indices
+from ._line_identity import IdentityLine, IdentityLegend, LINE_IDENTITIES, line_marker_indices
 from .presentation import FocusAnnotation, draw_focus_annotation, monotone_curve, resolve_pose
 
 
@@ -68,6 +68,23 @@ def _numeric_array(
         raise _input_error(path, "must contain only real numbers")
     if not np.isfinite(array).all():
         raise _input_error(path, "must contain only finite numbers")
+    return array
+
+
+def _line_y_array(value) -> np.ndarray:
+    """Ordinary line-only admission: NaN is a break, never an imputed value."""
+    array = _array(value, path="line.ys")
+    if array.ndim not in (1, 2):
+        raise _input_error("line.ys", "must be a 1 or 2-dimensional numeric array")
+    if array.size == 0 or any(size == 0 for size in array.shape):
+        raise _input_error("line.ys", "must contain at least one observation")
+    if array.dtype.kind not in "iuf":
+        raise _input_error("line.ys", "must contain only real numbers")
+    if np.isinf(array).any():
+        raise _input_error("line.ys", "must contain only finite numbers or NaN breaks; infinity is unsupported")
+    for index, row in enumerate(np.atleast_2d(array)):
+        if not np.isfinite(row).any():
+            raise _input_error(f"line.ys[{index}]", "all-missing series must contain at least one finite observation")
     return array
 
 
@@ -249,7 +266,7 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
 def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles=None, spec=None, theme="slipware",
          profile="deep_scope", ax=None, pose=None, focus: FocusAnnotation | None = None,
          direct_labels=False, marker_stride=1):
-    """Draw one or more finite numeric series sharing one x vector.
+    """Draw numeric series sharing a finite x vector; NaN y breaks ordinary lines.
 
     ``direct_labels=True`` requests an atomic right-gutter replacement for the
     ordinary legend on 2–3 default-line series. It requires strictly increasing
@@ -284,6 +301,13 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     distance. It leaves all data/segments intact; unmarked observations lose
     their explicit point glyph. Cadence has no scientific meaning by itself.
     Sparse cadence is unsupported with explicit poses.
+
+    NaN y means an explicit break on the ordinary static route. Each series
+    needs finite evidence; infinities, masks and other sentinels are unsupported.
+    Cadence uses finite original indices divisible by N plus every finite-run
+    endpoint (including singletons). Rhythm restarts at gaps, not marker holes.
+    Gapped figures use ordinary legends even when direct labels are requested.
+    No interpolation, imputation or reconnection occurs.
     """
     if isinstance(marker_stride, (bool, np.bool_)) or not isinstance(marker_stride, (int, np.integer)) or marker_stride < 1:
         raise _input_error("line.marker_stride", "must be a positive integer (not boolean)")
@@ -291,7 +315,7 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     if not isinstance(direct_labels, bool):
         raise _input_error("line.direct_labels", "must be boolean")
     x = _numeric_array(x, path="line.x", dimensions=(1,))
-    ys = _numeric_array(ys, path="line.ys", dimensions=(1, 2))
+    ys = _line_y_array(ys)
     ys = np.atleast_2d(ys)
     if ys.shape[1] != len(x):
         raise _input_error(
@@ -334,11 +358,13 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
         raise _input_error("line.line_styles", "authored rhythm is unsupported with explicit presentation poses")
     if marker_stride != 1 and presentation is not None:
         raise _input_error("line.marker_stride", "sparse cadence is unsupported with explicit presentation poses")
-    selected = marker_indices(len(x), marker_stride)
+    if np.isnan(ys).any() and presentation is not None:
+        raise _input_error("line.ys", "NaN breaks are unsupported with explicit presentation poses")
     fig, ax = ensure_axes(ax)
     style_axes(ax, theme, profile, spec, panel_surface=presentation.panel_surface if presentation else False, frame=presentation.frame if presentation else False)
     identity_lines = []
     for series_index, y, label, rhythm in zip(slots, ys, labels, resolved_rhythms):
+        selected = line_marker_indices(y, marker_stride)
         color = theme.series[series_index % len(theme.series)]
         draw_x, draw_y = monotone_curve(x, y) if presentation and presentation.curve == "monotone" else (x, y)
         width = presentation.line_width if presentation else 1.45
