@@ -20,6 +20,7 @@ from .core import (
     style_legend,
 )
 from ._sequential import sequential_colormap
+from ._histogram_legend import histogram_legend
 from ._line_identity import IdentityLine, IdentityLegend, LINE_IDENTITIES, line_marker_indices
 from .presentation import FocusAnnotation, draw_focus_annotation, monotone_curve, resolve_pose
 
@@ -413,6 +414,9 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
 
     A flat numeric sequence is one dataset. A nested sequence contains one
     one-dimensional dataset per entry. Supplied labels must match that count.
+    Multi-dataset median rules inherit dataset color; the paired legend reports
+    dataset labels and median values. Coincident medians are not displaced.
+    A single dataset retains summary_core and its existing legend behavior.
     """
     datasets = _histogram_datasets(values)
     labels = ([f"series {index + 1}" for index in range(len(datasets))]
@@ -422,13 +426,19 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax)
     style_axes(ax, theme, profile, spec)
+    multiple = len(datasets) > 1
+    pairs, medians = [], []
     for data, label, color in zip(datasets, labels, series_colors(theme)):
-        ax.hist(data, bins=bins, histtype="stepfilled", color=color, alpha=0.15,
-                edgecolor=color, linewidth=1.0, label=label, zorder=3)
-        ax.axvline(np.median(data), color=theme.summary_core, linewidth=1.1,
-                   alpha=0.85, zorder=4)
-    if len(datasets) > 1:
-        style_legend(ax, theme)
+        _, _, patches = ax.hist(data, bins=bins, histtype="stepfilled", color=color, alpha=0.15,
+                                edgecolor=color, linewidth=1.0, label=label, zorder=3)
+        median = np.median(data)
+        rule = ax.axvline(median, color=color if multiple else theme.summary_core, linewidth=1.1,
+                          alpha=0.85, zorder=4)
+        if multiple:
+            pairs.append((patches[0], rule))
+            medians.append(median)
+    if multiple:
+        histogram_legend(ax, theme, pairs, labels, medians)
     add_note(ax, spec, theme)
     return fig, ax
 

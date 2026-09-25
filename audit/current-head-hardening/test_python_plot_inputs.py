@@ -98,7 +98,7 @@ class PythonPlotInputRegression(unittest.TestCase):
         fig, ax = histogram([[1, 2, 3], [4, 5]], labels=["first", "second"])
         self.assertEqual(len(ax.lines), 2)
         self.assertEqual(len(ax.patches), 2)
-        self.assertEqual([item.get_text() for item in ax.get_legend().get_texts()], ["first", "second"])
+        self.assertEqual([item.get_text() for item in ax.get_legend().get_texts()], ["first · 2", "second · 4.5"])
         plt.close(fig)
 
     def test_histogram_two_dimensional_array_uses_rows_as_datasets(self) -> None:
