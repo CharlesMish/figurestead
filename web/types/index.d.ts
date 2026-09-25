@@ -168,6 +168,7 @@ export interface FiguresteadStyle {
    * default 1. Full line geometry retained; no data reduction or implied meaning. */
   markerStride?: number;
   glyphs: MarkerGlyph[];
+  /** Effective default ["solid"]; explicit arrays advance per glyph block. Keyed lineStyle wins. */
   lineStyles: LineStyle[];
   series: Record<string, SeriesStyleOverride>;
 }

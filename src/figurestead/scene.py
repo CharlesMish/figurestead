@@ -11,7 +11,7 @@ from .application import get_application_profile
 
 TERMINAL_SCENE_VERSION = "figurestead.scene/1"
 GLYPHS = ("ring", "square", "triangle", "diamond")
-LINE_STYLES = ("solid", "dash", "dot", "dash-dot")
+DEFAULT_LINE_STYLES = ("solid",)
 
 
 def _id(*parts: Any) -> str:
@@ -34,6 +34,11 @@ def compile_terminal_scene(contract: Mapping[str, Any]) -> dict[str, Any]:
         for key in _keys(panel):
             if key not in keys:
                 keys.append(key)
+    # Missing rhythm is solid at every slot. Explicit contract rhythm keeps its
+    # existing four-glyph block allocation; a keyed rhythm wins for that trace.
+    style = source.get("style") or {}
+    line_styles = style.get("lineStyles") or DEFAULT_LINE_STYLES
+    overrides = style.get("series") or {}
     styles = {}
     for index, key in enumerate(keys):
         color_index = index % len(theme["series"])
@@ -41,7 +46,7 @@ def compile_terminal_scene(contract: Mapping[str, Any]) -> dict[str, Any]:
             "key": key, "colorIndex": color_index, "color": theme["series"][color_index],
             "edge": (theme.get("seriesEdges") or [None] * len(theme["series"]))[color_index],
             "glyph": GLYPHS[index % len(GLYPHS)],
-            "lineStyle": LINE_STYLES[(index // len(GLYPHS)) % len(LINE_STYLES)],
+            "lineStyle": overrides.get(key, {}).get("lineStyle", line_styles[(index // len(GLYPHS)) % len(line_styles)]),
         }
     panels = []
     for panel in source.get("panels", []):

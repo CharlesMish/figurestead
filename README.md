@@ -51,7 +51,7 @@ See the [ordinary/direct-label example](https://github.com/CharlesMish/figureste
 
 [![Eight deterministic synthetic Figurestead specimens spanning line, scatter, distribution, and temporal figure families](docs/assets/readme/figurestead-at-a-glance.png)](docs/assets/readme/figurestead-at-a-glance.png)
 
-The montage spans temporal response, periodic series, calibration and nonlinear relationships, distributions, grouped distributions, exact temporal coverage, and sparse observations. These are deterministic synthetic design and renderer-evaluation fixtures—not scientific measurements or findings.
+This retained montage records earlier rendering, including prior dash-backed overflow. It is historical imagery, not a demonstration of current implicit rhythm. The montage spans temporal response, periodic series, calibration and nonlinear relationships, distributions, grouped distributions, exact temporal coverage, and sparse observations. These are deterministic synthetic design and renderer-evaluation fixtures—not scientific measurements or findings.
 
 ## Beyond the montage
 
@@ -83,7 +83,7 @@ Figurestead's two surfaces share a normalized contract vocabulary, selected them
 
 Figurestead is an experimental public alpha, not a mature universal plotting library.
 
-- The three-series and five-series color-led recommendations are project-authored usage guidance. Higher-series evidence relies on redundant marker and dash channels where those channels exist.
+- The bounded persistent-identity reference profile covers the first three ordinary line series. Additional series use deterministic color/marker fallback but are not claimed to be independently distinguishable. Unconfigured lines remain solid at every series count; non-solid rhythm is authored semantics. This is [current-source behavior](docs/line-series-semantics.md), not a retroactive change to published alpha.3.
 - Digital paper evidence records a 6.372 pt minimum label against Figurestead's internal 6 pt project floor; it is not physical-printer certification or an external typographic standard.
 - Color-vision-deficiency plates are simulations with documented model limits, not medical or universal-accessibility certification.
 - Renderer coverage differs between Python and browser runtimes, and all specimens shown here are deterministic synthetic evaluation fixtures.

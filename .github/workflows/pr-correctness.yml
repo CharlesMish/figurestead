@@ -73,6 +73,9 @@ jobs:
       - name: Verify Python gapped lines
         run: python audit/current-head-hardening/test_gapped_lines.py
 
+      - name: Verify auxiliary line-scene rhythm
+        run: python audit/current-head-hardening/test_scene_rhythm.py
+
       - name: Verify open line identity
         run: python audit/current-head-hardening/test_line_identity.py
 
@@ -227,6 +230,11 @@ jobs:
 
       - name: Verify native B2 line identity
         run: node ci/check-line-identity.cjs
+
+      - name: Verify implicit and authored rhythm in Chromium and Firefox
+        run: |
+          node ci/check-implicit-rhythm.cjs
+          FIGURESTEAD_BROWSER=firefox node ci/check-implicit-rhythm.cjs
 
       - name: Verify line rhythm phase in Chromium and Firefox
         run: |
