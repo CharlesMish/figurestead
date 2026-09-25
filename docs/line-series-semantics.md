@@ -39,7 +39,23 @@ figure.setConfig({
 }); // lineStyle was omitted: the ordinary positional default is resolved anew
 ```
 
-For a first-three default line trace that default is solid. This example does not promise a new 4–6-series identity grammar: the existing broader browser fallback allocator can advance its rhythm cycle after exhausting its glyph cycle. That out-of-profile behavior is unchanged by this feature.
+Unconfigured ordinary lines are solid at **every** series count. The bounded
+persistent-identity reference profile remains S1 circle/ring, S2 square and S3
+upright triangle. Additional series are valid but use unqualified deterministic
+fallback: circle/ring → square → upright triangle → diamond → repeat, with
+colors cycling through the resolved theme sequence. Repetition and S4 diamond
+are not additional distinguishability or qualification claims.
+
+Missing browser `style.lineStyles` normalizes to `["solid"]`. An explicitly
+supplied array remains authored configuration, including saved
+`["solid", "dash", "dot", "dash-dot"]` arrays: the existing allocation advances
+one array entry per complete glyph block. `style.series[key].lineStyle` takes
+precedence. A color-only override inherits the explicit array's rhythm, or solid
+when no rhythm was authored. The exported `LINE_STYLE_CYCLE` remains available
+for explicit use; it is no longer an implicit default. Authors supply meaning.
+The auxiliary Python `compile_terminal_scene()` likewise uses solid when
+unconfigured and honors explicit contract rhythm arrays/keyed rhythm. Ordinary
+Python `line()` already used solid overflow and is unchanged.
 
 ## Direct labels
 
@@ -132,3 +148,11 @@ slice should use explicit JSON `null` y, preserving shared finite x and original
 row positions in descriptions rather than compacting records. A future Python
 adapter would explicitly map accepted NaN to null with strict JSON, rejecting
 infinity before serialization. That transport is not implemented here.
+
+## Wording retained for a future release note
+
+Unconfigured browser line series now remain solid at every series count.
+Explicit rhythm styling and existing marker/color fallback allocation are preserved.
+This is current-source behavior after alpha.3, not a revision to that release's
+retained specimens. Ordinary Python line rendering, gaps and marker cadence are
+unchanged; the auxiliary Python terminal-scene compiler shares the solid default.

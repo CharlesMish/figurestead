@@ -1,4 +1,4 @@
-import { cloneValue } from "./schema.js";
+import { cloneValue, DEFAULT_LINE_STYLES } from "./schema.js";
 
 export const SERIES_STYLE_VERSION = "figurestead.series-style/1";
 export const GLYPH_CYCLE = Object.freeze(["ring", "square", "triangle", "diamond"]);
@@ -24,7 +24,7 @@ export function collectSeriesKeys(contract) {
 
 export function resolveSeriesStyles(contract) {
   const markers = contract.style?.glyphs ?? GLYPH_CYCLE;
-  const lineStyles = contract.style?.lineStyles ?? LINE_STYLE_CYCLE;
+  const lineStyles = contract.style?.lineStyles ?? DEFAULT_LINE_STYLES;
   const overrides = contract.style?.series ?? {};
   return Object.freeze(Object.fromEntries(collectSeriesKeys(contract).map((key, index) => {
     const colorIndex = index % contract.theme.series.length;

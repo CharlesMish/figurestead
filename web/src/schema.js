@@ -1,5 +1,7 @@
 import { linearFit } from "./statistics.js";
 
+export const DEFAULT_LINE_STYLES = Object.freeze(["solid"]);
+
 export const SCHEMA_VERSION = "0.4";
 export const LEGACY_SCHEMA_VERSION = "0.3";
 export const RENDERER_API_VERSION = "1";
@@ -313,7 +315,7 @@ function normalizeStyle(value) {
   const glyphs = style.glyphs ?? ["ring", "square", "triangle", "diamond"];
   if (!Array.isArray(glyphs) || !glyphs.length) throw new FiguresteadConfigError("must be a non-empty array", "config.style.glyphs");
   glyphs.forEach((glyph, index) => { if (!MARKER_TYPES.has(glyph)) throw new FiguresteadConfigError("is not a supported glyph", `config.style.glyphs[${index}]`); });
-  const lineStyles = style.lineStyles ?? ["solid", "dash", "dot", "dash-dot"];
+  const lineStyles = style.lineStyles ?? DEFAULT_LINE_STYLES;
   if (!Array.isArray(lineStyles) || !lineStyles.length || lineStyles.some((item) => !["solid", "dash", "dot", "dash-dot"].includes(item))) throw new FiguresteadConfigError("must contain supported line styles", "config.style.lineStyles");
   if (style.directLabels != null && typeof style.directLabels !== "boolean") throw new FiguresteadConfigError("must be boolean", "config.style.directLabels");
   if (style.markerStride !== undefined && (!Number.isSafeInteger(style.markerStride) || style.markerStride < 1)) throw new FiguresteadConfigError("must be a positive safe integer", "config.style.markerStride");

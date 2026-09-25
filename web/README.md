@@ -66,7 +66,7 @@ const contract = {
   profile: { key: "first_success", name: "First success", marker: "ring_core", markerSize: 42, markerAlpha: 0.84, edgeWidth: 1.05, coreFraction: 0.12, pointGlow: false, gridX: true, gridY: true, gridAlpha: 0.4, summaryGlow: false },
   timeline: { rainIn: [0, 0], marksEnter: [0, 1], summaryCompiles: [0.8, 1], rainOut: [0, 0], settle: [0.9, 1] },
   motion: { frames: 1, fps: 1, rainStreams: 0, rainGlyphs: 0, lightingPeak: 0, trailAlpha: 0, seed: 1, durationMs: 1 },
-  style: { glyphs: ["ring", "square", "triangle", "diamond"], lineStyles: ["solid", "dash", "dot", "dash-dot"], series: {} },
+  style: { glyphs: ["ring", "square", "triangle", "diamond"], series: {} },
   spec: { title: "Figurestead first success", subtitle: "One deterministic normalized line contract", xLabel: "observation", yLabel: "response", signature: "figurestead · first success", description: "One line with three observations." },
   layout: { type: "grid", columns: 1, gap: 18, sharedX: false, sharedY: false },
   view: { profile: "atlas", motion: "none", ambient: "none", strategy: "none" },
@@ -216,3 +216,14 @@ exposes its float32 value); SVG line **segments** use panel or field at 1. Pytho
 verified default line **polyline** uses field/.88. Companion markers/points may
 have different opacity and are outside those contexts. This is not an assessment
 of glow, antialias boundaries, every layered mark or whole-figure accessibility.
+
+### Current-source line overflow
+
+The bounded persistent-identity reference profile covers the first three ordinary
+line series. Additional series retain deterministic ring/square/triangle/diamond
+marker cycling and theme colors without a distinguishability claim. Unconfigured
+lines remain solid at every series count; non-solid rhythm must be authored.
+Missing `style.lineStyles` normalizes to `["solid"]`; explicitly supplied arrays
+retain their existing glyph-block allocation, and per-key `lineStyle` wins.
+See the [line semantics](https://github.com/CharlesMish/figurestead/blob/main/docs/line-series-semantics.md).
+This source change is not retroactively part of published alpha.3.

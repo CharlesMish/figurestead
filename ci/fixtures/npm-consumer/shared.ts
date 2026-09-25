@@ -59,7 +59,7 @@ export const motion: FiguresteadMotion = {
 
 export const style: FiguresteadStyle = {
   glyphs: ["ring", "square", "triangle", "diamond"],
-  lineStyles: ["solid", "dash", "dot", "dash-dot"],
+  lineStyles: ["solid"],
   series: {},
 };
 
