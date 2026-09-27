@@ -45,3 +45,20 @@ for(const n of [1,3])for(const points of [1,2]){
  assert.match(summary,points===1?/point-only series/:/connected series/);
 }
 console.log('hostile HC3 topology: 4 PASS');
+
+const {encodeIdComponent}=await import('../src/semantic-id.js');
+const ids=['A B','A/B','A-B','A~20B','λ','safe_1.x','\ud800'];
+assert.deepEqual(ids.map(encodeIdComponent),['A~20B','A~2FB','A-B','A~7E20B','~CE~BB','safe_1.x','~uD800']);
+const {evidenceFingerprint}=await import('../src/terminal-scene.js');
+for(const keys of [ids,['mzq0kr','1bf3idp']]){
+ const c=make(keys);if(keys===ids){c.panels[0].id='P A';const second=structuredClone(c.panels[0]);second.id='P/A';c.panels.push(second);}
+ const m=compileFigureModel(c), marks=m.scene.panels.flatMap(p=>p.marks);
+ assert.equal(new Set(marks.map(m=>m.id)).size,marks.length);
+ assert.equal(evidenceFingerprint(m.scene),evidenceFingerprint(compileFigureModel(c).scene));
+ const svg=resolvedSceneToSvg(composeResolvedScene(resolveTerminalScene(m.scene,{width:1008,height:624})));
+ const resources=[...svg.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);
+ assert.equal(new Set(resources).size,resources.length);
+ for(const ref of svg.matchAll(/url\(#([^)]*)\)/g))assert.ok(resources.includes(ref[1]));
+ if(keys!==ids)assert.match(svg,/65d1ead2-identity~1/,'real FNV collision gets a distinct resource');
+}
+console.log('hostile HC4 encoding/resources: 2 contracts + 7 encodings PASS');

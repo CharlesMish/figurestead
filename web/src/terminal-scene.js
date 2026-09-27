@@ -1,3 +1,4 @@
+import { encodeIdComponent } from "./semantic-id.js";
 import { validateContract } from "./schema.js";
 import { CORE_REGISTRY } from "./core-renderers.js";
 import { panelContract } from "./figure.js";
@@ -17,7 +18,7 @@ function deepFreeze(value) {
   return Object.freeze(value);
 }
 
-const markId = (panel, kind, ...parts) => [panel.id, kind, ...parts].map((item) => String(item).replace(/[^a-zA-Z0-9_.-]+/g, "-")).join("/");
+const markId = (panel, kind, ...parts) => [panel.id, kind, ...parts].map(encodeIdComponent).join("/");
 
 function lineMarks(panel, contract, prepared, styles) {
   const marks = [];

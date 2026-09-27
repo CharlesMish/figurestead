@@ -65,7 +65,23 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
           try{drawResolvedPanel(ctx,{...frame,panels:[{...p,marks:[],composedAnnotations:[]}]},0);}finally{ctx.setLineDash=dash;}
           same(rhythmSamples>0,points>1,'Canvas legend sample topology');
         }
-        return {result:'PASS',hc1Updates:6,hc2EmptyGroups:4,hc3Topology:4};
+        const raster=async svg=>{const image=new Image();image.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);await image.decode();const target=document.createElement('canvas');target.width=image.width;target.height=image.height;target.getContext('2d').drawImage(image,0,0);return target.toDataURL();};
+        for(const keys of [['A B','A/B','A-B','A~20B','λ'],['mzq0kr','1bf3idp']]) {
+          const c=lineIdentityContract(theme);c.panels[0].data.series=keys.map((key,i)=>({key,label:`row ${i}`,y:[i+1,i+1.2,i+.8]}));
+          f.setConfig(c);const frame=api.resolveSceneFrame(f.getComposedScene(),.6);
+          const pixels=canvas.toDataURL(),svg=api.resolvedSceneToSvg(f.getComposedScene()),bitmap=await raster(svg);
+          const doc=new DOMParser().parseFromString(svg,'image/svg+xml'),resources=[...doc.querySelectorAll('[id]')].map(n=>n.id);
+          same(new Set(resources).size,resources.length,'unique resources');
+          const marks=f.getScene().panels[0].marks;same(new Set(marks.map(m=>m.id)).size,marks.length,'unique semantic marks');
+          for(const node of doc.querySelectorAll('g[mask]')) {
+            const id=node.getAttribute('mask').slice(5,-1);if(!doc.getElementById(id))throw Error('unbound mask');
+          }
+          const safe=structuredClone(c);safe.panels[0].data.series.forEach((s,i)=>s.key=`safe${i}`);f.setConfig(safe);
+          same(canvas.toDataURL(),pixels,'Canvas identity unaffected by spelling');
+          same(await raster(api.resolvedSceneToSvg(f.getComposedScene())),bitmap,'SVG masks only own markers');
+          same(api.resolveSceneFrame(f.getComposedScene(),.6).panels[0].marks.map(m=>m.motion),frame.panels[0].marks.map(m=>m.motion),'motion unchanged');
+        }
+        return {result:'PASS',hc1Updates:6,hc2EmptyGroups:4,hc3Topology:4,hc4Collisions:2};
       } finally{f.destroy();canvas.remove();}
     });
     console.log(JSON.stringify(result));

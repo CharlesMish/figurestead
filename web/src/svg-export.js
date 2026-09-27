@@ -1,3 +1,4 @@
+import { encodeIdComponent } from "./semantic-id.js";
 import { DIRECT_FONT } from "./direct-labels.js";
 import { lineMarkerGeometry } from "./line-identity.js";
 import { CORE_REGISTRY } from "./core-renderers.js";
@@ -20,7 +21,7 @@ function hashText(value) {
   return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
-function safeId(value) { return String(value).replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-+|-+$/g, "") || "figurestead"; }
+const safeId = encodeIdComponent;
 
 function svgNamespace(composed, scene, options) {
   if (options.idPrefix != null && !String(options.idPrefix).trim()) throw new TypeError("idPrefix must be a non-empty string");
@@ -170,7 +171,7 @@ function axes(panel, theme) {
   return pieces.join("");
 }
 
-function legend(panel, theme, namespace) {
+function legend(panel, theme, namespace, allocateId) {
   if (panel.directLabelPlan?.status === "placed") return panel.directLabelPlan.entries.map(e => {
     const l=e.leader;
     return (l ? `<path ${attrs({d:`M ${l.x1} ${l.y1} L ${l.x2} ${l.y2}`,fill:"none",stroke:l.color,"stroke-width":.7})}/>` : "")
@@ -186,11 +187,11 @@ function legend(panel, theme, namespace) {
     const y = entry?.y ?? (panel.layout.legend.outside ? panel.layout.legend.top + (14 + index * 20) * panel.layout.scale : insideTop + index * 20 * panel.layout.scale), style = item.style ?? {};
     let point = `<circle ${attrs({ cx: x, cy: y, r: 4 * panel.layout.scale, fill: "none", stroke: style.color ?? theme.series[item.colorIndex % theme.series.length] })}/>`;
     if (panel.renderer === "line") {
-      const mark = { id: `${panel.id}-legend-${index}`, lineIdentity: true, style,
+      const mark = { id: `${safeId(panel.id)}-legend-${index}`, lineIdentity: true, style,
         geometry: { cx: x, cy: y, ...lineMarkerGeometry(style, panel.layout.scale, panel.presentation?.markerScale ?? 1) } };
       const half = 12 * Math.max(1, panel.layout.scale);
       point = (item.lineSample === false ? "" : maskedLine({ ...mark, geometry: { x1: x - half, y1: y, x2: x + half, y2: y } }, [mark],
-        { left: x - half - 3, right: x + half + 3, top: y - 10, bottom: y + 10 }, `${namespace}-${safeId(panel.id)}-legend-${index}`)) + linePoint(mark);
+        { left: x - half - 3, right: x + half + 3, top: y - 10, bottom: y + 10 }, allocateId(`${namespace}-${safeId(panel.id)}-legend-${index}`))) + linePoint(mark);
     }
     const label = entry?.displayLabel ?? item.label;
     return `${point}<text ${attrs({ x: textX, y, fill: theme.label, "font-size": panel.layout.font.legend, "text-anchor": entry?.textAnchor ?? (panel.layout.legend.outside ? "start" : "end"), "dominant-baseline": "middle", "data-full-label": item.label })}><title>${esc(item.label)}</title>${esc(label)}</text>`;
@@ -206,10 +207,10 @@ function annotations(panel, theme) {
   }).join("");
 }
 
-function matrixLegend(panel, theme, namespace) {
+function matrixLegend(panel, theme, namespace, allocateId) {
   if (panel.renderer !== "categorical_matrix" || !panel.valueScale || !panel.marks.length) return "";
   const width = Math.min(190 * panel.layout.scale, (panel.layout.plot.right - panel.layout.plot.left) * 0.42), left = panel.layout.plot.right - width;
-  const top = panel.layout.plot.top - 28 * panel.layout.scale, height = Math.max(5, 7 * panel.layout.scale), style = panel.marks[0].style, id = `${namespace}-${safeId(panel.id)}-matrix-gradient`;
+  const top = panel.layout.plot.top - 28 * panel.layout.scale, height = Math.max(5, 7 * panel.layout.scale), style = panel.marks[0].style, id = allocateId(`${namespace}-${safeId(panel.id)}-matrix-gradient`);
   return `<defs><linearGradient id="${esc(id)}"><stop offset="0%" stop-color="${esc(style.low)}"/><stop offset="68%" stop-color="${esc(style.color)}"/><stop offset="100%" stop-color="${esc(style.high)}"/></linearGradient></defs><text ${attrs({ x: left, y: top - 3 * panel.layout.scale, fill: theme.label, "font-size": panel.layout.font.legend })}>${esc(panel.valueScale.label)}</text><rect ${attrs({ x: left, y: top, width, height, fill: `url(#${id})`, stroke: theme.spine })}/><text ${attrs({ x: left, y: top + height + 12 * panel.layout.scale, fill: theme.secondary, "font-size": panel.layout.font.legend })}>${esc(panel.valueScale.domain[0])}</text><text ${attrs({ x: left + width, y: top + height + 12 * panel.layout.scale, fill: theme.secondary, "font-size": panel.layout.font.legend, "text-anchor": "end" })}>${esc(panel.valueScale.domain[1])}</text>`;
 }
 
@@ -223,10 +224,10 @@ function panelHeaderSvg(panel, theme, responsive) {
   return `<g ${attrs({ "data-responsive-header": responsive.policy })}>${title}${subtitle}</g>`;
 }
 
-function panelSvg(panel, theme, profile, namespace, responsive = null) {
+function panelSvg(panel, theme, profile, namespace, responsive = null, allocateId) {
   if (!panel.resolved) throw new TypeError(`SVG export requires a scene-aware renderer; ${panel.renderer} remains on the compatibility path`);
   const render = (mark) => panel.renderer === "line" && mark.kind === "segment"
-    ? maskedLine(mark, panel.marks.filter(p => p.lineIdentity && p.series === mark.series), plotClipRect(panel), `${namespace}-${safeId(panel.id)}-${hashText(mark.id)}-identity`)
+    ? maskedLine(mark, panel.marks.filter(p => p.lineIdentity && p.series === mark.series), plotClipRect(panel), allocateId(`${namespace}-${safeId(panel.id)}-${hashText(mark.id)}-identity`))
     : mark.lineIdentity ? linePoint(mark)
     : mark.kind === "point" ? marker(mark)
     : ["segment", "summary-line"].includes(mark.kind) ? segment(mark)
@@ -240,7 +241,7 @@ function panelSvg(panel, theme, profile, namespace, responsive = null) {
                   : mark.kind === "row-band" ? rowBand(mark)
                     : mark.kind === "rug" ? rug(mark)
                       : mark.kind === "temporal-bar" ? temporalBar(mark, panel, theme) : "";
-  const layers = partitionPanelMarks(panel.marks), plot = plotClipRect(panel), clipId = `${namespace}-${safeId(panel.id)}-evidence-clip`;
+  const layers = partitionPanelMarks(panel.marks), plot = plotClipRect(panel), clipId = allocateId(`${namespace}-${safeId(panel.id)}-evidence-clip`);
   const renderLayer = (name, marks) => `<g data-layer="${name}" clip-path="url(#${clipId})">${marks.map(render).join("")}</g>`;
   const dataMarks = [...layers.data.filter((mark) => mark.kind !== "point"), ...layers.data.filter((mark) => mark.kind === "point")];
   const dataLabels = panel.marks.map((mark) => mark.kind === "connector" ? connectorLabel(mark, panel, theme)
@@ -250,7 +251,7 @@ function panelSvg(panel, theme, profile, namespace, responsive = null) {
   const title = panelHeaderSvg(panel, theme, responsive);
   const provenance = theme.mode !== "paper" && panel.spec.signature && (panel.layout.panelIndex ?? 0) === 0
     ? `<text ${attrs({ x: panel.layout.provenance?.left ?? panel.layout.plot.left, y: panel.layout.provenance?.y ?? panel.layout.rect.bottom - 8 * panel.layout.scale, fill: theme.faint, "font-size": panel.layout.font.signature, "text-anchor": "start", "data-layer": "provenance" })}>${esc(panel.spec.signature)}</text>` : "";
-  return `<g ${attrs({ "data-panel-id": panel.id, "data-renderer": panel.renderer, "data-denominator": panel.denominator == null ? null : JSON.stringify(panel.denominator), "data-x-category-order": panel.categories.x?.join("|"), "data-y-category-order": panel.categories.y?.join("|") })}><defs><clipPath id="${esc(clipId)}" clipPathUnits="userSpaceOnUse"><rect ${attrs({ x: plot.left, y: plot.top, width: plot.right - plot.left, height: plot.bottom - plot.top })}/></clipPath></defs><g data-layer="surface">${panelSurface(panel, theme)}</g><g data-layer="grid">${grid(panel, theme, profile)}</g>${renderLayer("reference", layers.reference)}${renderLayer("data", dataMarks)}${renderLayer("summary", layers.summary)}<g data-layer="axes">${title}${axes(panel, theme)}${provenance}</g><g data-layer="annotations">${dataLabels}${annotations(panel, theme)}</g><g data-layer="legend">${legend(panel, theme, namespace)}${matrixLegend(panel, theme, namespace)}${denominator}</g></g>`;
+  return `<g ${attrs({ "data-panel-id": panel.id, "data-renderer": panel.renderer, "data-denominator": panel.denominator == null ? null : JSON.stringify(panel.denominator), "data-x-category-order": panel.categories.x?.join("|"), "data-y-category-order": panel.categories.y?.join("|") })}><defs><clipPath id="${esc(clipId)}" clipPathUnits="userSpaceOnUse"><rect ${attrs({ x: plot.left, y: plot.top, width: plot.right - plot.left, height: plot.bottom - plot.top })}/></clipPath></defs><g data-layer="surface">${panelSurface(panel, theme)}</g><g data-layer="grid">${grid(panel, theme, profile)}</g>${renderLayer("reference", layers.reference)}${renderLayer("data", dataMarks)}${renderLayer("summary", layers.summary)}<g data-layer="axes">${title}${axes(panel, theme)}${provenance}</g><g data-layer="annotations">${dataLabels}${annotations(panel, theme)}</g><g data-layer="legend">${legend(panel, theme, namespace, allocateId)}${matrixLegend(panel, theme, namespace, allocateId)}${denominator}</g></g>`;
 }
 
 export function resolvedSceneToSvg(resolved, options = {}) {
@@ -259,10 +260,19 @@ export function resolvedSceneToSvg(resolved, options = {}) {
   const scene = options.sourceScene, namespace = svgNamespace(composed, scene, options);
   const exportSize = options.exportSize ?? resolveExportSize({ ...options, width: composed.width, height: composed.height });
   const title = composed.spec.title, description = [composed.spec.description || composed.spec.subtitle || "Scientific figure", composed.spec.note, ...composed.panels.flatMap((panel) => panel.notes ?? [])].filter(Boolean).join(" ");
-  const titleId = `${namespace}-title`, descId = `${namespace}-desc`;
+  // Preserve established resource names when unique, but never trust the
+  // short mark hash as identity. Every resource is reserved within this export.
+  const usedIds = new Set();
+  const allocateId = base => {
+    let id = base, suffix = 0;
+    while (usedIds.has(id)) id = `${base}~${++suffix}`;
+    usedIds.add(id);
+    return id;
+  };
+  const titleId = allocateId(`${namespace}-title`), descId = allocateId(`${namespace}-desc`);
   const header = composed.layout.header ? `<text ${attrs({ x: composed.layout.header.left, y: composed.layout.header.titleY, fill: composed.theme.mode === "paper" ? composed.theme.label : composed.theme.primary, "font-size": composed.layout.font.title })}>${esc(title)}</text>` : "";
   const fixedResponsive = composed.width <= RESPONSIVE_HEADER_MAX_WIDTH && composed.panels.length === 1 && composed.theme.mode !== "paper";
-  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect ${attrs({ width: "100%", height: "100%", fill: composed.theme.field })}/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace, panel.layout.headerText ?? (fixedResponsive ? fixedResponsiveHeader(panel) : null))).join("")}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect ${attrs({ width: "100%", height: "100%", fill: composed.theme.field })}/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace, panel.layout.headerText ?? (fixedResponsive ? fixedResponsiveHeader(panel) : null), allocateId)).join("")}</svg>`;
 }
 
 export function sceneToSvg(scene, options = {}) {

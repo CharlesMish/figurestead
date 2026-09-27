@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from copy import deepcopy
-import re
 from typing import Any, Mapping
 
 from .application import get_application_profile
@@ -14,8 +13,20 @@ GLYPHS = ("ring", "square", "triangle", "diamond")
 DEFAULT_LINE_STYLES = ("solid",)
 
 
+def _id_component(value: Any) -> str:
+    result = []
+    for char in str(value):
+        if char.isascii() and (char.isalnum() or char in "_.-"):
+            result.append(char)
+        elif 0xD800 <= ord(char) <= 0xDFFF:
+            result.append(f"~u{ord(char):04X}")
+        else:
+            result.extend(f"~{byte:02X}" for byte in char.encode("utf-8"))
+    return "".join(result)
+
+
 def _id(*parts: Any) -> str:
-    return "/".join(re.sub(r"[^a-zA-Z0-9_.-]+", "-", str(part)) for part in parts)
+    return "/".join(_id_component(part) for part in parts)
 
 
 def _keys(panel: Mapping[str, Any]) -> list[str]:

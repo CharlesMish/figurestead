@@ -33,4 +33,12 @@ class HostileClosureTests(unittest.TestCase):
             self.assertEqual(handles[0].get_linestyle(),'--')
             self.assertIsInstance(handles[1],PathCollection if len(ys[0])==3 else IdentityLine)
 
+    def test_semantic_component_encoding(self):
+        from figurestead.scene import _id_component, _id
+        values=['A B','A/B','A-B','A~20B','λ','safe_1.x','\ud800']
+        expected=['A~20B','A~2FB','A-B','A~7E20B','~CE~BB','safe_1.x','~uD800']
+        self.assertEqual([_id_component(v) for v in values],expected)
+        self.assertEqual(len({_id('P A','point',v,0) for v in values}),len(values))
+        self.assertNotEqual(_id('P A','point','x',0),_id('P/A','point','x',0))
+
 if __name__=='__main__': unittest.main()
