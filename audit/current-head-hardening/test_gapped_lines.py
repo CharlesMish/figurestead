@@ -179,7 +179,7 @@ class GappedLineTests(unittest.TestCase):
                     self.assertEqual(handle.identity_marker,body.identity_marker)
             plt.close(f)
         _,a=line([0],[[1],[2]])
-        self.assertTrue(all(isinstance(h,IdentityLine) for h in a.get_legend().legend_handles))
+        self.assertTrue(all(isinstance(h,PathCollection) for h in a.get_legend().legend_handles))
 
     def test_finite_pair_domains_and_cadence_independence(self):
         cases=[([-100,1,2,100],[[N,2,N,N]],[1,2,1,2]),

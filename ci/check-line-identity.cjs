@@ -74,8 +74,8 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
           }
           const s4 = { key: 'S4', label: 'New key', y: [3.5, 3.5, 3.5] };
           const firstEncounter = { ...data, series: [s3, s4, s2] };
-          const freshInput = structuredClone(input); freshInput.panels[0].data = firstEncounter;
-          // Genuinely new keys retain the existing positional first-encounter rule.
+          const freshInput = structuredClone(input); freshInput.panels[0].data = { ...data, series: [s1, s2, s3, s4] };
+          // New keys receive the next never-assigned registration slot.
           established.S4 = api.compileTerminalScene(freshInput).seriesStyles.S4;
           figure.setData(firstEncounter); check('new-key', ['S3', 'S4', 'S2']);
           figure.setData({ ...data, series: [s4, s2] }); check('new-key-reorder', ['S4', 'S2']);

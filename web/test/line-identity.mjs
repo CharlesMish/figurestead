@@ -95,13 +95,13 @@ for(const progress of [0,.25,.75,1]) {
   assert.deepEqual(segments(moving),segments(denseMoving),'cadence must not retime or reshape segments');
 }
 
-// MC1: distinct valid authored keys may share sanitized output IDs. Scheduling
+// MC1: formerly colliding authored keys now have distinct escaped IDs. Scheduling
 // must use original numeric position, never an ID-keyed map (or display order).
 const collision=cadence(10);
 collision.panels[0].data.series.forEach((s,i)=>{s.key=['A B','A/B','C'][i];});
 collision.view.motion='semantic';collision.view.strategy='auto';
 const originalMarks=compileTerminalScene(collision).panels[0].marks;
-assert.equal(originalMarks[10].id,originalMarks[29].id,'fixture must collide');
+assert.notEqual(originalMarks[10].id,originalMarks[29].id,'HC4 must separate the original collision');
 const collisionResults=[];
 for(const stride of [undefined,1,4]) {
   const c=structuredClone(collision);if(stride!==undefined)c.style.markerStride=stride;

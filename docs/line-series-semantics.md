@@ -156,3 +156,31 @@ Explicit rhythm styling and existing marker/color fallback allocation are preser
 This is current-source behavior after alpha.3, not a revision to that release's
 retained specimens. Ordinary Python line rendering, gaps and marker cadence are
 unchanged; the auxiliary Python terminal-scene compiler shares the solid default.
+
+### Browser newcomer registration
+
+Within a line figure, `setData` preserves first-encounter identity registration,
+including absent keys. A new key receives the next never-assigned rank; filtering
+does not recycle ranks. Thus A,B → B,C → A,B,C preserves A=S1, B=S2, C=S3.
+Explicit keyed styles still win and may intentionally repeat identities.
+`setConfig` starts a new contract and resets registration.
+
+### Point-only legends
+
+A line series with finite evidence but no adjacent finite pair has a marker-only
+legend sample. This includes a single finite observation in either runtime and
+Python observations isolated by NaN gaps. A real segment retains the actual
+line rhythm plus marker. No segment is invented for the legend.
+
+### Auxiliary scenes and other point families
+
+`compile_terminal_scene()` is finite-only for line and scatter coordinates. It
+is not a transport for ordinary Python NaN gaps; portable/browser missingness
+remains unsupported. Its explicit glyph list determines the authored rhythm
+block size, and supported per-key style fields override that allocation.
+
+Python scatter/strip series colors and legend order follow first appearance
+within each fresh call, matching browser initial category ownership. This does
+not establish B2 marker identity, carried slots, or persistent identity across
+separately rebuilt/filtered scatter or strip figures. Their marker grammar is
+unchanged.

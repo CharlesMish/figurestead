@@ -97,7 +97,7 @@ function drawLegend(context, panel, theme) {
       const geometry = { cx: x, cy: y, ...lineMarkerGeometry(style, layout.scale, panel.presentation?.markerScale ?? 1) };
       const point = { lineIdentity: true, style, geometry, motion: { opacity: 1, scaleX: 1, scaleY: 1, translateX: 0, translateY: 0 } };
       const half = 12 * Math.max(1, layout.scale);
-      drawLine(context, { style, geometry: { x1: x - half, y1: y, x2: x + half, y2: y }, motion: { opacity: 1, clip: 1 } }, theme, [point],
+      if (item.lineSample !== false) drawLine(context, { style, geometry: { x1: x - half, y1: y, x2: x + half, y2: y }, motion: { opacity: 1, clip: 1 } }, theme, [point],
         { left: x - half - 3, right: x + half + 3, top: y - 10, bottom: y + 10 });
       drawPoint(context, point);
     } else {
