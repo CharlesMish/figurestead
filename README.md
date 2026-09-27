@@ -2,7 +2,7 @@
 
 Figurestead is an experimental scientific figure system with Python and framework-free browser surfaces. It shares figure-contract and theme semantics across runtimes while keeping scientific output deterministic and inspectable.
 
-Coordinated release target: Python `figurestead==0.9.0a2` and browser `@figurestead/web@0.9.0-alpha.3`. The package counters are independent. Registry commands below require those exact versions to be available; review candidates use the retained files in [release preparation](release/README.md).
+Published versions: Python `figurestead==0.9.0a2` and browser `@figurestead/web@0.9.0-alpha.3` ([alpha.3 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.3)). The source and retained **next candidate** target Python `0.9.0a3` / browser `0.9.0-alpha.4`; they are not yet published. The counters are independent. Reviewers install the exact retained files described in [release preparation](release/README.md). Registry commands below install the published foundation, not the new candidate features.
 
 ## Start here
 
@@ -41,11 +41,22 @@ Python and browser surfaces share normalized figure-contract vocabulary and sele
 
 Default line series combine color with persistent open **circle (S1), square (S2), and upright triangle (S3)** markers and matching line-and-marker legends. Line rhythm remains an independent semantic channel. Python callers can carry `series_slots=[1, 2]` when rebuilding filtered S2/S3 rows; browser `setData` retains established keyed identity through supported filtering/reordering and partial style overrides. `setConfig` replaces the contract.
 
-Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/main/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Product defaults are unchanged.
+Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.3/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
 
 Opt in with Python `line(..., direct_labels=True)` or browser `style: { directLabels: true }`. Direct labels reuse the actual body marker identity beside the traces. V1 covers ordinary one-panel, 2–3-series line figures with single-line printable ASCII labels. Unsupported or insufficient layouts fall back atomically to the ordinary legend. This treatment does not support Unicode, multiline or math interpretation; printable ASCII math punctuation is literal. Active browser transitions use ordinary treatment until settled, and exports without trustworthy measurement retain the ordinary legend.
 
-See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/main/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/main/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/main/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
+See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/v0.9.0-alpha.3/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.3/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.3/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
+
+## Next candidate: a3 / alpha.4
+
+[Candidate release notes](release/notes/0.9.0a3-web-alpha.4.md) distinguish these additions from the B2 identities, `series_slots`, baseline direct labels and bounded reference themes already shipped in a2/alpha.3:
+
+- Python `series_keys` + keyed `line_styles` author rhythm independently of marker/color slots. Non-solid direct-label treatments in both runtimes add truthful line samples, subject to whole-legend fallback.
+- Opt-in Python `marker_stride` / browser `style.markerStride` reduce marker density by authored index, preserving every line observation and segment. Default cadence is unchanged.
+- Ordinary static Python lines accept NaN y as explicit breaks, preserving finite-run endpoints and isolated observations; they never reconnect or impute. Shared x stays finite, and gapped direct labels fall back.
+- Python gains measured subtitle containment, [sequential heatmap colors](docs/sequential-heatmaps.md) and [dataset-owned histogram medians](docs/histogram-medians.md). Browser rhythm continuity, newcomer registration and scene integrity are corrected.
+
+See [line semantics and limits](docs/line-series-semantics.md). These are candidate/source features, not claims about the registry commands above. No new reference-theme or accessibility qualification is implied.
 
 ## Figurestead at a glance
 

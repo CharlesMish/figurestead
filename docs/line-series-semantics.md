@@ -1,5 +1,7 @@
 # Orthogonal line-series semantics
 
+Availability: this current-source contract targets the unpublished Python `0.9.0a3` / browser `0.9.0-alpha.4` candidate. Keyed Python rhythm, cadence, Python NaN gaps and the integrity corrections below begin with those versions. B2 identities, `series_slots`, baseline direct labels and the reference pair already shipped in Python a2 / browser alpha.3; browser per-key rhythm was already supported.
+
 Python slots carry marker/color identity; Python keys address authored line rhythm. Labels are display text. None of these imply a scientific meaning: authors explain their own convention, for example “solid = observed; dashed = predicted.” A triangle does not mean predicted.
 
 ```python
@@ -137,7 +139,8 @@ remain intact; a clipped finite observation does not become missing.
 A gapped series with connecting geometry retains its line + marker legend.
 A NaN-bearing series consisting entirely of isolated points has a marker-only
 legend entry, so it does not suggest connections absent from the body. Wholly
-finite single-point legends retain their historical behavior. Any valid NaN in a
+finite single-point series likewise have marker-only legends, since they contain
+no connecting segment. Any valid NaN in a
 Python direct-label request gives atomic ordinary-legend fallback with internal
 reason `missing-observations`, before gutter allocation. Invalid ordinary input
 still raises. No-gap direct labels and marker selection are unchanged.

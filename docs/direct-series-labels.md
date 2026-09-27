@@ -1,6 +1,8 @@
 # Opt-in direct series labels v1
 
-This source feature replaces the ordinary legend atomically for an eligible line figure. It is off by default. It does not change B2 identities, palettes, thresholds or the bounded reference-theme designation, and does not imply availability in an already-published release.
+Baseline direct labels shipped in Python `0.9.0a2` / browser `0.9.0-alpha.3`. Actual-body rhythm samples and Python gapped-line fallback described below target the unpublished Python `0.9.0a3` / browser `0.9.0-alpha.4` candidate.
+
+This feature replaces the ordinary legend atomically for an eligible line figure. It is off by default. It does not change B2 identities, palettes, thresholds or the bounded reference-theme designation, and retains its bounded text/layout/export contract.
 
 ```python
 fig, ax = line(x, ys, labels=["Control", "Treatment", "Model"],

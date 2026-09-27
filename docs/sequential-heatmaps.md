@@ -1,5 +1,7 @@
 # Python sequential heatmaps — current source
 
+Availability: introduced in the Python `0.9.0a3` candidate, not yet published. Published a2/alpha.3 bytes retain their earlier rendering.
+
 The current-source Python `heatmap()` uses a theme-derived sequential ramp with monotone lightness. This is a source change after the published Python `0.9.0a2` / coordinated alpha.3 release, not a description of that release's retained heatmaps.
 
 The ramp changes colors, not numeric values, admission, normalization or cell geometry. Equal numeric values map to equal colors. Nearest-neighbor rendering, opacity, axes, colorbar and typography are unchanged. Low values remain observations; a quiet low-value color does not mean missing data. No new missing-value semantics are introduced.
