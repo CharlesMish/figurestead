@@ -5,7 +5,11 @@ import { compileProgress, drawAxes, drawScopePoint, drawText, pointMotionState }
 export function prepareStrip(contract) {
   const keys=[...new Set(contract.data.series)], random=mulberry32(deriveSeed(contract.motion.seed,"strip:jitter"));
   const points=contract.data.values.map((y,i)=>({ x:contract.data.groups.indexOf(contract.data.group[i])+(random()-.5)*.28, y, group:contract.data.group[i], series:contract.data.series[i], colorIndex:keys.indexOf(contract.data.series[i]), index:i }));
-  return { points:arrival(points,contract), legend:keys.map((key,colorIndex)=>({label:contract.data.seriesLabels[key],colorIndex})), medians:contract.data.groups.map((group,index)=>({x:index,y:median(contract.data.values.filter((_,i)=>contract.data.group[i]===group))})) };
+  const medians = contract.data.groups.flatMap((group, index) => {
+    const values = contract.data.values.filter((_, i) => contract.data.group[i] === group);
+    return values.length ? [{ group, x: index, y: median(values) }] : [];
+  });
+  return { points:arrival(points,contract), legend:keys.map((key,colorIndex)=>({label:contract.data.seriesLabels[key],colorIndex})), medians };
 }
 
 export function compileStripScene({ panel, contract, prepared, styles, markId }) {
@@ -18,9 +22,9 @@ export function compileStripScene({ panel, contract, prepared, styles, markId })
       style: styles[point.series],
     };
   });
-  if (contract.data.summary === "median") prepared.medians.forEach((median, index) => marks.push({
-    id: markId(panel, "median", contract.data.groups[index]), kind: "median-rule", role: "summary",
-    group: contract.data.groups[index], y: median.y, xOffset1: -0.22, xOffset2: 0.22,
+  if (contract.data.summary === "median") prepared.medians.forEach((median) => marks.push({
+    id: markId(panel, "median", median.group), kind: "median-rule", role: "summary",
+    group: median.group, y: median.y, xOffset1: -0.22, xOffset2: 0.22,
     style: { color: contract.theme.summaryCore, edge: contract.theme.summaryEdge ?? null, lineStyle: "solid", lineWidth: 2 },
   }));
   return {

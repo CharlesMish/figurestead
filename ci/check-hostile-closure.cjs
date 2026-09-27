@@ -44,7 +44,15 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
         }
         const reset=structuredClone(c);reset.panels[0].data=data(['F','A']);f.setConfig(reset);
         same(f.getScene().seriesStyles.F.colorIndex,0,'reset F');same(f.getScene().seriesStyles.A.colorIndex,1,'reset A');
-        return {result:'PASS',hc1Updates:6};
+        for(const occupied of [['B','C'],['A','C'],['A','B'],['B']]) {
+          const strip=lineIdentityContract(theme),p=strip.panels[0];p.renderer='strip_summary';p.xScale={type:'band'};
+          p.data={groups:['A','B','C'],group:occupied.flatMap(k=>[k,k]),values:occupied.flatMap(()=>[2,4]),series:occupied.flatMap(()=>['s','s']),seriesLabels:{s:'s'},summary:'median',revealOrder:'input'};
+          f.setConfig(strip);same(f.getScene().panels[0].categories.x,['A','B','C'],'empty categories');
+          same(f.getScene().panels[0].marks.filter(m=>m.kind==='median-rule').map(m=>[m.group,m.y]),occupied.map(k=>[k,3]),'occupied medians');
+          if(/NaN|Infinity/.test(api.resolvedSceneToSvg(f.getComposedScene())))throw Error('nonfinite strip SVG');
+          if(!canvas.toDataURL().startsWith('data:image/png'))throw Error('Canvas');
+        }
+        return {result:'PASS',hc1Updates:6,hc2EmptyGroups:4};
       } finally{f.destroy();canvas.remove();}
     });
     console.log(JSON.stringify(result));

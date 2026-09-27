@@ -17,3 +17,17 @@ for(const keys of [['A','B'],['B','C'],['A','B','C'],['D','C'],['E','F'],['D','A
 }
 assert.deepEqual(compileFigureModel(make(['F','A'])).styleRanks,[['F',0],['A',1]]);
 console.log('hostile HC1 registration: PASS');
+
+const {resolveTerminalScene,resolvedSceneToSvg}=await import('../src/index.js');
+const {composeResolvedScene}=await import('../src/composition.js');
+const finite=value=>{if(typeof value==='number')assert.ok(Number.isFinite(value));else if(value && typeof value==='object')Object.values(value).forEach(finite);};
+for(const occupied of [['B','C'],['A','C'],['A','B'],['B']]){
+ const c=make(['s']);const p=c.panels[0];p.renderer='strip_summary';p.xScale={type:'band'};
+ p.data={groups:['A','B','C'],group:occupied.flatMap(k=>[k,k]),values:occupied.flatMap(()=>[2,4]),series:occupied.flatMap(()=>['s','s']),seriesLabels:{s:'s'},summary:'median',revealOrder:'input'};
+ const m=compileFigureModel(c),panel=m.scene.panels[0];
+ assert.deepEqual(panel.categories.x,['A','B','C']);
+ assert.deepEqual(panel.marks.filter(m=>m.kind==='median-rule').map(m=>[m.group,m.y]),occupied.map(k=>[k,3]));
+ finite(m.scene);const composed=composeResolvedScene(resolveTerminalScene(m.scene,{width:760,height:520}));finite(composed);
+ assert.doesNotMatch(resolvedSceneToSvg(composed),/NaN|Infinity/);
+}
+console.log('hostile HC2 empty groups: 4 PASS');
