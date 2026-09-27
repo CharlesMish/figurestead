@@ -20,16 +20,18 @@ export function createFigurestead(canvas, input, options = {}) {
   if (registry.apiVersion !== "1") throw new TypeError("Figurestead requires renderer registry API 1");
   const heightNegotiation = validateHeightNegotiation(options.heightNegotiation);
   let contract = input, scene = null, preparedPanels = [], domains = [], atmosphere, surface, resolvedScene = null, composedScene = null, clock = null, destroyed = false;
+  let styleRanks = [];
   let reducedOverride = options.reducedMotion ?? null, companion = null, contractRevision = 0;
   const heightNegotiator = createHeightNegotiator(canvas, heightNegotiation, options.onError);
   const media = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)");
   const isReduced = () => reducedOverride == null ? Boolean(media?.matches) : Boolean(reducedOverride);
 
   const prepareModel = (candidate, retainRanks = true) => {
-    const model = compileFigureModel(candidate, { registry, directRanks: retainRanks ? Object.entries(scene?.directRanks ?? {}) : [] });
+    const model = compileFigureModel(candidate, { registry, styleRanks: retainRanks ? styleRanks : [], directRanks: retainRanks ? Object.entries(scene?.directRanks ?? {}) : [] });
     return { ...model, atmosphere: model.contract.view.ambient === "matrix" ? prepareAtmosphere(model.contract.motion) : [] };
   };
   const applyModel = (model) => {
+    styleRanks = model.styleRanks;
     contract = model.contract; scene = model.scene; preparedPanels = model.preparedPanels; domains = model.domains; atmosphere = model.atmosphere;
   };
   const layoutFactory = (width, height, candidate = contract) => deriveFigureLayout(width, height, candidate);

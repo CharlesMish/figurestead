@@ -121,7 +121,14 @@ export function compileFigureModel(input, options = {}) {
   if (contract.style.directLabels && contract.panels.some(p => p.presentation.legend === "none")) throw new TypeError("directLabels requires the ordinary legend for fallback");
   const directRanks = new Map(options.directRanks ?? []);
   if (contract.style.directLabels) for (const key of collectSeriesKeys(contract)) if (!directRanks.has(key)) directRanks.set(key, directRanks.size);
-  const styles = resolveSeriesStyles(contract);
+  // Allocation ranks are controller history, separate from direct-label order.
+  // Copy before preparing so rejected updates cannot reserve ranks.
+  const styleRanks = new Map(options.styleRanks ?? []);
+  const registeredLine = contract.panels.length === 1 && contract.panels[0].renderer === "line";
+  if (registeredLine) for (const key of collectSeriesKeys(contract)) {
+    if (!styleRanks.has(key)) styleRanks.set(key, styleRanks.size);
+  }
+  const styles = resolveSeriesStyles(contract, registeredLine ? styleRanks : null);
   contract.seriesStyles = styles;
   contract.appearanceReport = applicationProfile.key === "paper" ? {
     resolution: themeResolution.report,
@@ -178,7 +185,7 @@ export function compileFigureModel(input, options = {}) {
   scene.motionPlan = compileMotionPlan(scene, contract.view);
   assertTerminalMotionIdentity(scene.motionPlan, scene);
   deepFreeze(scene);
-  return Object.freeze({ contract, scene, preparedPanels, domains });
+  return Object.freeze({ contract, scene, preparedPanels, domains, styleRanks: [...styleRanks] });
 }
 
 export function compileTerminalScene(input, options = {}) {

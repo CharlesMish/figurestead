@@ -156,3 +156,11 @@ Explicit rhythm styling and existing marker/color fallback allocation are preser
 This is current-source behavior after alpha.3, not a revision to that release's
 retained specimens. Ordinary Python line rendering, gaps and marker cadence are
 unchanged; the auxiliary Python terminal-scene compiler shares the solid default.
+
+### Browser newcomer registration
+
+Within a line figure, `setData` preserves first-encounter identity registration,
+including absent keys. A new key receives the next never-assigned rank; filtering
+does not recycle ranks. Thus A,B → B,C → A,B,C preserves A=S1, B=S2, C=S3.
+Explicit keyed styles still win and may intentionally repeat identities.
+`setConfig` starts a new contract and resets registration.

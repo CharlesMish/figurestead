@@ -228,6 +228,11 @@ jobs:
       - name: Verify rendered line-segment context facts
         run: npm run test:browser-rendered-contrast
 
+      - name: Verify hostile closure in Chromium and Firefox
+        run: |
+          node ci/check-hostile-closure.cjs
+          FIGURESTEAD_BROWSER=firefox node ci/check-hostile-closure.cjs
+
       - name: Verify native B2 line identity
         run: node ci/check-line-identity.cjs
 

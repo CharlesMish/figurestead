@@ -22,11 +22,12 @@ export function collectSeriesKeys(contract) {
   return keys;
 }
 
-export function resolveSeriesStyles(contract) {
+export function resolveSeriesStyles(contract, ranks = null) {
   const markers = contract.style?.glyphs ?? GLYPH_CYCLE;
   const lineStyles = contract.style?.lineStyles ?? DEFAULT_LINE_STYLES;
   const overrides = contract.style?.series ?? {};
-  return Object.freeze(Object.fromEntries(collectSeriesKeys(contract).map((key, index) => {
+  return Object.freeze(Object.fromEntries(collectSeriesKeys(contract).map((key, position) => {
+    const index = ranks?.get(key) ?? position;
     const colorIndex = index % contract.theme.series.length;
     const base = {
       key,
