@@ -41,4 +41,64 @@ class HostileClosureTests(unittest.TestCase):
         self.assertEqual(len({_id('P A','point',v,0) for v in values}),len(values))
         self.assertNotEqual(_id('P A','point','x',0),_id('P/A','point','x',0))
 
+    def scene_contract(self, count=9):
+        return {'theme':{'series':['#123456','#654321']},'panels':[{'id':'line','renderer':'line',
+            'data':{'x':[0,1],'series':[{'key':f's{i}','y':[i,i+1]} for i in range(count)]}}]}
+
+    def test_auxiliary_finite_boundary(self):
+        from copy import deepcopy
+        from figurestead import compile_terminal_scene
+        for renderer in ('line','scatter'):
+            for field in ('x','y'):
+                for value in (np.nan,np.inf,-np.inf):
+                    c=self.scene_contract(1);p=c['panels'][0];p['renderer']=renderer
+                    if renderer=='scatter':p['data']={'x':[0,1],'y':[2,3],'series':['s','s']}
+                    row=p['data'] if field=='x' or renderer=='scatter' else p['data']['series'][0]
+                    row[field][1]=value
+                    with self.assertRaisesRegex(ValueError,'finite numeric coordinates'):
+                        compile_terminal_scene(c)
+        c=self.scene_contract();before=deepcopy(c);compile_terminal_scene(c);self.assertEqual(c,before)
+
+    def test_auxiliary_glyph_blocks_overrides(self):
+        from figurestead import compile_terminal_scene
+        rhythms=['solid','dash','dot','dash-dot']
+        for glyphs in (['square','ring'],['triangle','square','ring'],['ring','square','triangle','diamond']):
+            c=self.scene_contract(13);override={'glyph':'diamond','lineStyle':'dash-dot','color':'#abcdef','edge':'#123456','lineWidth':3,'hatch':'diag'}
+            c['style']={'glyphs':glyphs,'lineStyles':rhythms,'series':{'s1':override}}
+            styles=compile_terminal_scene(c)['seriesStyles']
+            for i,style in enumerate(styles.values()):
+                self.assertEqual(style['glyph'],override['glyph'] if i==1 else glyphs[i%len(glyphs)])
+                self.assertEqual(style['lineStyle'],override['lineStyle'] if i==1 else rhythms[(i//len(glyphs))%4])
+            for k,v in override.items():self.assertEqual(styles['s1'][k],v)
+        for glyphs in ([],['hexagon']):
+            c=self.scene_contract();c['style']={'glyphs':glyphs}
+            with self.assertRaisesRegex(ValueError,'style.glyphs'):compile_terminal_scene(c)
+
+    def test_first_appearance_colors_and_family_markers(self):
+        from figurestead import scatter, strip_summary
+        from matplotlib.colors import to_hex
+        from figurestead.core import resolve
+        theme,_=resolve('lavender_fog_notebook','deep_scope')
+        for keys in (['treatment','treatment','control'],['z','a','z'],[2,2,1]):
+            order=list(dict.fromkeys(keys))
+            for family in ('scatter','strip'):
+                f,a=(scatter([0,1,2],[1,2,3],series=keys,theme=theme) if family=='scatter' else strip_summary(['A']*3,[1,2,3],series=keys,theme=theme))
+                labeled=[c for c in a.collections if c.get_label() in list(map(str,order))]
+                self.assertEqual([c.get_label() for c in labeled],list(map(str,order)))
+                self.assertEqual([t.get_text() for t in a.get_legend().get_texts()],list(map(str,order)))
+                for i,c in enumerate(labeled):
+                    self.assertEqual(to_hex(c.get_edgecolors()[0]),theme.series[i].lower())
+                    np.testing.assert_array_equal(c.get_paths()[0].vertices,labeled[0].get_paths()[0].vertices)
+
+    def test_category_admission_and_empty_strip_summary(self):
+        from figurestead import scatter, strip_summary
+        invalid=(np.array([1,'x'],dtype=object),[np.nan,1],np.ma.array([1,2],mask=False))
+        for keys in invalid:
+            with self.assertRaises(ValueError):scatter([0,1],[1,2],series=keys)
+            with self.assertRaises(ValueError):strip_summary(['A','B'],[1,2],series=keys)
+        for order in (['empty','B'],['B','empty'],['first','B','last']):
+            f,a=strip_summary(['B','B'],[2,4],order=order)
+            self.assertEqual([t.get_text() for t in a.get_xticklabels()],order)
+            self.assertTrue(all(np.isfinite(b.get_ydata()).all() for b in a.lines))
+
 if __name__=='__main__': unittest.main()

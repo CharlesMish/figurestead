@@ -105,7 +105,8 @@ def _category_vector(
         if isinstance(item, (int, float, np.integer, np.floating)) and not np.isfinite(item):
             raise _input_error(f"{path}[{index}]", "numeric category values must be finite")
     try:
-        unique = np.unique(array)
+        _, first = np.unique(array, return_index=True)
+        unique = array[np.sort(first)]
     except TypeError as exc:
         raise _input_error(path, "category values must be mutually comparable") from exc
     return array, unique
@@ -213,12 +214,18 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
     style_axes(ax, theme, profile, spec)
     rng = np.random.default_rng(seed)
     positions = {name: index for index, name in enumerate(order)}
+    # Keep existing per-observation jitter while color/legend ownership follows
+    # first appearance. Validation above retains the sortable category boundary.
+    jitter = np.empty(len(values))
+    for label in np.unique(series):
+        mask = series == label
+        jitter[mask] = rng.uniform(-0.13, 0.13, size=mask.sum())
 
     colors = series_colors(theme)
     for label, color in zip(series_keys, colors):
         mask = series == label
         x = np.array([positions[item] for item in groups[mask]], dtype=float)
-        x += rng.uniform(-0.13, 0.13, size=mask.sum())
+        x += jitter[mask]
         draw_points(ax, x, values[mask], color=color, theme=theme,
                     profile=profile, label=str(label))
 

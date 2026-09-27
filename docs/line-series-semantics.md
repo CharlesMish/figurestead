@@ -171,3 +171,16 @@ A line series with finite evidence but no adjacent finite pair has a marker-only
 legend sample. This includes a single finite observation in either runtime and
 Python observations isolated by NaN gaps. A real segment retains the actual
 line rhythm plus marker. No segment is invented for the legend.
+
+### Auxiliary scenes and other point families
+
+`compile_terminal_scene()` is finite-only for line and scatter coordinates. It
+is not a transport for ordinary Python NaN gaps; portable/browser missingness
+remains unsupported. Its explicit glyph list determines the authored rhythm
+block size, and supported per-key style fields override that allocation.
+
+Python scatter/strip series colors and legend order follow first appearance
+within each fresh call, matching browser initial category ownership. This does
+not establish B2 marker identity, carried slots, or persistent identity across
+separately rebuilt/filtered scatter or strip figures. Their marker grammar is
+unchanged.

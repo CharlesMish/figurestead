@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import math
 from typing import Any, Mapping
 
 from .application import get_application_profile
@@ -36,9 +37,30 @@ def _keys(panel: Mapping[str, Any]) -> list[str]:
     return list(dict.fromkeys(str(item) for item in series)) or ["series"]
 
 
+def _finite_coordinates(values, path):
+    for index, value in enumerate(values):
+        try:
+            valid = math.isfinite(value)
+        except (TypeError, ValueError, OverflowError):
+            valid = False
+        if not valid:
+            raise ValueError(f"{path}[{index}]: auxiliary scenes require finite numeric coordinates; NaN gaps are supported only by ordinary Python line()")
+
+
 def compile_terminal_scene(contract: Mapping[str, Any]) -> dict[str, Any]:
-    """Compile stable semantic IDs and styles without backend geometry."""
+    """Compile finite-only semantic records; not a transport for Python NaN gaps."""
     source = deepcopy(dict(contract))
+    # Validate before constructing any marks, including coordinates zip would omit.
+    for panel_index, panel in enumerate(source.get("panels", [])):
+        data = panel["data"]
+        path = f"panels[{panel_index}].data"
+        if panel["renderer"] in ("line", "scatter"):
+            _finite_coordinates(data["x"], f"{path}.x")
+            if panel["renderer"] == "line":
+                for index, row in enumerate(data["series"]):
+                    _finite_coordinates(row["y"], f"{path}.series[{index}] ({row['key']!r}).y")
+            else:
+                _finite_coordinates(data["y"], f"{path}.y")
     theme = source["theme"]
     keys: list[str] = []
     for panel in source.get("panels", []):
@@ -46,9 +68,15 @@ def compile_terminal_scene(contract: Mapping[str, Any]) -> dict[str, Any]:
             if key not in keys:
                 keys.append(key)
     # Missing rhythm is solid at every slot. Explicit contract rhythm keeps its
-    # existing four-glyph block allocation; a keyed rhythm wins for that trace.
+    # effective glyph-block allocation; a keyed rhythm wins for that trace.
     style = source.get("style") or {}
-    line_styles = style.get("lineStyles") or DEFAULT_LINE_STYLES
+    glyphs = style.get("glyphs") if style.get("glyphs") is not None else GLYPHS
+    line_styles = style.get("lineStyles") if style.get("lineStyles") is not None else DEFAULT_LINE_STYLES
+    if not isinstance(glyphs, (list, tuple)) or not glyphs or any(g not in GLYPHS for g in glyphs):
+        raise ValueError("style.glyphs: expected a nonempty list of ring, square, triangle or diamond")
+    rhythms = ("solid", "dash", "dot", "dash-dot")
+    if not isinstance(line_styles, (list, tuple)) or not line_styles or any(r not in rhythms for r in line_styles):
+        raise ValueError("style.lineStyles: expected a nonempty list of named rhythms")
     overrides = style.get("series") or {}
     styles = {}
     for index, key in enumerate(keys):
@@ -56,9 +84,16 @@ def compile_terminal_scene(contract: Mapping[str, Any]) -> dict[str, Any]:
         styles[key] = {
             "key": key, "colorIndex": color_index, "color": theme["series"][color_index],
             "edge": (theme.get("seriesEdges") or [None] * len(theme["series"]))[color_index],
-            "glyph": GLYPHS[index % len(GLYPHS)],
-            "lineStyle": overrides.get(key, {}).get("lineStyle", line_styles[(index // len(GLYPHS)) % len(line_styles)]),
+            "glyph": glyphs[index % len(glyphs)],
+            "lineStyle": line_styles[(index // len(glyphs)) % len(line_styles)],
         }
+        override = overrides.get(key, {})
+        if "glyph" in override and override["glyph"] not in GLYPHS:
+            raise ValueError(f"style.series[{key!r}].glyph: unsupported glyph")
+        if "lineStyle" in override and override["lineStyle"] not in rhythms:
+            raise ValueError(f"style.series[{key!r}].lineStyle: unsupported rhythm")
+        styles[key].update({name: override[name] for name in
+                           ("color", "edge", "glyph", "lineStyle", "hatch", "lineWidth") if name in override})
     panels = []
     for panel in source.get("panels", []):
         renderer, data, panel_id = panel["renderer"], panel["data"], panel["id"]

@@ -62,3 +62,12 @@ for(const keys of [ids,['mzq0kr','1bf3idp']]){
  if(keys!==ids)assert.match(svg,/65d1ead2-identity~1/,'real FNV collision gets a distinct resource');
 }
 console.log('hostile HC4 encoding/resources: 2 contracts + 7 encodings PASS');
+for(const keys of [['treatment','treatment','control'],['z','a','z']])for(const renderer of ['scatter','strip_summary']){
+ const c=make(['s']),p=c.panels[0],order=[...new Set(keys)];p.renderer=renderer;
+ const common={series:keys,seriesLabels:Object.fromEntries(order.map(k=>[k,k]))};
+ if(renderer==='scatter')p.data={...common,x:[0,1,2],y:[1,2,3],revealOrder:'input'};
+ else{p.xScale={type:'band'};p.data={...common,groups:['G'],group:['G','G','G'],values:[1,2,3],summary:'median',revealOrder:'input'};}
+ const m=compileFigureModel(c);assert.deepEqual(m.scene.panels[0].legend.map(e=>e.key),order);
+ order.forEach((key,i)=>assert.equal(m.scene.seriesStyles[key].color,theme.series[i]));
+}
+console.log('hostile HC5 browser category comparison: 4 PASS');
