@@ -158,7 +158,9 @@ export function compileFigureModel(input, options = {}) {
       denominator: child.data.denominator ?? child.data.n ?? null,
       annotations: child.annotations ?? [],
       notes: [child.spec.note, ...(child.annotations ?? []).filter((item) => item?.type === "scientific_note").map((item) => item.text)].filter(Boolean),
-      legend: compiled.legend ?? legendWithStyles(legend, keys, styles),
+      legend: (compiled.legend ?? legendWithStyles(legend, keys, styles)).map(item =>
+        panel.renderer === "line" && !defaultMarks.some(mark => mark.kind === "segment" && mark.series === item.key)
+          ? { ...item, lineSample: false } : item),
       meta: compiled.meta ?? null,
       ...(contract.style.directLabels ? { directLabelsInput: { data: panel.renderer === "line" ? { ...child.data, series: child.data.series.map((s,i) => {
         const authored = (input.panels?.[panelIndex]?.data ?? input.data)?.series?.[i];

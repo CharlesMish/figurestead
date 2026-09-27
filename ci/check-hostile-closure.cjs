@@ -52,7 +52,20 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
           if(/NaN|Infinity/.test(api.resolvedSceneToSvg(f.getComposedScene())))throw Error('nonfinite strip SVG');
           if(!canvas.toDataURL().startsWith('data:image/png'))throw Error('Canvas');
         }
-        return {result:'PASS',hc1Updates:6,hc2EmptyGroups:4};
+        const {drawResolvedPanel}=await import('/web/src/canvas-scene.js');
+        for(const count of [1,3])for(const points of [1,2]) {
+          const one=lineIdentityContract(theme);one.panels[0].data.x=[0,1].slice(0,points);
+          one.panels[0].data.series=Array.from({length:count},(_,i)=>({key:`S${i}`,label:`S${i}`,y:[i+1,i+2].slice(0,points)}));
+          one.style.series={S0:{lineStyle:'dash'}};f.setConfig(one);
+          const frame=api.resolveSceneFrame(f.getComposedScene(),1),p=frame.panels[0];
+          const svg=new DOMParser().parseFromString(api.resolvedSceneToSvg(f.getComposedScene()),'image/svg+xml');
+          same(svg.querySelectorAll('[data-layer="legend"] path[stroke-linecap]').length,points===1?0:count,'SVG legend topology');
+          const ctx=canvas.getContext('2d'),dash=ctx.setLineDash;let rhythmSamples=0;
+          ctx.setLineDash=function(v){if(v.length)rhythmSamples++;return dash.call(this,v);};
+          try{drawResolvedPanel(ctx,{...frame,panels:[{...p,marks:[],composedAnnotations:[]}]},0);}finally{ctx.setLineDash=dash;}
+          same(rhythmSamples>0,points>1,'Canvas legend sample topology');
+        }
+        return {result:'PASS',hc1Updates:6,hc2EmptyGroups:4,hc3Topology:4};
       } finally{f.destroy();canvas.remove();}
     });
     console.log(JSON.stringify(result));

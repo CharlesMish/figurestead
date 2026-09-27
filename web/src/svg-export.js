@@ -189,8 +189,8 @@ function legend(panel, theme, namespace) {
       const mark = { id: `${panel.id}-legend-${index}`, lineIdentity: true, style,
         geometry: { cx: x, cy: y, ...lineMarkerGeometry(style, panel.layout.scale, panel.presentation?.markerScale ?? 1) } };
       const half = 12 * Math.max(1, panel.layout.scale);
-      point = maskedLine({ ...mark, geometry: { x1: x - half, y1: y, x2: x + half, y2: y } }, [mark],
-        { left: x - half - 3, right: x + half + 3, top: y - 10, bottom: y + 10 }, `${namespace}-${safeId(panel.id)}-legend-${index}`) + linePoint(mark);
+      point = (item.lineSample === false ? "" : maskedLine({ ...mark, geometry: { x1: x - half, y1: y, x2: x + half, y2: y } }, [mark],
+        { left: x - half - 3, right: x + half + 3, top: y - 10, bottom: y + 10 }, `${namespace}-${safeId(panel.id)}-legend-${index}`)) + linePoint(mark);
     }
     const label = entry?.displayLabel ?? item.label;
     return `${point}<text ${attrs({ x: textX, y, fill: theme.label, "font-size": panel.layout.font.legend, "text-anchor": entry?.textAnchor ?? (panel.layout.legend.outside ? "start" : "end"), "dominant-baseline": "middle", "data-full-label": item.label })}><title>${esc(item.label)}</title>${esc(label)}</text>`;

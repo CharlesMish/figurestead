@@ -19,7 +19,7 @@ const pointDomains = (contract, prepared) => ({
 export const LINE_RENDERER = {
   key: "line", family: "trend", apiVersion: RENDERER_API_VERSION,
   validateData: normalizeLineData, prepare: prepareLine, draw: drawLine, domains: pointDomains,
-  describe(contract) { return { summary: `${contract.data.series.length} connected series.`, headers: [contract.spec.xLabel || "x", ...contract.data.series.map((series) => series.label)], rows: contract.data.x.map((x, index) => [x, ...contract.data.series.map((series) => series.y[index])]) }; },
+  describe(contract) { return { summary: `${contract.data.series.length} ${contract.data.x.length > 1 ? "connected series" : "point-only series"}.`, headers: [contract.spec.xLabel || "x", ...contract.data.series.map((series) => series.label)], rows: contract.data.x.map((x, index) => [x, ...contract.data.series.map((series) => series.y[index])]) }; },
 };
 
 export const SCATTER_RENDERER = {

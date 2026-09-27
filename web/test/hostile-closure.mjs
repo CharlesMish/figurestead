@@ -31,3 +31,17 @@ for(const occupied of [['B','C'],['A','C'],['A','B'],['B']]){
  assert.doesNotMatch(resolvedSceneToSvg(composed),/NaN|Infinity/);
 }
 console.log('hostile HC2 empty groups: 4 PASS');
+
+const {LINE_RENDERER}=await import('../src/core-renderers.js');
+for(const n of [1,3])for(const points of [1,2]){
+ const c=make(Array.from({length:n},(_,i)=>`s${i}`));c.panels[0].data.x=c.panels[0].data.x.slice(0,points);
+ c.panels[0].data.series.forEach(s=>s.y=s.y.slice(0,points));c.style.series={s0:{lineStyle:'dash'}};
+ const m=compileFigureModel(c),p=m.scene.panels[0];
+ assert.equal(p.marks.filter(m=>m.kind==='segment').length,n*(points-1));
+ assert.ok(p.legend.every(e=>points===1?e.lineSample===false:e.lineSample===undefined));
+ const svg=resolvedSceneToSvg(composeResolvedScene(resolveTerminalScene(m.scene,{width:760,height:520})));
+ assert.equal((svg.match(/-legend-\d+"[^>]*stroke-linecap/g)||[]).length,points===1?0:n);
+ const summary=LINE_RENDERER.describe(m.preparedPanels[0].contract).summary;
+ assert.match(summary,points===1?/point-only series/:/connected series/);
+}
+console.log('hostile HC3 topology: 4 PASS');

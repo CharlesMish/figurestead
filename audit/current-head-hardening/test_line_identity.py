@@ -245,8 +245,14 @@ class MarkerCadenceTests(unittest.TestCase):
                     self.assertEqual(body.identity_marker,sparse.identity_marker)
                 f.canvas.draw();g.canvas.draw()
                 for body,sample in zip(b.lines,b.get_legend().legend_handles):
-                    self.assertEqual(body.identity_marker,sample.identity_marker)
-                    self.assertEqual(len(sample.identity_points.get_offsets()),1)
+                    if n == 1:
+                        from matplotlib.collections import PathCollection
+                        self.assertIsInstance(sample,PathCollection)
+                        np.testing.assert_array_equal(sample.get_paths()[0].vertices,body.identity_points.get_paths()[0].vertices)
+                        self.assertEqual(len(sample.get_offsets()),1)
+                    else:
+                        self.assertEqual(body.identity_marker,sample.identity_marker)
+                        self.assertEqual(len(sample.identity_points.get_offsets()),1)
                 plt.close(f);plt.close(g)
         f,a=self.make();g,b=self.make(marker_stride=1)
         self.assertEqual(self.png(f),self.png(g))

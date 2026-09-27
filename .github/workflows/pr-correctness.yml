@@ -73,6 +73,9 @@ jobs:
       - name: Verify Python gapped lines
         run: python audit/current-head-hardening/test_gapped_lines.py
 
+      - name: Verify Python hostile closure
+        run: python audit/current-head-hardening/test_hostile_closure.py
+
       - name: Verify auxiliary line-scene rhythm
         run: python audit/current-head-hardening/test_scene_rhythm.py
 

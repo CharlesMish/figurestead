@@ -164,3 +164,10 @@ including absent keys. A new key receives the next never-assigned rank; filterin
 does not recycle ranks. Thus A,B → B,C → A,B,C preserves A=S1, B=S2, C=S3.
 Explicit keyed styles still win and may intentionally repeat identities.
 `setConfig` starts a new contract and resets registration.
+
+### Point-only legends
+
+A line series with finite evidence but no adjacent finite pair has a marker-only
+legend sample. This includes a single finite observation in either runtime and
+Python observations isolated by NaN gaps. A real segment retains the actual
+line rhythm plus marker. No segment is invented for the legend.

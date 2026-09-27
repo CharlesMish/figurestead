@@ -142,6 +142,6 @@ class IdentityLegend(HandlerBase):
         sample.identity_marker = orig.identity_marker
         sample.identity_edge_width = getattr(orig, "identity_edge_width", 0.)
         ydata = orig.get_ydata()
-        if np.isnan(ydata).any() and all(stop - start == 1 for start, stop in finite_runs(ydata)):
+        if not any(stop - start >= 2 for start, stop in finite_runs(ydata)):
             return [marker]
         return [sample, marker]
