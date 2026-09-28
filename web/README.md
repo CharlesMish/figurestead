@@ -1,6 +1,6 @@
 # @figurestead/web experimental public alpha
 
-This README targets `0.9.0-alpha.3`. Registry commands require that exact version to be available; review candidates are installed from their retained tarball. To follow the prerelease channel intentionally, use `npm install @figurestead/web@alpha`; an unqualified install follows `latest`, not necessarily this alpha.
+This README accompanies the unpublished `0.9.0-alpha.4` candidate. Reviewers install its retained tarball; after publication, use `npm install @figurestead/web@0.9.0-alpha.4`. The registry commands below intentionally install the currently published `0.9.0-alpha.3` foundation, not the candidate-only additions. To follow the prerelease channel intentionally, use `npm install @figurestead/web@alpha`; an unqualified install follows `latest`, not necessarily this alpha.
 
 ```sh
 npm install @figurestead/web@0.9.0-alpha.3
@@ -114,11 +114,19 @@ matrix renderer.
 
 Default line series combine color with persistent open **circle (S1), square (S2), and upright triangle (S3)** markers and matching line-and-marker legends. Line rhythm remains an independent semantic channel. `setData` retains established keyed identity through supported filtering/reordering and partial style overrides. `setConfig` replaces the contract.
 
-Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/main/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Product defaults are unchanged.
+Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.3/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
 
 Opt in with `style: { ...contract.style, directLabels: true }` (`style.directLabels: true`). Direct labels reuse the actual body marker identity beside the traces. V1 covers ordinary one-panel, 2–3-series line figures with single-line printable ASCII labels. Unsupported or insufficient layouts fall back atomically to the ordinary legend. This treatment does not support Unicode, multiline or math interpretation; printable ASCII math punctuation is literal. Active browser transitions use ordinary treatment until settled, and exports without trustworthy measurement retain the ordinary legend.
 
-See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/main/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/main/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/main/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
+See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/v0.9.0-alpha.3/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.3/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.3/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
+
+## New in the alpha.4 candidate
+
+Opt-in `style.markerStride` controls marker display by authored observation index, always including endpoints; it does not reduce data or the continuous line. When a participating body line is non-solid, every direct-label row adds its actual line sample before marker and text; extra width can trigger whole-legend fallback. Unconfigured lines remain solid at every series count; explicit `lineStyles` and keyed rhythm remain supported.
+
+`setData` now reserves first-encounter ranks for removed keys and assigns newcomers new ranks. `setConfig` still replaces/reset the contract. Empty strip groups retain categories without invented medians; point-only lines have marker-only legends; collision-safe IDs keep export resources associated with their own marks. Continuous authored rhythm survives segment subdivision and marker holes.
+
+See the [candidate release notes](https://github.com/CharlesMish/figurestead/blob/main/release/notes/0.9.0a3-web-alpha.4.md) and [current-source line semantics](https://github.com/CharlesMish/figurestead/blob/main/docs/line-series-semantics.md). Browser y missingness remains unsupported. These additions do not expand the bounded reference designation or direct-label profile.
 
 ## Controller failures
 
@@ -192,7 +200,7 @@ preferred height is never inferred as the next baseline by Figurestead.
 Height negotiation applies only to live Canvas rendering. SVG, paper, and
 explicitly dimensioned exports retain their requested dimensions.
 
-Version 0.9.0-alpha.3. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
+Candidate package version 0.9.0-alpha.4; currently published version 0.9.0-alpha.3. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
 
 ## Rendered series contrast
 

@@ -6,7 +6,9 @@ already-published first alpha used this repaired process.
 
 ## Next candidate (preparation only)
 
-`0.9.0-alpha.3` is retained separately under its versioned directory for independent review, not publication. Its approved future channel is `alpha`; no `latest` change is proposed. The existing parameterized publication workflow and exact candidate verifier are unchanged. See [coordinated notes](../notes/0.9.0a2-web-alpha.3.md).
+`0.9.0-alpha.4` is retained separately under its versioned directory for independent review, not publication. Its approved future channel is `alpha`; no `latest` change is proposed. The existing parameterized publication workflow and exact candidate verifier are unchanged. See [coordinated notes](../notes/0.9.0a3-web-alpha.4.md).
+
+Alpha.3 is already published and retained unchanged. As verified 2026-09-27, `alpha` points to alpha.3 and `latest` remains alpha.1. The [alpha.3 preparation notes](../notes/0.9.0a2-web-alpha.3.md) record that earlier preparation, not pending publication.
 
 ## Historical published alpha.2 state
 
@@ -31,7 +33,7 @@ was attempted.
 Independent read-only verification after propagation downloaded registry bytes
 that were byte-for-byte identical to the retained candidate: the same SHA-256,
 84,601-byte size, and 62 members. Registry provenance attestation is present;
-the `alpha` dist-tag points to `0.9.0-alpha.2`, while `latest` remains
+at that historical alpha.2 readback, the `alpha` dist-tag pointed to `0.9.0-alpha.2`, while `latest` remained
 `0.9.0-alpha.1`.
 
 The earlier alpha.2 digest and its final rejected disposition remain preserved

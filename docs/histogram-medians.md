@@ -1,5 +1,7 @@
 # Python histogram median ownership — current source
 
+Availability: introduced in the Python `0.9.0a3` candidate, not yet published. Published a2/alpha.3 bytes retain their earlier rendering.
+
 For two or more datasets, each Python `histogram()` median vertical rule uses
 that dataset's resolved series color. Common solid vertical-rule geometry
 communicates the median role; series color and the dataset-to-value legend entry

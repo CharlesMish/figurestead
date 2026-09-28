@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import importlib.metadata
 from pathlib import Path
@@ -10,8 +11,11 @@ import tempfile
 from figurestead import line
 
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--expected-version", required=True)
+args = parser.parse_args()
 checks = []
-checks.append(importlib.metadata.version("figurestead") == "0.9.0a2")
+checks.append(importlib.metadata.version("figurestead") == args.expected_version)
 checks.append(callable(line))
 with tempfile.TemporaryDirectory(prefix="figurestead-packed-smoke-") as temporary:
     output = Path(temporary) / "packed-smoke.png"
