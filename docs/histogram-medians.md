@@ -1,6 +1,6 @@
 # Python histogram median ownership — current source
 
-Availability: introduced in the Python `0.9.0a3` candidate, not yet published. Published a2/alpha.3 bytes retain their earlier rendering.
+Availability: published in Python `0.9.0a3`. Retained a2/alpha.3 bytes keep their earlier rendering.
 
 For two or more datasets, each Python `histogram()` median vertical rule uses
 that dataset's resolved series color. Common solid vertical-rule geometry
@@ -22,10 +22,10 @@ legend behavior, with no new value header. Other summary renderers and theme
 palettes are unchanged. Long labels may still encounter ordinary Matplotlib
 legend-layout pressure; this change does not add a layout solver.
 
-This is a current-source change after published alpha.3, not a claim about that
+This change shipped in Python a3 after alpha.3, not as a change to that
 release's retained specimens or package bytes.
 
-## Wording retained for a future release note
+## Published alpha.4 release summary
 
 Multi-dataset Python histograms now use dataset-colored median rules and a
 combined fill/rule legend reporting each dataset's median value. The common

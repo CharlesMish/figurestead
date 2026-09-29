@@ -1,6 +1,6 @@
 # Orthogonal line-series semantics
 
-Availability: this current-source contract targets the unpublished Python `0.9.0a3` / browser `0.9.0-alpha.4` candidate. Keyed Python rhythm, cadence, Python NaN gaps and the integrity corrections below begin with those versions. B2 identities, `series_slots`, baseline direct labels and the reference pair already shipped in Python a2 / browser alpha.3; browser per-key rhythm was already supported.
+Availability: this contract is published in Python `0.9.0a3` / browser `0.9.0-alpha.4`. Keyed Python rhythm, cadence, Python NaN gaps and the integrity corrections below begin with those versions. B2 identities, `series_slots`, baseline direct labels and the reference pair already shipped in Python a2 / browser alpha.3; browser per-key rhythm was already supported.
 
 Python slots carry marker/color identity; Python keys address authored line rhythm. Labels are display text. None of these imply a scientific meaning: authors explain their own convention, for example “solid = observed; dashed = predicted.” A triangle does not mean predicted.
 
@@ -145,18 +145,18 @@ Python direct-label request gives atomic ordinary-legend fallback with internal
 reason `missing-observations`, before gutter allocation. Invalid ordinary input
 still raises. No-gap direct labels and marker selection are unchanged.
 
-This is current-source Python behavior, not a claim about the published alpha.3
+This Python behavior shipped in a3, not in the earlier alpha.3
 packages. Browser and portable validators remain finite-only. A later browser
 slice should use explicit JSON `null` y, preserving shared finite x and original
 row positions in descriptions rather than compacting records. A future Python
 adapter would explicitly map accepted NaN to null with strict JSON, rejecting
 infinity before serialization. That transport is not implemented here.
 
-## Wording retained for a future release note
+## Published alpha.4 release summary
 
 Unconfigured browser line series now remain solid at every series count.
 Explicit rhythm styling and existing marker/color fallback allocation are preserved.
-This is current-source behavior after alpha.3, not a revision to that release's
+This behavior shipped in alpha.4, not as a revision to alpha.3's
 retained specimens. Ordinary Python line rendering, gaps and marker cadence are
 unchanged; the auxiliary Python terminal-scene compiler shares the solid default.
 

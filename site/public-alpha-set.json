@@ -57,7 +57,7 @@
     },
     {
       "group": "signature",
-      "guidance": "Use active marker/dash redundancy for larger series counts.",
+      "guidance": "Persistent reference qualification covers S1–S3. Higher-series marker/color fallback is deterministic but unqualified; non-solid rhythm is authored semantics, not automatic identity redundancy.",
       "image": "assets/card-ultraviolet.png",
       "key": "ultraviolet_laboratory",
       "name": "Ultraviolet Laboratory",
@@ -74,7 +74,7 @@
     },
     {
       "group": "signature",
-      "guidance": "Use active marker/dash redundancy for larger series counts.",
+      "guidance": "Persistent reference qualification covers S1–S3. Higher-series marker/color fallback is deterministic but unqualified; non-solid rhythm is authored semantics, not automatic identity redundancy.",
       "image": "assets/card-lavender.png",
       "key": "lavender_fog_notebook",
       "name": "Lavender Fog Notebook",

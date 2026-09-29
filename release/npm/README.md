@@ -4,11 +4,13 @@ This directory defines the retained-candidate lifecycle for
 `@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
 already-published first alpha used this repaired process.
 
-## Next candidate (preparation only)
+## Published alpha.4 (verified 2026-09-29)
 
-`0.9.0-alpha.4` is retained separately under its versioned directory for independent review, not publication. Its approved future channel is `alpha`; no `latest` change is proposed. The existing parameterized publication workflow and exact candidate verifier are unchanged. See [coordinated notes](../notes/0.9.0a3-web-alpha.4.md).
+`0.9.0-alpha.4` is published from the exact retained tarball under its versioned directory. `alpha` points to alpha.4; `latest` intentionally remains alpha.1. The existing parameterized publication workflow and exact candidate verifier are unchanged. See [coordinated release notes](../notes/0.9.0a3-web-alpha.4.md).
 
-Alpha.3 is already published and retained unchanged. As verified 2026-09-27, `alpha` points to alpha.3 and `latest` remains alpha.1. The [alpha.3 preparation notes](../notes/0.9.0a2-web-alpha.3.md) record that earlier preparation, not pending publication.
+[Run 36508701820](https://github.com/CharlesMish/figurestead/actions/runs/36508701820) passed retained-candidate verification and Trusted Publishing, but its public-readback job exhausted the 120-second visibility window. Independent read-only verification subsequently confirmed the exact retained SHA-256/SHA-512, registry signature, provenance bound to that run and commit `9260af190e60c621244072675c238db4822b8632`, and both dist-tags. Fresh exact-version/`@alpha`, ESM, TypeScript, Vite and Chromium/Firefox consumers passed. Publication succeeded after delayed visibility; no second publication was attempted. The workflow's original timeout conclusion remains part of the record.
+
+Alpha.3 remains published and retained unchanged. At the historical 2026-09-27 verification, `alpha` pointed to alpha.3 and `latest` remained alpha.1. The [alpha.3 preparation notes](../notes/0.9.0a2-web-alpha.3.md) record that earlier preparation, not pending publication.
 
 ## Historical published alpha.2 state
 

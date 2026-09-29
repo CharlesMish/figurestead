@@ -19,12 +19,12 @@ CURRENT_SPECIMENS = {
 }
 ACCEPTED_FILES = {
     "current-alpha/manifest.json": "f59b8f0215a844444223bf9845f96c1154259d043822f3aa8bd6ea54f793563b",
-    "index.html": "28e63b0f62f3ba3dbc38cbda58858ae7b4c3d4fad072173d08c7625e74c9c70a",
+    "index.html": "2cd2413f16051d00b3ef7ce7cf2f17af177471c7f44be65a7ca2f7341b4262a0",
     "earlier-alpha.html": "a2942f3f04a892cd67a60e2011c96bca6e8cc70dcafd01bd3df4dbf1a1d0e8a3",
     "evidence/index.html": "e9bf28929af0e1210f749cbc7686c2106f6f8eae66dbd33a45b19bb36db3641f",
     "styles.css": "281d7261c7663621d9e6632fcafb1cbc4d5a5a4550546b31fc7c3c9cbdd89b59",
-    "README.md": "e089b27769a66923d11d7e873912f847fcb36fc43d0b5d0534184a77e006419c",
-    "public-alpha-set.json": "657cc806d1ee4ae43c2cb70a910da4360c896e87e5855f5c16fa163b0b42bef9",
+    "README.md": "d178cf0fa1a2555b4cdfaee898e33b842d6384cd7a7b590e20c73155cce5ddfc",
+    "public-alpha-set.json": "9a711b915d1d51f4ec28c3f13692a07df3d44196729ff4bb1fce47ac4f37c952",
     "WEB_ASSET_MANIFEST.json": "f5865fc6cc06703358e6cd859fb88c8ed950c17c1d96041413d81fab91522d07",
 }
 
