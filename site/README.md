@@ -1,14 +1,11 @@
 # Figurestead public alpha site
 
-This experimental static surface presents six featured themes from a broader
-design catalog. Figurestead · deterministic synthetic evidence.
+The static root presents the published Python `0.9.0a3` / browser `0.9.0-alpha.4` release and current installation/documentation links. npm `alpha` follows alpha.4; `latest` intentionally remains alpha.1. This repository update does not itself deploy Pages.
 
-Digital paper evidence records a 6.372 pt minimum against Figurestead's internal
-6 pt project floor. The evidence is deterministic digital geometry, not physical
-printer proof or an external typographic threshold.
+`current-alpha/` retains the four accepted **a2/alpha.3** Python/Canvas specimens and their original package/data/image manifest. The directory name is retained for stable links; these bytes are not alpha.4 output. Root captions identify their original versions.
 
-Canonical evidence files remain unchanged under `assets/`. `WEB_ASSET_MANIFEST.json`
-maps each canonical file to deterministic lossless and responsive web-delivery
-derivatives under `assets/web/`, records exact byte hashes, and records decoded
-pixel identity for every full-size lossless derivative. Atlas Case 05 also records
-its presentation-only sRGB luminance grayscale transform in that manifest.
+The earlier-alpha gallery at `earlier-alpha.html` and Evidence Atlas at `evidence/` remain historical. `public-alpha-set.json` retains the earlier catalog's source commit, colors, roles and color-led counts; those historical fields are not current qualification claims. Its Lavender/Ultraviolet guidance now states the bounded S1–S3 reference profile, unqualified higher-series marker/color fallback and independently authored rhythm.
+
+Digital paper evidence records a 6.372 pt minimum against Figurestead's internal 6 pt project floor. It is deterministic digital geometry, not physical printer proof or an external typographic threshold.
+
+Canonical evidence files remain unchanged under `assets/`. `WEB_ASSET_MANIFEST.json` maps each canonical file to deterministic lossless and responsive web-delivery derivatives under `assets/web/`, records exact byte hashes, and records decoded pixel identity for every full-size lossless derivative. Atlas Case 05 also records its presentation-only sRGB luminance grayscale transform in that manifest. No images or manifests were regenerated for publication-status cleanup.

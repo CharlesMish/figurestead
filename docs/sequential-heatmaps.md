@@ -1,8 +1,8 @@
 # Python sequential heatmaps — current source
 
-Availability: introduced in the Python `0.9.0a3` candidate, not yet published. Published a2/alpha.3 bytes retain their earlier rendering.
+Availability: published in Python `0.9.0a3`. Retained a2/alpha.3 bytes keep their earlier rendering.
 
-The current-source Python `heatmap()` uses a theme-derived sequential ramp with monotone lightness. This is a source change after the published Python `0.9.0a2` / coordinated alpha.3 release, not a description of that release's retained heatmaps.
+Python `heatmap()` uses a theme-derived sequential ramp with monotone lightness. This change shipped in Python `0.9.0a3`; the earlier Python `0.9.0a2` / coordinated alpha.3 heatmaps retain their original rendering.
 
 The ramp changes colors, not numeric values, admission, normalization or cell geometry. Equal numeric values map to equal colors. Nearest-neighbor rendering, opacity, axes, colorbar and typography are unchanged. Low values remain observations; a quiet low-value color does not mean missing data. No new missing-value semantics are introduced.
 
@@ -18,6 +18,6 @@ The endpoint values are Figurestead design constants from the retained sequentia
 
 Theme palettes themselves are unchanged. Line-series identity and browser rendering are unchanged. The categorical-matrix extension, including its annotation and missing/insufficient-cell policies, retains its existing ramp pending a separate migration. Historical specimens remain records of the source that produced them.
 
-## Wording retained for a future release note
+## Published alpha.4 release summary
 
 Python heatmaps now use a theme-derived sequential ramp with monotone lightness, replacing the field/panel/primary/summary token sequence. This changes heatmap colors while preserving data and normalization. Theme palettes and line-series identity are unchanged. The categorical-matrix extension retains its existing rendering until its separate migration.
