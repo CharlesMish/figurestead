@@ -35,9 +35,11 @@ norm after those updates complete, without requiring a second manual update.
 Partially bounded norms can also pass through reversed or equal bounds between
 native assignments. During that initialization, reversed, equal or nonfinite
 interim bounds stay with Matplotlib until it settles them. The initialization
-scope follows the norm object through nested callbacks and ends when native
-update returns. Caller `set_clim` transitions outside that scope retain their
-protection against colorbar rewrites between limit assignments.
+scope follows the image through nested callbacks, including callbacks that
+replace its norm while an outer native update continues. It ends when native
+update returns, including after a caller exception. Caller `set_clim`
+transitions outside that scope retain their protection against colorbar
+rewrites between limit assignments.
 `autoscale` and `autoscale_None` retain the installed Matplotlib version's
 normalization behavior; the colorbar describes the resulting image domain.
 
@@ -69,6 +71,9 @@ and caller observers that make nested colormap/limit changes. Partial resets
 exercise negative, positive, cross-zero and constant data, partial/full masks,
 and repeated transitions, comparing settled limits and callback order with
 native Matplotlib on the same runtime.
+Reentrant replacement checks cover partial, unbounded, `None` and bounded
+replacement norms, successive replacements within one callback chain, masks,
+exports and recovery after a nested callback raises.
 
 This is not universal finite-domain qualification. The preexisting
 `[-8e307, 8e307]` image/tick arithmetic limitation remains separate: minimum

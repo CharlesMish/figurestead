@@ -179,7 +179,7 @@ class _MatrixColorbar(Colorbar):
 
     def __init__(self, ax, image, value_format, **kwargs):
         self._value_format = value_format
-        self._initializing_norm = None
+        self._initializing_image = None
         self._display = _MatrixDisplay(image)
         display = self._display_for(image)
         super().__init__(ax, display, alpha=image.get_alpha(), **kwargs)
@@ -199,7 +199,9 @@ class _MatrixColorbar(Colorbar):
         # belong to that in-progress normalization. Let Matplotlib settle them.
         # Outside initialization, the same interim bounds can come from a
         # caller's set_clim assignments and must not overwrite its limits.
-        if image.norm is self._initializing_norm and image.norm.scaled():
+        # Initialization belongs to the mappable: a caller can replace its norm
+        # reentrantly while an outer native update continues with that new norm.
+        if image is self._initializing_image and image.norm.scaled():
             low, high = image.get_clim()
             if not (math.isfinite(low) and math.isfinite(high) and low < high):
                 return image
@@ -229,9 +231,9 @@ class _MatrixColorbar(Colorbar):
 
     def update_normal(self, mappable=None):
         image = self.mappable if mappable is None else mappable
-        initializing = self._initializing_norm
+        initializing = self._initializing_image
         if not image.norm.scaled():
-            self._initializing_norm = image.norm
+            self._initializing_image = image
         was_unit = self.norm is self._display.norm
         try:
             display = self._display_for(image)
@@ -240,7 +242,7 @@ class _MatrixColorbar(Colorbar):
             super().update_normal(display)
         finally:
             self.mappable = image
-            self._initializing_norm = initializing
+            self._initializing_image = initializing
         # Native autoscaling of an unbounded norm can synchronously re-enter
         # this update and select another display norm. Format the settled bar,
         # not the display chosen before those native callbacks completed.

@@ -450,6 +450,106 @@ class MatrixDomainTests(unittest.TestCase):
             self.assert_colorbar_represents_image(fig, ax)
             plt.close(fig)
 
+    def test_reentrant_norm_replacement_keeps_native_ownership_and_exports(self):
+        def exercise(image, data, initial, replacements):
+            events, installed = [], []
+            pending = iter(replacements)
+
+            def observer(*_):
+                events.append(image.get_clim())
+                if image.norm.scaled():
+                    factory = next(pending, None)
+                    if factory is not None:
+                        replacement = factory()
+                        installed.append(replacement)
+                        image.set_norm(replacement)
+
+            image.set_data(data)
+            cid = image.callbacks.connect("changed", observer)
+            try:
+                image.set_norm(initial())
+            finally:
+                image.callbacks.disconnect(cid)
+            self.assertEqual(len(installed), len(replacements))
+            if installed[-1] is not None:
+                self.assertIs(image.norm, installed[-1])
+            return image.get_clim(), events
+
+        cases = [((-2., 0.), (-2., -1.)), ((0., 3.), (1., 2.)), ((-2., 2.), (-1., 1.))]
+        for domain, values in cases:
+            for masked in (False, True):
+                fig, ax = categorical_matrix(fixture(domain, values=values), theme="lavender_fog_notebook")
+                image, bar = ax.images[0], ax.images[0].colorbar
+                callback = image.colorbar_cid
+                reference, reference_ax = plt.subplots()
+                native = reference_ax.imshow([values], vmin=domain[0], vmax=domain[1])
+                reference.colorbar(native, ax=reference_ax)
+                data = np.ma.array([values], mask=[[False, masked]])
+                low, high = values[0] - .5, values[1] + .5
+                replacements = [
+                    (lambda: colors.Normalize(vmax=high),),
+                    (lambda: colors.Normalize(vmin=low),),
+                    (colors.Normalize,),
+                    (lambda: None,),
+                    (lambda: colors.Normalize(low, high),),
+                    (lambda: colors.Normalize(vmax=high), lambda: colors.Normalize(vmin=low)),
+                ]
+                for initial in (lambda: colors.Normalize(vmax=values[1]),
+                                lambda: colors.Normalize(vmin=values[0])):
+                    for index, replacement in enumerate(replacements):
+                        with self.subTest(domain=domain, masked=masked, replacement=index, initial=initial().vmin):
+                            # Repeated replacements enter from the exceptional
+                            # path; expected native callbacks use ordinary data.
+                            image.set_norm(colors.Normalize(1., math.nextafter(1., 2.)))
+                            expected = exercise(native, data, initial, replacement)
+                            actual = exercise(image, data, initial, replacement)
+                            self.assertEqual(actual, expected)
+                            self.assertIs(bar, image.colorbar)
+                            self.assertEqual(image.colorbar_cid, callback)
+                            np.testing.assert_array_equal(image.get_array().mask, data.mask)
+                            np.testing.assert_array_equal(image.get_array().compressed(), data.compressed())
+                            self.assert_colorbar_represents_image(fig, ax)
+                            settled = image.get_clim()
+                            for fmt in ("png", "svg", "pdf"):
+                                out = io.BytesIO()
+                                with matplotlib.rc_context({"svg.fonttype": "path"}):
+                                    fig.savefig(out, format=fmt)
+                                if fmt == "png":
+                                    out.seek(0)
+                                    np.testing.assert_array_equal(np.asarray(Image.open(out)), fig.canvas.buffer_rgba())
+                                elif fmt == "svg":
+                                    ET.fromstring(out.getvalue())
+                                else:
+                                    self.assertTrue(out.getvalue().startswith(b"%PDF"))
+                                self.assertEqual(image.get_clim(), settled)
+                                self.assert_colorbar_represents_image(fig, ax)
+                plt.close(reference)
+                plt.close(fig)
+
+    def test_reentrant_norm_replacement_scope_ends_after_callback_failure(self):
+        fig, ax = categorical_matrix(fixture((-2., 0.), values=[-2., -1.]))
+        image = ax.images[0]
+        replacement = colors.Normalize(vmax=-.5)
+        installed = []
+
+        def observer(*_):
+            if image.norm.scaled():
+                if not installed:
+                    installed.append(True)
+                    image.set_norm(replacement)
+                else:
+                    raise RuntimeError("synthetic nested replacement failure")
+
+        cid = image.callbacks.connect("changed", observer)
+        with self.assertRaisesRegex(RuntimeError, "synthetic nested replacement failure"):
+            image.set_norm(colors.Normalize(vmax=-1.))
+        image.callbacks.disconnect(cid)
+        self.assertIs(image.norm, replacement)
+        image.set_data([[10., 20.]])
+        image.set_clim(10., 20.)
+        self.assert_endpoint_pixels(fig, ax, (10., 20.))
+        self.assert_colorbar_represents_image(fig, ax)
+
     def test_unbounded_norm_resets_keep_settled_scientific_labels_through_exports(self):
         adjacent = (1., math.nextafter(1., 2.))
         domains = (adjacent, (0., 2.), (0., math.ulp(0.)), adjacent)
