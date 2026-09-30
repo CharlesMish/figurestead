@@ -29,6 +29,12 @@ numeric array, domain, masks and annotations remain intact. Nearest-neighbor
 RGBA resampling on this path preserves colors already computed from the exact
 values on older Matplotlib versions too.
 
+Resetting to an unbounded `Normalize()` or `None` can trigger native autoscaling
+and nested change notifications. Endpoint formatting uses the settled colorbar
+norm after those updates complete, without requiring a second manual update.
+`autoscale` and `autoscale_None` retain the installed Matplotlib version's
+normalization behavior; the colorbar describes the resulting image domain.
+
 An authored span that cannot be represented as a positive finite float fails
 with a domain-specific `ValueError` before creating a figure or modifying a
 caller-owned axes. The data normalizer's input grammar is unchanged. This is
@@ -52,6 +58,8 @@ status cells, repeated renders and PNG/SVG/PDF exports. Colorbar display
 coordinates are inspected separately from the image's scientific norm.
 Mutation checks cover repeated ordinary/exceptional transitions, colormap and
 norm replacement, exported pixels/labels, custom ticks and colorbar removal.
+They also cover unbounded/partially bounded norm resets, both autoscale methods,
+and caller observers that make nested colormap/limit changes.
 
 This is not universal finite-domain qualification. The preexisting
 `[-8e307, 8e307]` image/tick arithmetic limitation remains separate: minimum

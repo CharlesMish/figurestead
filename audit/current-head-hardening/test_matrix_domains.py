@@ -320,6 +320,130 @@ class MatrixDomainTests(unittest.TestCase):
                 fig.canvas.draw()
                 plt.close(fig)
 
+    def assert_colorbar_represents_image(self, fig, ax, kind="decimal"):
+        image, bar = ax.images[0], ax.images[0].colorbar
+        scientific = image.get_clim()
+        self.assertIs(bar.mappable, image)
+        self.assertIs(bar.cmap, image.cmap)
+        if bar.norm is image.norm:
+            self.assertEqual(bar.ax.get_ylim(), scientific)
+        else:
+            self.assertEqual(bar.ax.get_ylim(), (0., 1.))
+            np.testing.assert_array_equal(bar.get_ticks(), [0, 1])
+            labels = [t.get_text() for t in bar.ax.get_yticklabels()]
+            decoded = [Decimal(t.rstrip("%")) / (100 if kind == "percent" else 1) for t in labels]
+            self.assertEqual(decoded, [Decimal(str(v)) for v in scientific])
+        fig.canvas.draw()
+        self.assertEqual(image.get_clim(), scientific)
+        np.testing.assert_array_equal(bar.solids.get_facecolors(),
+                                      image.cmap((np.arange(image.cmap.N) + .5) / image.cmap.N))
+        rgba = np.asarray(fig.canvas.buffer_rgba())
+        for index, value in enumerate(image.get_array()[0]):
+            x, y = ax.transData.transform((index, -.25))
+            np.testing.assert_array_equal(rgba[rgba.shape[0] - 1 - int(y), int(x)],
+                                          image.cmap(image.norm(value), bytes=True))
+
+    def test_unbounded_norm_resets_keep_settled_scientific_labels_through_exports(self):
+        adjacent = (1., math.nextafter(1., 2.))
+        domains = (adjacent, (0., 2.), (0., math.ulp(0.)), adjacent)
+        for theme in ("lavender_fog_notebook", "ultraviolet_laboratory"):
+            for kind in ("decimal", "percent"):
+                with self.subTest(theme=theme, format=kind):
+                    fig, ax = categorical_matrix(fixture(adjacent, value_format=kind), theme=theme)
+                    image, bar = ax.images[0], ax.images[0].colorbar
+                    callback = image.colorbar_cid
+                    for domain in domains:
+                        for reset in (None, colors.Normalize(), colors.Normalize(vmin=domain[0]),
+                                      colors.Normalize(vmax=domain[1])):
+                            image.set_data([domain])
+                            image.set_norm(reset)
+                            # No manual colorbar update: check immediately, then
+                            # draw/export the state produced by native callbacks.
+                            self.assert_colorbar_represents_image(fig, ax, kind)
+                            settled = image.get_clim()
+                            for fmt in ("png", "svg", "pdf"):
+                                out = io.BytesIO()
+                                with matplotlib.rc_context({"svg.fonttype": "path"}):
+                                    fig.savefig(out, format=fmt)
+                                if fmt == "png":
+                                    out.seek(0)
+                                    np.testing.assert_array_equal(np.asarray(Image.open(out)), fig.canvas.buffer_rgba())
+                                elif fmt == "svg":
+                                    ET.fromstring(out.getvalue())
+                                    for label in (t.get_text() for t in bar.ax.get_yticklabels()):
+                                        self.assertIn(label, out.getvalue().decode())
+                                else:
+                                    self.assertTrue(out.getvalue().startswith(b"%PDF"))
+                                self.assertEqual(image.get_clim(), settled)
+                                self.assert_colorbar_represents_image(fig, ax, kind)
+                            self.assertEqual(image.colorbar_cid, callback)
+                            self.assertEqual(len(fig.axes), 2)
+                    plt.close(fig)
+
+    def test_autoscale_methods_follow_repeated_ordinary_and_exceptional_data(self):
+        adjacent = (1., math.nextafter(1., 2.))
+        for initial in (adjacent, (0., 2.)):
+            fig, ax = categorical_matrix(fixture(initial))
+            image = ax.images[0]
+            for domain in (adjacent, (10., 20.), (0., math.ulp(0.)), (-2., 2.), adjacent):
+                image.set_data([domain])
+                image.autoscale()
+                self.assertEqual(image.get_clim(), domain)
+                self.assert_colorbar_represents_image(fig, ax)
+                # A caller can clear either/both bounds before autoscale_None.
+                # Preserve native version-specific autoscale behavior while
+                # requiring the bar to represent the actual settled image norm.
+                for clear in ("vmin", "vmax", "both"):
+                    with image.norm.callbacks.blocked():
+                        if clear in ("vmin", "both"):
+                            image.norm.vmin = None
+                        if clear in ("vmax", "both"):
+                            image.norm.vmax = None
+                    image.autoscale_None()
+                    self.assert_colorbar_represents_image(fig, ax)
+            plt.close(fig)
+
+    def test_native_autoscale_callbacks_preserve_caller_observers_and_nested_changes(self):
+        adjacent = (1., math.nextafter(1., 2.))
+
+        def exercise(image, verify=None):
+            events, changed = [], []
+            settled = []
+
+            def observer(*_):
+                events.append(image.get_clim())
+                if image.norm.scaled() and not changed:
+                    changed.append(True)
+                    image.set_cmap("plasma")
+                    image.set_clim(0., 4.)
+
+            observer_id = image.callbacks.connect("changed", observer)
+            for reset in (None, colors.Normalize()):
+                changed.clear()
+                image.set_data([(0., 2.)])
+                image.set_norm(reset)
+                self.assertEqual(changed, [True])
+                self.assertEqual(image.cmap.name, "plasma")
+                settled.append(image.get_clim())
+                if verify is not None:
+                    verify()
+            self.assertGreater(len(events), 2)
+            image.callbacks.disconnect(observer_id)
+            return settled
+
+        for initial in (adjacent, (0., 2.)):
+            reference, reference_ax = plt.subplots()
+            native = reference_ax.imshow([initial], vmin=initial[0], vmax=initial[1])
+            reference.colorbar(native, ax=reference_ax)
+            # Native versions differ in whether remaining autoscale assignments
+            # overwrite a nested observer's limit change. Preserve that ordering.
+            expected = exercise(native)
+            plt.close(reference)
+            fig, ax = categorical_matrix(fixture(initial))
+            actual = exercise(ax.images[0], lambda: self.assert_colorbar_represents_image(fig, ax))
+            self.assertEqual(actual, expected)
+            plt.close(fig)
+
 
 if __name__ == "__main__":
     unittest.main()

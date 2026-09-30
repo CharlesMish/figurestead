@@ -228,8 +228,12 @@ class _MatrixColorbar(Colorbar):
             super().update_normal(display)
         finally:
             self.mappable = image
-        if display is self._display or was_unit:
-            self._format_ticks(display is self._display, restore=was_unit)
+        # Native autoscaling of an unbounded norm can synchronously re-enter
+        # this update and select another display norm. Format the settled bar,
+        # not the display chosen before those native callbacks completed.
+        unit = self.norm is self._display.norm
+        if unit or was_unit:
+            self._format_ticks(unit, restore=was_unit)
 
 
 def _matrix_colorbar(fig, ax, image, value_format):
