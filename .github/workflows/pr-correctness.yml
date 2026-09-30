@@ -258,6 +258,9 @@ jobs:
       - name: Verify controller transactionality and runtime errors
         run: npm run test:browser-controller-integrity
 
+      - name: Verify dense numeric admission and atomic sparse-array rejection
+        run: npm run test:browser-numeric-array-validation
+
       - name: Verify final-coordinate inspection purity
         run: npm run test:browser-final-coordinate-purity
 
