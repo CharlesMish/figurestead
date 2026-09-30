@@ -41,6 +41,49 @@ class DirectLabelTests(unittest.TestCase):
         f,a=self.make(direct_labels=False);before=self.png(f)
         g,b=line([0,1,2],[[1,2,3],[2,3,3.05],[3,4,3.1]],labels=['S1','S2','S3'],theme='lavender_fog_notebook')
         self.assertEqual(before,self.png(g));self.assertFalse(hasattr(b,'_figurestead_direct_labels'))
+    def test_marker_joins_draw_and_export_with_supported_dependency_minimum(self):
+        for slots in ([0,1,2],[1,2]):
+            for join in (None,'round','miter','bevel'):
+                with self.subTest(slots=slots,join=join):
+                    f,a=line([0,1,2],[[i,i+1,i+2] for i in slots],
+                             series_slots=slots,direct_labels=True)
+                    if join is not None:
+                        for body in a.lines:body.identity_points.set_joinstyle(join)
+                    expected=({'status':'fallback','reason':'unsupported-geometry'}
+                              if join in ('miter','bevel') else None)
+                    for fmt in (None,'png','svg','pdf'):
+                        with self.subTest(format=fmt):
+                            if fmt is None:f.canvas.draw()
+                            else:
+                                output=io.BytesIO();f.savefig(output,format=fmt)
+                                self.assertGreater(len(output.getvalue()),1000)
+                            result=a._figurestead_direct_labels.result
+                            if expected:self.assertEqual(result,expected)
+                            else:self.assertEqual(result['status'],'placed')
+                    plt.close(f)
+    def test_unexpected_marker_join_getter_errors_propagate(self):
+        for error in (AttributeError('unexpected getter failure'),RuntimeError('unexpected getter failure')):
+            f,a=self.make()
+            with patch.object(a.lines[0].identity_points,'get_joinstyle',side_effect=error):
+                with self.assertRaisesRegex(type(error),'unexpected getter failure'):f.canvas.draw()
+            plt.close(f)
+    def test_masked_marker_geometry_falls_back_to_ordinary_rendering(self):
+        for coordinate in (0,1):
+            images=[]
+            for direct in (True,False):
+                f,a=self.make(direct_labels=direct)
+                # Matplotlib hides this terminal marker; masked underlying
+                # coordinates must not be mistaken for an unchanged marker.
+                points=a.lines[0].identity_points
+                offsets=np.ma.array(points.get_offsets(),copy=True)
+                offsets.mask[-1,coordinate]=True
+                points.set_offsets(offsets)
+                images.append(self.png(f))
+                if direct:
+                    self.assertEqual(a._figurestead_direct_labels.result,
+                                     {'status':'fallback','reason':'unsupported-geometry'})
+                plt.close(f)
+            self.assertEqual(*images)
     def test_placement_identity_and_lifecycle(self):
         f,a=self.make();xy=[l.get_xydata().copy() for l in a.lines];domains=(a.get_xlim(),a.get_ylim())
         f.canvas.draw();d=a._figurestead_direct_labels;self.assertEqual(d.result['status'],'placed')

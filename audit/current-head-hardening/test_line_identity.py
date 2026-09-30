@@ -76,6 +76,49 @@ class LineIdentityTests(unittest.TestCase):
                                        np.array([[4., 0.], [5., 0.]]), "o", 4.))
         np.testing.assert_allclose(actual, [(0, .2), (.7, 1)])
 
+    def test_ordinary_marker_shapes_draw_and_export(self):
+        for slots in ([0], [1], [2], [0, 1, 2]):
+            with self.subTest(slots=slots):
+                fig, ax = line([0, 1, 2], [[i, i + 1, i] for i in slots], series_slots=slots)
+                fig.canvas.draw()
+                for fmt, signature in (("png", b"\x89PNG"), ("svg", b"<svg"), ("pdf", b"%PDF")):
+                    with self.subTest(format=fmt):
+                        output = BytesIO()
+                        fig.savefig(output, format=fmt)
+                        self.assertIn(signature, output.getvalue()[:1000])
+                plt.close(fig)
+
+    def test_masked_marker_offsets_match_omitted_markers_without_changing_data(self):
+        # A mask in either coordinate hides that marker in Matplotlib. The
+        # scientific line still passes through its observation without a hole.
+        masks = [np.zeros((3, 2), dtype=bool), np.ones((3, 2), dtype=bool)]
+        for coordinate in (0, 1):
+            mask = np.zeros((3, 2), dtype=bool)
+            mask[1, coordinate] = True
+            masks.append(mask)
+        for slot in range(3):
+            for scale in ("linear", "log"):
+                for mask in masks:
+                    with self.subTest(slot=slot, scale=scale, mask=mask.tolist()):
+                        images = []
+                        for masked in (True, False):
+                            fig, ax = line([1, 2, 4], [1, 1, 1], series_slots=[slot])
+                            body = ax.lines[0]
+                            xy = body.get_xydata().copy()
+                            offsets = (np.ma.array(xy, mask=mask) if masked
+                                       else xy[~mask.any(axis=1)])
+                            body.identity_points.set_offsets(offsets)
+                            ax.set_xscale(scale)
+                            ax.axvline(2, color="#00ff00", linewidth=2, zorder=1)
+                            fig.canvas.draw()
+                            images.append(np.asarray(fig.canvas.buffer_rgba()).copy())
+                            np.testing.assert_array_equal(body.get_xydata(), xy)
+                            retained = body.identity_points.get_offsets()
+                            np.testing.assert_array_equal(np.ma.getdata(retained), np.ma.getdata(offsets))
+                            np.testing.assert_array_equal(np.ma.getmaskarray(retained), np.ma.getmaskarray(offsets))
+                            plt.close(fig)
+                        np.testing.assert_array_equal(*images)
+
     def test_oblique_stroke_clearance(self):
         # A horizontal stroke near the top of a circle must not intrude sideways.
         pieces = list(visible_intervals(np.array([-8., 2.8]), np.array([8., 2.8]),

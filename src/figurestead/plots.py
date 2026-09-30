@@ -396,8 +396,10 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
                        edgecolors=color, linewidths=1.2, alpha=0.96, zorder=4.2)
         else:
             marker, size = LINE_IDENTITIES[series_index % len(LINE_IDENTITIES)]
+            # Explicitly retain the renderer's round default: Matplotlib 3.7's
+            # collection getter cannot read an unset join style.
             points = ax.scatter(x[selected], y[selected], s=size ** 2, marker=marker, facecolors="none",
-                                edgecolors=color, linewidths=1., alpha=1., zorder=4)
+                                edgecolors=color, linewidths=1., alpha=1., zorder=4, joinstyle="round")
             if theme.series_edges:
                 points.set_path_effects([pe.Stroke(linewidth=2.1, foreground=theme.series_edges[series_index % len(theme.series_edges)]), pe.Normal()])
             path.identity_marker, path.identity_points = marker, points

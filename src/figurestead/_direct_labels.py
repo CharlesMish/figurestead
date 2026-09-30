@@ -158,6 +158,7 @@ class DirectLabels(Artist):
                 or line.get_clip_path() is not None or points.get_clip_path() is not None
                 or any(b is not original for b,original in zip((line.get_clip_box(),points.get_clip_box()), self.clip_boxes[id(line)]))
                 or len(xy)<2 or not np.isfinite(xy).all() or not np.all(np.diff(xy[:,0])>0)
+                or np.ma.getmaskarray(points.get_offsets()).any()
                 or not np.array_equal(points.get_offsets(),xy[marker_indices(len(xy), getattr(line, "identity_stride", 1))]) or len(points.get_paths())!=1
                 or points.get_alpha()!=1 or len(points.get_sizes())!=1
                 or len(points.get_edgecolors())!=1 or len(points.get_linewidths())!=1
