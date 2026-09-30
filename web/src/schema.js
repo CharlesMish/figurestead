@@ -45,9 +45,13 @@ export function numberArray(value, path, { allowEmpty = false } = {}) {
   if (!Array.isArray(value) || (!allowEmpty && value.length === 0)) {
     throw new FiguresteadConfigError("must be a non-empty numeric array", path);
   }
-  value.forEach((item, index) => {
-    if (!isFiniteNumber(item)) throw new FiguresteadConfigError("must be a finite number", `${path}[${index}]`);
-  });
+  // Array iteration methods skip holes. Every authored position must own a
+  // finite value; inherited numeric slots are not observations either.
+  for (let index = 0; index < value.length; index += 1) {
+    if (!Object.hasOwn(value, index) || !isFiniteNumber(value[index])) {
+      throw new FiguresteadConfigError("must be a finite number", `${path}[${index}]`);
+    }
+  }
   return value;
 }
 

@@ -26,6 +26,9 @@ npm run test:browser-scientific-geometry
 FIGURESTEAD_SPECIMEN_URL=http://127.0.0.1:4179/specimen-study/ \
 npm run test:browser-controller-integrity
 
+FIGURESTEAD_BASE_URL=http://127.0.0.1:4179/ \
+npm run test:browser-numeric-array-validation
+
 FIGURESTEAD_SPECIMEN_URL=http://127.0.0.1:4179/specimen-study/ \
 npm run test:browser-responsive-header
 
