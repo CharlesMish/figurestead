@@ -1,5 +1,5 @@
 """Bounded direct-label contracts; real Agg measurements, no rendering harness."""
-import io,json,sys,unittest,warnings
+import io,json,logging,sys,unittest,warnings
 import xml.etree.ElementTree as ET
 from matplotlib.collections import PathCollection
 from dataclasses import replace
@@ -89,18 +89,26 @@ class DirectLabelTests(unittest.TestCase):
         for labels in (['_A','_B','_C'],['_nolegend_']*3,['A','_B','_C']):
             figures=[];observations=[]
             for options in ({},{'direct_labels':False}):
-                with warnings.catch_warnings(record=True) as caught:
-                    warnings.simplefilter('always')
-                    f,a=line([0,1,2],[[1,2,3],[2,3,3.05],[3,4,3.1]],labels=labels,
-                             theme='lavender_fog_notebook',**options)
-                    png=self.png(f)
+                # Older Matplotlib emits the empty-legend diagnostic via logging.
+                messages=[];handler=logging.Handler()
+                handler.emit=lambda record:messages.append(record.getMessage())
+                logger=logging.getLogger('matplotlib.legend');logger.addHandler(handler)
+                try:
+                    with warnings.catch_warnings(record=True) as caught:
+                        warnings.simplefilter('always')
+                        f,a=line([0,1,2],[[1,2,3],[2,3,3.05],[3,4,3.1]],labels=labels,
+                                 theme='lavender_fog_notebook',**options)
+                        png=self.png(f)
+                finally:
+                    logger.removeHandler(handler);handler.close()
                 self.assertFalse(hasattr(a,'_figurestead_direct_labels'))
                 self.assertEqual([t.get_text() for t in a.get_legend().get_texts()], [t for t in labels if not t.startswith('_')])
-                observations.append((png,[(w.category.__name__,str(w.message)) for w in caught]))
+                observations.append((png,[(w.category.__name__,str(w.message)) for w in caught],messages))
                 figures.append(f)
             self.assertEqual(observations[0],observations[1])
             if all(t.startswith('_') for t in labels):
-                self.assertTrue(any('No artists with labels' in message for _,message in observations[0][1]))
+                diagnostics=[message for _,message in observations[0][1]]+observations[0][2]
+                self.assertTrue(any('No artists with labels' in message for message in diagnostics))
             for f in figures:plt.close(f)
     def test_underscore_fallback_restores_ordinary_draw_export_lifecycle(self):
         with warnings.catch_warnings(record=True):
