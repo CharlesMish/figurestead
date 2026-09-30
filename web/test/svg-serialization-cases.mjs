@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { typographyContract, typographyLayouts, typographyThemes } from "./svg-typography-fixtures.mjs";
 
 import {
   compileTerminalScene,
@@ -26,19 +27,19 @@ const contract = {
   panels: [{ id: "line", renderer: "line", spec: {}, xScale: { type: "linear" }, yScale: { type: "linear" }, annotations: [], encoding: { interpolation: "linear" }, data: { x: [0, 1], revealOrder: "x", series: [{ key: "s", label: "S", y: [0, 1] }] } }],
 };
 
-function stages(source) {
+function stages(source, size = { width: 640, height: 480 }) {
   const scene = compileTerminalScene(source);
-  const composed = composeResolvedScene(resolveTerminalScene(scene, { width: 640, height: 480 }));
+  const composed = composeResolvedScene(resolveTerminalScene(scene, size));
   return { scene, composed };
 }
 
-function outputs(source) {
-  const { scene, composed } = stages(source);
+function outputs(source, size = { width: 640, height: 480 }) {
+  const { scene, composed } = stages(source, size);
   return {
-    exportFigureSvg: exportFigureSvg(source, { width: 640, height: 480 }),
-    exportFigureArtifacts: exportFigureArtifacts(source, { width: 640, height: 480 }).svg,
-    sceneToSvg: sceneToSvg(scene, { width: 640, height: 480 }),
-    resolvedSceneToSvg: resolvedSceneToSvg(composed, { width: 640, height: 480 }),
+    exportFigureSvg: exportFigureSvg(source, size),
+    exportFigureArtifacts: exportFigureArtifacts(source, size).svg,
+    sceneToSvg: sceneToSvg(scene, size),
+    resolvedSceneToSvg: resolvedSceneToSvg(composed, size),
   };
 }
 
@@ -76,8 +77,16 @@ const payloads = {
   controlCharacter: "#12345\u0001",
 };
 
+const typography = typographyThemes.flatMap(theme => typographyLayouts.map(layout => ({
+  theme, layout, outputs: outputs(typographyContract(theme, layout), layout),
+})));
+const hostileSubtitle = 'Literal </text><script data-proof="inert">&\u0001 end';
+const subtitleContract = typographyContract("lavender_fog_notebook", { subtitle: hostileSubtitle });
+
 process.stdout.write(JSON.stringify({
   valid: outputs(contract),
   escapedText: outputs(textContract),
   invalidColors: Object.fromEntries(Object.entries(payloads).map(([name, value]) => [name, colorBoundary(value)])),
+  typography,
+  escapedSubtitle: outputs(subtitleContract),
 }));
