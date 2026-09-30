@@ -17,6 +17,7 @@ from .themes import Theme, get_theme
 GLYPHS = np.array(list("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>[]{}|+-=αβγδε∑∫≈≠±∞"))
 
 # Only these immutable shipped profiles opt into their fonts' regular face.
+# The named 400-equivalent also works with older SVG text backends.
 # Custom Profile instances (including same-key/family copies or registry
 # replacements) retain the existing medium request; no family-wide coercion.
 _REGULAR_TITLE_PROFILES = tuple(
@@ -77,7 +78,7 @@ def style_axes(ax, theme: Theme, profile: Profile, spec: PlotSpec, *, atmosphere
     title = spec.title.upper() if profile.uppercase_title else spec.title
     title_artist = ax.set_title(title, loc="left", color=theme.primary, fontsize=10.5,
                                 fontfamily=profile.title_family,
-                                fontweight=400 if any(profile is shipped for shipped in _REGULAR_TITLE_PROFILES) else "medium",
+                                fontweight="normal" if any(profile is shipped for shipped in _REGULAR_TITLE_PROFILES) else "medium",
                                 pad=18)
     if theme.primary_edge:
         title_artist.set_path_effects([pe.Stroke(linewidth=1.4, foreground=theme.primary_edge), pe.Normal()])

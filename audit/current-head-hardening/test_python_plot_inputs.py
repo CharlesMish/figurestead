@@ -37,7 +37,7 @@ class PythonPlotInputRegression(unittest.TestCase):
             for profile in (key, PROFILES[key]):
                 with self.subTest(profile=key, by_key=isinstance(profile, str)):
                     fig, ax = line([0, 1], [0, 1], profile=profile)
-                    self.assertEqual(ax._left_title.get_fontweight(), 400)
+                    self.assertEqual(ax._left_title.get_fontweight(), "normal")
                     self.assertEqual(ax._left_title.get_fontfamily(), [PROFILES[key].title_family])
                     plt.close(fig)
 
@@ -67,7 +67,7 @@ class PythonPlotInputRegression(unittest.TestCase):
 
         with patch("matplotlib.figure.Figure.savefig", inspect_save):
             build_gallery(Path(os.environ["MPLCONFIGDIR"]) / "unused-gallery.png")
-        self.assertEqual(weights, [400])
+        self.assertEqual(weights, ["normal"])
 
     def assert_rejected_before_allocation(self, invoke, pattern: str) -> None:
         before = tuple(plt.get_fignums())
