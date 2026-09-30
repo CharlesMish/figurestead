@@ -11,7 +11,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from figurestead import line, PlotSpec
-from figurestead._direct_labels import solve, contrast, LEADER_TOLERANCE
+from figurestead._direct_labels import DirectLabels, solve, contrast, LEADER_TOLERANCE
 from figurestead.themes import get_theme
 from matplotlib.transforms import Bbox
 from matplotlib.text import Text
@@ -259,5 +259,189 @@ class DirectLabelTests(unittest.TestCase):
         f,a=self.make(series_keys=['c','t','m']);f.canvas.draw();d=a._figurestead_direct_labels
         self.assertNotIn('lineSamplesRequired',d.result)
         self.assertTrue(all('lineSample' not in e for e in d.result['entries']))
+
+class DirectLabelOwnershipTests(unittest.TestCase):
+    def tearDown(self): plt.close('all')
+
+    def make(self, ax=None, **options):
+        kwargs=dict(ax=ax, labels=['Long treatment name']*3,
+                    theme='lavender_fog_notebook', direct_labels=True)
+        kwargs.update(options)
+        return line([0,1,2], [[1,2,3],[2,3,3.05],[3,4,3.1]], **kwargs)
+
+    def png(self, figure, **options):
+        out=io.BytesIO(); figure.savefig(out, format='png', **options)
+        return out.getvalue()
+
+    def planners(self, figure):
+        return [artist for artist in figure.artists if isinstance(artist, DirectLabels)]
+
+    def test_clear_draw_retires_owner_and_restores_ordinary_geometry(self):
+        for clear in ('cla', 'clear'):
+            with self.subTest(clear=clear):
+                f,a=plt.subplots(figsize=(8.4,5.2),dpi=120)
+                original_draw,original_savefig=f.draw,f.savefig
+                baseline=a.get_position().bounds
+                self.make(a); f.canvas.draw(); owner=a._figurestead_direct_labels
+                self.assertGreater(owner.result['shrink'],0)
+                getattr(a,clear)(); f.canvas.draw()
+                self.assertEqual(a.get_position().bounds,baseline)
+                self.assertEqual(self.planners(f),[]); self.assertEqual(owner.artists,[])
+                self.assertFalse(hasattr(a,'_figurestead_direct_labels'))
+                self.assertFalse(hasattr(f,'_figurestead_direct_label_hooks'))
+                self.assertEqual(f.draw,original_draw); self.assertEqual(f.savefig,original_savefig)
+                owner.remove()  # Idempotent after the draw-time cleanup.
+
+    def test_clear_reuse_without_intervening_draw_matches_fresh_figure(self):
+        for direct in (True,False):
+            with self.subTest(direct=direct):
+                f,a=self.make(); f.canvas.draw()
+                g,b=self.make(direct_labels=direct); expected=self.png(g)
+                for _ in range(3):
+                    old=a._figurestead_direct_labels
+                    a.cla(); self.make(a,direct_labels=direct)
+                    self.assertEqual(self.png(f),expected)
+                    self.assertEqual(a.get_position().bounds,b.get_position().bounds)
+                    self.assertNotIn(old,self.planners(f)); self.assertEqual(old.artists,[])
+                    self.assertEqual(len(self.planners(f)),int(direct))
+                    if direct:
+                        self.assertEqual(a._figurestead_direct_labels.result['status'],'placed')
+                    else:
+                        self.assertFalse(hasattr(a,'_figurestead_direct_labels'))
+                        break
+
+    def test_clear_then_plain_matplotlib_plot_has_no_empty_gutter(self):
+        f,a=self.make(); g,b=self.make(direct_labels=False); f.canvas.draw()
+        for axes in (a,b):
+            axes.cla(); axes.plot([0,1,2],[2,1,3],label='Caller series'); axes.legend()
+        self.assertEqual(self.png(f),self.png(g))
+        self.assertEqual(self.planners(f),[])
+
+    def test_repeated_calls_preserve_all_body_artists_and_complete_legend(self):
+        for direct in (True,False):
+            with self.subTest(direct=direct):
+                f,a=self.make(); g,b=self.make(direct_labels=False); f.canvas.draw()
+                baseline=b.get_position().bounds
+                lines=list(a.lines); points=list(a.collections)
+                for count in (2,3):
+                    self.make(a,direct_labels=direct); self.make(b,direct_labels=False)
+                    self.assertEqual(self.png(f),self.png(g))
+                    self.assertEqual(len(a.lines),3*count)
+                    self.assertTrue(all(v in a.lines for v in lines))
+                    self.assertTrue(all(v in a.collections for v in points))
+                    self.assertEqual(len(a.get_legend().get_texts()),3*count)
+                    self.assertTrue(a.get_legend().get_visible())
+                    self.assertEqual(a.get_position().bounds,baseline)
+                    self.assertEqual(len(self.planners(f)),int(direct))
+                    if direct: self.assertEqual(a._figurestead_direct_labels.result['reason'],'unsupported-layout')
+
+    def test_unrelated_artists_and_caller_methods_survive_cleanup(self):
+        from types import MethodType
+        from matplotlib.patches import Rectangle
+        f,a=plt.subplots(figsize=(8.4,5.2),dpi=120)
+        calls=[]; draw=f.draw; savefig=f.savefig
+        f.draw=MethodType(lambda fig, renderer: (calls.append('draw'),draw(renderer))[1],f)
+        f.savefig=MethodType(lambda fig,*args,**kw: (calls.append('savefig'),savefig(*args,**kw))[1],f)
+        caller_draw,caller_savefig=f.draw,f.savefig
+        note=f.text(.5,.97,'Caller figure note')
+        annotation=a.text(.2,.1,'Caller annotation',transform=a.transAxes)
+        patch_artist=a.add_patch(Rectangle((.1,.1),.1,.1,transform=a.transAxes))
+        self.make(a); f.canvas.draw(); owner=a._figurestead_direct_labels
+        self.assertEqual(owner.result['status'],'placed')
+        lines=list(a.lines); points=list(a.collections); legend=a.get_legend()
+        owner.remove(); self.png(f)
+        self.assertEqual(f.draw,caller_draw); self.assertEqual(f.savefig,caller_savefig)
+        self.assertIn('draw',calls); self.assertIn('savefig',calls)
+        self.assertIn(note,f.texts); self.assertIn(annotation,a.texts); self.assertIn(patch_artist,a.patches)
+        self.assertEqual(list(a.lines),lines); self.assertEqual(list(a.collections),points)
+        self.assertIs(a.get_legend(),legend); self.assertTrue(legend.get_visible())
+
+    def test_unrelated_legend_entry_keeps_complete_ordinary_legend(self):
+        f,a=self.make(direct_labels=False); g,b=self.make(direct_labels=False)
+        for axes in (a,b): axes.cla(); axes.scatter([1],[2],label='Caller points')
+        self.make(a); self.make(b,direct_labels=False)
+        self.assertEqual(self.png(f),self.png(g))
+        self.assertEqual(a._figurestead_direct_labels.result['reason'],'unsupported-layout')
+        self.assertIn('Caller points',[t.get_text() for t in a.get_legend().get_texts()])
+
+    def test_multiple_axes_share_hooks_and_cleanup_is_per_owner(self):
+        f,(a,b)=plt.subplots(1,2,figsize=(10,5),dpi=120)
+        original_draw,original_savefig=f.draw,f.savefig
+        boxes=[ax.get_position().bounds for ax in (a,b)]
+        self.make(a); hooks=f._figurestead_direct_label_hooks; wrapped_draw=f.draw
+        self.make(b); owner_b=b._figurestead_direct_labels; f.canvas.draw()
+        self.assertIs(f._figurestead_direct_label_hooks,hooks); self.assertIs(f.draw,wrapped_draw)
+        self.assertEqual(len(self.planners(f)),2)
+        self.assertEqual(owner_b.result['reason'],'unsupported-layout')
+        for _ in range(3):
+            a.cla(); self.make(a); f.canvas.draw()
+            self.assertEqual(len(self.planners(f)),2); self.assertIs(b._figurestead_direct_labels,owner_b)
+            self.assertIs(f.draw,wrapped_draw)
+            self.assertEqual([ax.get_position().bounds for ax in (a,b)],boxes)
+            self.assertTrue(all(ax.get_legend().get_visible() for ax in (a,b)))
+        a.cla(); f.canvas.draw(); self.assertEqual(self.planners(f),[owner_b])
+        self.assertEqual(len(b.lines),3); self.assertIs(f.draw,wrapped_draw)
+        b.cla(); f.canvas.draw(); self.assertEqual(self.planners(f),[])
+        self.assertEqual(f.draw,original_draw); self.assertEqual(f.savefig,original_savefig)
+
+    def test_removed_body_or_figure_clear_retires_planner(self):
+        for removed in ('line','points','overlay','axes','figure'):
+            with self.subTest(removed=removed):
+                f,a=self.make(); f.canvas.draw(); owner=a._figurestead_direct_labels
+                if removed=='line': a.lines[0].remove()
+                elif removed=='points': a.lines[0].identity_points.remove()
+                elif removed=='overlay': owner.overlay.remove()
+                elif removed=='axes': a.remove()
+                else: f.clear()
+                f.canvas.draw()
+                self.assertEqual(self.planners(f),[]); self.assertEqual(owner.artists,[])
+                self.assertFalse(hasattr(f,'_figurestead_direct_label_hooks'))
+                self.assertFalse(hasattr(a,'_figurestead_direct_labels'))
+
+    def test_caller_position_and_later_method_replacement_are_preserved(self):
+        f,a=self.make(); f.canvas.draw(); owner=a._figurestead_direct_labels
+        a.set_position([.2,.2,.5,.5]); box=a.get_position().bounds
+        a.cla(); caller_draw=lambda renderer: None; caller_savefig=lambda *args,**kwargs: None
+        f.draw=caller_draw; f.savefig=caller_savefig
+        self.make(a,direct_labels=False)
+        self.assertEqual(a.get_position().bounds,box)
+        self.assertIs(f.draw,caller_draw); self.assertIs(f.savefig,caller_savefig)
+        self.assertEqual(self.planners(f),[]); self.assertEqual(owner.artists,[])
+
+    def test_reuse_fallback_exports_and_recovery_match_fresh_figure(self):
+        f,a=self.make(); f.canvas.draw(); a.cla(); self.make(a)
+        g,b=self.make(direct_labels=False)
+        for options in ({'bbox_inches':'tight'},{'transparent':True}):
+            self.assertEqual(self.png(f,**options),self.png(g,**options))
+            self.assertEqual(a._figurestead_direct_labels.result['reason'],'unsupported-layout')
+            f.canvas.draw(); self.assertEqual(a._figurestead_direct_labels.result['status'],'placed')
+        a.set_xlim(0,2); b.set_xlim(0,2)
+        self.assertEqual(self.png(f),self.png(g))
+        self.assertEqual(a._figurestead_direct_labels.result['reason'],'terminal-marker-clipped')
+
+    def test_invalid_repeated_call_leaves_existing_owner_untouched(self):
+        f,a=self.make(); before=self.png(f); owner=a._figurestead_direct_labels
+        with self.assertRaises(ValueError): self.make(a,marker_stride=0)
+        self.assertIs(a._figurestead_direct_labels,owner); self.assertEqual(self.png(f),before)
+
+    def test_replaced_planners_are_not_retained_by_figure_hooks(self):
+        import gc,weakref
+        f,a=self.make(); retired=[]
+        for _ in range(12):
+            f.canvas.draw(); retired.append(weakref.ref(a._figurestead_direct_labels))
+            a.cla(); self.make(a)
+        gc.collect()
+        self.assertTrue(all(ref() is None for ref in retired))
+        self.assertEqual(len(self.planners(f)),1)
+        self.assertEqual(len(f._figurestead_direct_label_hooks.owners),1)
+
+    def test_reused_axes_with_layout_engine_match_ordinary_fallback(self):
+        for engine in ('tight','constrained'):
+            with self.subTest(engine=engine):
+                f,a=self.make(); f.canvas.draw(); a.cla(); self.make(a)
+                g,b=self.make(direct_labels=False)
+                f.set_layout_engine(engine); g.set_layout_engine(engine)
+                self.assertEqual(self.png(f),self.png(g))
+                self.assertEqual(a._figurestead_direct_labels.result['reason'],'unsupported-layout')
 
 if __name__=='__main__':unittest.main()

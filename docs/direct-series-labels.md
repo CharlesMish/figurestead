@@ -18,6 +18,15 @@ const figure = createFigurestead(canvas, {
 
 The setting is separate from ordinary legend placement. Browser `presentation.legend: "none"` conflicts with direct labels and rejects, since a complete fallback legend is required. Python `line()` has no legend-disable configuration; removing/hiding the fallback legend after construction is not a supported direct-label control.
 
+In current source, Python axes reuse retires the previous direct-label planner before the next valid
+`line(..., ax=ax)` call, including calls with direct labels disabled. After
+`ax.cla()` / `ax.clear()`, cleanup also runs on the next figure draw or export.
+It removes only the planner and its overlay, releases its reserved gutter, and
+preserves caller position changes, other artists and other axes. Calling `line`
+again without clearing still appends data; when another layer contributes legend
+entries, the complete ordinary legend is retained. These lifecycle rules do not
+expand the supported one-panel, single-layer direct-label profile.
+
 ## Admission and endpoints
 
 Processing is ordinary validation → common-profile eligibility → measured fit/visibility → all direct labels or the complete ordinary treatment. Direct labels never catch browser `FiguresteadConfigError` or bypass `validateEvidenceCoverage`. Browser inputs with *any* observation outside either resolved numeric domain remain configuration errors, with the same messages when disabled or enabled. Existing scientific-geometry tests remain unchanged.
