@@ -326,7 +326,9 @@ class MatrixDomainTests(unittest.TestCase):
         self.assertIs(bar.mappable, image)
         self.assertIs(bar.cmap, image.cmap)
         if bar.norm is image.norm:
-            self.assertEqual(bar.ax.get_ylim(), scientific)
+            # Native Colorbar computes display endpoints through inverse(),
+            # whose floating-point round trip can differ from clim by an ulp.
+            self.assertEqual(bar.ax.get_ylim(), tuple(image.norm.inverse([0., 1.])))
         else:
             self.assertEqual(bar.ax.get_ylim(), (0., 1.))
             np.testing.assert_array_equal(bar.get_ticks(), [0, 1])
@@ -340,8 +342,113 @@ class MatrixDomainTests(unittest.TestCase):
         rgba = np.asarray(fig.canvas.buffer_rgba())
         for index, value in enumerate(image.get_array()[0]):
             x, y = ax.transData.transform((index, -.25))
+            expected = image.cmap(np.ma.masked, bytes=True) if np.ma.is_masked(value) else image.cmap(image.norm(value), bytes=True)
             np.testing.assert_array_equal(rgba[rgba.shape[0] - 1 - int(y), int(x)],
-                                          image.cmap(image.norm(value), bytes=True))
+                                          expected)
+
+    def test_partial_norms_preserve_native_settling_for_signed_constant_and_masked_data(self):
+        # Partial norms can temporarily become reversed or equal while native
+        # Colorbar initializes them. Compare settled behavior to the installed
+        # Matplotlib, rather than choosing a new cross-version autoscale policy.
+        cases = [(-2., -1.), (1., 2.), (-1., 1.), (-2., 0.), (0., 2.),
+                 (-1., -1.), (0., 0.), (1., 1.), (-2., -1.)]
+        exceptional = [(1., math.nextafter(1., 2.)),
+                       (-1., math.nextafter(-1., 0.)), (0., math.ulp(0.))]
+        for theme in ("lavender_fog_notebook", "ultraviolet_laboratory"):
+            for mask in ([False, False, False], [False, True, False], [True, True, True]):
+                fig, ax = categorical_matrix(fixture((-2., 2.), values=[-2., 0., 2.]), theme=theme)
+                image, bar = ax.images[0], ax.images[0].colorbar
+                callback = image.colorbar_cid
+                reference, reference_ax = plt.subplots()
+                native = reference_ax.imshow([[-2., 0., 2.]], vmin=-2., vmax=2.)
+                reference.colorbar(native, ax=reference_ax)
+                for index, values in enumerate(cases):
+                    data = np.ma.array([[values[0], 1e12 if mask[1] else sum(values) / 2, values[1]]], mask=[mask])
+                    for bound, value in (("vmin", values[0]), ("vmax", values[1])):
+                        with self.subTest(theme=theme, mask=mask, values=values, bound=bound):
+                            # Enter the unit path before each ordinary reset,
+                            # cycling positive/negative adjacent and subnormal.
+                            image.set_norm(colors.Normalize(*exceptional[index % len(exceptional)]))
+                            image.set_data(data)
+                            native.set_data(data)
+                            native.set_norm(colors.Normalize(**{bound: value}))
+                            image.set_norm(colors.Normalize(**{bound: value}))
+                            self.assertEqual(image.get_clim(), native.get_clim())
+                            self.assertIs(bar.norm, image.norm)
+                            self.assertEqual(image.colorbar_cid, callback)
+                            np.testing.assert_array_equal(image.get_array().mask, data.mask)
+                            np.testing.assert_array_equal(image.get_array().compressed(), data.compressed())
+                            self.assert_colorbar_represents_image(fig, ax)
+                            settled = image.get_clim()
+                            for fmt in ("png", "svg", "pdf"):
+                                out = io.BytesIO()
+                                with matplotlib.rc_context({"svg.fonttype": "path"}):
+                                    fig.savefig(out, format=fmt)
+                                if fmt == "png":
+                                    out.seek(0)
+                                    np.testing.assert_array_equal(np.asarray(Image.open(out)), fig.canvas.buffer_rgba())
+                                elif fmt == "svg":
+                                    ET.fromstring(out.getvalue())
+                                else:
+                                    self.assertTrue(out.getvalue().startswith(b"%PDF"))
+                                self.assertEqual(image.get_clim(), settled)
+                                self.assert_colorbar_represents_image(fig, ax)
+                plt.close(reference)
+                plt.close(fig)
+
+    def test_partial_norm_nested_observers_keep_native_callback_order(self):
+        def exercise(image, verify=None):
+            results = []
+            for values in ((-2., -1.), (1., 2.), (-1., 1.), (0., 0.), (-2., -1.)):
+                for bound, value in (("vmin", values[0]), ("vmax", values[1])):
+                    events, changed = [], []
+
+                    def observer(*_):
+                        events.append(image.get_clim())
+                        if image.norm.scaled() and not changed:
+                            changed.append(True)
+                            image.set_cmap("plasma")
+                            image.set_clim(-4., 4.)
+
+                    observer_id = image.callbacks.connect("changed", observer)
+                    image.set_data([values])
+                    image.set_norm(colors.Normalize(**{bound: value}))
+                    image.callbacks.disconnect(observer_id)
+                    self.assertEqual(changed, [True])
+                    results.append((image.get_clim(), events))
+                    if verify is not None:
+                        verify()
+            return results
+
+        reference, reference_ax = plt.subplots()
+        native = reference_ax.imshow([[-2., 0.]], vmin=-2., vmax=0.)
+        reference.colorbar(native, ax=reference_ax)
+        expected = exercise(native)
+        plt.close(reference)
+        fig, ax = categorical_matrix(fixture((-2., 0.)))
+        actual = exercise(ax.images[0], lambda: self.assert_colorbar_represents_image(fig, ax))
+        self.assertEqual(actual, expected)
+
+    def test_partial_norm_initialization_scope_ends_when_a_caller_callback_raises(self):
+        for reset in (colors.Normalize(), colors.Normalize(vmax=-1.)):
+            fig, ax = categorical_matrix(fixture((-2., 0.), values=[-2., -1.]))
+            image = ax.images[0]
+
+            def reject(*_):
+                raise RuntimeError("synthetic caller callback failure")
+
+            observer_id = image.callbacks.connect("changed", reject)
+            with self.assertRaisesRegex(RuntimeError, "synthetic caller callback failure"):
+                image.set_norm(reset)
+            image.callbacks.disconnect(observer_id)
+            # Reuse the same norm: a leaked initialization scope would let
+            # native callbacks overwrite this caller's temporary reversed clim.
+            image.set_data([[10., 20.]])
+            image.set_clim(10., 20.)
+            self.assertIs(image.norm, reset)
+            self.assert_endpoint_pixels(fig, ax, (10., 20.))
+            self.assert_colorbar_represents_image(fig, ax)
+            plt.close(fig)
 
     def test_unbounded_norm_resets_keep_settled_scientific_labels_through_exports(self):
         adjacent = (1., math.nextafter(1., 2.))

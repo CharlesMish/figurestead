@@ -32,6 +32,12 @@ values on older Matplotlib versions too.
 Resetting to an unbounded `Normalize()` or `None` can trigger native autoscaling
 and nested change notifications. Endpoint formatting uses the settled colorbar
 norm after those updates complete, without requiring a second manual update.
+Partially bounded norms can also pass through reversed or equal bounds between
+native assignments. During that initialization, reversed, equal or nonfinite
+interim bounds stay with Matplotlib until it settles them. The initialization
+scope follows the norm object through nested callbacks and ends when native
+update returns. Caller `set_clim` transitions outside that scope retain their
+protection against colorbar rewrites between limit assignments.
 `autoscale` and `autoscale_None` retain the installed Matplotlib version's
 normalization behavior; the colorbar describes the resulting image domain.
 
@@ -59,7 +65,10 @@ coordinates are inspected separately from the image's scientific norm.
 Mutation checks cover repeated ordinary/exceptional transitions, colormap and
 norm replacement, exported pixels/labels, custom ticks and colorbar removal.
 They also cover unbounded/partially bounded norm resets, both autoscale methods,
-and caller observers that make nested colormap/limit changes.
+and caller observers that make nested colormap/limit changes. Partial resets
+exercise negative, positive, cross-zero and constant data, partial/full masks,
+and repeated transitions, comparing settled limits and callback order with
+native Matplotlib on the same runtime.
 
 This is not universal finite-domain qualification. The preexisting
 `[-8e307, 8e307]` image/tick arithmetic limitation remains separate: minimum

@@ -179,6 +179,7 @@ class _MatrixColorbar(Colorbar):
 
     def __init__(self, ax, image, value_format, **kwargs):
         self._value_format = value_format
+        self._initializing_norm = None
         self._display = _MatrixDisplay(image)
         display = self._display_for(image)
         super().__init__(ax, display, alpha=image.get_alpha(), **kwargs)
@@ -194,6 +195,14 @@ class _MatrixColorbar(Colorbar):
 
     def _display_for(self, image):
         # Nonlinear/custom norms continue through Matplotlib's native path.
+        # During native initialization of a partial norm, reversed/equal bounds
+        # belong to that in-progress normalization. Let Matplotlib settle them.
+        # Outside initialization, the same interim bounds can come from a
+        # caller's set_clim assignments and must not overwrite its limits.
+        if image.norm is self._initializing_norm and image.norm.scaled():
+            low, high = image.get_clim()
+            if not (math.isfinite(low) and math.isfinite(high) and low < high):
+                return image
         if type(image.norm) is mcolors.Normalize and image.norm.scaled() and _unit_colorbar(image.norm, image.cmap.N):
             self._display.image = image
             self._display.set_cmap(image.cmap)
@@ -220,14 +229,18 @@ class _MatrixColorbar(Colorbar):
 
     def update_normal(self, mappable=None):
         image = self.mappable if mappable is None else mappable
-        display = self._display_for(image)
+        initializing = self._initializing_norm
+        if not image.norm.scaled():
+            self._initializing_norm = image.norm
         was_unit = self.norm is self._display.norm
         try:
+            display = self._display_for(image)
             # Native update handles colormap/norm changes, resetting tick
             # locators when the display switches between ordinary and unit.
             super().update_normal(display)
         finally:
             self.mappable = image
+            self._initializing_norm = initializing
         # Native autoscaling of an unbounded norm can synchronously re-enter
         # this update and select another display norm. Format the settled bar,
         # not the display chosen before those native callbacks completed.
