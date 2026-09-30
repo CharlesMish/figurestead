@@ -38,6 +38,11 @@ def line_marker_indices(y, stride):
 
 def visible_intervals(a, b, centers, marker, size, padding=0.):
     """Subtract the union of convex marker interiors from one display segment."""
+    if np.ma.isMaskedArray(centers):
+        # Matplotlib hides a marker when either offset coordinate is masked.
+        # Only unmasked centers cut holes; unwrap those rows for NumPy 1.24
+        # whose masked-vector dot product raises even with an all-false mask.
+        centers = centers[~np.ma.getmaskarray(centers).any(axis=1)].data
     delta = b - a
     blocked = []
     for center in centers:
