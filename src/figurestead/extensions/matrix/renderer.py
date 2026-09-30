@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from decimal import Decimal
 import math
 
+from matplotlib.colorbar import Colorbar, make_axes, make_axes_gridspec
+from matplotlib.cm import ScalarMappable
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch, Rectangle
-from matplotlib.ticker import FuncFormatter
+from matplotlib.ticker import FuncFormatter, Locator
 import numpy as np
 
 from figurestead.core import PlotSpec, add_note, ensure_axes, resolve, style_axes
@@ -127,9 +130,143 @@ def _annotation_color(theme, fill):
     return theme.label if _contrast(theme.label, fill) >= _contrast(theme.field, fill) else theme.field
 
 
+def _value_norm(domain):
+    """Preflight the existing linear mapping before touching caller artists."""
+    low, high = domain
+    if not 0 < high - low < math.inf:
+        raise ValueError("data.valueScale.domain cannot be represented by a finite positive linear span")
+    return mcolors.Normalize(low, high)
+
+
+def _unit_colorbar(norm, entries):
+    # Matplotlib expands nearly singular colorbar bounds in-place on the
+    # image's shared norm. Consult its public locator policy, without adopting
+    # the expanded bounds or imposing an admission threshold of our own.
+    domain = (norm.vmin, norm.vmax)
+    if tuple(Locator().nonsingular(*domain)) != domain:
+        return True
+    # Even a representable span can overflow the ordinary colorbar's boundary
+    # midpoint addition. Unit display coordinates avoid that arithmetic too.
+    with np.errstate(over="ignore", invalid="ignore"):
+        boundaries = norm.inverse(np.linspace(0, 1, entries + 1))
+        midpoints = (boundaries[:-1] + boundaries[1:]) * 0.5
+    return not np.all(np.isfinite(midpoints))
+
+
+def _endpoint_label(value, kind):
+    # Unlike the ordinary colorbar's rounded ticks, these two labels must keep
+    # adjacent floating-point domain bounds distinguishable. Decimal scaling
+    # also avoids overflowing a finite endpoint just to display a percentage.
+    if kind == "percent":
+        sign, digits, exponent = Decimal(str(value)).as_tuple()
+        return f"{Decimal((sign, digits, exponent + 2))}%"
+    return str(value)
+
+
+class _MatrixDisplay(ScalarMappable):
+    """Unit display coordinates with the owning image's opacity."""
+
+    def __init__(self, image):
+        self.image = image
+        super().__init__(norm=mcolors.Normalize(0, 1), cmap=image.cmap)
+
+    def get_alpha(self):
+        return self.image.get_alpha()
+
+
+class _MatrixColorbar(Colorbar):
+    """Keep image ownership while isolating exceptional display arithmetic."""
+
+    def __init__(self, ax, image, value_format, **kwargs):
+        self._value_format = value_format
+        self._initializing_image = None
+        self._display = _MatrixDisplay(image)
+        display = self._display_for(image)
+        super().__init__(ax, display, alpha=image.get_alpha(), **kwargs)
+        if display is not image:
+            # Colorbar.remove() and normal Matplotlib image updates must keep
+            # their native ownership and callback relationship with the image.
+            display.callbacks.disconnect(display.colorbar_cid)
+            display.colorbar = display.colorbar_cid = None
+            image.colorbar = self
+            image.colorbar_cid = image.callbacks.connect("changed", self.update_normal)
+        self.mappable = image
+        self._format_ticks(display is self._display)
+
+    def _display_for(self, image):
+        # Nonlinear/custom norms continue through Matplotlib's native path.
+        # During native initialization of a partial norm, reversed/equal bounds
+        # belong to that in-progress normalization. Let Matplotlib settle them.
+        # Outside initialization, the same interim bounds can come from a
+        # caller's set_clim assignments and must not overwrite its limits.
+        # Initialization belongs to the mappable: a caller can replace its norm
+        # reentrantly while an outer native update continues with that new norm.
+        if image is self._initializing_image and image.norm.scaled():
+            low, high = image.get_clim()
+            if not (math.isfinite(low) and math.isfinite(high) and low < high):
+                return image
+        if type(image.norm) is mcolors.Normalize and image.norm.scaled() and _unit_colorbar(image.norm, image.cmap.N):
+            self._display.image = image
+            self._display.set_cmap(image.cmap)
+            # Normalize before nearest resampling, including after an ordinary
+            # image is changed to adjacent/subnormal bounds on older Matplotlib.
+            image.set_interpolation_stage("rgba")
+            return self._display
+        return image
+
+    def _format_ticks(self, unit, restore=False):
+        if unit:
+            self.set_ticks([0, 1], labels=[
+                _endpoint_label(value, self._value_format)
+                for value in self.mappable.get_clim()
+            ])
+        elif self._value_format == "percent":
+            self.formatter = FuncFormatter(lambda value, _: _format(value, "percent"))
+            self.update_ticks()
+        if unit or restore:
+            for index, tick in enumerate(self.ax.get_yticklabels()):
+                tick.set_rotation(90 if unit else 0)
+                tick.set_horizontalalignment("left")
+                tick.set_verticalalignment(("bottom" if index == 0 else "top") if unit else "center_baseline")
+
+    def update_normal(self, mappable=None):
+        image = self.mappable if mappable is None else mappable
+        initializing = self._initializing_image
+        if not image.norm.scaled():
+            self._initializing_image = image
+        was_unit = self.norm is self._display.norm
+        try:
+            display = self._display_for(image)
+            # Native update handles colormap/norm changes, resetting tick
+            # locators when the display switches between ordinary and unit.
+            super().update_normal(display)
+        finally:
+            self.mappable = image
+            self._initializing_image = initializing
+        # Native autoscaling of an unbounded norm can synchronously re-enter
+        # this update and select another display norm. Format the settled bar,
+        # not the display chosen before those native callbacks completed.
+        unit = self.norm is self._display.norm
+        if unit or was_unit:
+            self._format_ticks(unit, restore=was_unit)
+
+
+def _matrix_colorbar(fig, ax, image, value_format):
+    # The public Colorbar factory helpers retain Figure.colorbar's layout
+    # policy while allowing an owned Colorbar subclass with a safe update hook.
+    current_ax = fig.gca()
+    engine = fig.get_layout_engine()
+    factory = make_axes_gridspec if ax.get_subplotspec() and (engine is None or engine.colorbar_gridspec) else make_axes
+    cax, kwargs = factory(ax, fraction=0.046, pad=0.04)
+    fig.sca(current_ax)
+    cax.grid(visible=False, which="both", axis="both")
+    return _MatrixColorbar(cax, image, value_format, **kwargs)
+
+
 def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope", ax=None):
     """Render a categorical value matrix with explicit missing/insufficient cells."""
     data = normalize_matrix_data(data)
+    norm = _value_norm(data["valueScale"]["domain"])
     spec = spec or PlotSpec("Categorical matrix")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax)
@@ -151,7 +288,6 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
 
     colors = [theme.panel, theme.primary, theme.summary_core]
     cmap = mcolors.LinearSegmentedColormap.from_list(f"figurestead_extension_{theme.key}", [(0, colors[0]), (0.68, colors[1]), (1, colors[2])]).with_extremes(bad=theme.field)
-    norm = mcolors.Normalize(*data["valueScale"]["domain"])
     image = ax.imshow(np.ma.masked_invalid(matrix), cmap=cmap, norm=norm, aspect="auto", interpolation="nearest", zorder=2)
     present_statuses = set()
     for cell in materialized:
@@ -171,12 +307,10 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
     ax.set_yticks(range(len(y_categories)), y_categories)
     ax.set_xlim(-0.5, len(x_categories) - 0.5)
     ax.set_ylim(len(y_categories) - 0.5, -0.5)
-    colorbar = fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
+    colorbar = _matrix_colorbar(fig, ax, image, data["valueScale"]["format"])
     colorbar.set_label(data["valueScale"]["label"], color=theme.label, fontsize=8)
     colorbar.outline.set_edgecolor(theme.spine)
     colorbar.ax.tick_params(colors=theme.secondary, labelsize=7)
-    if data["valueScale"]["format"] == "percent":
-        colorbar.ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: _format(value, "percent")))
     handles = []
     if "insufficient" in present_statuses:
         handles.append(Patch(facecolor=theme.panel, edgecolor=theme.warm, hatch="///", label=data["statusLabels"]["insufficient"]))
