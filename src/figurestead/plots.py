@@ -369,6 +369,9 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     if np.isnan(ys).any() and presentation is not None:
         raise _input_error("line.ys", "NaN breaks are unsupported with explicit presentation poses")
     fig, ax = ensure_axes(ax)
+    previous = getattr(ax, '_figurestead_direct_labels', None)
+    if previous is not None:
+        previous.remove()
     style_axes(ax, theme, profile, spec, panel_surface=presentation.panel_surface if presentation else False, frame=presentation.frame if presentation else False)
     identity_lines = []
     for series_index, y, label, rhythm in zip(slots, ys, labels, resolved_rhythms):

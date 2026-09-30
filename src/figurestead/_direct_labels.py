@@ -56,6 +56,47 @@ def contrast(ink, background):
     return (b+.05)/(a+.05)
 
 
+class _FigureHooks:
+    """One removable draw/export adapter shared by this figure's planners."""
+    def __init__(self, figure):
+        self.figure=figure; self.owners=[]
+        self.original_draw=figure.draw; self.original_savefig=figure.savefig
+        self.draw_hook=MethodType(lambda fig, renderer: self.draw(renderer), figure)
+        self.savefig_hook=MethodType(lambda fig, *a, **kw: self.savefig(*a, **kw), figure)
+        figure.draw=self.draw_hook; figure.savefig=self.savefig_hook
+        figure._figurestead_direct_label_hooks=self
+
+    def live_owners(self):
+        for owner in tuple(self.owners):
+            if not owner.attached(): owner.remove()
+        return tuple(self.owners)
+
+    def draw(self, renderer):
+        # Restore BEFORE Figure.draw runs a layout engine, and retire planners
+        # whose axes/overlay/body were cleared even when no new plot was made.
+        for owner in self.live_owners(): owner.restore_baseline()
+        return self.original_draw(renderer)
+
+    def savefig(self, *args, **kwargs):
+        states=[(owner, owner.export_unsupported) for owner in self.live_owners()]
+        for owner, _ in states:
+            owner.export_unsupported=kwargs.get('bbox_inches', mpl.rcParams['savefig.bbox']) is not None
+        try:
+            return self.original_savefig(*args, **kwargs)
+        finally:
+            for owner, previous in states: owner.export_unsupported=previous
+
+    def remove(self, owner):
+        self.owners.remove(owner)
+        if self.owners: return
+        # A caller may have installed their own method since ours. Never erase it.
+        figure=self.figure
+        if figure.draw is self.draw_hook: figure.draw=self.original_draw
+        if figure.savefig is self.savefig_hook: figure.savefig=self.original_savefig
+        if getattr(figure, '_figurestead_direct_label_hooks', None) is self:
+            del figure._figurestead_direct_label_hooks
+
+
 class DirectLabels(Artist):
     """Prepare before axes paint, from an unallocated baseline on every draw.
 
@@ -64,27 +105,39 @@ class DirectLabels(Artist):
     """
     def __init__(self, ax, lines, labels, slots, theme, unsupported=False):
         super().__init__(); self.ax=ax; self.lines=lines; self.labels=labels; self.slots=slots; self.theme=theme
-        self.unsupported=unsupported; self.export_unsupported=False; self.baseline=ax.get_position(original=True).frozen()
+        # The complete ordinary legend must survive if another plotted layer
+        # owns any of its entries (including repeated line() calls without cla).
+        self.unsupported=unsupported or any(h not in lines for h in ax.get_legend_handles_labels()[0])
+        self.export_unsupported=False; self.baseline=ax.get_position(original=True).frozen()
         self.installed=self.baseline; self.artists=[]; self.result={'status':'fallback','reason':'unsupported-layout'}
         self.clip_boxes={id(line):(line.get_clip_box(),getattr(line,"identity_points",line).get_clip_box()) for line in lines}
         self.legend=ax.get_legend(); self.set_zorder(-100); self.set_in_layout(False)
         self.overlay=_Overlay(self); ax.add_artist(self.overlay); ax.figure.add_artist(self)
         ax._figurestead_direct_labels=self
-        # Restore the unallocated box BEFORE Figure.draw runs a layout engine.
-        # The early planning artist then sees the engine's ordinary result.
-        original_draw=ax.figure.draw
-        def baseline_draw(figure, renderer):
-            self.restore_baseline()
-            return original_draw(renderer)
-        ax.figure.draw=MethodType(baseline_draw, ax.figure)
-        original_savefig=ax.figure.savefig
-        def baseline_savefig(figure, *args, **kwargs):
-            self.export_unsupported=kwargs.get('bbox_inches', mpl.rcParams['savefig.bbox']) is not None
-            try:
-                return original_savefig(*args, **kwargs)
-            finally:
-                self.export_unsupported=False
-        ax.figure.savefig=MethodType(baseline_savefig, ax.figure)
+        self.hooks=getattr(ax.figure, '_figurestead_direct_label_hooks', None)
+        if self.hooks is None: self.hooks=_FigureHooks(ax.figure)
+        self.hooks.owners.append(self)
+
+    def attached(self):
+        ax=self.ax; figure=self.hooks.figure
+        return (ax in figure.axes and self in figure.artists and self.overlay in ax.get_children()
+                and ax.get_legend() is self.legend
+                and all(line in ax.lines and (getattr(line, 'identity_points', None) is None
+                        or line.identity_points in ax.collections) for line in self.lines))
+
+    def remove(self):
+        """Retire only this planner's overlay, allocation and figure hooks."""
+        if self not in self.hooks.owners: return
+        ax=self.ax; figure=self.hooks.figure
+        # An explicit caller position supersedes our last installed allocation.
+        if ax in figure.axes and np.array_equal(ax.get_position(original=True).bounds, self.installed.bounds):
+            self.position(self.baseline)
+        self.artists=[]; self.result={'status':'fallback','reason':'unsupported-layout'}
+        if self.legend is not None and ax.get_legend() is self.legend: self.legend.set_visible(True)
+        if self.overlay in ax.get_children(): self.overlay.remove()
+        if self in figure.artists: super().remove()
+        if getattr(ax, '_figurestead_direct_labels', None) is self: del ax._figurestead_direct_labels
+        self.hooks.remove(self)
 
     def position(self, box):
         in_layout=self.ax.get_in_layout()
