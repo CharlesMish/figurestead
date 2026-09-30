@@ -15,6 +15,8 @@ matplotlib.use("Agg")
 from matplotlib import colors
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image
+from matplotlib.ticker import FixedLocator, FuncFormatter
 from figurestead.extensions.matrix import categorical_matrix, normalize_matrix_data
 from figurestead.themes import THEMES
 
@@ -218,6 +220,105 @@ class MatrixDomainTests(unittest.TestCase):
                                     self.assertIn(str(value), text)
                             self.assert_endpoint_pixels(fig, ax, domain)
                         plt.close(fig)
+
+    def test_image_mutations_keep_colorbar_linked_across_domain_transitions_and_exports(self):
+        adjacent = (1., math.nextafter(1., 2.))
+        subnormal = (0., math.ulp(0.))
+        changes = [("viridis", adjacent, True), ("plasma", (0., 2.), False),
+                   ("cividis", subnormal, True), ("magma", (10., 20.), False),
+                   ("viridis", adjacent, True), ("plasma", (0., 2.), False)]
+        for theme in ("lavender_fog_notebook", "ultraviolet_laboratory"):
+            for initial in (adjacent, (0., 2.)):
+                for kind in ("decimal", "percent"):
+                    with self.subTest(theme=theme, initial=initial, format=kind):
+                        fig, ax = categorical_matrix(fixture(initial, value_format=kind), theme=theme)
+                        image, bar = ax.images[0], fig.axes[-1]._colorbar
+                        callback = image.colorbar_cid
+                        axes = tuple(fig.axes)
+                        for cmap, domain, unit in changes:
+                            image.set_cmap(cmap)
+                            self.assertIs(bar.cmap, image.cmap)
+                            image.set_clim(*domain)
+                            image.set_data([domain])
+                            self.assertIs(image.colorbar, bar)
+                            self.assertIs(bar.mappable, image)
+                            self.assertEqual(image.colorbar_cid, callback)
+                            self.assertEqual(tuple(fig.axes), axes)
+                            self.assert_endpoint_pixels(fig, ax, domain)
+                            self.assertEqual(bar.ax.get_ylim(), (0., 1.) if unit else domain)
+                            if unit:
+                                labels = [t.get_text() for t in bar.ax.get_yticklabels()]
+                                decoded = [Decimal(t.rstrip("%")) / (100 if kind == "percent" else 1) for t in labels]
+                                self.assertEqual(decoded, [Decimal(str(v)) for v in domain])
+                            else:
+                                self.assertIs(bar.norm, image.norm)
+                                self.assertTrue(all(t.get_rotation() == 0 for t in bar.ax.get_yticklabels()))
+                            np.testing.assert_array_equal(bar.solids.get_facecolors(),
+                                                          image.cmap((np.arange(image.cmap.N) + .5) / image.cmap.N))
+                            for fmt in ("png", "svg", "pdf"):
+                                out = io.BytesIO()
+                                with matplotlib.rc_context({"svg.fonttype": "path"}):
+                                    fig.savefig(out, format=fmt)
+                                if fmt == "png":
+                                    out.seek(0)
+                                    np.testing.assert_array_equal(np.asarray(Image.open(out)), fig.canvas.buffer_rgba())
+                                elif fmt == "svg":
+                                    ET.fromstring(out.getvalue())
+                                    for label in (t.get_text() for t in bar.ax.get_yticklabels()):
+                                        self.assertIn(label, out.getvalue().decode())
+                                else:
+                                    self.assertTrue(out.getvalue().startswith(b"%PDF"))
+                                self.assertIs(bar.cmap, image.cmap)
+                                self.assertIs(bar.mappable, image)
+                                self.assert_endpoint_pixels(fig, ax, domain)
+                        plt.close(fig)
+
+    def test_norm_replacement_direct_updates_and_ordinary_tick_customization(self):
+        adjacent = (1., math.nextafter(1., 2.))
+        for initial in (adjacent, (0., 2.)):
+            fig, ax = categorical_matrix(fixture(initial))
+            image, bar = ax.images[0], fig.axes[-1]._colorbar
+            for norm in (colors.LogNorm(1., 100.), colors.Normalize(*adjacent),
+                         colors.Normalize(0., 2.)):
+                image.set_norm(norm)
+                bar.update_normal(image)
+                fig.canvas.draw()
+                self.assertIs(bar.mappable, image)
+                self.assertIs(image.norm, norm)
+                self.assertEqual(image.get_clim(), (norm.vmin, norm.vmax))
+                if isinstance(norm, colors.LogNorm):
+                    np.testing.assert_allclose(bar.ax.get_ylim(), image.get_clim(), rtol=1e-14, atol=0)
+                else:
+                    self.assertEqual(bar.ax.get_ylim(), (0., 1.) if norm.vmax == adjacent[1] else image.get_clim())
+            locator = FixedLocator([0., 1., 2.])
+            formatter = FuncFormatter(lambda v, _: f"custom {v:g}")
+            bar.locator, bar.formatter = locator, formatter
+            bar.update_ticks()
+            image.set_cmap("viridis")
+            image.set_clim(0., 3.)
+            fig.canvas.draw()
+            self.assertIs(bar.locator, locator)
+            self.assertIs(bar.formatter, formatter)
+            self.assertEqual([t.get_text() for t in bar.ax.get_yticklabels()], ["custom 0", "custom 1", "custom 2"])
+            plt.close(fig)
+
+    def test_colorbar_remove_keeps_native_ownership_and_disconnects_updates(self):
+        for initial in ((0., 2.), (1., math.nextafter(1., 2.))):
+            for layout in (None, "constrained"):
+                fig, ax = plt.subplots(layout=layout)
+                categorical_matrix(fixture(initial), ax=ax)
+                image, bar = ax.images[0], fig.axes[-1]._colorbar
+                image.set_cmap("viridis")
+                image.set_clim(0., math.ulp(0.))
+                bar.remove()
+                self.assertIsNone(image.colorbar)
+                self.assertIsNone(image.colorbar_cid)
+                self.assertEqual(fig.axes, [ax])
+                image.set_cmap("plasma")
+                image.set_clim(0., 2.)
+                self.assertEqual(bar.cmap.name, "viridis")
+                fig.canvas.draw()
+                plt.close(fig)
 
 
 if __name__ == "__main__":

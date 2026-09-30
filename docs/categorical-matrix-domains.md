@@ -18,7 +18,13 @@ beside the bar to avoid truncating digits at the figure edge; percent labels
 still express the same values multiplied by 100. This fallback also avoids
 overflow in colorbar midpoint arithmetic for otherwise representable domains.
 It uses the same unchanged colormap through a separate display mappable: its
-unit norm is not the scientific domain stored on the matrix image. The image's
+unit norm is not the scientific domain stored on the matrix image. The colorbar
+remains owned by that image (`image.colorbar` and `colorbar.mappable`) and follows
+`set_cmap`, `set_clim`, norm changes and explicit `update_normal` calls. Each
+update selects ordinary or unit display coordinates from the current norm;
+endpoint labels and tick layout follow that selection. Removing the colorbar
+disconnects its image callback through Matplotlib's native lifecycle. Ordinary
+colormap/limit changes retain custom tick locators and formatters. The image's
 numeric array, domain, masks and annotations remain intact. Nearest-neighbor
 RGBA resampling on this path preserves colors already computed from the exact
 values on older Matplotlib versions too.
@@ -44,3 +50,10 @@ The suite checks all six themes, narrow and ordinary domains, caller-owned
 figure preservation on failure, colorbar fills and endpoint labels, annotations,
 status cells, repeated renders and PNG/SVG/PDF exports. Colorbar display
 coordinates are inspected separately from the image's scientific norm.
+Mutation checks cover repeated ordinary/exceptional transitions, colormap and
+norm replacement, exported pixels/labels, custom ticks and colorbar removal.
+
+This is not universal finite-domain qualification. The preexisting
+`[-8e307, 8e307]` image/tick arithmetic limitation remains separate: minimum
+Matplotlib can lose cell colors despite a representable span, and current
+Matplotlib can emit overflow warnings. This repair does not change that case.

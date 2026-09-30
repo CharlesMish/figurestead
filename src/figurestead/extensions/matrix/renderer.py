@@ -6,6 +6,7 @@ from collections.abc import Mapping
 from decimal import Decimal
 import math
 
+from matplotlib.colorbar import Colorbar, make_axes, make_axes_gridspec
 from matplotlib.cm import ScalarMappable
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
@@ -162,6 +163,87 @@ def _endpoint_label(value, kind):
     return str(value)
 
 
+class _MatrixDisplay(ScalarMappable):
+    """Unit display coordinates with the owning image's opacity."""
+
+    def __init__(self, image):
+        self.image = image
+        super().__init__(norm=mcolors.Normalize(0, 1), cmap=image.cmap)
+
+    def get_alpha(self):
+        return self.image.get_alpha()
+
+
+class _MatrixColorbar(Colorbar):
+    """Keep image ownership while isolating exceptional display arithmetic."""
+
+    def __init__(self, ax, image, value_format, **kwargs):
+        self._value_format = value_format
+        self._display = _MatrixDisplay(image)
+        display = self._display_for(image)
+        super().__init__(ax, display, alpha=image.get_alpha(), **kwargs)
+        if display is not image:
+            # Colorbar.remove() and normal Matplotlib image updates must keep
+            # their native ownership and callback relationship with the image.
+            display.callbacks.disconnect(display.colorbar_cid)
+            display.colorbar = display.colorbar_cid = None
+            image.colorbar = self
+            image.colorbar_cid = image.callbacks.connect("changed", self.update_normal)
+        self.mappable = image
+        self._format_ticks(display is self._display)
+
+    def _display_for(self, image):
+        # Nonlinear/custom norms continue through Matplotlib's native path.
+        if type(image.norm) is mcolors.Normalize and image.norm.scaled() and _unit_colorbar(image.norm, image.cmap.N):
+            self._display.image = image
+            self._display.set_cmap(image.cmap)
+            # Normalize before nearest resampling, including after an ordinary
+            # image is changed to adjacent/subnormal bounds on older Matplotlib.
+            image.set_interpolation_stage("rgba")
+            return self._display
+        return image
+
+    def _format_ticks(self, unit, restore=False):
+        if unit:
+            self.set_ticks([0, 1], labels=[
+                _endpoint_label(value, self._value_format)
+                for value in self.mappable.get_clim()
+            ])
+        elif self._value_format == "percent":
+            self.formatter = FuncFormatter(lambda value, _: _format(value, "percent"))
+            self.update_ticks()
+        if unit or restore:
+            for index, tick in enumerate(self.ax.get_yticklabels()):
+                tick.set_rotation(90 if unit else 0)
+                tick.set_horizontalalignment("left")
+                tick.set_verticalalignment(("bottom" if index == 0 else "top") if unit else "center_baseline")
+
+    def update_normal(self, mappable=None):
+        image = self.mappable if mappable is None else mappable
+        display = self._display_for(image)
+        was_unit = self.norm is self._display.norm
+        try:
+            # Native update handles colormap/norm changes, resetting tick
+            # locators when the display switches between ordinary and unit.
+            super().update_normal(display)
+        finally:
+            self.mappable = image
+        if display is self._display or was_unit:
+            self._format_ticks(display is self._display, restore=was_unit)
+
+
+def _matrix_colorbar(fig, ax, image, value_format):
+    # The public Colorbar factory helpers retain Figure.colorbar's layout
+    # policy while allowing an owned Colorbar subclass with a safe update hook.
+    current_ax = fig.gca()
+    engine = fig.get_layout_engine()
+    factory = make_axes_gridspec if ax.get_subplotspec() and (engine is None or engine.colorbar_gridspec) else make_axes
+    cax, kwargs = factory(ax, fraction=0.046, pad=0.04)
+    fig.sca(current_ax)
+    cax.grid(visible=False, which="both", axis="both")
+    return _MatrixColorbar(cax, image, value_format, **kwargs)
+
+
 def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope", ax=None):
     """Render a categorical value matrix with explicit missing/insufficient cells."""
     data = normalize_matrix_data(data)
@@ -187,13 +269,7 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
 
     colors = [theme.panel, theme.primary, theme.summary_core]
     cmap = mcolors.LinearSegmentedColormap.from_list(f"figurestead_extension_{theme.key}", [(0, colors[0]), (0.68, colors[1]), (1, colors[2])]).with_extremes(bad=theme.field)
-    unit_colorbar = _unit_colorbar(norm, cmap.N)
     image = ax.imshow(np.ma.masked_invalid(matrix), cmap=cmap, norm=norm, aspect="auto", interpolation="nearest", zorder=2)
-    if unit_colorbar:
-        # Older Matplotlib data-stage resampling can lose adjacent/subnormal
-        # observations before normalization. Nearest RGBA resampling preserves
-        # their already-computed colors, without replacing the numeric array.
-        image.set_interpolation_stage("rgba")
     present_statuses = set()
     for cell in materialized:
         xi, yi = x_lookup[cell["x"]], y_lookup[cell["y"]]
@@ -212,30 +288,10 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
     ax.set_yticks(range(len(y_categories)), y_categories)
     ax.set_xlim(-0.5, len(x_categories) - 0.5)
     ax.set_ylim(len(y_categories) - 0.5, -0.5)
-    if unit_colorbar:
-        # The display gradient alone uses [0, 1]. Scientific values and the
-        # image norm remain on the exact authored domain; endpoints are labelled
-        # in the original units. Never let colorbar construction widen that norm.
-        display = ScalarMappable(norm=mcolors.Normalize(0, 1), cmap=cmap)
-        colorbar = fig.colorbar(display, ax=ax, fraction=0.046, pad=0.04)
-        colorbar.set_ticks([0, 1], labels=[
-            _endpoint_label(value, data["valueScale"]["format"])
-            for value in data["valueScale"]["domain"]
-        ])
-        # Full-precision adjacent bounds can be long. Keep both labels inside
-        # the bar's vertical span instead of truncating scientific digits at
-        # the figure's right edge or resizing unrelated caller-owned axes.
-        for tick, alignment in zip(colorbar.ax.get_yticklabels(), ("bottom", "top")):
-            tick.set_rotation(90)
-            tick.set_horizontalalignment("left")
-            tick.set_verticalalignment(alignment)
-    else:
-        colorbar = fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
+    colorbar = _matrix_colorbar(fig, ax, image, data["valueScale"]["format"])
     colorbar.set_label(data["valueScale"]["label"], color=theme.label, fontsize=8)
     colorbar.outline.set_edgecolor(theme.spine)
     colorbar.ax.tick_params(colors=theme.secondary, labelsize=7)
-    if data["valueScale"]["format"] == "percent" and not unit_colorbar:
-        colorbar.ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: _format(value, "percent")))
     handles = []
     if "insufficient" in present_statuses:
         handles.append(Patch(facecolor=theme.panel, edgecolor=theme.warm, hatch="///", label=data["statusLabels"]["insufficient"]))
