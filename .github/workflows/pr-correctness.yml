@@ -70,6 +70,9 @@ jobs:
       - name: Verify sequential heatmap ramp
         run: python audit/current-head-hardening/test_sequential_heatmap.py
 
+      - name: Verify categorical matrix authored domains
+        run: python audit/current-head-hardening/test_matrix_domains.py
+
       - name: Verify Python gapped lines
         run: python audit/current-head-hardening/test_gapped_lines.py
 

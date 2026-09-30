@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from decimal import Decimal
 import math
 
+from matplotlib.cm import ScalarMappable
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch, Rectangle
-from matplotlib.ticker import FuncFormatter
+from matplotlib.ticker import FuncFormatter, Locator
 import numpy as np
 
 from figurestead.core import PlotSpec, add_note, ensure_axes, resolve, style_axes
@@ -127,9 +129,43 @@ def _annotation_color(theme, fill):
     return theme.label if _contrast(theme.label, fill) >= _contrast(theme.field, fill) else theme.field
 
 
+def _value_norm(domain):
+    """Preflight the existing linear mapping before touching caller artists."""
+    low, high = domain
+    if not 0 < high - low < math.inf:
+        raise ValueError("data.valueScale.domain cannot be represented by a finite positive linear span")
+    return mcolors.Normalize(low, high)
+
+
+def _unit_colorbar(norm, entries):
+    # Matplotlib expands nearly singular colorbar bounds in-place on the
+    # image's shared norm. Consult its public locator policy, without adopting
+    # the expanded bounds or imposing an admission threshold of our own.
+    domain = (norm.vmin, norm.vmax)
+    if tuple(Locator().nonsingular(*domain)) != domain:
+        return True
+    # Even a representable span can overflow the ordinary colorbar's boundary
+    # midpoint addition. Unit display coordinates avoid that arithmetic too.
+    with np.errstate(over="ignore", invalid="ignore"):
+        boundaries = norm.inverse(np.linspace(0, 1, entries + 1))
+        midpoints = (boundaries[:-1] + boundaries[1:]) * 0.5
+    return not np.all(np.isfinite(midpoints))
+
+
+def _endpoint_label(value, kind):
+    # Unlike the ordinary colorbar's rounded ticks, these two labels must keep
+    # adjacent floating-point domain bounds distinguishable. Decimal scaling
+    # also avoids overflowing a finite endpoint just to display a percentage.
+    if kind == "percent":
+        sign, digits, exponent = Decimal(str(value)).as_tuple()
+        return f"{Decimal((sign, digits, exponent + 2))}%"
+    return str(value)
+
+
 def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope", ax=None):
     """Render a categorical value matrix with explicit missing/insufficient cells."""
     data = normalize_matrix_data(data)
+    norm = _value_norm(data["valueScale"]["domain"])
     spec = spec or PlotSpec("Categorical matrix")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax)
@@ -151,8 +187,13 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
 
     colors = [theme.panel, theme.primary, theme.summary_core]
     cmap = mcolors.LinearSegmentedColormap.from_list(f"figurestead_extension_{theme.key}", [(0, colors[0]), (0.68, colors[1]), (1, colors[2])]).with_extremes(bad=theme.field)
-    norm = mcolors.Normalize(*data["valueScale"]["domain"])
+    unit_colorbar = _unit_colorbar(norm, cmap.N)
     image = ax.imshow(np.ma.masked_invalid(matrix), cmap=cmap, norm=norm, aspect="auto", interpolation="nearest", zorder=2)
+    if unit_colorbar:
+        # Older Matplotlib data-stage resampling can lose adjacent/subnormal
+        # observations before normalization. Nearest RGBA resampling preserves
+        # their already-computed colors, without replacing the numeric array.
+        image.set_interpolation_stage("rgba")
     present_statuses = set()
     for cell in materialized:
         xi, yi = x_lookup[cell["x"]], y_lookup[cell["y"]]
@@ -171,11 +212,29 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
     ax.set_yticks(range(len(y_categories)), y_categories)
     ax.set_xlim(-0.5, len(x_categories) - 0.5)
     ax.set_ylim(len(y_categories) - 0.5, -0.5)
-    colorbar = fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
+    if unit_colorbar:
+        # The display gradient alone uses [0, 1]. Scientific values and the
+        # image norm remain on the exact authored domain; endpoints are labelled
+        # in the original units. Never let colorbar construction widen that norm.
+        display = ScalarMappable(norm=mcolors.Normalize(0, 1), cmap=cmap)
+        colorbar = fig.colorbar(display, ax=ax, fraction=0.046, pad=0.04)
+        colorbar.set_ticks([0, 1], labels=[
+            _endpoint_label(value, data["valueScale"]["format"])
+            for value in data["valueScale"]["domain"]
+        ])
+        # Full-precision adjacent bounds can be long. Keep both labels inside
+        # the bar's vertical span instead of truncating scientific digits at
+        # the figure's right edge or resizing unrelated caller-owned axes.
+        for tick, alignment in zip(colorbar.ax.get_yticklabels(), ("bottom", "top")):
+            tick.set_rotation(90)
+            tick.set_horizontalalignment("left")
+            tick.set_verticalalignment(alignment)
+    else:
+        colorbar = fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
     colorbar.set_label(data["valueScale"]["label"], color=theme.label, fontsize=8)
     colorbar.outline.set_edgecolor(theme.spine)
     colorbar.ax.tick_params(colors=theme.secondary, labelsize=7)
-    if data["valueScale"]["format"] == "percent":
+    if data["valueScale"]["format"] == "percent" and not unit_colorbar:
         colorbar.ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: _format(value, "percent")))
     handles = []
     if "insufficient" in present_statuses:
