@@ -4,12 +4,24 @@ Figurestead is an experimental scientific figure system with Python and framewor
 
 Published versions: Python `figurestead==0.9.0a3` and browser `@figurestead/web@0.9.0-alpha.4` ([alpha.4 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.4)). The counters are independent. npm `alpha` points to alpha.4; `latest` intentionally remains alpha.1. The [retained release records](release/README.md) bind the exact published artifacts.
 
+## Unpublished maintenance candidate
+
+This checkout prepares Python `0.9.0a4` / browser `0.9.0-alpha.5` for independent
+review, not registry publication. It includes the merged SVG typography/subtitle,
+dense numeric-array, DirectLabels lifecycle, authored matrix-domain and
+minimum-dependency repairs. See [candidate changes and limits](release/notes/0.9.0a4-web-alpha.5.md).
+The published identities above and all historical images remain unchanged.
+
 ## Start here
+
+The commands below review the retained local candidate from this checkout.
+They do not fetch a new registry release. For the existing public release use
+the exact published versions listed above.
 
 ### Python
 
 ```bash
-python -m pip install "figurestead==0.9.0a3"
+python -m pip install ./release/python/0.9.0a4/dist/figurestead-0.9.0a4-py3-none-any.whl
 ```
 
 ```python
@@ -24,7 +36,7 @@ figure.savefig("figurestead-first-success.png", dpi=150)
 ### Browser
 
 ```bash
-npm install @figurestead/web@0.9.0-alpha.4
+npm install ./release/npm/0.9.0-alpha.5/dist/figurestead-web-0.9.0-alpha.5.tgz
 ```
 
 The package exports `createFigurestead`; rendering requires a complete normalized figure contract. The repository includes one with every identifier defined. From a checkout:

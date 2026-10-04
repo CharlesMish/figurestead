@@ -52,25 +52,30 @@ class HistoricalA2Integrity(CandidateIntegrity):
     version = '0.9.0a2'
 
 
+class HistoricalA3Integrity(CandidateIntegrity):
+    version = '0.9.0a3'
+
+
 class SourceInventory(unittest.TestCase):
+    version = '0.9.0a3'
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='figurestead-bound-source-')
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        release = self.root / 'release/python' / VERSION
-        shutil.copytree(ROOT / 'release/python' / VERSION, release)
+        release = self.root / 'release/python' / self.version
+        shutil.copytree(ROOT / 'release/python' / self.version, release)
         # Authenticate frozen artifacts and their ledger before materializing
         # source. Moving checkout files are not historical release authority.
-        self.assertEqual(verify(self.root)['result'], 'PASS')
+        self.assertEqual(verify(self.root, version=self.version)['result'], 'PASS')
         ledger = json.loads((release / 'SOURCE_INPUTS.json').read_text())
-        with tarfile.open(release / 'dist' / f'figurestead-{VERSION}.tar.gz') as archive:
+        with tarfile.open(release / 'dist' / f'figurestead-{self.version}.tar.gz') as archive:
             for name, digest in ledger['files'].items():
-                payload = archive.extractfile(f'figurestead-{VERSION}/{name}').read()
+                payload = archive.extractfile(f'figurestead-{self.version}/{name}').read()
                 self.assertEqual(hashlib.sha256(payload).hexdigest(), digest)
                 target = self.root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(payload)
-        self.assertEqual(verify(self.root, check_source=True)['result'], 'PASS')
+        self.assertEqual(verify(self.root, check_source=True, version=self.version)['result'], 'PASS')
 
     def test_new_docs_are_bound_without_redefining_a2(self):
         previous = source_inputs(self.root, '0.9.0a2')
@@ -80,20 +85,32 @@ class SourceInventory(unittest.TestCase):
             'docs/histogram-medians.md', 'release/notes/0.9.0a3-web-alpha.4.md',
         })
 
-    def test_frozen_source_matches_a3(self):
-        self.assertEqual(verify(self.root, check_source=True)['result'], 'PASS')
+    def test_frozen_source_matches_selected_version(self):
+        self.assertEqual(verify(self.root, check_source=True, version=self.version)['result'], 'PASS')
 
     def test_source_change_rejects(self):
         (self.root / 'docs/line-series-semantics.md').write_text('changed')
         with self.assertRaisesRegex(ValueError, 'source input identity'):
-            verify(self.root, check_source=True)
+            verify(self.root, check_source=True, version=self.version)
 
     def test_later_readme_edit_preserves_retained_verification(self):
         with (self.root / 'README.md').open('a') as readme:
             readme.write('\nA harmless later documentation sentence.\n')
-        self.assertEqual(verify(self.root)['result'], 'PASS')
+        self.assertEqual(verify(self.root, version=self.version)['result'], 'PASS')
         with self.assertRaisesRegex(ValueError, 'source input identity'):
-            verify(self.root, check_source=True)
+            verify(self.root, check_source=True, version=self.version)
+
+
+class CurrentSourceInventory(SourceInventory):
+    version = VERSION
+
+    def test_new_docs_are_bound_without_redefining_a3(self):
+        previous = source_inputs(self.root, '0.9.0a3')
+        current = source_inputs(self.root, VERSION)
+        self.assertEqual(set(current) - set(previous), {
+            'docs/categorical-matrix-domains.md', 'docs/svg-export-typography.md',
+            'release/notes/0.9.0a4-web-alpha.5.md',
+        })
 
 
 if __name__ == '__main__':unittest.main()

@@ -105,7 +105,7 @@ jobs:
   minimum-python-line:
     name: Minimum Python line compatibility / 3.10
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     env:
       MPLBACKEND: Agg
       MPLCONFIGDIR: /tmp/figurestead-matplotlib
@@ -124,18 +124,16 @@ jobs:
       - name: Install source package with declared minimum dependencies
         run: python -m pip install . matplotlib==3.7.0 numpy==1.24.0 Pillow==10.0.0
 
-      # This lane covers the two bounded line compatibility repairs. The full
-      # minimum suite also exposes unrelated SVG numeric-weight failures and
-      # a warning-delivery difference, outside this repair's scope.
-      - name: Verify marker geometry and ordinary line exports
-        run: python audit/current-head-hardening/test_line_identity.py
-
-      - name: Verify direct placement, fallback, exports and unexpected errors
-        run: >-
-          python audit/current-head-hardening/test_direct_labels.py
-          DirectLabelTests.test_marker_joins_draw_and_export_with_supported_dependency_minimum
-          DirectLabelTests.test_unexpected_marker_join_getter_errors_propagate
-          DirectLabelTests.test_masked_marker_geometry_falls_back_to_ordinary_rendering
+      # PR47/48 repaired the two line defects and the owned-heading SVG issue.
+      # Keep the existing job identity; qualify all current Python suites for
+      # this release at the declared dependency minimum, without widening it.
+      - name: Verify complete Python correctness suites at declared minimum
+        shell: bash
+        run: |
+          set -euo pipefail
+          for suite in scientific_geometry rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity direct_labels subtitle python_motion_inputs; do
+            python "audit/current-head-hardening/test_${suite}.py"
+          done
 
   core-web:
     name: Core browser and SVG contract
@@ -402,7 +400,7 @@ jobs:
           python -m venv "$RUNNER_TEMP/python-packed-venv"
           "$RUNNER_TEMP/python-packed-venv/bin/python" -m pip install "${wheels[0]}"
           cd "$RUNNER_TEMP"
-          "$RUNNER_TEMP/python-packed-venv/bin/python" "$GITHUB_WORKSPACE/ci/python-package-smoke.py" --expected-version 0.9.0a3
+          "$RUNNER_TEMP/python-packed-venv/bin/python" "$GITHUB_WORKSPACE/ci/python-package-smoke.py" --expected-version 0.9.0a4
 
       - name: Pack, install, and smoke the npm artifact
         shell: bash
@@ -424,6 +422,7 @@ jobs:
         run: |
           python release/python/verify_candidate.py --version 0.9.0a2
           python release/python/verify_candidate.py --version 0.9.0a3
+          python release/python/verify_candidate.py --version 0.9.0a4 --check-source
           python release/python/test_candidate.py
 
       - name: Verify npm retained-candidate integrity
