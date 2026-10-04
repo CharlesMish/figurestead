@@ -422,8 +422,9 @@ jobs:
         run: |
           python release/python/verify_candidate.py --version 0.9.0a2
           python release/python/verify_candidate.py --version 0.9.0a3
-          python release/python/verify_candidate.py --version 0.9.0a4 --check-source
+          python release/python/verify_candidate.py --version 0.9.0a4
           python release/python/test_candidate.py
+          python release/python/test_publish_workflow.py
 
       - name: Verify npm retained-candidate integrity
         run: npm run test:npm-release-integrity

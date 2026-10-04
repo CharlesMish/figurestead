@@ -12,6 +12,27 @@ already-published first alpha used this repaired process.
 
 Alpha.3 remains published and retained unchanged. At the historical 2026-09-27 verification, `alpha` pointed to alpha.3 and `latest` remained alpha.1. The [alpha.3 preparation notes](../notes/0.9.0a2-web-alpha.3.md) record that earlier preparation, not pending publication.
 
+## Unpublished alpha.5 review candidate
+
+The new `0.9.0-alpha.5` tarball is retained for independent review alongside
+Python a4; see [candidate notes](../notes/0.9.0a4-web-alpha.5.md) and the
+[coordinated exact-artifact record](../reviews/0.9.0a4-web-alpha.5.json).
+The parameterized workflow and fail-closed verifier are unchanged. This is
+preparation only: no registry publication, dist-tag movement or Git tag creation
+is authorized. If later accepted, use the retained tarball's reviewed SHA-256
+and the final reviewed protected-main commit, with the explicit `alpha` tag.
+Keep `latest` at its existing value unless separately authorized.
+
+The prior 120-second visibility timeout remains a known operational limitation.
+A readback timeout after npm success is a hold for manual read-only verification,
+not permission to repeat the publishing command or entire workflow. Rerun only
+`verify-public-registry.mjs` with the same exact version, approved hash and tag
+(or re-run only the readback job). Never automatically republish, recut or change
+credentials. The publisher must independently verify public bytes, metadata and
+requested tags before calling the release complete. Preparation does not prove
+that current external OIDC/environment configuration will still authorize a
+future publication; that can only be confirmed during an approved dispatch.
+
 ## Historical published alpha.2 state
 
 `@figurestead/web@0.9.0-alpha.2` is published. Its accepted candidate is
