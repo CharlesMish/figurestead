@@ -18,6 +18,41 @@ Published 2026-09-29 through the reviewed exact-artifact workflows: Python `0.9.
 
 The ledger binds package-input contents without a circular commit hash. The coordinated record in `release/reviews/0.9.0a3-web-alpha.4.json` records the producing authority, tool versions, archive/source hashes and consumer checks; its retaining commit binds artifacts and ledger. These exact bytes were published without rebuilding or repacking. The coordinated record remains an immutable preparation-time record; its authorization/status fields are historical, not current publication status. Independent acceptance and separate publication authorization remain required for future releases.
 
+## Unpublished a4 / alpha.5 review candidate
+
+Prepared from merged source `2cc3b28e9c7a3c6543848549a2b7de7b3ab484c5`:
+Python `0.9.0a4` and browser `0.9.0-alpha.5`. See
+[changes and limits](notes/0.9.0a4-web-alpha.5.md) and the
+[exact-artifact preparation record](reviews/0.9.0a4-web-alpha.5.json).
+The retained Python files are under `python/0.9.0a4`; the npm tarball is under
+`npm/0.9.0-alpha.5`. None is published or independently accepted yet. Source,
+artifact acceptance, registry publication and a coordinated GitHub prerelease
+remain separate gates. No external reviewer has been contacted by preparation.
+
+Read-only verification:
+
+```sh
+python release/python/verify_candidate.py --version 0.9.0a4
+python release/python/test_candidate.py
+python release/python/test_publish_workflow.py
+```
+
+Add `--check-source` only when checking the producing candidate source. Later
+main must not redefine a retained artifact. Existing a2/a3 verification remains
+bound to its original ledger and bytes. The a4 source inventory additionally
+binds matrix-domain and SVG typography scope documents and the new release note.
+
+If separately accepted and authorized, the Python workflow is bound to a4 and
+these confirmation phrases (not instructions to dispatch now):
+
+- `publish figurestead 0.9.0a4 to testpypi`
+- `publish figurestead 0.9.0a4 to pypi`
+
+Select the final reviewed protected-main commit as `expected_commit`; do not
+substitute the producing/source-only commit or an unreviewed later head. TestPyPI
+must expose identical accepted bytes before the production PyPI gate can pass.
+No build, repack, skip-existing or automatic retry of publication is introduced.
+
 ## Completed a3 dispatch record (do not repeat)
 
 - TestPyPI: `publish figurestead 0.9.0a3 to testpypi`
@@ -34,4 +69,4 @@ Both dispatches used `expected_commit=9260af190e60c621244072675c238db4822b8632`.
 
 ## Integrity rule
 
-The updated workflow consumes only the two versioned a3 distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2 bytes or retag their records as a3. Candidate bytes and their bindings require independent acceptance before any authorized publication.
+The updated workflow consumes only the two versioned a4 candidate distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.

@@ -9,7 +9,23 @@
 - Release target: `9260af190e60c621244072675c238db4822b8632`.
 - npm `alpha` points to alpha.4; `latest` intentionally remains alpha.1.
 
-The exact retained files were published and independently verified on TestPyPI, PyPI, npm and the coordinated GitHub prerelease. See [retained release records](release/README.md). No subsequent candidate is designated.
+The exact retained files were published and independently verified on TestPyPI, PyPI, npm and the coordinated GitHub prerelease. See [retained release records](release/README.md). The separately prepared, unpublished next candidate is described below.
+
+## Proposed a4 / alpha.5 candidate (2026-10-04)
+
+This checkout prepares Python `figurestead` **0.9.0a4** and browser
+`@figurestead/web` **0.9.0-alpha.5** for review. The proposed coordinated identity
+is `v0.9.0-alpha.5`, titled **Figurestead alpha.5 — Python 0.9.0a4 / web 0.9.0-alpha.5**.
+These identities were unused in registry/tag reads at preparation time; no tag
+has been created and no publication is authorized. Registry availability must
+be rechecked before any separately authorized publication. Schema 0.4,
+renderer API 1, dependency floors and the private tooling version are unchanged.
+
+The candidate contains only the merged SVG typography/subtitle, dense-array
+validation, DirectLabels lifecycle, authored matrix-domain and minimum-dependency
+compatibility repairs. See [candidate notes](release/notes/0.9.0a4-web-alpha.5.md).
+Current public installs and retained historical evidence remain a3/alpha.4 and
+their own earlier producing versions until publication is independently verified.
 
 ## Historical a2 / alpha.3 foundation
 

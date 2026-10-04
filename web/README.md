@@ -1,9 +1,20 @@
 # @figurestead/web experimental public alpha
 
-The current published package is `@figurestead/web@0.9.0-alpha.4` ([coordinated release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.4)). To follow the prerelease channel intentionally, use `npm install @figurestead/web@alpha`; `latest` remains `0.9.0-alpha.1`. This repository README reflects completed publication; the README inside the immutable published tarball retains its preparation-time status wording.
+This is the unpublished `@figurestead/web@0.9.0-alpha.5` maintenance candidate.
+It carries the reviewed standalone SVG font/subtitle repair and rejects sparse
+numeric arrays before compilation or controller mutation. Dense finite inputs,
+Canvas rendering, schema 0.4 and renderer API 1 retain their existing behavior.
+
+At preparation time, the public package is still `0.9.0-alpha.4`
+([coordinated release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.4));
+`alpha` points there and `latest` remains `0.9.0-alpha.1`. Candidate acceptance
+and publication require separate approval. Review this candidate by installing
+the exact retained tarball supplied with it, replacing `/path/to/` below with its
+local directory. After separately authorized publication, the exact registry
+specifier will be `@figurestead/web@0.9.0-alpha.5`.
 
 ```sh
-npm install @figurestead/web@0.9.0-alpha.4
+npm install /path/to/figurestead-web-0.9.0-alpha.5.tgz
 ```
 
 The package root provides Figurestead's accepted core rendering and custom
@@ -26,7 +37,7 @@ files after installing `@figurestead/web` and run them through a normal ESM
 browser tool such as Vite.
 
 ```sh
-npm install @figurestead/web@0.9.0-alpha.4
+npm install /path/to/figurestead-web-0.9.0-alpha.5.tgz
 ```
 
 <!-- figurestead-npm-first-success:index.html -->

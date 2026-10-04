@@ -121,7 +121,11 @@ class HistogramOwnershipTests(unittest.TestCase):
         if np.finfo(np.longdouble).eps < np.finfo(np.float64).eps:
             values=[np.longdouble(1),np.nextafter(np.longdouble(1),np.longdouble(2))]
             text=median_labels(values);self.assertEqual(len(set(text)),2)
-            for s,v in zip(text,values):self.assertEqual(np.longdouble(s),v)
+            # NumPy 1.x scalar promotion can conservatively retain the existing
+            # approximation prefix on an extended-precision readout. As above,
+            # require distinct labels and exact numeric round-trip, not absence
+            # of that prefix; never parse display punctuation as a number.
+            for s,v in zip(text,values):self.assertEqual(np.longdouble(s.removeprefix('≈ ')),v)
             for v in (np.longdouble('1e400'),np.longdouble('1e-400')):
                 self.assertEqual(np.longdouble(median_labels([v])[0].removeprefix('≈ ')),v)
 
