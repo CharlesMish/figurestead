@@ -12,6 +12,7 @@ export { APPLICATION_PROFILE_VERSION, APPLICATION_PROFILES, applyApplicationProf
 export { APPEARANCE_VERSION, composeAppearance } from "./appearance.js";
 export { SERIES_STYLE_VERSION, GLYPH_CYCLE, LINE_STYLE_CYCLE, HATCH_CYCLE, collectSeriesKeys, resolveSeriesStyles, styleForSeries } from "./series-style.js";
 export { TERMINAL_SCENE_VERSION, canonicalTerminalEvidence, compileFigureModel, compileTerminalScene, evidenceFingerprint, terminalEvidence } from "./terminal-scene.js";
+export { MARK_KINDS, assertMarkKind } from "./scene-marks.js";
 export { RESOLVED_SCENE_VERSION, RESOLVED_RENDERERS, isResolvedRenderer, resolveSceneFrame, resolveTerminalScene, resolvedTerminalGeometry } from "./resolved-scene.js";
 export { COMPOSED_SCENE_VERSION, auditComposition, composeResolvedScene } from "./composition.js";
 export { MOTION_PLAN_VERSION, ALLOWED_MOTION_CHANNELS, TERMINAL_MOTION_STATE, assertTerminalMotionIdentity, compileMotionPlan, markMotionState, strategyForRenderer } from "./motion-plan.js";

@@ -1,4 +1,5 @@
 import { clamp01, smooth } from "./marks.js";
+import { assertMarkKind } from "./scene-marks.js";
 
 export const MOTION_PLAN_VERSION = "figurestead.motion-plan/1";
 export const ALLOWED_MOTION_CHANNELS = Object.freeze(["opacity", "translate", "scale", "clip", "glow"]);
@@ -28,11 +29,12 @@ export function strategyForRenderer(renderer, requested = "auto") {
 
 export function compileMotionPlan(scene, view = {}) {
   const motion = view.motion ?? "none", requested = view.strategy ?? "auto";
-  const panels = scene.panels.map((panel) => ({
+  const panels = scene.panels.map((panel, panelIndex) => ({
     panelId: panel.id,
     renderer: panel.renderer,
     strategy: motion === "none" ? "none" : strategyForRenderer(panel.renderer, requested),
     targets: panel.marks.map((mark, index) => {
+      assertMarkKind(mark, `scene.panels[${panelIndex}].marks[${index}]`);
       const strategy = motion === "none" ? "none" : strategyForRenderer(panel.renderer, requested);
       return { id: mark.id, order: index, channels: [...(STRATEGY_CHANNELS[strategy] ?? STRATEGY_CHANNELS.reveal)] };
     }),
@@ -41,6 +43,7 @@ export function compileMotionPlan(scene, view = {}) {
 }
 
 export function markMotionState(mark, index, count, progress, strategy = "reveal") {
+  assertMarkKind(mark);
   if (progress >= 1 || strategy === "none") return { ...TERMINAL_MOTION_STATE };
   const stagger = count <= 1 ? 0 : (index / (count - 1)) * 0.28;
   const local = smooth(clamp01((progress - stagger) / Math.max(1e-9, 1 - stagger)));

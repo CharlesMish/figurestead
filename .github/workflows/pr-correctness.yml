@@ -264,6 +264,11 @@ jobs:
       - name: Verify browser scientific geometry
         run: npm run test:browser-scientific-geometry
 
+      - name: Verify visible reference bands in Chromium and Firefox
+        run: |
+          node ci/check-band-rendering.cjs
+          FIGURESTEAD_BROWSER=firefox node ci/check-band-rendering.cjs
+
       - name: Verify browser title and provenance legibility
         run: npm run test:browser-readability
 

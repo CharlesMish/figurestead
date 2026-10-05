@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const fixtureRoot = path.join(repositoryRoot, "ci", "fixtures", "npm-consumer");
@@ -43,6 +43,7 @@ try {
 
   const installedRoot = path.join(temporaryRoot, "node_modules", "@figurestead", "web");
   const requiredMembers = [
+    "src/scene-marks.js",
     "types/index.d.ts",
     "types/extensions/temporal.d.ts",
     "types/theme-json.d.ts",
@@ -89,6 +90,19 @@ try {
   assert.equal(expectedErrorCount, negativeCaseCount, "each negative case must carry one expected compiler error");
 
   run(process.execPath, [path.join(repositoryRoot, "node_modules", "typescript", "bin", "tsc"), "--project", path.join(temporaryRoot, "tsconfig.json")], { cwd: temporaryRoot });
+  // Exercise narrowing against the installed declarations, not a repository
+  // path alias that could mask a missing or stale packed member.
+  const markFixture = path.join(temporaryRoot, "scene-marks");
+  fs.cpSync(path.join(repositoryRoot, "ci", "fixtures", "scene-mark-consumer"), markFixture, { recursive: true });
+  const markConfig = JSON.parse(fs.readFileSync(path.join(markFixture, "tsconfig.json"), "utf8"));
+  delete markConfig.compilerOptions.paths;
+  fs.writeFileSync(path.join(markFixture, "tsconfig.json"), JSON.stringify(markConfig));
+  run(process.execPath, [path.join(repositoryRoot, "node_modules", "typescript", "bin", "tsc"), "--project", path.join(markFixture, "tsconfig.json")], { cwd: temporaryRoot });
+  const { MARK_KINDS } = await import(pathToFileURL(path.join(installedRoot, "src", "index.js")).href);
+  const declaredKinds = declarationText.match(/export const MARK_KINDS: readonly \[([\s\S]*?)\];/);
+  assert.ok(declaredKinds, "packed mark-kind declaration is missing");
+  assert.deepEqual([...declaredKinds[1].matchAll(/"([^"]+)"/g)].map((match) => match[1]), [...MARK_KINDS], "packed runtime and declared mark kinds differ");
+  assert.ok(Object.isFrozen(MARK_KINDS));
   run(process.execPath, [path.join(temporaryRoot, "node-smoke.mjs")], { cwd: temporaryRoot });
   run(process.execPath, [path.join(repositoryRoot, "node_modules", "vite", "bin", "vite.js"), "build", "browser", "--outDir", "dist", "--emptyOutDir"], { cwd: temporaryRoot });
   assert.ok(fs.statSync(path.join(temporaryRoot, "browser", "dist", "index.html")).isFile(), "Vite browser build was not produced");
@@ -100,6 +114,8 @@ try {
     result: "PASS",
     validTypeScriptCases: validCaseCount,
     expectedErrorCases: negativeCaseCount,
+    sceneMarkTypeFixtures: 1,
+    sceneMarkKinds: MARK_KINDS.length,
     curatedThemeIdentityCases: themes.length,
     requiredPackedMembers: requiredMembers.length,
     declaredRuntimeExports: runtimeSourceNames.reduce((sum, count) => sum + count, 0),

@@ -246,3 +246,12 @@ Missing `style.lineStyles` normalizes to `["solid"]`; explicitly supplied arrays
 retain their existing glyph-block allocation, and per-key `lineStyle` wins.
 See the [line semantics](https://github.com/CharlesMish/figurestead/blob/main/docs/line-series-semantics.md).
 This behavior begins with alpha.4; it is not retroactively part of alpha.3.
+
+## Unreleased scene-mark follow-up
+
+Source after alpha.5 repairs missing Canvas reference/row bands, exposes a
+closed `Mark` union and `MARK_KINDS`, and rejects unknown scene kinds instead of
+silently omitting them. Custom renderer drawing remains supported; opaque custom
+evidence is reported as incomplete coverage. See the [mark and coverage
+contract](https://github.com/CharlesMish/figurestead/blob/main/docs/browser-scene-marks.md).
+This repair is not included in the published alpha.5 package.

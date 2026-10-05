@@ -1,14 +1,19 @@
+import { assertMarkKind } from "./scene-marks.js";
+
 export const RENDER_LAYER_ORDER = Object.freeze([
   "surface", "grid", "reference", "data", "summary", "axes", "annotations", "legend",
 ]);
 
-const REFERENCE_MARKS = new Set(["reference-band", "row-band", "baseline-rule"]);
-const SUMMARY_MARKS = new Set(["summary-line", "median-rule"]);
-
 export function renderLayerForMark(mark) {
-  if (REFERENCE_MARKS.has(mark?.kind)) return "reference";
-  if (SUMMARY_MARKS.has(mark?.kind) || mark?.role === "summary") return "summary";
-  return "data";
+  assertMarkKind(mark);
+  switch (mark.kind) {
+    case "reference-band": case "row-band": case "baseline-rule": return "reference";
+    case "summary-line": case "median-rule": return "summary";
+    case "point": case "segment": case "bar": case "cell": case "interval":
+    case "connector": case "rug": case "temporal-bar": case "renderer-mark":
+      return mark.role === "summary" ? "summary" : "data";
+    default: throw new TypeError(`scene mark kind ${mark.kind} has no render-layer policy`);
+  }
 }
 
 export function partitionPanelMarks(marks = []) {
