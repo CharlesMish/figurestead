@@ -18,7 +18,7 @@ const figure = createFigurestead(canvas, {
 
 The setting is separate from ordinary legend placement. Browser `presentation.legend: "none"` conflicts with direct labels and rejects, since a complete fallback legend is required. Python `line()` has no legend-disable configuration; removing/hiding the fallback legend after construction is not a supported direct-label control.
 
-In current source, Python axes reuse retires the previous direct-label planner before the next valid
+Since Python `0.9.0a4`, axes reuse retires the previous direct-label planner before the next valid
 `line(..., ax=ax)` call, including calls with direct labels disabled. After
 `ax.cla()` / `ax.clear()`, cleanup also runs on the next figure draw or export.
 It removes only the planner and its overlay, releases its reserved gutter, and
@@ -70,8 +70,8 @@ Inspection uses private Python `ax._figurestead_direct_labels.result` or browser
 
 Direct regressions: `audit/current-head-hardening/test_direct_labels.py`, `web/test/direct-labels.mjs`, and `ci/check-direct-labels.cjs`, using the existing Python/core/browser jobs. Visual examples remain development review, not a qualification or reference-status update.
 
-For current-source Python gapped lines, valid NaN y causes whole-treatment
+Since Python `0.9.0a3`, valid NaN y in gapped lines causes whole-treatment
 `missing-observations` fallback before gutter allocation. The ordinary legend
 remains truthful (marker-only for NaN-bearing all-isolated traces). Invalid
 ordinary input still raises. Browser missing-y support is not implemented; see
-[Python missing-y semantics](line-series-semantics.md#python-explicit-missing-y-current-source).
+[Python missing-y semantics](line-series-semantics.md#python-explicit-missing-y-published-in-090a3).

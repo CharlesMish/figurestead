@@ -95,6 +95,7 @@ Figurestead's two surfaces share a normalized contract vocabulary, selected them
 - [Public overview](https://charlesmish.github.io/figurestead/)
 - [Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
 - [Python first-success example](examples/python-first-success.py)
+- [Python sizing, calendar ticks and comparison recipes](docs/python-layout-and-comparison.md) — includes unreleased note/count layout repairs
 - [Browser first-success example](examples/browser-first-success/)
 - [Python sequential heatmap ramp](docs/sequential-heatmaps.md) — published color mapping; numeric normalization unchanged
 - [Static palette versus rendered-series contrast](docs/rendered-series-contrast.md)

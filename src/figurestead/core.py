@@ -39,9 +39,14 @@ def resolve(theme="slipware", profile="deep_scope") -> tuple[Theme, Profile]:
     return get_theme(theme), get_profile(profile)
 
 
-def ensure_axes(ax=None, *, figsize=(8.4, 5.2)):
+def ensure_axes(ax=None, *, figsize=(8.4, 5.2), note=False):
     if ax is None:
         fig, ax = plt.subplots(figsize=figsize, dpi=120)
+        # Reserve a bounded footer only on figures we create. This allocation
+        # precedes direct-label planning and never changes caller-owned axes.
+        # Layout engines instead allocate from the note's measured tight bounds.
+        if note and fig.get_layout_engine() is None:
+            fig.subplots_adjust(bottom=max(fig.subplotpars.bottom, 0.18))
     else:
         fig = ax.figure
     return fig, ax
@@ -173,7 +178,12 @@ def style_legend(ax, theme: Theme, *, location="best", handler_map=None):
 
 
 def add_note(ax, spec: PlotSpec, theme: Theme):
+    from ._note import NoteText
+    # A subsequent plot specification replaces only its managed note. Ordinary
+    # caller text, including notes at the same location, retains its ownership.
+    for text in list(ax.texts):
+        if isinstance(text, NoteText):
+            text.remove()
     if spec.note:
-        ax.text(0.5, -0.16, spec.note, transform=ax.transAxes,
-                ha="center", va="top", color=theme.warm, fontsize=6.5,
-                fontfamily="DejaVu Sans Mono", style="italic")
+        NoteText(ax, spec.note, color=theme.warm, fontsize=6.5,
+                 fontfamily="DejaVu Sans Mono", style="italic")

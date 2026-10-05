@@ -228,7 +228,7 @@ def paired_points(data: Mapping[str, Any], *, spec: PlotSpec | None = None,
     normalized = normalize_paired_points_data(data)
     spec = spec or PlotSpec("Paired observations", xlabel="value", ylabel="eligible shared date")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec, atmosphere=False)
     pairs = normalized["pairs"]
     y = np.arange(len(pairs) - 1, -1, -1, dtype=float)
@@ -257,7 +257,7 @@ def reference_improvement(data: Mapping[str, Any], *, spec: PlotSpec | None = No
     normalized = normalize_reference_improvement_data(data)
     spec = spec or PlotSpec("Model increment", xlabel="direction-normalized improvement", ylabel="target · fold")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec, atmosphere=False)
     slots = [(target, fold) for target in normalized["targetOrder"] for fold in normalized["foldOrder"]]
     positions = {slot: len(slots) - 1 - index for index, slot in enumerate(slots)}

@@ -269,7 +269,7 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
     norm = _value_norm(data["valueScale"]["domain"])
     spec = spec or PlotSpec("Categorical matrix")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec, atmosphere=False)
     ax.grid(False)
 
