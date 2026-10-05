@@ -1,8 +1,8 @@
 # Figurestead public alpha site
 
-The static root presents the published Python `0.9.0a3` / browser `0.9.0-alpha.4` release and current installation/documentation links. npm `alpha` follows alpha.4; `latest` intentionally remains alpha.1. This repository update does not itself deploy Pages.
+The static root presents the published Python `0.9.0a4` / browser `0.9.0-alpha.5` release and current installation/documentation links. npm `alpha` follows alpha.5; `latest` intentionally remains alpha.1. This repository update does not itself deploy Pages.
 
-`current-alpha/` retains the four accepted **a2/alpha.3** Python/Canvas specimens and their original package/data/image manifest. The directory name is retained for stable links; these bytes are not alpha.4 output. Root captions identify their original versions.
+`current-alpha/` retains the four accepted **a2/alpha.3** Python/Canvas specimens and their original package/data/image manifest. The directory name is retained for stable links; these bytes are not alpha.5 output. Root captions identify their original versions.
 
 The earlier-alpha gallery at `earlier-alpha.html` and Evidence Atlas at `evidence/` remain historical. `public-alpha-set.json` retains the earlier catalog's source commit, colors, roles and color-led counts; those historical fields are not current qualification claims. Its Lavender/Ultraviolet guidance now states the bounded S1–S3 reference profile, unqualified higher-series marker/color fallback and independently authored rhythm.
 
