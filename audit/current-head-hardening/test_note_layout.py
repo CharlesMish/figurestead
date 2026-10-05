@@ -207,6 +207,32 @@ class NoteLayoutTests(unittest.TestCase):
         note.set_text(SOURCE_NOTE)
         self.export(fig, "png")
 
+    def test_resized_plotter_figure_recovers_with_a_larger_bottom_margin(self):
+        for fmt in ("png", "svg", "pdf"):
+            with self.subTest(format=fmt):
+                fig, ax = self.make_line()
+                fig.canvas.draw()
+                self.assert_note(self.note(ax), fig.canvas.get_renderer())
+                position = ax.get_position(original=True).bounds
+                domains = ax.get_xlim(), ax.get_ylim()
+                margin = fig.subplotpars.bottom
+
+                # Deliberately small enough to fail across export backends;
+                # the exact minimum usable height depends on fonts/backend.
+                fig.set_size_inches(6.5, 2.4)
+                with self.assertRaisesRegex(ValueError, "PlotSpec.note: insufficient footer space") as raised:
+                    fig.savefig(io.BytesIO(), format=fmt)
+                self.assertIn("fig.subplots_adjust(bottom=...)", str(raised.exception))
+                self.assertNotIn("caller-owned", str(raised.exception))
+                self.assertEqual(fig.subplotpars.bottom, margin)
+                self.assertEqual(ax.get_position(original=True).bounds, position)
+                self.assertEqual((ax.get_xlim(), ax.get_ylim()), domains)
+
+                fig.subplots_adjust(bottom=.45)
+                self.export(fig, fmt)
+                self.assertEqual((ax.get_xlim(), ax.get_ylim()), domains)
+                self.assertEqual(fig.subplotpars.bottom, .45)
+
     def test_too_narrow_failure_restores_text_then_recovers(self):
         fig, ax = self.make_line()
         note = self.note(ax)

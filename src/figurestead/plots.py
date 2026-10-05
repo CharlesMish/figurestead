@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence, Mapping
+import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -178,9 +179,9 @@ def _histogram_datasets(values) -> list[np.ndarray]:
     return [array] if array.ndim == 1 else [row for row in array]
 
 
-def _validate_bins(datasets: list[np.ndarray], bins) -> None:
+def _validate_bins(datasets: list[np.ndarray], bins) -> np.ndarray:
     try:
-        np.histogram_bin_edges(np.concatenate(datasets), bins=bins)
+        return np.histogram_bin_edges(np.concatenate(datasets), bins=bins)
     except (TypeError, ValueError) as exc:
         raise _input_error("histogram.bins", f"invalid bin specification: {exc}") from exc
 
@@ -450,11 +451,27 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
     Multi-dataset median rules inherit dataset color; the paired legend reports
     dataset labels and median values. Coincident medians are not displaced.
     A single dataset retains summary_core and its existing legend behavior.
+    Explicit bin edges exclude observations outside their intervals from counts,
+    with a UserWarning per affected dataset. Medians still use each full dataset.
     """
     datasets = _histogram_datasets(values)
     labels = ([f"series {index + 1}" for index in range(len(datasets))]
               if labels is None else _metadata(labels, path="histogram.labels", expected=len(datasets)))
-    _validate_bins(datasets, bins)
+    edges = _validate_bins(datasets, bins)
+    if np.ndim(bins) > 0:
+        # Preflight before allocating or styling axes, including when a caller
+        # promotes warnings to errors. NumPy owns the inclusive final edge.
+        for index, (data, label) in enumerate(zip(datasets, labels)):
+            excluded = data.size - int(np.histogram(data, bins=edges)[0].sum())
+            if excluded:
+                warnings.warn(
+                    f"histogram.values[{index}] ({label!r}): {excluded} of "
+                    f"{data.size} observations are outside the supplied bin "
+                    f"intervals and excluded from counts; the median still uses "
+                    f"all {data.size} observations.",
+                    UserWarning,
+                    stacklevel=2,
+                )
     spec = spec or PlotSpec("Distribution")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax, note=bool(spec.note))

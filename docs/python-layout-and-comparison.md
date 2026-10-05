@@ -67,6 +67,31 @@ and at export DPI; they do not require `bbox_inches="tight"`.
 Math expressions enclosed in paired dollar signs stay together during wrapping;
 an expression wider than the available footer raises the same sizing error.
 
+Remeasuring a note does not automatically move or shrink the axes. For a figure
+created by a plotter, the footer margin is allocated when the figure is created
+and remains the same fraction of figure height after `fig.set_size_inches()`.
+A shorter figure therefore leaves less physical space for the note; reducing
+width can also add wrapped lines. Increase the subplot margin after resizing
+when necessary, including when you did not supply `ax=`:
+
+```python
+from figurestead import PlotSpec, line
+
+fig, ax = line([0, 1, 2], [20, 24, 22],
+               spec=PlotSpec("Daily observations", xlabel="Sampling day",
+                             ylabel="Temperature (°C)",
+                             note="Source: station observations; no imputation."))
+fig.set_size_inches(6.5, 4.0)
+fig.subplots_adjust(bottom=0.25)  # fraction of the new figure height
+fig.savefig("resized-observations.png")
+fig.savefig("resized-observations.svg")
+```
+
+The margin above is a starting point, not a guaranteed fit for every note,
+font or figure size. More wrapped lines, tick labels or a strip count row may
+need a larger margin or a taller figure. For axes positioned manually with
+`ax.set_position()`, adjust that position to leave more space below the axes.
+
 `strip_summary()` places its `n=` readouts below the data rectangle, above the
 category labels. Counts include every admitted observation in the category;
 an explicitly ordered empty category displays `n=0`. Moving this text does not
