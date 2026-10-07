@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import numpy as np
 
-from figurestead import PlotSpec, get_theme, histogram
+from figurestead import PlotSpec, get_theme, histogram, save_figure
 
 
 def main():
@@ -75,7 +75,7 @@ def main():
     for suffix in ("png", "svg"):
         output = args.output_dir / f"histogram-small-multiples.{suffix}"
         kwargs = {"metadata": {"Date": None}} if suffix == "svg" else {}
-        fig.savefig(output, dpi=150, **kwargs)
+        save_figure(fig, output, dpi=150, **kwargs)
         print(f"Wrote {output}")
     plt.close(fig)
 

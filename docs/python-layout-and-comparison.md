@@ -75,7 +75,7 @@ width can also add wrapped lines. Increase the subplot margin after resizing
 when necessary, including when you did not supply `ax=`:
 
 ```python
-from figurestead import PlotSpec, line
+from figurestead import PlotSpec, line, save_figure
 
 fig, ax = line([0, 1, 2], [20, 24, 22],
                spec=PlotSpec("Daily observations", xlabel="Sampling day",
@@ -83,8 +83,8 @@ fig, ax = line([0, 1, 2], [20, 24, 22],
                              note="Source: station observations; no imputation."))
 fig.set_size_inches(6.5, 4.0)
 fig.subplots_adjust(bottom=0.25)  # fraction of the new figure height
-fig.savefig("resized-observations.png")
-fig.savefig("resized-observations.svg")
+save_figure(fig, "resized-observations.png")
+save_figure(fig, "resized-observations.svg")
 ```
 
 The margin above is a starting point, not a guaranteed fit for every note,
@@ -110,3 +110,38 @@ Ordinary direct labels remain supported within their existing capacity rules.
 Tight bounding-box export and tight/constrained layout continue to use the
 ordinary legend under the [direct-label contract](direct-series-labels.md).
 These changes do not expand the supported direct-label profile.
+
+## Safe path exports (unreleased)
+
+Use `save_figure` from the current source checkout when saving a file you want
+to retain. It writes to a temporary file beside the destination, closes the
+completed output, then replaces the destination. Rendering, writing or
+replacement errors propagate; an existing export stays unchanged and failed
+temporary output is removed. In particular, an insufficient note footer still
+raises its sizing error, without leaving a truncated SVG at the destination.
+Adjust the margin as above, then save the same figure again.
+
+```python
+from figurestead import save_figure
+
+path = save_figure(fig, "observations.svg", metadata={"Date": None})
+```
+
+The helper returns the actual `Path`. Format inference follows Matplotlib:
+`"observations.svg"` selects SVG; a path without an extension gains the default
+format's extension (normally `.png`); an explicit `format="svg"` uses the exact
+path you supply, even if it has a different extension. Save options such as
+`dpi`, `transparent`, `metadata` and `bbox_inches` pass through unchanged,
+including the existing direct-label fallback for tight bounding boxes.
+
+The destination directory must already exist. This helper accepts paths, not
+streams. It replaces the file itself, including a destination symlink, and does
+not retain old file metadata. It protects the single output file from failed
+saves; it does not promise durability through a system crash or manage auxiliary
+files emitted by a custom backend.
+
+`fig.savefig()` remains the ordinary Matplotlib API. A late drawing error can
+leave partial output when saving directly, and file existence does not prove
+that an export succeeded. Use it directly for streams or when you deliberately
+want Matplotlib's path behavior. `save_figure` does not pre-draw with a different
+backend, change the figure's margins, or suppress rendering errors.

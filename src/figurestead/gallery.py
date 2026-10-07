@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from .core import PlotSpec
+from ._export import save_figure
 from .plots import heatmap, histogram, line, scatter, strip_summary
 from .profiles import get_profile
 from .themes import get_theme
@@ -97,7 +98,7 @@ def build_gallery(output, *, theme="slipware", profile="deep_scope"):
                         wspace=0.30, hspace=0.42)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(output, facecolor=fig.get_facecolor(), bbox_inches="tight")
+    output = save_figure(fig, output, facecolor=fig.get_facecolor(), bbox_inches="tight")
     plt.close(fig)
     return output
 

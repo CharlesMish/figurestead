@@ -480,6 +480,7 @@ def preview_theme_pack(source: str | Path | Mapping[str, Any], output: str | Pat
     import matplotlib.pyplot as plt
     import numpy as np
     from .core import PlotSpec
+    from ._export import save_figure
     from .presentation import FocusAnnotation
     from .plots import line
 
@@ -499,7 +500,7 @@ def preview_theme_pack(source: str | Path | Mapping[str, Any], output: str | Pat
     figure.subplots_adjust(wspace=0.28, left=0.06, right=0.98, top=0.88, bottom=0.13)
     target = Path(output)
     target.parent.mkdir(parents=True, exist_ok=True)
-    figure.savefig(target, facecolor=figure.get_facecolor(), bbox_inches="tight", pad_inches=0.18)
+    target = save_figure(figure, target, facecolor=figure.get_facecolor(), bbox_inches="tight", pad_inches=0.18)
     plt.close(figure)
     return target
 
