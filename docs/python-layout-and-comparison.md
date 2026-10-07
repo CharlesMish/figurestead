@@ -134,11 +134,30 @@ path you supply, even if it has a different extension. Save options such as
 `dpi`, `transparent`, `metadata` and `bbox_inches` pass through unchanged,
 including the existing direct-label fallback for tight bounding boxes.
 
+SVG and compressed SVG (`.svgz`) exports require Matplotlib's default
+`svg.image_inline=True`. External-image mode (`False`) can create separate PNGs
+named after the staging file, including when drawing later fails. The helper
+rejects that mode before opening files or drawing, even for a vector-only figure:
+rasterized artists can also create images. It does not change your settings.
+Enable embedded images explicitly when needed:
+
+```python
+import matplotlib as mpl
+
+with mpl.rc_context({"svg.image_inline": True}):
+    save_figure(fig, "observations.svg")
+```
+
+This check follows the resolved output format, including `format=` overrides and
+extensionless paths. PNG and other formats are unaffected by this SVG setting.
+If separate image files are intentional, use `fig.savefig()` and manage the SVG
+and its companion files together; that direct save is not transactional.
+
 The destination directory must already exist. This helper accepts paths, not
 streams. It replaces the file itself, including a destination symlink, and does
 not retain old file metadata. It protects the single output file from failed
-saves; it does not promise durability through a system crash or manage auxiliary
-files emitted by a custom backend.
+saves; it does not promise durability through a system crash or manage multi-file
+output from other backends.
 
 `fig.savefig()` remains the ordinary Matplotlib API. A late drawing error can
 leave partial output when saving directly, and file existence does not prove

@@ -1,5 +1,6 @@
 """Failed renders preserve destinations; successful exports retain savefig behavior."""
 
+import gzip
 import io
 import sys
 import tempfile
@@ -205,6 +206,108 @@ class SafeExportTests(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             save_figure(fig, self.root / "missing" / "figure.svg")
         self.assert_directory()
+
+    def test_external_svg_mode_rejects_before_files_or_drawing(self):
+        # This is a mode boundary even for vector-only figures: rasterization
+        # can create images during drawing, so an artist inventory cannot prove
+        # that an SVG will stay a single file.
+        fig, _ = self.figure()
+        cases = [
+            ("output.svg", {}, "png", "output.svg"),
+            ("output.SVG", {}, "png", "output.SVG"),
+            ("output.svgz", {}, "png", "output.svgz"),
+            ("output.SVGZ", {}, "png", "output.SVGZ"),
+            ("output.png", {"format": "SvG"}, "png", "output.png"),
+            ("output.png", {"format": "SVGZ"}, "png", "output.png"),
+            ("output", {}, "svg", "output.svg"),
+            ("output", {"format": None}, "svgz", "output.svgz"),
+        ]
+        unrelated = self.root / ".figurestead-unrelated.tmp.image0.png"
+        unrelated.write_bytes(b"another export owns this image")
+        for name, kwargs, default, effective in cases:
+            for existing in (False, True):
+                with self.subTest(name=name, kwargs=kwargs, existing=existing):
+                    target = self.root / effective
+                    if existing:
+                        target.write_bytes(b"previous retained export")
+                    before = {path: path.read_bytes() for path in self.root.iterdir()}
+                    with matplotlib.rc_context({"svg.image_inline": False,
+                                                "savefig.format": default}):
+                        with patch.object(_export.tempfile, "NamedTemporaryFile") as stage:
+                            with patch.object(fig, "savefig") as render:
+                                with self.assertRaisesRegex(ValueError, "svg.image_inline=True"):
+                                    save_figure(fig, self.root / name, **kwargs)
+                        stage.assert_not_called()
+                        render.assert_not_called()
+                        self.assertFalse(matplotlib.rcParams["svg.image_inline"])
+                    self.assertEqual({path: path.read_bytes() for path in self.root.iterdir()}, before)
+                    if existing:
+                        target.unlink()
+
+    def test_inline_svg_images_recover_after_external_mode_rejection(self):
+        for fmt in ("svg", "svgz"):
+            for rasterized in (False, True):
+                with self.subTest(format=fmt, rasterized=rasterized):
+                    fig, ax = plt.subplots()
+                    if rasterized:
+                        ax.scatter([0, 1], [1, 0], rasterized=True)
+                    else:
+                        ax.imshow([[0, 1], [1, 0]])
+                    target = self.root / ("image." + fmt)
+                    with matplotlib.rc_context({"svg.image_inline": False}):
+                        with self.assertRaisesRegex(ValueError, "svg.image_inline=True"):
+                            save_figure(fig, target)
+                        self.assert_directory()
+                        with matplotlib.rc_context({"svg.image_inline": True}):
+                            save_figure(fig, target)
+                        self.assertFalse(matplotlib.rcParams["svg.image_inline"])
+                    data = target.read_bytes()
+                    if fmt == "svgz":
+                        data = gzip.decompress(data)
+                    images = list(ET.fromstring(data).iter("{http://www.w3.org/2000/svg}image"))
+                    self.assertTrue(images)
+                    for image in images:
+                        self.assertTrue(image.attrib["{http://www.w3.org/1999/xlink}href"].startswith(
+                            "data:image/png;base64,"))
+                    self.assert_directory(target)
+                    target.unlink()
+                    plt.close(fig)
+
+    def test_inline_svg_late_error_preserves_target_without_image_sidecars(self):
+        class LateFailure(Artist):
+            def draw(self, renderer):
+                raise ValueError("expected late draw failure")
+
+        for fmt in ("svg", "svgz"):
+            for existing in (False, True):
+                with self.subTest(format=fmt, existing=existing):
+                    fig, ax = plt.subplots()
+                    ax.imshow([[0, 1], [1, 0]])
+                    late = LateFailure()
+                    late.set_zorder(100)
+                    fig.add_artist(late)
+                    target = self.root / ("image." + fmt)
+                    if existing:
+                        target.write_bytes(b"previous retained export")
+                    before = {path: path.read_bytes() for path in self.root.iterdir()}
+                    with matplotlib.rc_context({"svg.image_inline": True}):
+                        with self.assertRaisesRegex(ValueError, "expected late draw failure"):
+                            save_figure(fig, target)
+                        self.assertTrue(matplotlib.rcParams["svg.image_inline"])
+                    self.assertEqual({path: path.read_bytes() for path in self.root.iterdir()}, before)
+                    if existing:
+                        target.unlink()
+                    plt.close(fig)
+
+    def test_external_svg_setting_does_not_block_other_resolved_formats(self):
+        fig, _ = self.figure()
+        with matplotlib.rc_context({"svg.image_inline": False, "savefig.format": "svg"}):
+            for name, kwargs in (("image.png", {}), ("image.svg", {"format": "png"})):
+                target = save_figure(fig, self.root / name, **kwargs)
+                self.assert_complete(target, "png")
+                self.assert_directory(target)
+                self.assertFalse(matplotlib.rcParams["svg.image_inline"])
+                target.unlink()
 
 
 if __name__ == "__main__":
