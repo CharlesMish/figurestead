@@ -145,3 +145,22 @@ leave partial output when saving directly, and file existence does not prove
 that an export succeeded. Use it directly for streams or when you deliberately
 want Matplotlib's path behavior. `save_figure` does not pre-draw with a different
 backend, change the figure's margins, or suppress rendering errors.
+
+## Optional signature placement (unreleased)
+
+`PlotSpec.signature` now uses measured spare space below the x-axis decorations,
+sample counts and source note. It is remeasured for each draw, resize and export
+backend. It stays outside the data rectangle and direct-label association area;
+caller annotations, legends and neighboring panels take precedence.
+
+The signature does not reserve space or move axes. If it is too wide, would fall
+outside the canvas, or meets other content, it is omitted for that draw. It can
+reappear when more room becomes available. Tight cropping and layout engines can
+leave too little spare footer space, so branding is not guaranteed in those
+exports. Required source notes still raise their existing sizing error when they
+cannot fit; signature omission does not hide that error.
+
+Use `PlotSpec(..., signature="")` to disable branding explicitly. This is Python
+layout behavior; it does not change browser signature placement or the bounded
+direct-label contract. Caller annotations in the association area still trigger
+the ordinary legend fallback.

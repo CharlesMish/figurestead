@@ -93,10 +93,14 @@ def style_axes(ax, theme: Theme, profile: Profile, spec: PlotSpec, *, atmosphere
                 fontfamily="DejaVu Sans Mono", style="italic")
         from ._subtitle import SubtitleLayout
         SubtitleLayout(ax, subtitle_artist, title_artist)
+    from ._signature import SignatureText
+    for text in list(ax.texts):
+        if isinstance(text, SignatureText):
+            text.remove()
     if spec.signature:
-        ax.text(0.005 if panel_surface else 0.995, 0.012, spec.signature, transform=ax.transAxes,
-                ha="left" if panel_surface else "right", va="bottom", color=theme.faint, fontsize=5.4,
-                fontfamily="DejaVu Sans Mono", zorder=20)
+        SignatureText(ax, spec.signature, left=panel_surface,
+                      color=theme.faint, fontsize=5.4,
+                      fontfamily="DejaVu Sans Mono", zorder=20)
     if atmosphere and profile.rain_density:
         add_matrix_texture(ax, theme, profile)
 
