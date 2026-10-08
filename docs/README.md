@@ -11,6 +11,7 @@ The Python and browser counters are independent; npm `latest` remains alpha.1.
 - [Choose among the six themes](theme-selection.md)
 - [Complete browser consumer example](../web/README.md#first-figure)
 - [Compare ordinary legends and direct labels](../examples/direct-series-labels/README.md)
+- [Run the current published-package gallery](../examples/published-gallery/README.md)
 
 ## Behavior and limits
 

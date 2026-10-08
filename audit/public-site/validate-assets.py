@@ -17,14 +17,20 @@ CURRENT_SPECIMENS = {
     "lavender-python-ordinary.png", "lavender-python-direct.png",
     "ultraviolet-canvas-ordinary.png", "ultraviolet-canvas-direct.png",
 }
+PUBLISHED_GALLERY_IMAGES = {
+    f"{name}.{extension}"
+    for name in ("python-line", "python-scatter", "python-histogram", "python-strip", "python-heatmap", "browser-line")
+    for extension in ("png", "svg")
+}
 ACCEPTED_FILES = {
+    "published-a4-alpha5/manifest.json": "7798e95007b1ceff342b396bde14c66ecd2719c73732ad66f1b9196b54ecf40a",
     "favicon.svg": "4e51267c44e3f6b0697c3fd881b1faf8f70bdb9b56a64acce4d866eb89a42f2e",
     "current-alpha/manifest.json": "f59b8f0215a844444223bf9845f96c1154259d043822f3aa8bd6ea54f793563b",
-    "index.html": "fcceb0777c3d86a30e3c350f887e5c03f047562fbac8b45fdf16e36b0c755806",
+    "index.html": "6adb13d3479948fe6c0df82dde479540d7b809f840c182a7da1b61985c3cf723",
     "earlier-alpha.html": "61071c661b27defaa208f2e91d57128892d306c91c8730668d4de37faf413cfd",
     "evidence/index.html": "b2a7b8a1a66f9d908951e3f82b19aa874d6e1eec0a9fa0ae0aca1e15d957a077",
-    "styles.css": "cbbbebe2e37524526a31a93f461eb7e1e0850bdde08233a778948c5ba1e1fed3",
-    "README.md": "c4362676523db6b6720cdd129064d5c08da8a04c2381b2292b02023c639b4115",
+    "styles.css": "45c701c26fe73147f65fc194c2edc481616f8f5d5b2ebb24142d62792ea72cde",
+    "README.md": "a0ac1e21b55e54decbd0365710297eefde021b57c810f20a5365a3fbec03dc48",
     "public-alpha-set.json": "9a711b915d1d51f4ec28c3f13692a07df3d44196729ff4bb1fce47ac4f37c952",
     "WEB_ASSET_MANIFEST.json": "f5865fc6cc06703358e6cd859fb88c8ed950c17c1d96041413d81fab91522d07",
 }
@@ -32,6 +38,45 @@ ACCEPTED_FILES = {
 
 def sha256(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
+
+
+def validate_published_gallery() -> int:
+    gallery = SITE / "published-a4-alpha5"
+    manifest = json.loads((gallery / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["schemaVersion"] == "figurestead.published-gallery/1"
+    assert manifest["synthetic"] is True
+    assert manifest["python"]["version"] == "0.9.0a4"
+    assert manifest["browser"]["version"] == "0.9.0-alpha.5"
+    assert {entry["sha256"] for entry in manifest["packages"]} == {
+        "b7f8a04cbb383be2f395fabf174f65a89c83c15638d7d3cb6bdbd96cdd9f1cc8",
+        "af2009e54025329eb210713b64eee754d81d417fa8e6baa34e04a520a4c46e76",
+    }
+    checks = 1
+    entries = manifest["python"]["images"] + manifest["browser"]["images"]
+    assert len(entries) == len(PUBLISHED_GALLERY_IMAGES) == 12
+    assert {entry["file"] for entry in entries} == PUBLISHED_GALLERY_IMAGES
+    assert {path.name for path in gallery.iterdir()} == PUBLISHED_GALLERY_IMAGES | {"fixture.json", "manifest.json"}
+    checks += 1
+    fixture = (gallery / "fixture.json").read_bytes()
+    assert sha256(fixture) == manifest["fixture"]["sha256"] == manifest["python"]["fixtureSha256"]
+    assert fixture == (ROOT / "examples/published-gallery/fixture.json").read_bytes()
+    assert fixture == (ROOT / "examples/published-gallery/browser/fixture.json").read_bytes()
+    checks += 1
+    assert len(manifest["sources"]) == 10
+    for relative, expected in manifest["sources"].items():
+        assert relative.startswith("examples/published-gallery/") and ".." not in Path(relative).parts
+        assert sha256((ROOT / relative).read_bytes()) == expected, relative
+        checks += 1
+    for entry in entries:
+        payload = (gallery / entry["file"]).read_bytes()
+        assert len(payload) == entry["bytes"] and sha256(payload) == entry["sha256"], entry["file"]
+        if entry["file"].endswith(".png"):
+            assert payload[:8] == b"\x89PNG\r\n\x1a\n"
+            assert struct.unpack(">II", payload[16:24]) == (entry["width"], entry["height"]) == (1008, 624)
+        else:
+            assert b"<svg" in payload and b"</svg>" in payload
+        checks += 1
+    return checks
 
 
 def paeth(left: int, above: int, upper_left: int) -> int:
@@ -100,6 +145,7 @@ def main() -> int:
         "site/WEB_ASSET_MANIFEST.json",
     }
     accepted_changed_files.update({"site/current-alpha/manifest.json", *("site/current-alpha/" + name for name in CURRENT_SPECIMENS)})
+    accepted_changed_files.update({"site/published-a4-alpha5/" + name for name in PUBLISHED_GALLERY_IMAGES | {"fixture.json", "manifest.json"}})
     unexpected = [
         relative for relative in changed
         if relative not in accepted_changed_files and not relative.startswith("site/assets/web/")
@@ -187,7 +233,8 @@ def main() -> int:
         assert payload[:8] == b"\x89PNG\r\n\x1a\n"
         assert struct.unpack(">II", payload[16:24]) == (entry["width"], entry["height"])
         checks += 1
-    expected_checks = 70
+    checks += validate_published_gallery()
+    expected_checks = 96
     assert checks == expected_checks, f"expected {expected_checks} site checks, executed {checks}"
     print(json.dumps({"suite": "public-r3-assets", "expectedCheckCount": expected_checks, "executedCheckCount": checks, "result": "PASS"}))
     return 0

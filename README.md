@@ -76,6 +76,10 @@ See the [ordinary/direct-label example](https://github.com/CharlesMish/figureste
 
 See [line semantics and limits](docs/line-series-semantics.md). These features are available in the published versions above. No new reference-theme or accessibility qualification is implied.
 
+## Current published-package gallery
+
+[Browse six a4/alpha.5 examples](https://charlesmish.github.io/figurestead/#published-gallery) or [run their exact source](examples/published-gallery/README.md). The new files preserve historical images and show only behavior available in these registry versions.
+
 ## Figurestead at a glance
 
 [![Eight deterministic synthetic Figurestead specimens spanning line, scatter, distribution, and temporal figure families](docs/assets/readme/figurestead-at-a-glance.png)](docs/assets/readme/figurestead-at-a-glance.png)

@@ -5,3 +5,9 @@
 @media(max-width:390px){.capacity-method,.figure-description{margin-left:0}}
 
 .history-notice{margin-top:28px;padding:20px;border:1px solid var(--line);background:var(--white);font-size:16px}.history-notice strong{display:block;margin-bottom:8px}
+
+/* Keep the current-release examples near the introduction without changing archive layouts. */
+.intro{padding-block:48px 36px}.intro .release-note{grid-column:2;margin:0;font-size:16px;max-width:720px}.published-gallery{padding-top:38px}.published-gallery .section-head h2{font-size:clamp(30px,4vw,48px)}.published-gallery article>p:not(.method-note){font-size:16px}.published-gallery img{border:1px solid var(--line)}
+@media(max-width:800px){.intro{padding-block:32px 28px;gap:18px}.intro .release-note{grid-column:auto}.published-gallery .section-head{grid-template-columns:1fr;gap:10px}.published-gallery{padding-top:28px}}
+
+.intro h1{font-size:clamp(44px,5.4vw,72px)}
