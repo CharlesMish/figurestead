@@ -16,6 +16,7 @@ completed publication. Historical images keep their original version labels.
 ## Start here
 
 Install from the public registries; a repository checkout is not required.
+Browse the [documentation index](docs/README.md), [theme selection](docs/theme-selection.md), and [Python plotting reference](docs/python-plotting.md).
 See [getting started](docs/getting-started.md) for a fresh environment, version
 checks, and the Python/browser capability boundary.
 
@@ -36,6 +37,9 @@ figure.savefig("figurestead-first-success.png", dpi=150)
 Requires Python >=3.10. Save the code as `first_figure.py` and run
 `python first_figure.py`; it writes a deterministic synthetic three-point line
 to `figurestead-first-success.png`. [Open the exact Python example](examples/python-first-success.py).
+
+For a complete labeled example with units, three named series and PNG/SVG output,
+run [the Lavender line example](examples/python-labeled-line.py).
 
 ### Browser
 
@@ -72,6 +76,10 @@ See the [ordinary/direct-label example](https://github.com/CharlesMish/figureste
 
 See [line semantics and limits](docs/line-series-semantics.md). These features are available in the published versions above. No new reference-theme or accessibility qualification is implied.
 
+## Current published-package gallery
+
+[Browse six a4/alpha.5 examples](https://charlesmish.github.io/figurestead/#published-gallery) or [run their exact source](examples/published-gallery/README.md). The new files preserve historical images and show only behavior available in these registry versions.
+
 ## Figurestead at a glance
 
 [![Eight deterministic synthetic Figurestead specimens spanning line, scatter, distribution, and temporal figure families](docs/assets/readme/figurestead-at-a-glance.png)](docs/assets/readme/figurestead-at-a-glance.png)
@@ -95,7 +103,7 @@ Figurestead's two surfaces share a normalized contract vocabulary, selected them
 ## Evidence and documentation
 
 - [Public overview](https://charlesmish.github.io/figurestead/)
-- [Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
+- [Historical Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
 - [Getting started with the current published packages](docs/getting-started.md)
 - [Python first-success example](examples/python-first-success.py)
 - [Browser first-success example](examples/browser-first-success/)

@@ -63,6 +63,14 @@ python --version
 python -m pip freeze > requirements-resolved.txt
 ```
 
+## A labeled Python example
+
+Keep the three-point example above as a quick installation check. For named
+series and axis units, copy [python-labeled-line.py](../examples/python-labeled-line.py)
+into the same consumer directory and run `python python-labeled-line.py`. It uses
+only the published a4 API and writes both PNG and SVG. See [theme selection](theme-selection.md)
+and the [five-plotter reference](python-plotting.md) for the next step.
+
 ## First browser figure
 
 In a fresh project, follow the [complete installed-package example](../web/README.md#first-figure).
@@ -92,6 +100,15 @@ plotter's short argument list is not a browser API.
 - Shared contract/theme semantics do not promise identical pixels. Inspect the
   exported artifact at the intended size, including labels, units and series
   identity.
+
+## Published release versus source work
+
+This guide targets a4/alpha.5. The open Python work in [#51](https://github.com/CharlesMish/figurestead/pull/51),
+[#53](https://github.com/CharlesMish/figurestead/pull/53) and [#55](https://github.com/CharlesMish/figurestead/pull/55)
+and browser work in [#52](https://github.com/CharlesMish/figurestead/pull/52) are
+not part of those registry artifacts. In particular, these examples do not use
+the proposed `save_figure` API, later footer/count-layout fixes or browser band
+repairs. A source merge alone does not change an installed release.
 
 ## Documentation and agent version context
 

@@ -9,3 +9,5 @@ The earlier-alpha gallery at `earlier-alpha.html` and Evidence Atlas at `evidenc
 Digital paper evidence records a 6.372 pt minimum against Figurestead's internal 6 pt project floor. It is deterministic digital geometry, not physical printer proof or an external typographic threshold.
 
 Canonical evidence files remain unchanged under `assets/`. `WEB_ASSET_MANIFEST.json` maps each canonical file to deterministic lossless and responsive web-delivery derivatives under `assets/web/`, records exact byte hashes, and records decoded pixel identity for every full-size lossless derivative. Atlas Case 05 also records its presentation-only sRGB luminance grayscale transform in that manifest. No images or manifests were regenerated for publication-status cleanup.
+
+`published-a4-alpha5/` adds six new published-package examples (five Python plotters and one browser line), each with PNG/SVG output, exact synthetic data and a separate source/package/runtime manifest. See `examples/published-gallery/README.md` for generation. It does not replace or relabel the retained `current-alpha/` or archive bytes. The Pages validator checks both old bindings and the new inventory.
