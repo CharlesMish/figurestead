@@ -127,6 +127,8 @@ curated subpaths are `registration-ink`, `ultraviolet-laboratory`,
 `lavender-fog-notebook`, `midnight-transit-signal-slate`, and
 `deep-observatory-sage-core` under `@figurestead/web/themes/`.
 
+See the [theme selection guide](https://github.com/CharlesMish/figurestead/blob/main/docs/theme-selection.md) for Python keys, browser paths and version-specific limits.
+
 The declarations and all six curated-theme subpaths above are included in
 `@figurestead/web@0.9.0-alpha.5`.
 
@@ -226,8 +228,6 @@ preferred height is never inferred as the next baseline by Figurestead.
 Height negotiation applies only to live Canvas rendering. SVG, paper, and
 explicitly dimensioned exports retain their requested dimensions.
 
-Published package version 0.9.0-alpha.5. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
-
 ## Rendered series contrast
 
 `contrastAudit(theme)` remains a static authored-palette inspection.
@@ -251,7 +251,7 @@ verified default line **polyline** uses field/.88. Companion markers/points may
 have different opacity and are outside those contexts. This is not an assessment
 of glow, antialias boundaries, every layered mark or whole-figure accessibility.
 
-### Line overflow in alpha.4
+### Additional line series
 
 The bounded persistent-identity reference profile covers the first three ordinary
 line series. Additional series retain deterministic ring/square/triangle/diamond
@@ -261,3 +261,5 @@ Missing `style.lineStyles` normalizes to `["solid"]`; explicitly supplied arrays
 retain their existing glyph-block allocation, and per-key `lineStyle` wins.
 See the [line semantics](https://github.com/CharlesMish/figurestead/blob/main/docs/line-series-semantics.md).
 This behavior begins with alpha.4; it is not retroactively part of alpha.3.
+
+Published package version 0.9.0-alpha.5. [Source and full project documentation](https://github.com/CharlesMish/figurestead).

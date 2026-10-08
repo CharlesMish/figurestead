@@ -18,11 +18,12 @@ CURRENT_SPECIMENS = {
     "ultraviolet-canvas-ordinary.png", "ultraviolet-canvas-direct.png",
 }
 ACCEPTED_FILES = {
+    "favicon.svg": "4e51267c44e3f6b0697c3fd881b1faf8f70bdb9b56a64acce4d866eb89a42f2e",
     "current-alpha/manifest.json": "f59b8f0215a844444223bf9845f96c1154259d043822f3aa8bd6ea54f793563b",
-    "index.html": "13c210c13216b57c7a3d3da491f0c07dfaabf940ea3ddc3c7fcab47f7d0524b7",
-    "earlier-alpha.html": "a2942f3f04a892cd67a60e2011c96bca6e8cc70dcafd01bd3df4dbf1a1d0e8a3",
-    "evidence/index.html": "e9bf28929af0e1210f749cbc7686c2106f6f8eae66dbd33a45b19bb36db3641f",
-    "styles.css": "281d7261c7663621d9e6632fcafb1cbc4d5a5a4550546b31fc7c3c9cbdd89b59",
+    "index.html": "fcceb0777c3d86a30e3c350f887e5c03f047562fbac8b45fdf16e36b0c755806",
+    "earlier-alpha.html": "61071c661b27defaa208f2e91d57128892d306c91c8730668d4de37faf413cfd",
+    "evidence/index.html": "b2a7b8a1a66f9d908951e3f82b19aa874d6e1eec0a9fa0ae0aca1e15d957a077",
+    "styles.css": "cbbbebe2e37524526a31a93f461eb7e1e0850bdde08233a778948c5ba1e1fed3",
     "README.md": "c4362676523db6b6720cdd129064d5c08da8a04c2381b2292b02023c639b4115",
     "public-alpha-set.json": "9a711b915d1d51f4ec28c3f13692a07df3d44196729ff4bb1fce47ac4f37c952",
     "WEB_ASSET_MANIFEST.json": "f5865fc6cc06703358e6cd859fb88c8ed950c17c1d96041413d81fab91522d07",
@@ -90,6 +91,7 @@ def main() -> int:
     ).splitlines()
     accepted_changed_files = {
         "site/README.md",
+        "site/favicon.svg",
         "site/evidence/index.html",
         "site/index.html",
         "site/earlier-alpha.html",
@@ -185,7 +187,7 @@ def main() -> int:
         assert payload[:8] == b"\x89PNG\r\n\x1a\n"
         assert struct.unpack(">II", payload[16:24]) == (entry["width"], entry["height"])
         checks += 1
-    expected_checks = 69
+    expected_checks = 70
     assert checks == expected_checks, f"expected {expected_checks} site checks, executed {checks}"
     print(json.dumps({"suite": "public-r3-assets", "expectedCheckCount": expected_checks, "executedCheckCount": checks, "result": "PASS"}))
     return 0

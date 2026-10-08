@@ -1,4 +1,4 @@
-# Python sequential heatmaps — current source
+# Python sequential heatmaps
 
 Availability: published in Python `0.9.0a3`. Retained a2/alpha.3 bytes keep their earlier rendering.
 
