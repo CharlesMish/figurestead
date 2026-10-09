@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "figurestead.published-gallery/1",
+  "synthetic": true,
+  "purpose": "Published a4/alpha.5 consumer demonstrations; not expanded reference qualification.",
+  "release": "https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5",
+  "packages": [
+    {
+      "file": "figurestead-0.9.0a4-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/49/4e/07f4ae31532ea7e626ecbe6a4f682ef73a8639a49b902fa5f6eed784e09f/figurestead-0.9.0a4-py3-none-any.whl",
+      "bytes": 95313,
+      "sha256": "b7f8a04cbb383be2f395fabf174f65a89c83c15638d7d3cb6bdbd96cdd9f1cc8"
+    },
+    {
+      "file": "figurestead-web-0.9.0-alpha.5.tgz",
+      "url": "https://registry.npmjs.org/@figurestead/web/-/web-0.9.0-alpha.5.tgz",
+      "bytes": 96491,
+      "sha256": "af2009e54025329eb210713b64eee754d81d417fa8e6baa34e04a520a4c46e76"
+    }
+  ],
+  "python": {
+    "package": "figurestead",
+    "version": "0.9.0a4",
+    "python": "3.12.13",
+    "platform": "macOS-26.4-arm64-arm-64bit",
+    "importSource": "installed site-packages",
+    "backend": "Agg",
+    "dependencies": {
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.3",
+      "Pillow": "12.3.0",
+      "fonttools": "4.66.1"
+    },
+    "geometry": {
+      "inches": [
+        8.4,
+        5.2
+      ],
+      "dpi": 120
+    },
+    "fixtureSha256": "7794da93818cfc286ff5f097b8cd51fc3411d1f051a8a84374f4cede5db142c1",
+    "generatorSha256": "2e9f53aaa6777074e7582e204d52fba049eedacb094491025e282ef3dda90c7d",
+    "images": [
+      {
+        "file": "python-line.png",
+        "bytes": 66696,
+        "sha256": "a1f9a2af86b2e439408884aa241f6e874c4bbc87520c4dee19aa1e7827525277",
+        "theme": "lavender_fog_notebook",
+        "width": 1008,
+        "height": 624
+      },
+      {
+        "file": "python-line.svg",
+        "bytes": 68368,
+        "sha256": "e96194c4852d09525032715b9fa52cdb54f1b0e6eaa7e36e35a8ccc4e8c77bb9",
+        "theme": "lavender_fog_notebook"
+      },
+      {
+        "file": "python-scatter.png",
+        "bytes": 37048,
+        "sha256": "45be434f6f4d016c74ac1601f60cb1915ed607815e8bea6e2f30baac84c6f933",
+        "theme": "lavender_fog_notebook",
+        "width": 1008,
+        "height": 624
+      },
+      {
+        "file": "python-scatter.svg",
+        "bytes": 50647,
+        "sha256": "57431abae04294745fe1f053ef8eddda0208a0d4f22d061feea79ace25fe6f3a",
+        "theme": "lavender_fog_notebook"
+      },
+      {
+        "file": "python-histogram.png",
+        "bytes": 25959,
+        "sha256": "c714b798ca87184273f3a9d8f0d1fa5a90988551345e0dc46d8d87f5e7aa2cdd",
+        "theme": "lavender_fog_notebook",
+        "width": 1008,
+        "height": 624
+      },
+      {
+        "file": "python-histogram.svg",
+        "bytes": 46568,
+        "sha256": "9bbbbf60a4968efcbc6cae32025d4ea45d60feff41c9d6a8ee47d9058f9d046a",
+        "theme": "lavender_fog_notebook"
+      },
+      {
+        "file": "python-strip.png",
+        "bytes": 41369,
+        "sha256": "4d4027b9ef274b76a6d15d1565f839f92d95ef41c3cbe111e61c24eedd1e8281",
+        "theme": "lavender_fog_notebook",
+        "width": 1008,
+        "height": 624
+      },
+      {
+        "file": "python-strip.svg",
+        "bytes": 53793,
+        "sha256": "dfe918a597a93eb130ec75d5b66af61fe1005bf50478e701f528522fdcb1e98c",
+        "theme": "lavender_fog_notebook"
+      },
+      {
+        "file": "python-heatmap.png",
+        "bytes": 21552,
+        "sha256": "90e5896afd6256a39c42933970be97b360fe980e262611be01e5264343610f91",
+        "theme": "lavender_fog_notebook",
+        "width": 1008,
+        "height": 624
+      },
+      {
+        "file": "python-heatmap.svg",
+        "bytes": 40661,
+        "sha256": "75cd59fc57cce3a3f8bbb3260af66d1b6e46c1953705fc559285dbd7fefca10c",
+        "theme": "lavender_fog_notebook"
+      }
+    ]
+  },
+  "browser": {
+    "package": "@figurestead/web",
+    "version": "0.9.0-alpha.5",
+    "node": "v22.22.0",
+    "chromium": "151.0.7922.34",
+    "platform": "darwin/arm64",
+    "deviceScaleFactor": 1,
+    "state": "settled Canvas; no motion",
+    "distinctColors": 1997,
+    "sources": {
+      "main.js": "13c7c4fbfc7543ca697e04e777077054dfe1ee80dedd36a893fedc89bd5ef82c",
+      "capture.mjs": "732f65bdd6010a0ad337266fa341f81a50e89abdfab905415b905cb44c8614c4",
+      "index.html": "3cdec989a76edd85fbe8423b567e655a6ca3ea0595b871f30f0677fc1f77a12f",
+      "fixture.json": "7794da93818cfc286ff5f097b8cd51fc3411d1f051a8a84374f4cede5db142c1",
+      "package.json": "a60a150fcad9faeb4837c9118bad1bd097ee6b28063a7499bed7cb394b9b0c82",
+      "package-lock.json": "2b3e3e12149fc1acf8713b58aa151792b87614d7ad3e085e511e279b850a8b37"
+    },
+    "images": [
+      {
+        "file": "browser-line.png",
+        "bytes": 81061,
+        "sha256": "5721c453ca5584a29cc7c992286f4b69ccd25469e55a0053038e9a064e0daf52",
+        "width": 1008,
+        "height": 624,
+        "theme": "ultraviolet_laboratory"
+      },
+      {
+        "file": "browser-line.svg",
+        "bytes": 311131,
+        "sha256": "2ce90079f6a2086e56baf7fdaeb344178b9043ccbaafd063227f5486f8ce24f6",
+        "width": 1008,
+        "height": 624,
+        "theme": "ultraviolet_laboratory"
+      }
+    ],
+    "errors": []
+  },
+  "fixture": {
+    "file": "fixture.json",
+    "sha256": "7794da93818cfc286ff5f097b8cd51fc3411d1f051a8a84374f4cede5db142c1"
+  },
+  "sources": {
+    "examples/published-gallery/README.md": "4d66b6889627fce4c736384492d45551f5812cba1a327a97ff7d6cd7c1c1f802",
+    "examples/published-gallery/browser/capture.mjs": "732f65bdd6010a0ad337266fa341f81a50e89abdfab905415b905cb44c8614c4",
+    "examples/published-gallery/browser/fixture.json": "7794da93818cfc286ff5f097b8cd51fc3411d1f051a8a84374f4cede5db142c1",
+    "examples/published-gallery/browser/index.html": "3cdec989a76edd85fbe8423b567e655a6ca3ea0595b871f30f0677fc1f77a12f",
+    "examples/published-gallery/browser/main.js": "13c7c4fbfc7543ca697e04e777077054dfe1ee80dedd36a893fedc89bd5ef82c",
+    "examples/published-gallery/browser/package-lock.json": "2b3e3e12149fc1acf8713b58aa151792b87614d7ad3e085e511e279b850a8b37",
+    "examples/published-gallery/browser/package.json": "a60a150fcad9faeb4837c9118bad1bd097ee6b28063a7499bed7cb394b9b0c82",
+    "examples/published-gallery/fixture.json": "7794da93818cfc286ff5f097b8cd51fc3411d1f051a8a84374f4cede5db142c1",
+    "examples/published-gallery/render_python.py": "2e9f53aaa6777074e7582e204d52fba049eedacb094491025e282ef3dda90c7d",
+    "examples/published-gallery/requirements.txt": "59e524e08fedb87b26ede14c570c47d29ef95f6d13fb55e488724cdddf991cb4"
+  },
+  "cards": [
+    {
+      "key": "python-line",
+      "title": "Line \u00b7 Python a4",
+      "runtime": "Python",
+      "caption": "Three named series, 25 observations each. Open circles, squares and triangles carry identity; every line is solid.",
+      "alt": "Lavender line figure: three separated synthetic response curves with matching circle, square and triangle legend samples."
+    },
+    {
+      "key": "browser-line",
+      "title": "Line \u00b7 browser alpha.5",
+      "runtime": "Browser",
+      "caption": "The same values rendered independently in Ultraviolet Laboratory. Settled Canvas, with an SVG export alongside it.",
+      "alt": "Dark Ultraviolet Canvas line figure showing the same three synthetic responses with matching circle, square and triangle identities."
+    },
+    {
+      "key": "python-scatter",
+      "title": "Scatter \u00b7 Python a4",
+      "runtime": "Python",
+      "caption": "Ten paired observations per group; no fitted model. Color identifies A and B; the marker treatment is the published scatter default.",
+      "alt": "Two synthetic calibration groups, ten points each, rise with input; group A is purple and B teal, with no fitted line."
+    },
+    {
+      "key": "python-histogram",
+      "title": "Histogram \u00b7 Python a4",
+      "runtime": "Python",
+      "caption": "Shared bins cover all 15 observations per dataset. Vertical rules mark full-data medians: A 0.7, B 1.3.",
+      "alt": "Overlaid distributions in shared bins, with purple and teal dataset-owned vertical median rules and a matching median legend."
+    },
+    {
+      "key": "python-strip",
+      "title": "Strip summary \u00b7 Python a4",
+      "runtime": "Python",
+      "caption": "Nine observations per group, deterministic jitter and group medians. The authored [0,2] domain leaves space for a4 count labels inside the plot.",
+      "alt": "Three groups of nine synthetic observations with median bars, jittered horizontally; count labels remain above their points inside the axes."
+    },
+    {
+      "key": "python-heatmap",
+      "title": "Heatmap \u00b7 Python a4",
+      "runtime": "Python",
+      "caption": "Four conditions by six samples. Sequential fill encodes response (a.u.) from 0.05 to 1.0, with a colorbar.",
+      "alt": "A four-row, six-column synthetic response field, light to dark purple as values increase, with labeled conditions, samples and colorbar."
+    }
+  ],
+  "limits": [
+    "No unreleased Python footer/count/exclusion/save API changes or browser band changes.",
+    "No fit, smoothing, inferred uncertainty, missing browser values or new qualification claims.",
+    "Same line data across runtimes; no pixel-equivalence claim.",
+    "Byte reproducibility is scoped to recorded package, dependency, browser and OS versions."
+  ]
+}

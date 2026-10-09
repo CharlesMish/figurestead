@@ -2,26 +2,29 @@
 
 Figurestead is an experimental scientific figure system with Python and framework-free browser surfaces. It shares figure-contract and theme semantics across runtimes while keeping scientific output deterministic and inspectable.
 
-Published versions: Python `figurestead==0.9.0a3` and browser `@figurestead/web@0.9.0-alpha.4` ([alpha.4 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.4)). The counters are independent. npm `alpha` points to alpha.4; `latest` intentionally remains alpha.1. The [retained release records](release/README.md) bind the exact published artifacts.
+Published 2026-10-04: Python `figurestead==0.9.0a4` and browser `@figurestead/web@0.9.0-alpha.5` ([alpha.5 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5)). The counters are independent. npm `alpha` points to alpha.5; `latest` intentionally remains alpha.1. Use the exact versions below to reproduce this release. The [retained release records](release/README.md) bind the published artifacts.
 
-## Unpublished maintenance candidate
+## Current maintenance release: a4 / alpha.5
 
-This checkout prepares Python `0.9.0a4` / browser `0.9.0-alpha.5` for independent
-review, not registry publication. It includes the merged SVG typography/subtitle,
-dense numeric-array, DirectLabels lifecycle, authored matrix-domain and
-minimum-dependency repairs. See [candidate changes and limits](release/notes/0.9.0a4-web-alpha.5.md).
-The published identities above and all historical images remain unchanged.
+This release repairs standalone browser SVG typography/subtitles, browser dense
+numeric-array admission, Python DirectLabels lifecycle, authored matrix domains,
+and minimum-dependency compatibility. See the [published changes and verification](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5).
+Retained preparation notes and package-embedded READMEs describe their earlier
+pre-publication state; this living README and the GitHub release record the
+completed publication. Historical images keep their original version labels.
 
 ## Start here
 
-The commands below review the retained local candidate from this checkout.
-They do not fetch a new registry release. For the existing public release use
-the exact published versions listed above.
+Install from the public registries; a repository checkout is not required.
+Browse the [documentation index](docs/README.md), [theme selection](docs/theme-selection.md), and [Python plotting reference](docs/python-plotting.md).
+See [getting started](docs/getting-started.md) for a fresh environment, version
+checks, and the Python/browser capability boundary.
 
 ### Python
 
 ```bash
-python -m pip install ./release/python/0.9.0a4/dist/figurestead-0.9.0a4-py3-none-any.whl
+python -m pip install figurestead==0.9.0a4
+python -c "from importlib.metadata import version; print(version('figurestead'))"
 ```
 
 ```python
@@ -31,21 +34,24 @@ figure, axes = line([0, 1, 2], [[0, 1, 0]])
 figure.savefig("figurestead-first-success.png", dpi=150)
 ```
 
-[Open the exact Python example](examples/python-first-success.py).
+Requires Python >=3.10. Save the code as `first_figure.py` and run
+`python first_figure.py`; it writes a deterministic synthetic three-point line
+to `figurestead-first-success.png`. [Open the exact Python example](examples/python-first-success.py).
+
+For a complete labeled example with units, three named series and PNG/SVG output,
+run [the Lavender line example](examples/python-labeled-line.py).
 
 ### Browser
 
 ```bash
-npm install ./release/npm/0.9.0-alpha.5/dist/figurestead-web-0.9.0-alpha.5.tgz
+npm install --save-exact @figurestead/web@0.9.0-alpha.5
+npm ls @figurestead/web
 ```
 
-The package exports `createFigurestead`; rendering requires a complete normalized figure contract. The repository includes one with every identifier defined. From a checkout:
-
-```bash
-python3 -m http.server 4173
-```
-
-Open <http://127.0.0.1:4173/examples/browser-first-success/>. [Inspect the exact browser example and its inline contract](examples/browser-first-success/).
+Requires Node >=22.22.0. Follow the [installed-package first figure](web/README.md#first-figure)
+for the complete `index.html`, `main.js`, and Vite command. The package exports
+`createFigurestead`; rendering requires a complete normalized figure contract.
+The [repository example](examples/browser-first-success/) is a separate source-development route.
 
 Python and browser surfaces share normalized figure-contract vocabulary and selected theme definitions. Each surface renders through its own implementation; shared semantics do not imply pixel-identical output.
 
@@ -53,13 +59,13 @@ Python and browser surfaces share normalized figure-contract vocabulary and sele
 
 Default line series combine color with persistent open **circle (S1), square (S2), and upright triangle (S3)** markers and matching line-and-marker legends. Line rhythm remains an independent semantic channel. Python callers can carry `series_slots=[1, 2]` when rebuilding filtered S2/S3 rows; browser `setData` retains established keyed identity through supported filtering/reordering and partial style overrides. `setConfig` replaces the contract.
 
-Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.4/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
+Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.5/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
 
 Opt in with Python `line(..., direct_labels=True)` or browser `style: { directLabels: true }`. Direct labels reuse the actual body marker identity beside the traces. V1 covers ordinary one-panel, 2–3-series line figures with single-line printable ASCII labels. Unsupported or insufficient layouts fall back atomically to the ordinary legend. This treatment does not support Unicode, multiline or math interpretation; printable ASCII math punctuation is literal. Active browser transitions use ordinary treatment until settled, and exports without trustworthy measurement retain the ordinary legend.
 
-See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/v0.9.0-alpha.4/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.4/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.4/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
+See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/v0.9.0-alpha.5/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.5/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.5/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
 
-## Current alpha: a3 / alpha.4
+## Features carried forward from a3 / alpha.4
 
 [Release notes](release/notes/0.9.0a3-web-alpha.4.md) distinguish these additions from the B2 identities, `series_slots`, baseline direct labels and bounded reference themes already shipped in a2/alpha.3:
 
@@ -69,6 +75,10 @@ See the [ordinary/direct-label example](https://github.com/CharlesMish/figureste
 - Python gains measured subtitle containment, [sequential heatmap colors](docs/sequential-heatmaps.md) and [dataset-owned histogram medians](docs/histogram-medians.md). Browser rhythm continuity, newcomer registration and scene integrity are corrected.
 
 See [line semantics and limits](docs/line-series-semantics.md). These features are available in the published versions above. No new reference-theme or accessibility qualification is implied.
+
+## Current published-package gallery
+
+[Browse six a4/alpha.5 examples](https://charlesmish.github.io/figurestead/#published-gallery) or [run their exact source](examples/published-gallery/README.md). The new files preserve historical images and show only behavior available in these registry versions.
 
 ## Figurestead at a glance
 
@@ -93,7 +103,8 @@ Figurestead's two surfaces share a normalized contract vocabulary, selected them
 ## Evidence and documentation
 
 - [Public overview](https://charlesmish.github.io/figurestead/)
-- [Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
+- [Historical Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
+- [Getting started with the current published packages](docs/getting-started.md)
 - [Python first-success example](examples/python-first-success.py)
 - [Python sizing, calendar ticks and comparison recipes](docs/python-layout-and-comparison.md) — includes unreleased note/count layout repairs
 - [Browser first-success example](examples/browser-first-success/)
