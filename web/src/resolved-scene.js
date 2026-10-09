@@ -1,4 +1,6 @@
 import { linePathLength } from "./line-path.js";
+import { assertMarkKind } from "./scene-marks.js";
+import { FiguresteadConfigError } from "./schema.js";
 import { planDirectLabels } from "./direct-labels.js";
 import { lineMarkerGeometry } from "./line-identity.js";
 import { deriveFigureLayout } from "./figure-layout.js";
@@ -97,6 +99,13 @@ function pointGeometry(mark, axes, radius) {
   return { cx, cy, radius };
 }
 
+function unsupportedGeometryMark(panel, mark) {
+  return new FiguresteadConfigError(
+    `scene mark kind ${mark.kind} has no ${panel.renderer} geometry resolver`,
+    `panels.${panel.id}.marks.${mark.id}.kind`,
+  );
+}
+
 function lineGeometry(panel, axes, scale) {
   const controls = new Map(), lengthTolerances = new Map();
   const series = [...new Set(panel.marks.filter((mark) => mark.kind === "point").map((mark) => mark.series))];
@@ -120,7 +129,7 @@ function lineGeometry(panel, axes, scale) {
       const marker = lineMarkerGeometry(mark.style, scale, panel.presentation?.markerScale ?? 1);
       return { ...mark, lineIdentity: true, geometry: { ...pointGeometry(mark, axes, marker.radius), outlineWidth: marker.outlineWidth } };
     }
-    if (mark.kind !== "segment") return { ...mark };
+    if (mark.kind !== "segment") throw unsupportedGeometryMark(panel, mark);
     const index = segmentIndex.get(mark.series) ?? 0; segmentIndex.set(mark.series, index + 1);
     const control = controls.get(`${mark.series}\u0000${index}`);
     const geometry = {
@@ -140,14 +149,23 @@ function scatterGeometry(panel, axes, radius) {
       const [x0, x1] = panel.domain.x;
       return { ...mark, geometry: { x1: axes.x(x0), y1: axes.y(mark.intercept + mark.slope * x0), x2: axes.x(x1), y2: axes.y(mark.intercept + mark.slope * x1) } };
     }
-    return { ...mark };
+    throw unsupportedGeometryMark(panel, mark);
   });
 }
 
 function fallbackPointGeometry(panel, axes, radius) {
   return panel.marks.map((mark) => {
     if (mark.kind === "point") return { ...mark, geometry: pointGeometry(mark, axes, radius) };
-    if (mark.kind !== "renderer-mark") return { ...mark, geometry: null };
+    switch (mark.kind) {
+      case "renderer-mark": break;
+      // Custom renderers keep their own draw method. Known non-point marks are
+      // retained for inspection; the compatibility resolver does not paint them.
+      case "segment": case "summary-line": case "bar": case "cell":
+      case "interval": case "median-rule": case "connector":
+      case "reference-band": case "baseline-rule": case "row-band":
+      case "rug": case "temporal-bar": return { ...mark, geometry: null };
+      default: throw unsupportedGeometryMark(panel, mark);
+    }
     const evidence = mark.evidence ?? {};
     const hasX = evidence.x != null || (evidence.group != null && axes.x.bandwidth);
     const hasY = evidence.y != null || (evidence.yCategory != null && axes.y.bandwidth);
@@ -171,6 +189,7 @@ function barGeometry(panel, axes, layout) {
   const category = horizontal ? axes.y : axes.x, value = horizontal ? axes.x : axes.y;
   const series = [...new Set(panel.marks.map((mark) => mark.series))], layered = panel.renderer === "categorical_layered_bar";
   return panel.marks.map((mark) => {
+    if (mark.kind !== "bar") throw unsupportedGeometryMark(panel, mark);
     const start = category(mark.category), bandwidth = category.bandwidth();
     let left, right, top, bottom;
     if (layered) {
@@ -195,6 +214,7 @@ function matrixGeometry(panel, layout, theme) {
   const x = bandScale(xs, [plot.left, plot.right], { padding: 0.06 }), y = bandScale(ys, [plot.top, plot.bottom], { padding: 0.06 });
   const domain = panel.valueScale?.domain ?? [0, 1];
   const marks = panel.marks.map((mark) => {
+    if (mark.kind !== "cell") throw unsupportedGeometryMark(panel, mark);
     const t = Number.isFinite(mark.value) ? clamp01((mark.value - domain[0]) / (domain[1] - domain[0])) : 0;
     const diagonal = mark.diagonalMode === "context" && mark.xCategory === mark.yCategory;
     const fill = mark.status !== "observed" ? mark.style.low : diagonal ? mix(mark.style.low, mark.style.color, 0.12)
@@ -237,7 +257,7 @@ function extensionGeometry(panel, axes, layout, radius) {
     if (mark.kind === "rug") return { ...mark, geometry: {
       x: axes.x(mark.x), y: categoryCenter(axes.y, mark.yCategory), halfHeight: Math.max(4, 5 * layout.scale),
     } };
-    return { ...mark, geometry: null };
+    throw unsupportedGeometryMark(panel, mark);
   });
 }
 
@@ -255,7 +275,7 @@ function coverageGeometry(panel, layout, radius) {
       const usable = Math.max(0, countPlot.bottom - countPlot.top - 12 * layout.scale), barHeight = usable * mark.value / Math.max(1, mark.maximum);
       return { ...mark, geometry: { left, right: Math.max(left, right), top: countPlot.bottom - barHeight, bottom: countPlot.bottom, labelX: (left + Math.max(left, right)) / 2, labelY: countPlot.bottom - barHeight - 2 * layout.scale } };
     }
-    return { ...mark, geometry: null };
+    throw unsupportedGeometryMark(panel, mark);
   });
   return { axes, marks, plots: { count: countPlot, rug: rugPlot } };
 }
@@ -263,6 +283,8 @@ function coverageGeometry(panel, layout, radius) {
 export function isResolvedRenderer(renderer) { return RESOLVED_RENDERERS.includes(renderer); }
 
 export function resolveTerminalScene(scene, options = {}) {
+  scene.panels.forEach((panel, panelIndex) => panel.marks.forEach((mark, markIndex) =>
+    assertMarkKind(mark, `scene.panels[${panelIndex}].marks[${markIndex}]`)));
   const width = options.width ?? 960, height = options.height ?? 600;
   const layout = options.layout ?? deriveFigureLayout(width, height, { panels: scene.panels, layout: scene.layout, theme: scene.theme, spec: scene.spec });
   const panels = scene.panels.map((panel, index) => {

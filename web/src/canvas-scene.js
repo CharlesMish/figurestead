@@ -1,6 +1,8 @@
 import { DIRECT_FONT } from "./direct-labels.js";
 import { appendMarkerPath, clipOwnLine, lineMarkerGeometry } from "./line-identity.js";
 import { partitionPanelMarks, withCanvasPlotClip } from "./render-layers.js";
+import { assertMarkKind } from "./scene-marks.js";
+import { FiguresteadConfigError } from "./schema.js";
 
 const FONT_STACK = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace";
 
@@ -329,22 +331,37 @@ function drawDenominatorLabels(context, panel, theme) {
 
 export function drawResolvedPanel(context, frame, panelIndex) {
   const panel = frame.panels[panelIndex], theme = frame.theme;
+  panel.marks.forEach((mark, index) => assertMarkKind(mark, `frame.panels[${panelIndex}].marks[${index}]`));
   const layers = partitionPanelMarks(panel.marks);
   drawGrid(context, panel, theme, frame.profile);
   const drawMark = (mark) => {
-    if (!mark.geometry || mark.motion.opacity <= 0) return;
-    if (mark.kind === "point") drawPoint(context, mark);
-    else if (["segment", "summary-line"].includes(mark.kind)) drawLine(context, mark, theme,
-      panel.renderer === "line" ? panel.marks.filter(p => p.lineIdentity && p.series === mark.series) : [],
-      panel.axes.plot ?? panel.layout.plot);
-    else if (mark.kind === "median-rule") drawLine(context, mark, theme);
-    else if (mark.kind === "bar") drawBar(context, mark, theme);
-    else if (mark.kind === "cell") drawCell(context, mark, theme, panel.layout.font.axis);
-    else if (mark.kind === "interval") drawIntervalMark(context, mark, panel.layout.scale, theme);
-    else if (mark.kind === "connector") drawConnector(context, mark, panel, theme);
-    else if (mark.kind === "baseline-rule") drawBaseline(context, mark, panel, theme);
-    else if (mark.kind === "rug") drawRug(context, mark, panel.layout.scale, theme);
-    else if (mark.kind === "temporal-bar") drawTemporalBar(context, mark, theme, panel);
+    const visible = mark.kind !== "renderer-mark" && mark.geometry && mark.motion.opacity > 0;
+    switch (mark.kind) {
+      case "point": if (visible) drawPoint(context, mark); return;
+      case "segment":
+      case "summary-line":
+        if (visible) drawLine(context, mark, theme,
+          panel.renderer === "line" ? panel.marks.filter(p => p.lineIdentity && p.series === mark.series) : [],
+          panel.axes.plot ?? panel.layout.plot);
+        return;
+      case "median-rule": if (visible) drawLine(context, mark, theme); return;
+      case "bar": if (visible) drawBar(context, mark, theme); return;
+      case "cell": if (visible) drawCell(context, mark, theme, panel.layout.font.axis); return;
+      case "interval": if (visible) drawIntervalMark(context, mark, panel.layout.scale, theme); return;
+      case "connector": if (visible) drawConnector(context, mark, panel, theme); return;
+      case "reference-band": if (visible) drawReferenceBand(context, mark); return;
+      case "baseline-rule": if (visible) drawBaseline(context, mark, panel, theme); return;
+      case "row-band": if (visible) drawRowBand(context, mark); return;
+      case "rug": if (visible) drawRug(context, mark, panel.layout.scale, theme); return;
+      case "temporal-bar": if (visible) drawTemporalBar(context, mark, theme, panel); return;
+      // Registered custom renderers own their live paint. Their compatibility
+      // placeholders cannot be painted by the built-in resolved dispatcher.
+      case "renderer-mark": throw new FiguresteadConfigError(
+        "renderer-mark requires its registered custom renderer draw function; built-in Canvas painting is unsupported",
+        `frame.panels[${panelIndex}].marks[${panel.marks.indexOf(mark)}].kind`);
+      default: throw new FiguresteadConfigError(`Canvas has no renderer for mark kind ${JSON.stringify(mark.kind)}`,
+        `frame.panels[${panelIndex}].marks[${panel.marks.indexOf(mark)}].kind`);
+    }
   };
   for (const key of ["reference", "data", "summary"]) withCanvasPlotClip(context, panel, () => {
     const marks = key === "data"

@@ -406,21 +406,190 @@ export interface FiguresteadPanelCoordinates {
   points: FiguresteadPointCoordinate[];
 }
 
+/** Scene evidence is structural; renderers still validate finite coordinates,
+ * ordered domains, color values, and renderer-specific scientific constraints. */
+export interface MarkStyle extends SeriesStyleOverride {
+  color: CanonicalColor;
+  key?: string;
+}
+export type MarkCategory = string | number;
+export interface MarkBase {
+  id: string;
+  role?: string;
+  style: MarkStyle;
+}
+export interface MarkPosition { x: number; y: number }
+/** Categorical point coordinates are evidence, not precomputed display pixels. */
+export type PointMark = MarkBase & {
+  kind: "point";
+  series: string;
+  date?: string;
+  markerVisible?: boolean;
+} & ({ x: number; group?: MarkCategory; xOffset?: number } | { group: MarkCategory; xOffset?: number; x?: number })
+  & ({ y: number; yCategory?: MarkCategory } | { yCategory: MarkCategory; y?: number });
+export interface SegmentMark extends MarkBase {
+  kind: "segment";
+  series: string;
+  from: MarkPosition;
+  to: MarkPosition;
+  interpolation: CurveType;
+}
+export interface SummaryLineMark extends MarkBase {
+  kind: "summary-line";
+  slope: number;
+  intercept: number;
+}
+export interface BarMark extends MarkBase {
+  kind: "bar";
+  series: string;
+  category: MarkCategory;
+  value: number | null;
+  missing: boolean;
+  orientation: "horizontal" | "vertical";
+  layer: number;
+  seriesIndex: number;
+  categoryIndex: number;
+}
+export interface CellMark extends MarkBase {
+  kind: "cell";
+  xCategory: MarkCategory;
+  yCategory: MarkCategory;
+  value: number | null;
+  status: string;
+  label: string;
+  diagonalMode: string;
+  style: MarkStyle & { low: CanonicalColor; high: CanonicalColor };
+}
+export interface IntervalMark extends MarkBase {
+  kind: "interval";
+  category: MarkCategory;
+  low: number;
+  high: number;
+  series?: string;
+  observed?: number;
+}
+export interface MedianRuleMark extends MarkBase {
+  kind: "median-rule";
+  group: MarkCategory;
+  y: number;
+  xOffset1: number;
+  xOffset2: number;
+}
+export interface ConnectorMark extends MarkBase {
+  kind: "connector";
+  x1: number;
+  x2: number;
+  yCategory: MarkCategory;
+  delta: number;
+  endpointALabel: string;
+  endpointBLabel: string;
+}
+export interface ReferenceBandMark extends MarkBase {
+  kind: "reference-band";
+  from: number;
+  to: number;
+  label: string;
+  status: string;
+}
+export interface BaselineRuleMark extends MarkBase {
+  kind: "baseline-rule";
+  x: number;
+  label: string;
+}
+export interface RowBandMark extends MarkBase {
+  kind: "row-band";
+  categoryFrom: MarkCategory;
+  categoryTo: MarkCategory;
+}
+export interface RugMark extends MarkBase {
+  kind: "rug";
+  series: string;
+  x: number;
+  yCategory: MarkCategory;
+  date?: string;
+}
+export interface TemporalBarMark extends MarkBase {
+  kind: "temporal-bar";
+  year: number;
+  xFrom: number;
+  xTo: number;
+  value: number;
+  observationCount: number;
+  maximum: number;
+}
+/** Explicit compatibility mark for custom renderer evidence. This fallback
+ * does not make unrecognized kind strings valid built-in scene marks. */
+export interface RendererMark {
+  id: string;
+  kind: "renderer-mark";
+  series: string;
+  role?: string;
+  evidence: UnknownRecord;
+  style: MarkStyle | null;
+}
+export type Mark = PointMark | SegmentMark | SummaryLineMark | BarMark | CellMark
+  | IntervalMark | MedianRuleMark | ConnectorMark | ReferenceBandMark
+  | BaselineRuleMark | RowBandMark | RugMark | TemporalBarMark | RendererMark;
+export type MarkKind = Mark["kind"];
+export const MARK_KINDS: readonly [
+  "point", "segment", "summary-line", "bar", "cell", "interval",
+  "median-rule", "connector", "reference-band", "baseline-rule", "row-band",
+  "rug", "temporal-bar", "renderer-mark"
+];
+/** Validates only the discriminator, not the required fields of a full Mark. */
+export function assertMarkKind<T>(mark: T, path?: string): asserts mark is T & { kind: MarkKind };
+
+export interface PointMarkGeometry { cx: number; cy: number; radius: number; outlineWidth?: number }
+export interface LineMarkGeometry { x1: number; y1: number; x2: number; y2: number; c1x?: number; c1y?: number; c2x?: number; c2y?: number }
+export interface MarkGeometryMap {
+  point: PointMarkGeometry;
+  segment: LineMarkGeometry;
+  "summary-line": LineMarkGeometry;
+  bar: FiguresteadRect & { baselineX: number | null; baselineY: number | null; alpha: number };
+  cell: FiguresteadRect & { fill: CanonicalColor; labelColor: CanonicalColor };
+  interval: { x1: number; x2: number; y: number; cap: number };
+  "median-rule": LineMarkGeometry;
+  connector: { x1: number; x2: number; y: number };
+  "reference-band": FiguresteadRect;
+  "baseline-rule": { x: number; top: number; bottom: number };
+  "row-band": FiguresteadRect;
+  rug: { x: number; y: number; halfHeight: number };
+  "temporal-bar": FiguresteadRect & { labelX: number; labelY: number };
+  "renderer-mark": PointMarkGeometry;
+}
+/** Unsupported renderer/mark combinations can have absent or null geometry. */
+export type ResolvedMark = {
+  [K in MarkKind]: Extract<Mark, { kind: K }> & {
+    readonly geometry?: MarkGeometryMap[K] | null;
+    readonly motion?: MotionState;
+    readonly motionOrder?: number;
+    readonly pathDistance?: number;
+    readonly lineIdentity?: boolean;
+  }
+}[MarkKind];
+export interface ScenePanel<M extends Mark = Mark> extends UnknownRecord {
+  readonly id: string;
+  readonly renderer: string;
+  readonly marks: readonly M[];
+}
+export type TerminalScenePanel = ScenePanel<Mark>;
+export interface ResolvedScenePanel extends ScenePanel<ResolvedMark> { readonly resolved: boolean }
+
 export interface TerminalScene extends UnknownRecord {
   schemaVersion: "figurestead.scene/1";
   contractSchemaVersion: string;
   rendererApiVersion: string;
-  panels: readonly UnknownRecord[];
+  panels: readonly TerminalScenePanel[];
 }
 
 export interface ResolvedScene extends UnknownRecord {
   schemaVersion: "figurestead.resolved-scene/1";
-  panels: readonly UnknownRecord[];
+  panels: readonly ResolvedScenePanel[];
 }
 
 export interface ComposedScene extends UnknownRecord {
   schemaVersion: "figurestead.composed-scene/1";
-  panels: readonly UnknownRecord[];
+  panels: readonly ResolvedScenePanel[];
 }
 
 export interface FiguresteadController<P extends FiguresteadPanel = CoreFiguresteadPanel> {
@@ -528,7 +697,7 @@ export function styleForSeries(environment: UnknownRecord, key: string, fallback
 export const TERMINAL_SCENE_VERSION: "figurestead.scene/1";
 export function compileFigureModel(input: FiguresteadContract<FiguresteadPanel>, options?: { registry?: RendererRegistry }): Readonly<{ contract: FiguresteadContract<FiguresteadPanel>; scene: TerminalScene; preparedPanels: readonly UnknownRecord[]; domains: readonly UnknownRecord[] }>;
 export function compileTerminalScene(input: FiguresteadContract<FiguresteadPanel>, options?: { registry?: RendererRegistry }): TerminalScene;
-export function terminalEvidence(scene: TerminalScene): UnknownRecord[];
+export function terminalEvidence(scene: TerminalScene): Array<{ panelId: string; marks: Mark[] }>;
 export function canonicalTerminalEvidence(scene: TerminalScene): UnknownRecord;
 export function evidenceFingerprint(scene: TerminalScene): string;
 
@@ -551,7 +720,7 @@ export const ALLOWED_MOTION_CHANNELS: readonly MotionChannel[];
 export const TERMINAL_MOTION_STATE: Readonly<MotionState>;
 export function strategyForRenderer(renderer: string, requested?: MotionStrategy): MotionStrategy;
 export function compileMotionPlan(scene: TerminalScene, view?: Partial<FiguresteadView>): Readonly<UnknownRecord>;
-export function markMotionState(mark: UnknownRecord, index: number, count: number, progress: number, strategy?: MotionStrategy): MotionState;
+export function markMotionState(mark: Mark, index: number, count: number, progress: number, strategy?: MotionStrategy): MotionState;
 export function assertTerminalMotionIdentity(plan: UnknownRecord, scene: TerminalScene): true;
 
 export interface ExportSizeOptions {
@@ -640,11 +809,30 @@ export interface RenderedSeriesContrast {
 export function renderedSeriesAudit(theme: FiguresteadTheme, context: SeriesRenderContext): RenderedSeriesContrast[];
 
 export const RENDER_LAYER_ORDER: readonly string[];
-export function renderLayerForMark(mark: UnknownRecord): string;
-export function partitionPanelMarks(marks?: UnknownRecord[]): Record<string, UnknownRecord[]>;
+export function renderLayerForMark(mark: { kind: MarkKind; role?: string }): "reference" | "data" | "summary";
+export function partitionPanelMarks<M extends Mark>(marks?: readonly M[]): Record<"reference" | "data" | "summary", M[]>;
 export function plotClipRect(panel: UnknownRecord): FiguresteadRect;
 export function withCanvasPlotClip<T>(context: CanvasRenderingContext2D, panel: UnknownRecord, draw: (plot: FiguresteadRect) => T): T;
-export function validateEvidenceCoverage(panels: UnknownRecord[]): Readonly<UnknownRecord>;
+export interface EvidenceCoverageFinding {
+  readonly panelId: string;
+  readonly markId: string;
+  readonly axis: "x" | "y";
+  readonly value: number;
+  readonly domain: readonly number[];
+  readonly path: string;
+}
+export interface EvidenceCoverageReport {
+  readonly clean: boolean;
+  readonly complete: boolean;
+  readonly checkedPanels: number;
+  readonly findings: readonly EvidenceCoverageFinding[];
+  readonly uncheckedMarks: readonly {
+    panelId: string;
+    markId: string;
+    reason: "custom-renderer-evidence";
+  }[];
+}
+export function validateEvidenceCoverage(panels: readonly TerminalScenePanel[]): EvidenceCoverageReport;
 
 export interface OklabColor { L: number; a: number; b: number }
 export interface OklchColor { L: number; C: number; h: number }

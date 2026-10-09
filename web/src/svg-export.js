@@ -7,7 +7,8 @@ import { resolveTerminalScene } from "./resolved-scene.js";
 import { composeResolvedScene } from "./composition.js";
 import { partitionPanelMarks, plotClipRect } from "./render-layers.js";
 import { resolveExportSize } from "./physical-export.js";
-import { validateThemeColors } from "./schema.js";
+import { FiguresteadConfigError, validateThemeColors } from "./schema.js";
+import { assertMarkKind } from "./scene-marks.js";
 import { fixedResponsiveHeader, RESPONSIVE_HEADER_MAX_WIDTH } from "./responsive-header.js";
 
 const xmlValue = (value) => String(value).replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/gu, "\uFFFD");
@@ -228,27 +229,37 @@ function panelHeaderSvg(panel, theme, responsive) {
   return `<g ${attrs({ "data-responsive-header": responsive.policy })}>${title}${subtitle}</g>`;
 }
 
-function panelSvg(panel, theme, profile, namespace, responsive = null, allocateId) {
+function panelSvg(panel, theme, profile, namespace, responsive = null, allocateId, panelIndex) {
   if (!panel.resolved) throw new TypeError(`SVG export requires a scene-aware renderer; ${panel.renderer} remains on the compatibility path`);
-  const render = (mark) => panel.renderer === "line" && mark.kind === "segment"
-    ? maskedLine(mark, panel.marks.filter(p => p.lineIdentity && p.series === mark.series), plotClipRect(panel), allocateId(`${namespace}-${safeId(panel.id)}-${hashText(mark.id)}-identity`))
-    : mark.lineIdentity ? linePoint(mark)
-    : mark.kind === "point" ? marker(mark)
-    : ["segment", "summary-line"].includes(mark.kind) ? segment(mark)
-      : mark.kind === "median-rule" ? segment(mark)
-      : mark.kind === "bar" ? bar(mark, theme)
-        : mark.kind === "cell" ? cell(mark, theme, panel.layout.font.axis)
-          : mark.kind === "interval" ? interval(mark, theme)
-            : mark.kind === "connector" ? connector(mark, theme)
-              : mark.kind === "reference-band" ? referenceBand(mark)
-                : mark.kind === "baseline-rule" ? baseline(mark, panel)
-                  : mark.kind === "row-band" ? rowBand(mark)
-                    : mark.kind === "rug" ? rug(mark)
-                      : mark.kind === "temporal-bar" ? temporalBar(mark, panel, theme) : "";
+  const render = (mark) => {
+    switch (mark.kind) {
+      case "point": return mark.geometry ? (mark.lineIdentity ? linePoint(mark) : marker(mark)) : "";
+      case "segment": return !mark.geometry ? "" : panel.renderer === "line"
+        ? maskedLine(mark, panel.marks.filter(p => p.lineIdentity && p.series === mark.series), plotClipRect(panel), allocateId(`${namespace}-${safeId(panel.id)}-${hashText(mark.id)}-identity`))
+        : segment(mark);
+      case "summary-line":
+      case "median-rule": return mark.geometry ? segment(mark) : "";
+      case "bar": return mark.geometry ? bar(mark, theme) : "";
+      case "cell": return mark.geometry ? cell(mark, theme, panel.layout.font.axis) : "";
+      case "interval": return mark.geometry ? interval(mark, theme) : "";
+      case "connector": return mark.geometry ? connector(mark, theme) : "";
+      case "reference-band": return mark.geometry ? referenceBand(mark) : "";
+      case "baseline-rule": return mark.geometry ? baseline(mark, panel) : "";
+      case "row-band": return mark.geometry ? rowBand(mark) : "";
+      case "rug": return mark.geometry ? rug(mark) : "";
+      case "temporal-bar": return mark.geometry ? temporalBar(mark, panel, theme) : "";
+      // A compatibility placeholder has no shared SVG paint implementation.
+      case "renderer-mark": throw new FiguresteadConfigError(
+        "renderer-mark belongs to a custom renderer; built-in SVG export is unsupported",
+        `scene.panels[${panelIndex}].marks[${panel.marks.indexOf(mark)}].kind`);
+      default: throw new FiguresteadConfigError(`SVG has no renderer for mark kind ${JSON.stringify(mark.kind)}`,
+        `scene.panels[${panelIndex}].marks[${panel.marks.indexOf(mark)}].kind`);
+    }
+  };
   const layers = partitionPanelMarks(panel.marks), plot = plotClipRect(panel), clipId = allocateId(`${namespace}-${safeId(panel.id)}-evidence-clip`);
   const renderLayer = (name, marks) => `<g data-layer="${name}" clip-path="url(#${clipId})">${marks.map(render).join("")}</g>`;
   const dataMarks = [...layers.data.filter((mark) => mark.kind !== "point"), ...layers.data.filter((mark) => mark.kind === "point")];
-  const dataLabels = panel.marks.map((mark) => mark.kind === "connector" ? connectorLabel(mark, panel, theme)
+  const dataLabels = panel.marks.filter(mark => mark.geometry).map((mark) => mark.kind === "connector" ? connectorLabel(mark, panel, theme)
     : mark.kind === "baseline-rule" ? baselineLabel(mark, panel)
       : mark.kind === "temporal-bar" ? temporalBarLabel(mark, panel, theme) : "").join("");
   const denominator = panel.meta?.denominator ? `<text ${attrs({ x: panel.layout.plot.right, y: panel.layout.plot.top - 5 * panel.layout.scale, fill: theme.warm, "font-size": panel.layout.font.signature, "text-anchor": "end" })}>${esc(`${panel.meta.denominator.label}: ${panel.meta.denominator.value}`)}</text>` : "";
@@ -259,6 +270,8 @@ function panelSvg(panel, theme, profile, namespace, responsive = null, allocateI
 }
 
 export function resolvedSceneToSvg(resolved, options = {}) {
+  resolved.panels.forEach((panel, panelIndex) => panel.marks.forEach((mark, index) =>
+    assertMarkKind(mark, `scene.panels[${panelIndex}].marks[${index}]`)));
   const composed = resolved.schemaVersion === "figurestead.composed-scene/1" ? resolved : composeResolvedScene(resolved);
   validateThemeColors(composed.theme, "scene.theme");
   const scene = options.sourceScene, namespace = svgNamespace(composed, scene, options);
@@ -276,7 +289,7 @@ export function resolvedSceneToSvg(resolved, options = {}) {
   const titleId = allocateId(`${namespace}-title`), descId = allocateId(`${namespace}-desc`);
   const header = composed.layout.header ? `<text ${attrs({ x: composed.layout.header.left, y: composed.layout.header.titleY, fill: composed.theme.mode === "paper" ? composed.theme.label : composed.theme.primary, "font-size": composed.layout.font.title })}>${esc(title)}</text>` : "";
   const fixedResponsive = composed.width <= RESPONSIVE_HEADER_MAX_WIDTH && composed.panels.length === 1 && composed.theme.mode !== "paper";
-  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, "font-family": FONT, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect ${attrs({ width: "100%", height: "100%", fill: composed.theme.field })}/>${header}${composed.panels.map((panel) => panelSvg(panel, composed.theme, composed.profile, namespace, panel.layout.headerText ?? (fixedResponsive ? fixedResponsiveHeader(panel) : null), allocateId)).join("")}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" ${attrs({ width: exportSize.widthAttribute, height: exportSize.heightAttribute, viewBox: `0 0 ${composed.width} ${composed.height}`, "font-family": FONT, role: "img", "aria-labelledby": `${titleId} ${descId}`, "data-scene-version": composed.sourceSceneVersion, "data-resolved-scene-version": composed.resolvedSceneVersion, "data-composed-scene-version": composed.schemaVersion, "data-evidence-fingerprint": scene ? evidenceFingerprint(scene) : null, "data-physical-width-mm": exportSize.physical?.widthMm })}><title id="${titleId}">${esc(title)}</title><desc id="${descId}">${esc(description)}</desc><rect ${attrs({ width: "100%", height: "100%", fill: composed.theme.field })}/>${header}${composed.panels.map((panel, panelIndex) => panelSvg(panel, composed.theme, composed.profile, namespace, panel.layout.headerText ?? (fixedResponsive ? fixedResponsiveHeader(panel) : null), allocateId, panelIndex)).join("")}</svg>`;
 }
 
 export function sceneToSvg(scene, options = {}) {

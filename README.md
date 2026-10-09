@@ -117,6 +117,7 @@ Figurestead's two surfaces share a normalized contract vocabulary, selected them
 - [Browser first-success example](examples/browser-first-success/)
 - [Python sequential heatmap ramp](docs/sequential-heatmaps.md) — published color mapping; numeric normalization unchanged
 - [Static palette versus rendered-series contrast](docs/rendered-series-contrast.md)
+- [Browser scene marks and coverage policy](docs/browser-scene-marks.md) — unreleased band-rendering and mark-contract repair
 - [Reference light/dark themes for the bounded three-series line profile](docs/reference-themes.md) — bounded exemplars, not universal qualification
 - [Deterministic specimen corpus and local visual lab](specimen-study/README.md)
 - [Technical-showcase reviewer packet](technical-showcase/reviewer-packet/README.md) — repository-local and undeployed
