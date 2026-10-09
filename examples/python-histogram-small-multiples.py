@@ -1,6 +1,8 @@
 """Compare synthetic distributions with shared bins, scales, and disclosures.
 
-Run after installing Figurestead:
+This source-only recipe uses the unreleased save_figure helper, absent from
+published 0.9.0a4. Install the current checkout and run from its repository root:
+    python -m pip install .
     python examples/python-histogram-small-multiples.py --output-dir ./figures
 
 These invented temperatures illustrate layout and bin policy, not station data.
