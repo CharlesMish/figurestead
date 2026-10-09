@@ -71,6 +71,9 @@ jobs:
       - name: Verify histogram median ownership
         run: python audit/current-head-hardening/test_histogram_ownership.py
 
+      - name: Execute histogram small-multiples recipe
+        run: python examples/python-histogram-small-multiples.py --output-dir "$RUNNER_TEMP/histogram-small-multiples"
+
       - name: Verify sequential heatmap ramp
         run: python audit/current-head-hardening/test_sequential_heatmap.py
 
@@ -142,6 +145,9 @@ jobs:
           for suite in scientific_geometry rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity direct_labels subtitle note_layout strip_count_layout python_motion_inputs; do
             python "audit/current-head-hardening/test_${suite}.py"
           done
+
+      - name: Execute histogram recipe at declared minimum
+        run: python examples/python-histogram-small-multiples.py --output-dir "$RUNNER_TEMP/histogram-small-multiples"
 
   core-web:
     name: Core browser and SVG contract

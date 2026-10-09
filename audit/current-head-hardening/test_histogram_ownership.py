@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 import unittest
 from unittest.mock import patch
+import warnings
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'src'))
 import matplotlib
@@ -160,5 +161,72 @@ class HistogramOwnershipTests(unittest.TestCase):
             f,a=plt.subplots();before=tuple(a.get_children())
             with self.assertRaises(ValueError):histogram(values,ax=a,**kw)
             self.assertEqual(tuple(a.get_children()),before);plt.close(f)
+
+    def test_explicit_edges_disclose_exclusions_without_changing_geometry(self):
+        data = [-5, 0, 1, 2, 8]
+        edges = [0, 1, 2]
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always', UserWarning)
+            fig, ax = histogram(data, labels=['Station A'], bins=edges)
+        self.assertEqual(len(caught), 1)
+        self.assertIs(caught[0].category, UserWarning)
+        message = str(caught[0].message)
+        self.assertIn("histogram.values[0] ('Station A')", message)
+        self.assertIn('2 of 5 observations', message)
+        self.assertIn('median still uses all 5 observations', message)
+        self.assertEqual(Path(caught[0].filename), Path(__file__))
+        control, control_ax = plt.subplots()
+        counts, returned_edges, patches = control_ax.hist(data, bins=edges, histtype='stepfilled')
+        np.testing.assert_array_equal(counts, [1, 2])  # Includes the final edge (2).
+        np.testing.assert_array_equal(returned_edges, edges)
+        np.testing.assert_array_equal(ax.patches[0].get_path().vertices, patches[0].get_path().vertices)
+        np.testing.assert_array_equal(ax.lines[0].get_xdata(), [np.median(data)] * 2)
+
+    def test_each_affected_dataset_is_identified(self):
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always', UserWarning)
+            _, ax = histogram([[-5, 0, 1], [0, 1, 7, 8], [0, 1, 2]],
+                              labels=['Cold', 'Hot', 'Covered'], bins=[0, 1, 2])
+        self.assertEqual(len(caught), 2)
+        self.assertIn("histogram.values[0] ('Cold'): 1 of 3", str(caught[0].message))
+        self.assertIn("histogram.values[1] ('Hot'): 2 of 4", str(caught[1].message))
+        self.assertEqual([line.get_xdata()[0] for line in ax.lines], [0, 4, 1])
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()],
+                         ['Cold · 0', 'Hot · 4', 'Covered · 1'])
+
+    def test_covered_data_and_automatic_bins_have_no_exclusion_warning(self):
+        for bins in ([0, 1, 2], np.array([0, 1, 2]), 2, np.int64(2), 'auto'):
+            with self.subTest(bins=bins), warnings.catch_warnings(record=True) as caught:
+                warnings.simplefilter('always', UserWarning)
+                histogram([[0, 1, 2], [0.25, 1.75]], bins=bins)
+                self.assertEqual(caught, [])
+
+    def test_exclusion_warning_as_error_does_not_mutate_caller(self):
+        fig, ax = plt.subplots()
+        ax.plot([0, 1], [1, 2], label='Existing')
+        ax.set(title='Caller title', xlabel='Caller x', ylabel='Caller y',
+               xlim=(-10, 10), ylim=(-2, 5), facecolor='#abcdef')
+        before = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
+                  ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
+                  ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor(),
+                  ax.get_autoscalex_on(), ax.get_autoscaley_on())
+        with warnings.catch_warnings():
+            warnings.simplefilter('error', UserWarning)
+            with self.assertRaisesRegex(UserWarning, "histogram.values\\[1\\].*1 of 2"):
+                histogram([[0, 1], [1, 9]], labels=['Covered', 'Excluded'],
+                          bins=[0, 1, 2], spec=PlotSpec('Replacement'), ax=ax)
+        after = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
+                 ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
+                 ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor(),
+                 ax.get_autoscalex_on(), ax.get_autoscaley_on())
+        self.assertEqual(after, before)
+
+    def test_exclusion_warning_as_error_allocates_no_figure(self):
+        before = plt.get_fignums()
+        with warnings.catch_warnings():
+            warnings.simplefilter('error', UserWarning)
+            with self.assertRaisesRegex(UserWarning, "histogram.values\\[0\\].*1 of 2"):
+                histogram([0, 4], bins=[0, 1, 2])
+        self.assertEqual(plt.get_fignums(), before)
 
 if __name__=='__main__':unittest.main(verbosity=2)

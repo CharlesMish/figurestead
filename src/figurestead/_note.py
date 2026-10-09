@@ -127,6 +127,7 @@ class NoteText(Text):
             self.set_position(state[1])
             raise ValueError(
                 "PlotSpec.note: insufficient footer space; enlarge the figure, "
-                "shorten the note, or increase the bottom margin of caller-owned axes"
+                "shorten the note, or increase the bottom margin "
+                "(for subplots, use fig.subplots_adjust(bottom=...))"
             )
         super().draw(renderer)
