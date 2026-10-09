@@ -1,6 +1,7 @@
 """figurestead public API."""
 
 from .core import PlotSpec
+from ._export import save_figure
 from .plots import heatmap, histogram, line, scatter, strip_summary
 from .motion import MotionStyle, MotionTimeline, animate_line, animate_scatter, animate_strip_summary
 from .portable import PORTABLE_SCHEMA_VERSION, RENDERER_API_VERSION, export_contract, export_figure, portable_schema
@@ -75,5 +76,6 @@ __all__ = [
     "portable_schema",
     "render",
     "scatter",
+    "save_figure",
     "strip_summary",
 ]

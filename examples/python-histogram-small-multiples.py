@@ -1,6 +1,8 @@
 """Compare synthetic distributions with shared bins, scales, and disclosures.
 
-Run after installing Figurestead:
+This source-only recipe uses the unreleased save_figure helper, absent from
+published 0.9.0a4. Install the current checkout and run from its repository root:
+    python -m pip install .
     python examples/python-histogram-small-multiples.py --output-dir ./figures
 
 These invented temperatures illustrate layout and bin policy, not station data.
@@ -16,7 +18,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import numpy as np
 
-from figurestead import PlotSpec, get_theme, histogram
+from figurestead import PlotSpec, get_theme, histogram, save_figure
 
 
 def main():
@@ -75,7 +77,7 @@ def main():
     for suffix in ("png", "svg"):
         output = args.output_dir / f"histogram-small-multiples.{suffix}"
         kwargs = {"metadata": {"Date": None}} if suffix == "svg" else {}
-        fig.savefig(output, dpi=150, **kwargs)
+        save_figure(fig, output, dpi=150, **kwargs)
         print(f"Wrote {output}")
     plt.close(fig)
 

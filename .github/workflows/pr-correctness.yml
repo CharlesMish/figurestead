@@ -101,6 +101,12 @@ jobs:
       - name: Verify note footer containment
         run: python audit/current-head-hardening/test_note_layout.py
 
+      - name: Verify transactional figure exports
+        run: python audit/current-head-hardening/test_safe_export.py
+
+      - name: Verify optional signature placement
+        run: python audit/current-head-hardening/test_signature_layout.py
+
       - name: Verify strip sample-count placement
         run: python audit/current-head-hardening/test_strip_count_layout.py
 
@@ -142,7 +148,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for suite in scientific_geometry rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity direct_labels subtitle note_layout strip_count_layout python_motion_inputs; do
+          for suite in scientific_geometry rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity direct_labels subtitle note_layout safe_export signature_layout strip_count_layout python_motion_inputs; do
             python "audit/current-head-hardening/test_${suite}.py"
           done
 

@@ -41,6 +41,13 @@ to `figurestead-first-success.png`. [Open the exact Python example](examples/pyt
 For a complete labeled example with units, three named series and PNG/SVG output,
 run [the Lavender line example](examples/python-labeled-line.py).
 
+For the unreleased source checkout, `from figurestead import save_figure` adds
+safe path exports: `save_figure(figure, "figure.svg")` replaces the destination
+only after rendering and closing succeed. A failed save preserves an existing
+file and removes the temporary output. This helper is not in the retained wheel
+above; ordinary `figure.savefig()` remains Matplotlib's direct-write API. See
+[safe exports and footer recovery](docs/python-layout-and-comparison.md#safe-path-exports-unreleased).
+
 ### Browser
 
 ```bash
