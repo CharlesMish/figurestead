@@ -24,7 +24,7 @@ def coverage_timeline(
     dates, sites, site_order, _ = validate_temporal_vectors(dates, sites, site_order)
     spec = spec or PlotSpec("Temporal coverage", xlabel="Date", ylabel="Site")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec)
     parsed = _date_values(dates)
     positions = {site: index for index, site in enumerate(site_order)}

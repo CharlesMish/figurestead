@@ -4,24 +4,31 @@ This directory defines the retained-candidate lifecycle for
 `@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
 already-published first alpha used this repaired process.
 
-## Published alpha.4 (verified 2026-09-29)
+## Current published alpha.5 (2026-10-04)
 
-`0.9.0-alpha.4` is published from the exact retained tarball under its versioned directory. `alpha` points to alpha.4; `latest` intentionally remains alpha.1. The existing parameterized publication workflow and exact candidate verifier are unchanged. See [coordinated release notes](../notes/0.9.0a3-web-alpha.4.md).
+`@figurestead/web@0.9.0-alpha.5` is published from the exact retained tarball under
+its versioned directory. npm `alpha` points to alpha.5; `latest` intentionally
+remains alpha.1. [Install the package](../../web/README.md#first-figure).
+
+[Run 37227522331](https://github.com/CharlesMish/figurestead/actions/runs/37227522331)
+completed publication and bounded public readback at accepted merge
+`889b8d15f364b4edbc71a9eec4ce572f73d705b5`. The
+[coordinated release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5)
+records matching public bytes and fresh installed-package consumers.
+The [preparation notes](../notes/0.9.0a4-web-alpha.5.md),
+[exact-artifact record](../reviews/0.9.0a4-web-alpha.5.json) and packed README
+retain their historical pre-publication wording. The original tarball and
+checksum remain unchanged; publication is complete.
+
+## Historical published alpha.4 (verified 2026-09-29)
+
+`0.9.0-alpha.4` is published from the exact retained tarball under its versioned directory. At that verification, `alpha` pointed to alpha.4 and `latest` remained alpha.1. The existing parameterized publication workflow and exact candidate verifier are unchanged. See [coordinated release notes](../notes/0.9.0a3-web-alpha.4.md).
 
 [Run 36508701820](https://github.com/CharlesMish/figurestead/actions/runs/36508701820) passed retained-candidate verification and Trusted Publishing, but its public-readback job exhausted the 120-second visibility window. Independent read-only verification subsequently confirmed the exact retained SHA-256/SHA-512, registry signature, provenance bound to that run and commit `9260af190e60c621244072675c238db4822b8632`, and both dist-tags. Fresh exact-version/`@alpha`, ESM, TypeScript, Vite and Chromium/Firefox consumers passed. Publication succeeded after delayed visibility; no second publication was attempted. The workflow's original timeout conclusion remains part of the record.
 
 Alpha.3 remains published and retained unchanged. At the historical 2026-09-27 verification, `alpha` pointed to alpha.3 and `latest` remained alpha.1. The [alpha.3 preparation notes](../notes/0.9.0a2-web-alpha.3.md) record that earlier preparation, not pending publication.
 
-## Unpublished alpha.5 review candidate
-
-The new `0.9.0-alpha.5` tarball is retained for independent review alongside
-Python a4; see [candidate notes](../notes/0.9.0a4-web-alpha.5.md) and the
-[coordinated exact-artifact record](../reviews/0.9.0a4-web-alpha.5.json).
-The parameterized workflow and fail-closed verifier are unchanged. This is
-preparation only: no registry publication, dist-tag movement or Git tag creation
-is authorized. If later accepted, use the retained tarball's reviewed SHA-256
-and the final reviewed protected-main commit, with the explicit `alpha` tag.
-Keep `latest` at its existing value unless separately authorized.
+## Publication readback policy
 
 The prior 120-second visibility timeout remains a known operational limitation.
 A readback timeout after npm success is a hold for manual read-only verification,

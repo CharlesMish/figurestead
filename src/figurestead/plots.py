@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from collections.abc import Sequence, Mapping
+import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.patheffects as pe
+from matplotlib.transforms import ScaledTranslation
 
 from .core import (
     PlotSpec,
@@ -177,9 +179,9 @@ def _histogram_datasets(values) -> list[np.ndarray]:
     return [array] if array.ndim == 1 else [row for row in array]
 
 
-def _validate_bins(datasets: list[np.ndarray], bins) -> None:
+def _validate_bins(datasets: list[np.ndarray], bins) -> np.ndarray:
     try:
-        np.histogram_bin_edges(np.concatenate(datasets), bins=bins)
+        return np.histogram_bin_edges(np.concatenate(datasets), bins=bins)
     except (TypeError, ValueError) as exc:
         raise _input_error("histogram.bins", f"invalid bin specification: {exc}") from exc
 
@@ -189,6 +191,8 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
     """Jittered categorical points with class-level median bars.
 
     An explicit order must be unique and include every observed group.
+    Counts occupy a separate row between the bottom axis and category labels;
+    they do not consume data space or change the y limits.
     """
     groups, _ = _category_vector(groups, path="strip_summary.groups", allow_empty=True)
     values = _numeric_array(
@@ -210,7 +214,7 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
     order = observed if order is None else _explicit_order(order, observed=observed)
     spec = spec or PlotSpec("Strip summary")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec)
     rng = np.random.default_rng(seed)
     positions = {name: index for index, name in enumerate(order)}
@@ -229,16 +233,34 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
         draw_points(ax, x, values[mask], color=color, theme=theme,
                     profile=profile, label=str(label))
 
+    ax.set_xticks(range(len(order)), order)
+    # Keep counts out of the observation rectangle, including caller-authored
+    # y domains. Point-based spacing follows export DPI and figure resizing;
+    # the lower category row participates in Matplotlib's normal axis layout.
+    ticks = ax.xaxis.get_major_ticks()
+    tick_extents = [tick.get_tick_padding() for tick in ticks]
+    outward = max(tick_extents, default=0)
+    count_transform = ax.get_xaxis_transform() + ScaledTranslation(
+        0, -(outward + 2) / 72, fig.dpi_scale_trans
+    )
+    if positions:
+        # Tick-label padding is measured from each tick's *outward* extent,
+        # which is zero for inward ticks and half the length for inout ticks.
+        # Keep a shared count row clear even if individual tick extents differ.
+        category_pad = 12 + outward - min(tick_extents)
+        ax.tick_params(axis="x", which="major",
+                       pad=max(category_pad, *(tick.get_pad() for tick in ticks)))
+
     for name, x in positions.items():
         selected = values[groups == name]
         if selected.size:
             draw_summary_line(ax, x - 0.28, x + 0.28, float(np.median(selected)),
                               theme=theme, profile=profile)
-        ax.text(x, 0.965, f"n={selected.size}", transform=ax.get_xaxis_transform(),
-                ha="center", va="top", color=theme.secondary, fontsize=6.2,
-                fontfamily="DejaVu Sans Mono")
+        count = ax.text(x, 0, f"n={selected.size}", transform=count_transform,
+                        ha="center", va="top", color=theme.secondary, fontsize=6.2,
+                        fontfamily="DejaVu Sans Mono")
+        count._figurestead_strip_count = True
 
-    ax.set_xticks(range(len(order)), order)
     ax.set_xlim(-0.55, len(order) - 0.45)
     if len(series_keys) > 1:
         style_legend(ax, theme)
@@ -259,7 +281,7 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
     _same_length(("scatter.x", x), ("scatter.y", y), ("scatter.series", series))
     spec = spec or PlotSpec("Scatter")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec)
     for label, color in zip(series_keys, series_colors(theme)):
         mask = series == label
@@ -368,7 +390,7 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
         raise _input_error("line.marker_stride", "sparse cadence is unsupported with explicit presentation poses")
     if np.isnan(ys).any() and presentation is not None:
         raise _input_error("line.ys", "NaN breaks are unsupported with explicit presentation poses")
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     previous = getattr(ax, '_figurestead_direct_labels', None)
     if previous is not None:
         previous.remove()
@@ -429,14 +451,30 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
     Multi-dataset median rules inherit dataset color; the paired legend reports
     dataset labels and median values. Coincident medians are not displaced.
     A single dataset retains summary_core and its existing legend behavior.
+    Explicit bin edges exclude observations outside their intervals from counts,
+    with a UserWarning per affected dataset. Medians still use each full dataset.
     """
     datasets = _histogram_datasets(values)
     labels = ([f"series {index + 1}" for index in range(len(datasets))]
               if labels is None else _metadata(labels, path="histogram.labels", expected=len(datasets)))
-    _validate_bins(datasets, bins)
+    edges = _validate_bins(datasets, bins)
+    if np.ndim(bins) > 0:
+        # Preflight before allocating or styling axes, including when a caller
+        # promotes warnings to errors. NumPy owns the inclusive final edge.
+        for index, (data, label) in enumerate(zip(datasets, labels)):
+            excluded = data.size - int(np.histogram(data, bins=edges)[0].sum())
+            if excluded:
+                warnings.warn(
+                    f"histogram.values[{index}] ({label!r}): {excluded} of "
+                    f"{data.size} observations are outside the supplied bin "
+                    f"intervals and excluded from counts; the median still uses "
+                    f"all {data.size} observations.",
+                    UserWarning,
+                    stacklevel=2,
+                )
     spec = spec or PlotSpec("Distribution")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec)
     multiple = len(datasets) > 1
     pairs, medians = [], []
@@ -465,7 +503,7 @@ def heatmap(matrix, *, xlabels=None, ylabels=None, spec=None,
         ylabels = _metadata(ylabels, path="heatmap.ylabels", expected=matrix.shape[0])
     spec = spec or PlotSpec("Heatmap")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax)
+    fig, ax = ensure_axes(ax, note=bool(spec.note))
     # Rain is intentionally suppressed on dense color fields; the identity is
     # carried by typography, structure, and the semantic palette instead.
     style_axes(ax, theme, profile, spec, atmosphere=False)

@@ -96,7 +96,9 @@ line samples to all direct-label rows, with the same measured-capacity rules and
 atomic ordinary-legend fallback. The 2–3-series direct-label scope, default
 marker grammar and existing higher-series overflow behavior are unchanged.
 
-## Python explicit missing y (current source)
+<a id="python-explicit-missing-y-current-source"></a>
+
+## Python explicit missing y (published in 0.9.0a3)
 
 Ordinary static Python `line()` accepts IEEE NaN in y as an **explicit break**.
 Shared x remains entirely finite and each y row keeps its original width/order.
@@ -107,6 +109,9 @@ Infinities, `None`, object/string sentinels and masked arrays (even zero-mask
 arrays) remain unsupported. Gaps with explicit presentation poses/curves are
 also unsupported in this first slice. Other plot families retain finite-only
 numeric admission.
+
+The x vector remains numeric. For calendar ticks, convert dates explicitly as
+shown in [Python layout and comparison recipes](python-layout-and-comparison.md#calendar-labels-on-numeric-x).
 
 ```python
 fig, ax = line(
