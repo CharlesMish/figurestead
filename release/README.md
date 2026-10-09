@@ -4,6 +4,10 @@ Python artifacts and npm candidates use separate retained-byte
 lifecycles. See [`npm/README.md`](npm/README.md) for the npm
 candidate process; no original npm `0.9.0-alpha.1` candidate is present here.
 
+Current published versions (2026-10-04): Python `0.9.0a4` and browser
+`0.9.0-alpha.5`. [Install the packages](../docs/getting-started.md) or read the
+[completed release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5).
+
 ## Python registry workflow
 
 This directory binds the accepted `figurestead` Python alpha artifacts to a manually dispatched, OIDC-only TestPyPI/PyPI workflow. It never builds or repacks them.
@@ -18,16 +22,21 @@ Published 2026-09-29 through the reviewed exact-artifact workflows: Python `0.9.
 
 The ledger binds package-input contents without a circular commit hash. The coordinated record in `release/reviews/0.9.0a3-web-alpha.4.json` records the producing authority, tool versions, archive/source hashes and consumer checks; its retaining commit binds artifacts and ledger. These exact bytes were published without rebuilding or repacking. The coordinated record remains an immutable preparation-time record; its authorization/status fields are historical, not current publication status. Independent acceptance and separate publication authorization remain required for future releases.
 
-## Unpublished a4 / alpha.5 review candidate
+## Published and verified a4 / alpha.5
 
-Prepared from merged source `2cc3b28e9c7a3c6543848549a2b7de7b3ab484c5`:
-Python `0.9.0a4` and browser `0.9.0-alpha.5`. See
+Published 2026-10-04 at accepted merge
+`889b8d15f364b4edbc71a9eec4ce572f73d705b5`: Python `0.9.0a4` and browser
+`0.9.0-alpha.5`. The candidate was prepared from merged source
+`2cc3b28e9c7a3c6543848549a2b7de7b3ab484c5`. See
 [changes and limits](notes/0.9.0a4-web-alpha.5.md) and the
 [exact-artifact preparation record](reviews/0.9.0a4-web-alpha.5.json).
 The retained Python files are under `python/0.9.0a4`; the npm tarball is under
-`npm/0.9.0-alpha.5`. None is published or independently accepted yet. Source,
-artifact acceptance, registry publication and a coordinated GitHub prerelease
-remain separate gates. No external reviewer has been contacted by preparation.
+`npm/0.9.0-alpha.5`. These exact reviewed bytes were published without rebuilding.
+The notes, preparation record and package-embedded READMEs intentionally retain
+their preparation-time status; the
+[GitHub release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5)
+and publisher runs record completed publication. npm `alpha` points to alpha.5;
+`latest` remains alpha.1.
 
 Read-only verification:
 
@@ -42,16 +51,17 @@ main must not redefine a retained artifact. Existing a2/a3 verification remains
 bound to its original ledger and bytes. The a4 source inventory additionally
 binds matrix-domain and SVG typography scope documents and the new release note.
 
-If separately accepted and authorized, the Python workflow is bound to a4 and
-these confirmation phrases (not instructions to dispatch now):
+### Completed a4 dispatch record (do not repeat)
 
 - `publish figurestead 0.9.0a4 to testpypi`
 - `publish figurestead 0.9.0a4 to pypi`
 
-Select the final reviewed protected-main commit as `expected_commit`; do not
-substitute the producing/source-only commit or an unreviewed later head. TestPyPI
-must expose identical accepted bytes before the production PyPI gate can pass.
-No build, repack, skip-existing or automatic retry of publication is introduced.
+Both dispatches used `expected_commit=889b8d15f364b4edbc71a9eec4ce572f73d705b5`.
+[TestPyPI run 37226888103](https://github.com/CharlesMish/figurestead/actions/runs/37226888103),
+[PyPI run 37227419795](https://github.com/CharlesMish/figurestead/actions/runs/37227419795)
+and [npm run 37227522331](https://github.com/CharlesMish/figurestead/actions/runs/37227522331)
+succeeded. The release records matching public download hashes and fresh
+installed-package consumers. TestPyPI verification preceded PyPI publication.
 
 ## Completed a3 dispatch record (do not repeat)
 
