@@ -224,7 +224,7 @@ def interval_comparison(data, *, spec=None, theme="slipware", profile="deep_scop
     normalized = normalize_interval_data(data)
     spec = spec or PlotSpec("Interval comparison")
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax, figsize=(8.8, 5.4))
+    fig, ax = ensure_axes(ax, figsize=(8.8, 5.4), note=bool(spec.note))
     style_axes(ax, theme, profile, spec, atmosphere=False)
     positions = {category: index for index, category in enumerate(normalized.categories)}
 
