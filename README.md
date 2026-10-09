@@ -4,6 +4,14 @@ Figurestead is an experimental scientific figure system with Python and framewor
 
 Published 2026-10-04: Python `figurestead==0.9.0a4` and browser `@figurestead/web@0.9.0-alpha.5` ([alpha.5 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5)). The counters are independent. npm `alpha` points to alpha.5; `latest` intentionally remains alpha.1. Use the exact versions below to reproduce this release. The [retained release records](release/README.md) bind the published artifacts.
 
+## Candidate awaiting review: a5 / alpha.6
+
+This branch prepares Python `0.9.0a5` and browser `0.9.0-alpha.6` from the
+reviewed integration. These versions are not published. Registry installation
+commands below still identify the published baseline. Candidate testing must
+install the retained local archives described in
+[the candidate notes](release/notes/0.9.0a5-web-alpha.6.md).
+
 ## Current maintenance release: a4 / alpha.5
 
 This release repairs standalone browser SVG typography/subtitles, browser dense
@@ -46,7 +54,7 @@ safe path exports: `save_figure(figure, "figure.svg")` replaces the destination
 only after rendering and closing succeed. A failed save preserves an existing
 file and removes the temporary output. This helper is not in the retained wheel
 above; ordinary `figure.savefig()` remains Matplotlib's direct-write API. See
-[safe exports and footer recovery](docs/python-layout-and-comparison.md#safe-path-exports-unreleased).
+[safe exports and footer recovery](docs/python-layout-and-comparison.md#safe-path-exports-090a5).
 
 ### Browser
 

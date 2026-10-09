@@ -1,4 +1,4 @@
-"""Read-only verification of the retained a2/a3/a4 bytes and their package-source inputs."""
+"""Read-only verification of the retained a2/a3/a4/a5 bytes and their package-source inputs."""
 import argparse
 import email
 import hashlib
@@ -7,17 +7,19 @@ from pathlib import Path
 import tarfile
 import zipfile
 ROOT = Path(__file__).resolve().parents[2]
-VERSION = '0.9.0a4'
-VERSIONS = ('0.9.0a2', '0.9.0a3', VERSION)
+VERSION = '0.9.0a5'
+VERSIONS = ('0.9.0a2', '0.9.0a3', '0.9.0a4', VERSION)
 
 def source_inputs(root, version=VERSION):
     if version not in VERSIONS:
         raise ValueError("unsupported retained version")
     files = {root / p for p in ('pyproject.toml', 'MANIFEST.in', 'README.md', 'LICENSE', 'VERSIONING.md', 'docs/direct-series-labels.md', 'docs/rendered-series-contrast.md', 'docs/reference-themes.md', 'release/notes/0.9.0a2-web-alpha.3.md')}
-    if version in ('0.9.0a3', '0.9.0a4'):
+    if version in ('0.9.0a3', '0.9.0a4', '0.9.0a5'):
         files.update(root / p for p in ('docs/line-series-semantics.md', 'docs/sequential-heatmaps.md', 'docs/histogram-medians.md', 'release/notes/0.9.0a3-web-alpha.4.md'))
-    if version == '0.9.0a4':
+    if version in ('0.9.0a4', '0.9.0a5'):
         files.update(root / p for p in ('docs/categorical-matrix-domains.md', 'docs/svg-export-typography.md', 'release/notes/0.9.0a4-web-alpha.5.md'))
+    if version == '0.9.0a5':
+        files.update(root / p for p in ('docs/package-python.md', 'docs/python-layout-and-comparison.md', 'docs/browser-scene-marks.md', 'examples/python-histogram-small-multiples.py', 'release/notes/0.9.0a5-web-alpha.6.md'))
     files.update((p for p in (root / 'src/figurestead').rglob('*') if p.suffix in ('.py', '.json')))
     files.update((p for p in (root / 'examples/direct-series-labels').iterdir() if p.is_file()))
     files.update((p for p in (root / 'docs/assets/reference-themes').rglob('*') if p.suffix in ('.png', '.json')))
@@ -62,7 +64,10 @@ def verify(root=ROOT, check_source=False, version=VERSION):
         expected_wheel_sources = {p[4:] for p in current if p.startswith('src/figurestead/')}
         if not {n for n in wheel.namelist() if n.startswith('figurestead/')} == expected_wheel_sources:
             raise ValueError('wheel source inventory')
-        readme = sdist.extractfile(members[f'figurestead-{version}/README.md']).read().decode('utf-8').strip()
+        readme_path = 'docs/package-python.md' if version == '0.9.0a5' else 'README.md'
+        if readme_path not in current:
+            raise ValueError('missing package README binding')
+        readme = sdist.extractfile(members[f'figurestead-{version}/{readme_path}']).read().decode('utf-8').strip()
         for payload in (wheel.read(f'figurestead-{version}.dist-info/METADATA'), sdist.extractfile(members[f'figurestead-{version}/PKG-INFO']).read()):
             metadata = email.message_from_bytes(payload)
             if not (metadata['Name'] == 'figurestead' and metadata['Version'] == version):

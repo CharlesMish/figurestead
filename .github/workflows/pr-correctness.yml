@@ -429,7 +429,7 @@ jobs:
           python -m venv "$RUNNER_TEMP/python-packed-venv"
           "$RUNNER_TEMP/python-packed-venv/bin/python" -m pip install "${wheels[0]}"
           cd "$RUNNER_TEMP"
-          "$RUNNER_TEMP/python-packed-venv/bin/python" "$GITHUB_WORKSPACE/ci/python-package-smoke.py" --expected-version 0.9.0a4
+          "$RUNNER_TEMP/python-packed-venv/bin/python" "$GITHUB_WORKSPACE/ci/python-package-smoke.py" --expected-version 0.9.0a5
 
       - name: Pack, install, and smoke the npm artifact
         shell: bash
@@ -452,6 +452,7 @@ jobs:
           python release/python/verify_candidate.py --version 0.9.0a2
           python release/python/verify_candidate.py --version 0.9.0a3
           python release/python/verify_candidate.py --version 0.9.0a4
+          python release/python/verify_candidate.py --version 0.9.0a5
           python release/python/test_candidate.py
           python release/python/test_publish_workflow.py
 

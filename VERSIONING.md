@@ -44,3 +44,10 @@ The public landing page retains version-bound a2/alpha.3 specimens alongside an 
 Python uses PEP 440; npm and Git prerelease tags use SemVer spelling. The package counters are independent. The coordinated tag names both versions; it does not force their suffixes to match. Private repository tooling stays at 0.0.0; schema and renderer API versions are unchanged.
 
 Exact-version installs are reproducible; `@alpha` intentionally follows the prerelease channel. Retained artifacts and source-input ledgers are immutable. Verify them against their producing authority, not later repository prose. Any future preparation and publication requires separate review and authorization; it must not replace published bytes or move historical tags.
+
+## Proposed next candidate
+
+Python `0.9.0a5` / browser `0.9.0-alpha.6` are prepared from reviewed main
+`e729f3c030b5ccf0764933f710957bcea47ee636`. Package publication, registry tags and a public
+release remain unauthorized. Schema 0.4, renderer API 1 and runtime floors
+are unchanged. See [candidate notes](release/notes/0.9.0a5-web-alpha.6.md).
