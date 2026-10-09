@@ -1,6 +1,6 @@
 # Browser scene marks
 
-Availability: unreleased source changes after browser `0.9.0-alpha.5`.
+Availability: browser `0.9.0-alpha.6`.
 The published alpha.5 package does not include this repair.
 
 ## Closed vocabulary

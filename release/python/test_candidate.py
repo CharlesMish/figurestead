@@ -56,6 +56,10 @@ class HistoricalA3Integrity(CandidateIntegrity):
     version = '0.9.0a3'
 
 
+class HistoricalA4Integrity(CandidateIntegrity):
+    version = '0.9.0a4'
+
+
 class SourceInventory(unittest.TestCase):
     version = '0.9.0a3'
     def setUp(self):
@@ -101,16 +105,34 @@ class SourceInventory(unittest.TestCase):
             verify(self.root, check_source=True, version=self.version)
 
 
-class CurrentSourceInventory(SourceInventory):
-    version = VERSION
+class HistoricalA4SourceInventory(SourceInventory):
+    version = '0.9.0a4'
 
     def test_new_docs_are_bound_without_redefining_a3(self):
         previous = source_inputs(self.root, '0.9.0a3')
-        current = source_inputs(self.root, VERSION)
+        current = source_inputs(self.root, '0.9.0a4')
         self.assertEqual(set(current) - set(previous), {
             'docs/categorical-matrix-domains.md', 'docs/svg-export-typography.md',
             'release/notes/0.9.0a4-web-alpha.5.md',
         })
+
+
+class CurrentSourceInventory(HistoricalA4SourceInventory):
+    version = VERSION
+
+    def test_new_docs_are_bound_without_redefining_a4(self):
+        previous = source_inputs(self.root, '0.9.0a4')
+        current = source_inputs(self.root, VERSION)
+        self.assertEqual(set(current) - set(previous), {
+            'docs/package-python.md', 'docs/python-layout-and-comparison.md',
+            'docs/browser-scene-marks.md', 'examples/python-histogram-small-multiples.py',
+            'release/notes/0.9.0a5-web-alpha.6.md',
+        })
+
+    def test_packaged_readme_change_rejects(self):
+        (self.root / 'docs/package-python.md').write_text('changed')
+        with self.assertRaisesRegex(ValueError, 'source input identity'):
+            verify(self.root, check_source=True, version=self.version)
 
 
 if __name__ == '__main__':unittest.main()
