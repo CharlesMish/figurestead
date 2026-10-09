@@ -97,14 +97,19 @@ not change the library's default tick policy. A common count scale is useful
 for equal sample sizes; unequal samples may call for a separately authored
 normalized comparison.
 
-After installing Figurestead, run from the repository root:
+This complete script uses the unreleased `save_figure` helper. Install the
+current source checkout, then run from that same repository root:
 
 ```bash
+python -m pip install .
 python examples/python-histogram-small-multiples.py --output-dir ./figures
 ```
 
 It writes `histogram-small-multiples.png` and `.svg`. Two synthetic datasets
 intentionally contain an out-of-bin observation, so their warnings are expected
-on the unreleased follow-up. The example's plotting APIs also work in published
-`0.9.0a4`, where the exclusion warning is absent. Small multiples improve
-separation without changing the default translucent histogram treatment.
+on the unreleased follow-up. Installing published `0.9.0a4` alone cannot run
+this script because that package has no `save_figure` helper. Its plotting APIs
+support the shared-bin comparison described above, but omit the exclusion
+warning; an a4 consumer must use Matplotlib's `fig.savefig(...)` for export.
+Small multiples improve separation without changing the default translucent
+histogram treatment.
