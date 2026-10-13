@@ -44,7 +44,7 @@ def _masked_entry_count(value) -> int | None:
     return None
 
 
-def _array(value, *, path: str) -> np.ndarray:
+def _array(value, *, path: str, dtype=None) -> np.ndarray:
     masked_count = _masked_entry_count(value)
     if masked_count is not None:
         noun = "entry" if masked_count == 1 else "entries"
@@ -53,7 +53,7 @@ def _array(value, *, path: str) -> np.ndarray:
             f"masked arrays are not currently supported ({masked_count} masked {noun})",
         )
     try:
-        return np.asarray(value)
+        return np.asarray(value, dtype=dtype)
     except (TypeError, ValueError) as exc:
         raise _input_error(path, "must have a regular array shape") from exc
 
@@ -94,6 +94,17 @@ def _line_y_array(value) -> np.ndarray:
 def _category_vector(
     value, *, path: str, allow_empty: bool = False
 ) -> tuple[np.ndarray, np.ndarray]:
+    # Preserve original scalar identities for this check: ordinary NumPy dtype
+    # inference can turn ["nan", np.nan] into two indistinguishable strings.
+    # The object view is admission-only; canonical category dtype, comparison,
+    # and ordering still follow the existing path below.
+    original = _array(value, path=path, dtype=object)
+    if original.ndim == 1:
+        for index, item in enumerate(original.tolist()):
+            numeric = isinstance(item, (int, float, complex, np.integer,
+                                        np.floating, np.complexfloating))
+            if numeric and not np.isfinite(item):
+                raise _input_error(f"{path}[{index}]", "numeric category values must be finite")
     array = _array(value, path=path)
     if array.ndim != 1:
         raise _input_error(path, "must be a one-dimensional category sequence")
