@@ -202,6 +202,7 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
     """Jittered categorical points with class-level median bars.
 
     An explicit order must be unique and include every observed group.
+    Omitted series are anonymous and do not contribute legend entries.
     Counts occupy a separate row between the bottom axis and category labels;
     they do not consume data space or change the y limits.
     """
@@ -209,7 +210,8 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
     values = _numeric_array(
         values, path="strip_summary.values", dimensions=(1,), allow_empty=True
     )
-    if series is None:
+    anonymous_series = series is None
+    if anonymous_series:
         series = np.zeros(len(values), dtype=int)
         series_keys = np.unique(series)
     else:
@@ -242,7 +244,7 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
         x = np.array([positions[item] for item in groups[mask]], dtype=float)
         x += jitter[mask]
         draw_points(ax, x, values[mask], color=color, theme=theme,
-                    profile=profile, label=str(label))
+                    profile=profile, label="_nolegend_" if anonymous_series else str(label))
 
     ax.set_xticks(range(len(order)), order)
     # Keep counts out of the observation rectangle, including caller-authored
@@ -281,10 +283,11 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
 
 def scatter(x, y, *, series=None, spec=None, theme="slipware",
             profile="deep_scope", ax=None):
-    """Draw paired finite numeric vectors as categorized points."""
+    """Draw paired finite numeric vectors; omitted series have no legend entry."""
     x = _numeric_array(x, path="scatter.x", dimensions=(1,))
     y = _numeric_array(y, path="scatter.y", dimensions=(1,))
-    if series is None:
+    anonymous_series = series is None
+    if anonymous_series:
         series = np.zeros(len(x), dtype=int)
         series_keys = np.unique(series)
     else:
@@ -297,7 +300,7 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
     for label, color in zip(series_keys, series_colors(theme)):
         mask = series == label
         draw_points(ax, x[mask], y[mask], color=color, theme=theme,
-                    profile=profile, label=str(label))
+                    profile=profile, label="_nolegend_" if anonymous_series else str(label))
     if len(series_keys) > 1:
         style_legend(ax, theme)
     add_note(ax, spec, theme)
@@ -349,6 +352,9 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     endpoint (including singletons). Rhythm restarts at gaps, not marker holes.
     Gapped figures use ordinary legends even when direct labels are requested.
     No interpolation, imputation or reconnection occurs.
+
+    Appended calls refresh the ordinary legend for accumulated eligible labels.
+    A fresh single-series call still omits its ordinary legend.
     """
     if isinstance(marker_stride, (bool, np.bool_)) or not isinstance(marker_stride, (int, np.integer)) or marker_stride < 1:
         raise _input_error("line.marker_stride", "must be a positive integer (not boolean)")
@@ -441,9 +447,13 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
             path.identity_marker, path.identity_points = marker, points
             path.identity_stride = marker_stride
             path.identity_edge_width = 1.45 if theme.series_edges else 0.
-    if len(ys) > 1:
+    # Appended calls share one ordinary legend. Count eligible axes artists,
+    # not just this call's rows; anonymous point layers opt out explicitly.
+    # Retain the existing multi-row trigger (including underscore labels),
+    # whose empty legend also supplies direct-label typography.
+    if len(ys) > 1 or len(ax.get_legend_handles_labels()[0]) > 1:
         style_legend(ax, theme, location=presentation.legend_location if presentation else "best",
-                     handler_map=None if presentation else {IdentityLine: IdentityLegend()})
+                     handler_map={IdentityLine: IdentityLegend()})
     if focus is not None:
         draw_focus_annotation(ax, focus, theme)
     add_note(ax, spec, theme)
