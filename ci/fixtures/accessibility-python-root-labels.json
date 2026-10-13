@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "0.4",
+  "rendererApiVersion": "1",
+  "theme": {
+    "key": "lavender_fog_notebook",
+    "name": "Lavender Fog Notebook",
+    "field": "#F4F1F8",
+    "panel": "#FCFAFF",
+    "grid": "#DDD7E7",
+    "spine": "#9087A1",
+    "label": "#201B2B",
+    "secondary": "#51495F",
+    "faint": "#7B718B",
+    "primary": "#6855A8",
+    "summaryCore": "#18776D",
+    "warm": "#A44E5E",
+    "series": [
+      "#6855A8",
+      "#18776D",
+      "#9B5B16",
+      "#A44E5E",
+      "#326D9B",
+      "#52752C"
+    ]
+  },
+  "profile": {
+    "key": "deep_scope",
+    "name": "Deep Scope",
+    "marker": "ring_core",
+    "markerSize": 46,
+    "markerAlpha": 0.8,
+    "edgeWidth": 1.05,
+    "coreFraction": 0.12,
+    "pointGlow": true,
+    "gridX": true,
+    "gridY": true,
+    "gridAlpha": 0.4,
+    "rainDensity": 24,
+    "rainAlpha": 0.07,
+    "summaryGlow": true,
+    "titleFamily": "DejaVu Sans Mono",
+    "uppercaseTitle": false
+  },
+  "timeline": {
+    "rainIn": [
+      0.06,
+      0.22
+    ],
+    "marksEnter": [
+      0.18,
+      0.72
+    ],
+    "summaryCompiles": [
+      0.68,
+      0.84
+    ],
+    "rainOut": [
+      0.7,
+      0.92
+    ],
+    "settle": [
+      0.88,
+      1.0
+    ]
+  },
+  "motion": {
+    "frames": 72,
+    "fps": 12,
+    "rainStreams": 14,
+    "rainGlyphs": 6,
+    "lightingPeak": 0.105,
+    "trailAlpha": 0.17,
+    "seed": 73,
+    "durationMs": 6000
+  },
+  "spec": {
+    "title": "Python root-label fixture",
+    "subtitle": "",
+    "xLabel": "Time (s)",
+    "yLabel": "Temperature (K)",
+    "note": "",
+    "signature": "figurestead"
+  },
+  "layout": {
+    "type": "grid",
+    "columns": 1,
+    "gap": 22,
+    "sharedX": false,
+    "sharedY": false
+  },
+  "panels": [
+    {
+      "id": "panel-1",
+      "renderer": "scatter",
+      "spec": {},
+      "xScale": {
+        "type": "linear"
+      },
+      "yScale": {
+        "type": "linear"
+      },
+      "annotations": [],
+      "encoding": {
+        "interpolation": "linear"
+      },
+      "data": {
+        "x": [
+          100,
+          200,
+          300
+        ],
+        "y": [
+          280,
+          300,
+          320
+        ],
+        "series": [
+          "sample",
+          "sample",
+          "sample"
+        ],
+        "seriesLabels": {
+          "sample": "Sample"
+        }
+      },
+      "presentation": {
+        "panelSurface": true,
+        "frame": true,
+        "legend": "auto",
+        "lineWidth": 2.15,
+        "markerScale": 1.12
+      }
+    }
+  ],
+  "view": {
+    "profile": "atlas",
+    "motion": "semantic",
+    "ambient": "none",
+    "strategy": "auto"
+  }
+}

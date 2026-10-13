@@ -1,3 +1,5 @@
+import { panelContract } from "./figure.js";
+
 const el = (name, text) => { const node = document.createElement(name); if (text != null) node.textContent = text; return node; };
 
 function appendTable(root, panel, description, { interactive = false } = {}) {
@@ -15,7 +17,11 @@ function appendTable(root, panel, description, { interactive = false } = {}) {
 
 function annotationCoordinates(item, composedPanel, focusIndex) {
   const composed = composedPanel?.composedAnnotations?.[focusIndex];
-  if (!item.anchorId) return composed?.status === "authored-coordinate" ? { x: item.x, y: item.y } : null;
+  if (!item.anchorId) {
+    if (composed?.status !== "authored-coordinate") return null;
+    // Plot fractions locate an annotation in the panel, not in the data domain.
+    return item.space === "plot" ? { space: "plot" } : { x: item.x, y: item.y };
+  }
   if (!composed?.boundMarkId) return null;
   const mark = composedPanel.marks?.find((candidate) => candidate.id === composed.boundMarkId);
   if (!mark) return null;
@@ -33,7 +39,7 @@ export function prepareAccessibilityCompanion(canvas, contract, registry, { visi
   if (contract.spec.subtitle) root.append(el("p", contract.spec.subtitle));
   const description = el("p", contract.spec.description || `${contract.panels.length}-panel scientific figure.`); description.id = `${id}-description`; root.append(description);
   contract.panels.forEach((panel, index) => {
-    const section = el("section"), panelTitle = panel.spec.title || `${panel.renderer.replaceAll("_", " ")} panel`, definition = registry.get(panel.renderer), described = definition.describe({ ...contract, renderer: panel.renderer, spec: { ...contract.spec, ...panel.spec }, data: panel.data }), composedPanel = composedScene?.panels?.[index];
+    const section = el("section"), panelTitle = panel.spec.title || `${panel.renderer.replaceAll("_", " ")} panel`, definition = registry.get(panel.renderer), effective = panelContract(contract, panel), described = definition.describe(effective), composedPanel = composedScene?.panels?.[index];
     const repeatsContractTitle = contract.panels.length === 1 && panelTitle.trim() === contract.spec.title.trim();
     if (repeatsContractTitle) section.setAttribute("aria-labelledby", title.id);
     else {
@@ -43,11 +49,11 @@ export function prepareAccessibilityCompanion(canvas, contract, registry, { visi
     if (panel.spec.description || described.summary) section.append(el("p", panel.spec.description || described.summary));
     panel.annotations.filter((item) => item?.type === "focus" && typeof item.label === "string" && item.label.trim()).forEach((item, focusIndex) => {
       const coordinates = annotationCoordinates(item, composedPanel, focusIndex);
-      const suffix = coordinates ? ` at x ${coordinates.x}, y ${coordinates.y}.` : ".";
+      const suffix = coordinates?.space === "plot" ? " (plot-relative position)." : coordinates ? ` at x ${coordinates.x}, y ${coordinates.y}.` : ".";
       section.append(el("p", `Focus annotation: ${item.label}${suffix}`));
     });
     const dl = el("dl");
-    [["Horizontal axis", panel.spec.xLabel || panel.xScale.label || "Unlabelled"], ["Vertical axis", panel.spec.yLabel || panel.yScale.label || "Unlabelled"], ["Renderer", panel.renderer.replaceAll("_", " ")]].forEach(([term, value]) => dl.append(el("dt", term), el("dd", value)));
+    [["Horizontal axis", effective.spec.xLabel || "Unlabelled"], ["Vertical axis", effective.spec.yLabel || "Unlabelled"], ["Renderer", panel.renderer.replaceAll("_", " ")]].forEach(([term, value]) => dl.append(el("dt", term), el("dd", value)));
     section.append(dl); if (table) appendTable(section, panel, described, { interactive: visible }); root.append(section);
   });
   const labelledBy = `${title.id} ${description.id}`;
