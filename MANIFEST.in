@@ -14,3 +14,6 @@ include release/notes/0.9.0a3-web-alpha.4.md
 include docs/categorical-matrix-domains.md
 include docs/svg-export-typography.md
 include release/notes/0.9.0a4-web-alpha.5.md
+include docs/package-python.md
+include docs/browser-scene-marks.md
+include release/notes/0.9.0a5-web-alpha.6.md

@@ -1,8 +1,9 @@
 # Package README preparation for a future release
 
-These are **review drafts**, not replacements for the published a4/alpha.5
-artifacts. They are not wired into `pyproject.toml` or npm packaging. No version
-number or npm tag changes in this documentation pass.
+These are historical **review drafts**, not replacements for the published
+a4/alpha.5 artifacts. The a5/alpha.6 candidate adopts a separate Python package
+README at `docs/package-python.md` and keeps the complete browser example in
+`web/README.md`; these two draft files remain unchanged and are not package inputs.
 
 The drafts use a tested a4/alpha.5 example baseline so they remain executable
 now. At the next approved release freeze:

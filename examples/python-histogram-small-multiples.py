@@ -1,7 +1,7 @@
 """Compare synthetic distributions with shared bins, scales, and disclosures.
 
-This source-only recipe uses the unreleased save_figure helper, absent from
-published 0.9.0a4. Install the current checkout and run from its repository root:
+This recipe requires save_figure from Python 0.9.0a5, absent from published
+0.9.0a4. For a source checkout, install it and run from its repository root:
     python -m pip install .
     python examples/python-histogram-small-multiples.py --output-dir ./figures
 
