@@ -346,6 +346,139 @@ class PythonPlotInputRegression(unittest.TestCase):
             r"strip_summary\.groups\[1\]: numeric category values must be finite",
         )
 
+    def _category_calls(self, categories, ax=None):
+        return (
+            ("strip_summary.groups", lambda: strip_summary(categories, [3, 2, 100], ax=ax)),
+            ("strip_summary.series", lambda: strip_summary(["A", "A", "B"], [3, 2, 100], series=categories, ax=ax)),
+            ("scatter.series", lambda: scatter([0, 1, 2], [3, 2, 100], series=categories, ax=ax)),
+        )
+
+    def test_missing_category_guard_precedes_mixed_string_coercion(self) -> None:
+        for missing in (math.nan, math.inf, -math.inf, np.float32("nan"), np.float64("inf")):
+            for factory in (list, tuple):
+                categories = factory(["Control", "nan", missing])
+                for path, invoke in self._category_calls(categories):
+                    with self.subTest(path=path, missing=missing, container=factory.__name__):
+                        self.assert_rejected_before_allocation(
+                            invoke, rf"{path}\[2\]: numeric category values must be finite"
+                        )
+
+    def test_missing_category_guard_covers_explicit_object_and_numeric_arrays(self) -> None:
+        for missing in (math.nan, math.inf, -math.inf):
+            for categories in (
+                np.array(["Control", "nan", missing], dtype=object),
+                np.array([1, 2, missing]),
+            ):
+                for path, invoke in self._category_calls(categories):
+                    with self.subTest(path=path, missing=missing, dtype=categories.dtype):
+                        self.assert_rejected_before_allocation(
+                            invoke, rf"{path}\[2\]: numeric category values must be finite"
+                        )
+
+    def test_nonfinite_complex_categories_cannot_be_stringified(self) -> None:
+        for missing in (complex(math.nan, 0), complex(0, math.inf), complex(-math.inf, 2)):
+            for categories in (["Control", "nan", missing], np.array([1, 2, missing])):
+                for path, invoke in self._category_calls(categories):
+                    with self.subTest(path=path, missing=missing):
+                        self.assert_rejected_before_allocation(
+                            invoke, rf"{path}\[2\]: numeric category values must be finite"
+                        )
+
+    def test_literal_nan_inf_strings_remain_valid_categories(self) -> None:
+        for factory in (list, np.array, lambda data: np.array(data, dtype=object)):
+            categories = factory(["nan", "inf", "-inf"])
+            for path, invoke in self._category_calls(categories):
+                with self.subTest(path=path, factory=factory):
+                    fig, ax = invoke()
+                    if path == "strip_summary.groups":
+                        self.assertEqual([t.get_text() for t in ax.get_xticklabels()], ["nan", "inf", "-inf"])
+                        self.assertEqual([t.get_text() for t in ax.texts if getattr(t, "_figurestead_strip_count", False)], ["n=1"] * 3)
+                    else:
+                        self.assertEqual([t.get_text() for t in ax.get_legend().get_texts()], ["nan", "inf", "-inf"])
+                    plt.close(fig)
+        fig, ax = strip_summary(["Control", "nan", "nan"], [3, 2, 100])
+        self.assertEqual([t.get_text() for t in ax.texts if getattr(t, "_figurestead_strip_count", False)], ["n=1", "n=2"])
+        self.assertTrue(any(np.all(np.asarray(item.get_ydata()) == 51) for item in ax.lines))
+        plt.close(fig)
+
+    def test_category_guard_keeps_canonical_dtype_and_first_appearance(self) -> None:
+        from figurestead.plots import _category_vector
+
+        for categories in (["treatment", 0, 0], [2, 1, 2], [1 + 2j, 2 + 1j, 1 + 2j]):
+            actual, unique = _category_vector(categories, path="category")
+            expected = np.asarray(categories)
+            np.testing.assert_array_equal(actual, expected)
+            self.assertEqual(actual.dtype, expected.dtype)
+            np.testing.assert_array_equal(unique, expected[:2])
+
+    def test_category_guard_keeps_shape_mask_hash_and_comparison_boundaries(self) -> None:
+        from figurestead.plots import _category_vector
+
+        unhashable = np.empty(2, dtype=object)
+        unhashable[:] = [{"a": 1}, {"b": 2}]
+        for value, message in (
+            ([[1, 2], [3, 4]], "one-dimensional"),
+            (np.ma.array([1, 2], mask=False), "masked arrays"),
+            (unhashable, "hashable"),
+            (np.array([1, "Control"], dtype=object), "mutually comparable"),
+            ([], "at least one category"),
+        ):
+            with self.subTest(message=message):
+                with self.assertRaisesRegex(ValueError, message):
+                    _category_vector(value, path="category")
+        empty, unique = _category_vector([], path="category", allow_empty=True)
+        self.assertEqual(empty.size, 0)
+        self.assertEqual(unique.size, 0)
+
+    def test_missing_category_rejection_preserves_caller_axes(self) -> None:
+        import hashlib
+        import io
+        import matplotlib as mpl
+
+        def snapshot(fig, ax):
+            fig.canvas.draw()
+            return (
+                tuple(ax.get_children()), tuple(fig.axes), tuple(ax.get_xlim()), tuple(ax.get_ylim()),
+                tuple(ax.dataLim.bounds), tuple(ax.get_position().bounds), ax.get_autoscalex_on(),
+                ax.get_autoscaley_on(), ax.get_title(), ax.get_xlabel(), ax.get_ylabel(),
+                ax.get_facecolor(), ax.get_legend(), tuple(ax.get_xticks()), tuple(ax.get_yticks()),
+                tuple(t.get_text() for t in ax.get_xticklabels()),
+            )
+
+        def exports(fig):
+            results = []
+            for format in ("png", "svg"):
+                data = io.BytesIO()
+                fig.savefig(data, format=format, metadata={"Date": None} if format == "svg" else {})
+                results.append(hashlib.sha256(data.getvalue()).hexdigest())
+            return tuple(results)
+
+        with mpl.rc_context({"svg.hashsalt": "category-rejection"}):
+            fig, ax = plt.subplots()
+            ax.plot([0, 1], [2, 3], label="Existing")
+            ax.scatter([0.5], [2.5])
+            ax.legend()
+            ax.set(title="Caller-owned", xlabel="Time", ylabel="Response", xlim=(-2, 4), ylim=(-1, 6))
+            state, pixels = snapshot(fig, ax), exports(fig)
+            for missing in (math.nan, math.inf, -math.inf):
+                for categories in (["Control", "nan", missing], np.array(["Control", "nan", missing], dtype=object)):
+                    for path, invoke in self._category_calls(categories, ax=ax):
+                        with self.subTest(path=path, missing=missing):
+                            with self.assertRaisesRegex(ValueError, rf"{path}\[2\]: numeric category values must be finite"):
+                                invoke()
+                            self.assertEqual(snapshot(fig, ax), state)
+                            self.assertEqual(exports(fig), pixels)
+            plt.close(fig)
+
+    def test_upstream_stringification_is_not_reclassified_as_missing(self) -> None:
+        # A pre-stringified ndarray has no remaining evidence of numeric NaN.
+        categories = np.asarray(["Control", "nan", math.nan])
+        for path, invoke in self._category_calls(categories):
+            with self.subTest(path=path):
+                fig, ax = invoke()
+                self.assertIsNotNone(ax)
+                plt.close(fig)
+
     def test_non_numeric_scientific_values_are_rejected_publicly(self) -> None:
         self.assert_rejected_before_allocation(
             lambda: line(["0", "1"], [0, 1]), r"line\.x: must contain only real numbers"
@@ -373,6 +506,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 49:
-        raise SystemExit(f"expected exactly 49 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 57:
+        raise SystemExit(f"expected exactly 57 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)

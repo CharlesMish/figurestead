@@ -373,5 +373,107 @@ class MarkerCadenceTests(unittest.TestCase):
             out=BytesIO();f.savefig(out,format='svg');self.assertEqual(d.result['status'],'placed')
             plt.close(f);plt.close(g)
 
+class AccumulatedLegendTests(unittest.TestCase):
+    def tearDown(self):
+        plt.close('all')
+
+    def test_appended_lines_refresh_all_eligible_labels_and_paired_styles(self):
+        from itertools import product
+        for counts in ((2, 1), (1, 1), (1, 2)):
+            for first_direct, last_direct in product((False, True), repeat=2):
+                with self.subTest(counts=counts, direct=(first_direct, last_direct)):
+                    ax = None
+                    offset = 0
+                    for count, direct in zip(counts, (first_direct, last_direct)):
+                        slots = list(range(offset, offset + count))
+                        labels = [f'Authored {slot}' for slot in slots]
+                        keys = [f'trace-{slot}' for slot in slots]
+                        fig, ax = line([0, 1, 2], [[slot, slot + .5, slot + 1] for slot in slots],
+                                       labels=labels, series_slots=slots, series_keys=keys,
+                                       line_styles={key: 'dash' if slot == 2 else 'solid'
+                                                    for key, slot in zip(keys, slots)},
+                                       direct_labels=direct, ax=ax, theme='lavender_fog_notebook')
+                        fig.canvas.draw()
+                        offset += count
+                    legend = ax.get_legend()
+                    self.assertIsNotNone(legend)
+                    self.assertTrue(legend.get_visible())
+                    self.assertEqual([t.get_text() for t in legend.get_texts()],
+                                     [f'Authored {slot}' for slot in range(offset)])
+                    handles = legend.legend_handles if hasattr(legend, 'legend_handles') else legend.legendHandles
+                    for slot, (body, sample) in enumerate(zip(ax.lines, handles)):
+                        self.assertIsInstance(sample, IdentityLine)
+                        self.assertEqual(body.identity_marker, ['o', 's', '^'][slot])
+                        self.assertEqual(sample.identity_marker, body.identity_marker)
+                        self.assertEqual(sample.get_color(), body.get_color())
+                        self.assertEqual(sample.get_linestyle(), body.get_linestyle())
+                        np.testing.assert_array_equal(body.get_xydata(), [[0, slot], [1, slot + .5], [2, slot + 1]])
+                        np.testing.assert_array_equal(sample.identity_points.get_paths()[0].vertices,
+                                                      body.identity_points.get_paths()[0].vertices)
+                    if last_direct:
+                        planner = ax._figurestead_direct_labels
+                        self.assertEqual(planner.result, {'status': 'fallback', 'reason': 'unsupported-layout'})
+                        self.assertEqual(planner.artists, [])
+                        self.assertEqual(ax.get_position(original=True).bounds, planner.baseline.bounds)
+                    for fmt in ('png', 'svg'):
+                        output = BytesIO()
+                        fig.savefig(output, format=fmt)
+                        self.assertGreater(len(output.getvalue()), 100)
+                    plt.close(fig)
+
+    def test_fresh_single_line_and_ineligible_labels_preserve_legend_behavior(self):
+        for direct in (False, True):
+            fig, ax = line([0, 1], [1, 2], labels=['Only'], direct_labels=direct)
+            fig.canvas.draw()
+            self.assertIsNone(ax.get_legend())
+            line([0, 1], [2, 3], labels=['_private'], ax=ax, direct_labels=direct)
+            fig.canvas.draw()
+            self.assertIsNone(ax.get_legend())
+            plt.close(fig)
+
+    def test_anonymous_point_layers_never_acquire_internal_zero_legend(self):
+        from figurestead import scatter, strip_summary, histogram
+        for family in ('scatter', 'strip'):
+            for direct in (False, True):
+                for next_family in ('line', 'scatter', 'histogram'):
+                    with self.subTest(family=family, direct=direct, next=next_family):
+                        if family == 'scatter':
+                            fig, ax = scatter([0, 1], [1, 2])
+                        else:
+                            fig, ax = strip_summary(['Control', 'Control'], [1, 2])
+                        self.assertEqual(ax.get_legend_handles_labels()[1], [])
+                        offsets = [c.get_offsets().copy() for c in ax.collections]
+                        if next_family == 'line':
+                            line([0, 1], [[1, 2], [2, 3]], labels=['Observed', 'Predicted'],
+                                 ax=ax, direct_labels=direct)
+                        elif next_family == 'scatter':
+                            scatter([0, 1], [2, 3], series=['Observed', 'Predicted'], ax=ax)
+                        else:
+                            histogram([[1, 2], [2, 3]], labels=['Observed', 'Predicted'], ax=ax)
+                        fig.canvas.draw()
+                        labels = [t.get_text() for t in ax.get_legend().get_texts()]
+                        self.assertEqual(len(labels), 2)
+                        self.assertTrue(labels[0].startswith('Observed'))
+                        self.assertTrue(labels[1].startswith('Predicted'))
+                        self.assertNotIn('0', ax.get_legend_handles_labels()[1])
+                        for before, after in zip(offsets, ax.collections):
+                            np.testing.assert_array_equal(before, after.get_offsets())
+                        plt.close(fig)
+
+    def test_explicit_numeric_zero_and_authored_categories_remain_eligible(self):
+        from figurestead import scatter, strip_summary
+        for family in ('scatter', 'strip'):
+            for label in (0, '0', 'Observations', 'nan'):
+                with self.subTest(family=family, label=label):
+                    if family == 'scatter':
+                        fig, ax = scatter([0, 1], [1, 2], series=[label, label])
+                    else:
+                        fig, ax = strip_summary(['Control', 'Control'], [1, 2], series=[label, label])
+                    self.assertEqual(ax.get_legend_handles_labels()[1], [str(label)])
+                    line([0, 1], [2, 3], labels=['Added'], series_slots=[2], ax=ax)
+                    self.assertEqual([t.get_text() for t in ax.get_legend().get_texts()], [str(label), 'Added'])
+                    fig.canvas.draw()
+                    plt.close(fig)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -2,10 +2,15 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {
   CORE_RENDERERS,
+  CORE_REGISTRY,
+  compileFigureModel,
+  composeResolvedScene,
+  resolveTerminalScene,
   FIGURESTEAD_PACKAGE_VERSION,
   exportFigureSvg,
   validateContract,
 } from "../src/index.js";
+import { prepareAccessibilityCompanion } from "../src/accessibility.js";
 import { TEMPORAL_RENDERERS } from "../src/extensions/temporal/index.js";
 
 const theme = JSON.parse(fs.readFileSync("src/figurestead/themes/slipware.json", "utf8")).themes.slipware;
@@ -38,8 +43,33 @@ const cases = [
     assert.match(svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
     assert.match(svg, /Figurestead CI smoke/);
   },
+  () => {
+    // A minimal DOM tree captures companion meaning; native checks cover real DOM/paint.
+    const previousDocument = globalThis.document;
+    globalThis.document = { createElement(tag) { return { tag, children: [], style: {}, append(...children) { this.children.push(...children); }, setAttribute() {} }; } };
+    const descendants = (root, tag) => [root, ...root.children.flatMap((child) => descendants(child, tag))].filter((node) => node.tag === tag);
+    try {
+      const input = JSON.parse(fs.readFileSync("ci/fixtures/accessibility-python-root-labels.json", "utf8"));
+      input.panels[0].annotations = [{ type: "focus", space: "plot", x: .5, y: .5, label: "Middle" }];
+      for (const precedence of ["figure", "scale", "panel"]) {
+        const candidate = structuredClone(input), panel = candidate.panels[0];
+        if (precedence !== "figure") { panel.xScale.label = "Scale x (s)"; panel.yScale.label = "Scale y (K)"; }
+        if (precedence === "panel") { panel.spec.xLabel = "Panel x (s)"; panel.spec.yLabel = "Panel y (K)"; }
+        const model = compileFigureModel(candidate), composedScene = composeResolvedScene(resolveTerminalScene(model.scene, { width: 760, height: 520 }));
+        const effectiveLabels = [composedScene.panels[0].spec.xLabel, composedScene.panels[0].spec.yLabel];
+        const { root } = prepareAccessibilityCompanion(null, model.contract, CORE_REGISTRY, { composedScene });
+        assert.deepEqual(descendants(root, "dd").slice(0, 2).map((node) => node.textContent), effectiveLabels);
+        const head = descendants(root, "thead")[0];
+        assert.deepEqual(descendants(head, "th").map((node) => node.textContent), [...effectiveLabels, "series"]);
+        assert.ok(descendants(root, "p").some((node) => node.textContent === "Focus annotation: Middle (plot-relative position)."));
+      }
+    } finally {
+      if (previousDocument === undefined) delete globalThis.document;
+      else globalThis.document = previousDocument;
+    }
+  },
 ];
 
 for (const run of cases) run();
-assert.equal(cases.length, 3, "expected exactly 3 browser-core smoke cases");
-console.log(JSON.stringify({ suite: "browser-core-smoke", expectedCaseCount: 3, executedCaseCount: cases.length, result: "PASS" }));
+assert.equal(cases.length, 4, "expected exactly 4 browser-core smoke cases");
+console.log(JSON.stringify({ suite: "browser-core-smoke", expectedCaseCount: 4, executedCaseCount: cases.length, result: "PASS" }));
