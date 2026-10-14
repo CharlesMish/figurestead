@@ -8,6 +8,22 @@ Current published versions (2026-10-04): Python `0.9.0a4` and browser
 `0.9.0-alpha.5`. [Install the packages](../docs/getting-started.md) or read the
 [completed release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5).
 
+## Candidate a5 / alpha.6 — publication on hold
+
+The next candidate is Python `0.9.0a5` / browser `0.9.0-alpha.6`.
+[Candidate notes](notes/0.9.0a5-web-alpha.6.md) describe changes and limitations.
+Its local archives and ledgers are separate from every published version.
+Independent candidate review and owner publication authorization are required;
+no dispatch is authorized by this branch. The Python package description now
+comes from `docs/package-python.md`, bound in the a5 source ledger. Historical
+versions retain their original root-README metadata binding.
+
+Read-only checks: `python release/python/verify_candidate.py --version 0.9.0a5`
+and `python release/python/test_publish_workflow.py`. Use `--check-source` only
+against the producing inputs. The future manual phrases are
+`publish figurestead 0.9.0a5 to testpypi` and
+`publish figurestead 0.9.0a5 to pypi`; these are documentation, not authorization.
+
 ## Python registry workflow
 
 This directory binds the accepted `figurestead` Python alpha artifacts to a manually dispatched, OIDC-only TestPyPI/PyPI workflow. It never builds or repacks them.
@@ -79,4 +95,4 @@ Both dispatches used `expected_commit=9260af190e60c621244072675c238db4822b8632`.
 
 ## Integrity rule
 
-The updated workflow consumes only the two versioned a4 candidate distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.
+The updated workflow consumes only the two versioned a5 candidate distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.

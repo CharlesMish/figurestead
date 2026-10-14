@@ -1,0 +1,1 @@
+a3d9497812fd54ccdce3b6884e06d014e1b61ea51521aa54e566c5c0585a47c8  figurestead-web-0.9.0-alpha.6.tgz
