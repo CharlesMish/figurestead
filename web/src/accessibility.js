@@ -31,22 +31,27 @@ function annotationCoordinates(item, composedPanel, focusIndex) {
   return usable(x) && usable(y) ? { x, y } : null;
 }
 
-export function prepareAccessibilityCompanion(canvas, contract, registry, { visible = false, table = true, composedScene = null } = {}) {
+export function prepareAccessibilityCompanion(canvas, contract, registry, { visible = false, table = true, composedScene = null, descriptions = null } = {}) {
   const id = `figurestead-${Math.random().toString(36).slice(2)}`, root = el("section");
   root.className = visible ? "figurestead-accessibility" : "figurestead-accessibility figurestead-sr-only";
   if (!visible) Object.assign(root.style, { position: "absolute", width: "1px", height: "1px", padding: "0", margin: "-1px", overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: "0" });
   const title = el("h2", contract.spec.title); title.id = `${id}-title`; root.append(title);
   if (contract.spec.subtitle) root.append(el("p", contract.spec.subtitle));
-  const description = el("p", contract.spec.description || `${contract.panels.length}-panel scientific figure.`); description.id = `${id}-description`; root.append(description);
+  const description = el("p", `${contract.panels.length}-panel scientific figure.`); description.id = `${id}-description`; root.append(description);
+  if (contract.spec.description) root.append(el("p", `Authored context: ${contract.spec.description}`));
+  if (contract.spec.note) root.append(el("p", `Source note: ${contract.spec.note}`));
   contract.panels.forEach((panel, index) => {
-    const section = el("section"), panelTitle = panel.spec.title || `${panel.renderer.replaceAll("_", " ")} panel`, definition = registry.get(panel.renderer), effective = panelContract(contract, panel), described = definition.describe(effective), composedPanel = composedScene?.panels?.[index];
+    const section = el("section"), panelTitle = panel.spec.title || `${panel.renderer.replaceAll("_", " ")} panel`, definition = registry.get(panel.renderer), effective = panelContract(contract, panel), described = descriptions?.[index] ?? definition.describe(effective), composedPanel = composedScene?.panels?.[index];
     const repeatsContractTitle = contract.panels.length === 1 && panelTitle.trim() === contract.spec.title.trim();
     if (repeatsContractTitle) section.setAttribute("aria-labelledby", title.id);
     else {
       const heading = el("h3", panelTitle); heading.id = `${id}-panel-${index + 1}`;
       section.setAttribute("aria-labelledby", heading.id); section.append(heading);
     }
-    if (panel.spec.description || described.summary) section.append(el("p", panel.spec.description || described.summary));
+    if (described.summary) section.append(el("p", described.summary));
+    if (panel.spec.description && panel.spec.description !== contract.spec.description) section.append(el("p", `Authored panel context: ${panel.spec.description}`));
+    const notes = composedPanel?.notes ?? [panel.spec.note, ...panel.annotations.filter((item) => item?.type === "scientific_note").map((item) => item.text)];
+    for (const note of new Set(notes.filter(Boolean))) if (note !== contract.spec.note) section.append(el("p", `Source note: ${note}`));
     panel.annotations.filter((item) => item?.type === "focus" && typeof item.label === "string" && item.label.trim()).forEach((item, focusIndex) => {
       const coordinates = annotationCoordinates(item, composedPanel, focusIndex);
       const suffix = coordinates?.space === "plot" ? " (plot-relative position)." : coordinates ? ` at x ${coordinates.x}, y ${coordinates.y}.` : ".";

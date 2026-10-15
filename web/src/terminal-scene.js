@@ -8,7 +8,6 @@ import { collectSeriesKeys, legendWithStyles, resolveSeriesStyles } from "./seri
 import { compileMotionPlan, assertTerminalMotionIdentity } from "./motion-plan.js";
 import { auditPaperTheme, themeResolutionForProfile } from "./paper-profile.js";
 import { validateEvidenceCoverage } from "./evidence-coverage.js";
-import { linearFit } from "./statistics.js";
 
 export const TERMINAL_SCENE_VERSION = "figurestead.scene/1";
 
@@ -45,7 +44,7 @@ function scatterMarks(panel, contract, prepared, styles) {
     x: point.x, y: point.y, style: styles[point.series],
   }));
   if (contract.data.summary === "linear_fit") {
-    const { slope, intercept } = linearFit(prepared.points.map((point) => point.x), prepared.points.map((point) => point.y));
+    const { slope, intercept } = prepared.fit;
     marks.push({ id: markId(panel, "summary", "linear-fit"), kind: "summary-line", role: "model", slope, intercept, style: { color: contract.theme.summaryCore, edge: contract.theme.summaryEdge ?? null, lineStyle: "solid" } });
   }
   return marks;
@@ -137,10 +136,11 @@ export function compileFigureModel(input, options = {}) {
   } : null;
   const preparedPanels = contract.panels.map((panel) => {
     const definition = registry.get(panel.renderer), child = panelContract(contract, panel);
-    return { panel, definition, contract: child, prepared: definition.prepare(child) };
+    const prepared = definition.prepare(child);
+    return { panel, definition, contract: child, prepared, description: definition.describe(child, prepared) };
   });
   const domains = resolvePanelDomains(contract, preparedPanels);
-  const panels = preparedPanels.map(({ panel, definition, contract: child, prepared }, panelIndex) => {
+  const panels = preparedPanels.map(({ panel, definition, contract: child, prepared, description }, panelIndex) => {
     const keys = seriesKeys(child), legend = prepared.legend ?? keys.map((key, colorIndex) => ({ key, label: key, colorIndex }));
     const compiled = compileMarks(panel, child, prepared, styles, definition, { panelIndex, figure: contract });
     const defaultMarks = Array.isArray(compiled) ? compiled : compiled.marks;
@@ -151,6 +151,7 @@ export function compileFigureModel(input, options = {}) {
     return {
       id: panel.id, renderer: panel.renderer, family: definition.family,
       spec: child.spec, scales: compiled.scales ?? { x: child.xScale, y: child.yScale }, encoding: child.encoding,
+      factualSummary: description.summary,
       domain: domains[panelIndex], presentation: child.presentation,
       categories: compiled.categories ?? defaultCategories,
       categoryLabels: compiled.categoryLabels ?? null,
