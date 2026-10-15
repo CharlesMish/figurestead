@@ -1,8 +1,8 @@
 # Python layout and comparison recipes
 
 The sizing, calendar-tick and shared-bin recipes below work with published
-Python `0.9.0a4`. Layout repairs described separately below are unreleased source
-changes; installing registry `0.9.0a4` does not include them.
+Python `0.9.0a4` and later. The layout and safe-export additions below begin
+with Python `0.9.0a5`; installing registry `0.9.0a4` does not include them.
 
 ## Figure size
 
@@ -57,9 +57,9 @@ when comparing counts across datasets. Integer bin counts are resolved per
 dataset. Record the edges, sample sizes and any excluded observations alongside
 the figure.
 
-## Note and sample-count placement (unreleased)
+## Note and sample-count placement (0.9.0a5)
 
-Source after Python `0.9.0a4` repairs two layout defects found in a consumer
+Python `0.9.0a5` repairs two layout defects found in a consumer
 field test. Ordinary PNG and SVG exports place `PlotSpec.note` below the actual
 x-axis decorations and wrap it to the plot width. Figures created by a plotter
 reserve footer space when a note is present. Notes are remeasured after resizing
@@ -111,9 +111,9 @@ Tight bounding-box export and tight/constrained layout continue to use the
 ordinary legend under the [direct-label contract](direct-series-labels.md).
 These changes do not expand the supported direct-label profile.
 
-## Safe path exports (unreleased)
+## Safe path exports (0.9.0a5)
 
-Use `save_figure` from the current source checkout when saving a file you want
+Use `save_figure` from Python `0.9.0a5` when saving a file you want
 to retain. It writes to a temporary file beside the destination, closes the
 completed output, then replaces the destination. Rendering, writing or
 replacement errors propagate; an existing export stays unchanged and failed
@@ -165,7 +165,7 @@ that an export succeeded. Use it directly for streams or when you deliberately
 want Matplotlib's path behavior. `save_figure` does not pre-draw with a different
 backend, change the figure's margins, or suppress rendering errors.
 
-## Optional signature placement (unreleased)
+## Optional signature placement (0.9.0a5)
 
 `PlotSpec.signature` now uses measured spare space below the x-axis decorations,
 sample counts and source note. It is remeasured for each draw, resize and export

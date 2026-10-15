@@ -71,7 +71,7 @@ and consider separate panels with the same edges and axis scales.
 
 ## Unreleased: disclose observations outside authored bins
 
-In the unreleased follow-up, explicit bin edges that exclude observations emit
+In Python `0.9.0a5`, explicit bin edges that exclude observations emit
 one `UserWarning` per affected dataset. Each warning identifies the dataset
 index and label, reports the excluded and total observations, and states that
 the median still uses the full dataset. The last bin includes its right edge,
@@ -97,8 +97,8 @@ not change the library's default tick policy. A common count scale is useful
 for equal sample sizes; unequal samples may call for a separately authored
 normalized comparison.
 
-This complete script uses the unreleased `save_figure` helper. Install the
-current source checkout, then run from that same repository root:
+This complete script requires the `save_figure` helper added in Python
+`0.9.0a5`. For a source checkout, install it and run from the repository root:
 
 ```bash
 python -m pip install .
@@ -107,7 +107,7 @@ python examples/python-histogram-small-multiples.py --output-dir ./figures
 
 It writes `histogram-small-multiples.png` and `.svg`. Two synthetic datasets
 intentionally contain an out-of-bin observation, so their warnings are expected
-on the unreleased follow-up. Installing published `0.9.0a4` alone cannot run
+on Python `0.9.0a5`. Installing published `0.9.0a4` alone cannot run
 this script because that package has no `save_figure` helper. Its plotting APIs
 support the shared-bin comparison described above, but omit the exclusion
 warning; an a4 consumer must use Matplotlib's `fig.savefig(...)` for export.
