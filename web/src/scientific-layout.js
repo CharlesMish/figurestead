@@ -1,3 +1,5 @@
+import { planCategoryTicks } from "./category-ticks.js";
+
 const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
 
 const DEFAULT_FONT_WIDTH = 0.602;
@@ -14,7 +16,11 @@ function normalizedMetric(measureText, text, fontSize) {
   const measured = measureText?.(String(text), fontSize) ?? fallbackMetric(text, fontSize);
   const ascent = measured.ascent ?? measured.actualBoundingBoxAscent ?? fontSize * 0.78;
   const descent = measured.descent ?? measured.actualBoundingBoxDescent ?? fontSize * 0.22;
-  return { width: measured.width, ascent, descent, height: ascent + descent };
+  return { width: measured.width, ascent, descent, height: ascent + descent,
+    fontAscent: measured.fontAscent ?? measured.fontBoundingBoxAscent ?? fontSize,
+    fontDescent: measured.fontDescent ?? measured.fontBoundingBoxDescent ?? fontSize * 0.3,
+    left: measured.left ?? measured.actualBoundingBoxLeft ?? 0,
+    right: measured.right ?? measured.actualBoundingBoxRight ?? measured.width };
 }
 
 function annotationGaps(scale) {
@@ -60,7 +66,7 @@ export function refineScientificLayout(source, panel, axes, options = {}) {
   );
 
   const provisionalPlot = { ...layout.plot };
-  const xTick = xTickDepth(axes, provisionalPlot, axisMetric);
+  let xTick = xTickDepth(axes, provisionalPlot, axisMetric);
   const yTickMetrics = axes.yTicks.map((tick) => axisMetric(tick.label));
   const yTickWidth = yTickMetrics.length ? Math.max(...yTickMetrics.map((value) => value.width)) : 0;
 
@@ -78,6 +84,20 @@ export function refineScientificLayout(source, panel, axes, options = {}) {
   if (xTitleMetric) {
     xTitle = { left: 0, right: 0, top: cursorBottom - xTitleMetric.height, bottom: cursorBottom };
     cursorBottom = xTitle.top - gaps.tickTitle;
+  }
+  if (axes.xType === "band") {
+    const yTitleThickness = yTitleMetric?.height ?? 0;
+    const requestedLeft = rect.left + gaps.outer + yTitleThickness
+      + (yTitleMetric && yTickWidth ? gaps.yTitleTick : 0) + yTickWidth + gaps.plotTick;
+    provisionalPlot.left = Math.min(provisionalPlot.right - 160, requestedLeft);
+    // Preserve useful plotting capacity instead of reserving a full raw string
+    // and silently collapsing the plot. Compact fitting labels stay unchanged.
+    const retainedHeight = Math.min(120, Math.max(1, layout.plot.bottom - layout.plot.top));
+    xTick = planCategoryTicks(axes, provisionalPlot, rect, {
+      measure: axisMetric, outer: gaps.outer, panelId: panel.id,
+      maximumDepth: cursorBottom - layout.plot.top - gaps.plotTick - retainedHeight,
+    });
+    layout.categoryTicks = xTick;
   }
   const xTicks = {
     left: 0, right: 0,

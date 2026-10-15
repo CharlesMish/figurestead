@@ -42,7 +42,8 @@ export function createFigurestead(canvas, input, options = {}) {
     surface.context.textAlign = "left"; surface.context.textBaseline = "alphabetic"; surface.context.direction = "ltr";
     const value = surface.context.measureText(String(text));
     surface.context.restore();
-    return { width: value.width, ascent: value.actualBoundingBoxAscent, descent: value.actualBoundingBoxDescent, left: value.actualBoundingBoxLeft, right: value.actualBoundingBoxRight };
+    return { width: value.width, ascent: value.actualBoundingBoxAscent, descent: value.actualBoundingBoxDescent, left: value.actualBoundingBoxLeft, right: value.actualBoundingBoxRight,
+      fontAscent: value.fontBoundingBoxAscent, fontDescent: value.fontBoundingBoxDescent };
   };
   const observedBox = () => {
     const rect = canvas.getBoundingClientRect();
