@@ -43,10 +43,10 @@ export const STRIP_RENDERER = {
   validateData: normalizeStripData, prepare: prepareStrip, compileScene: compileStripScene, draw: drawStrip,
   domains(contract, prepared) { return { x: [-0.5, contract.data.groups.length - 0.5], y: resolveNumericDomain(contract, "y", extent(prepared.points.map((point) => point.y))) }; },
   describe(contract, prepared = prepareStrip(contract)) {
-    const medians = formatFactualValues(prepared.groups.filter((group) => group.n).map((group) => group.median));
-    let medianIndex = 0;
+    const values = formatFactualValues(prepared.medians.map((median) => median.y));
+    const medians = new Map(prepared.medians.map((median, index) => [median.group, values[index]]));
     const groups = prepared.groups.map((group) => {
-      const median = group.n ? medians[medianIndex++] : null;
+      const median = medians.get(group.group);
       return `${group.group}: n=${group.n}${!group.n ? "; no median" : contract.data.summary === "median" ? `; median ${median}` : ""}.`;
     });
     return { summary: `${prepared.points.length} observations across ${prepared.groups.length} ordered groups. ${groups.join(" ")}`, headers: ["group", contract.spec.yLabel || "value", "series"], rows: contract.data.values.map((value, index) => [contract.data.group[index], value, contract.data.seriesLabels[contract.data.series[index]]]) };

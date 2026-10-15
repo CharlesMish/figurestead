@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { compileFigureModel, exportFigureSvg, CORE_REGISTRY } from "../src/index.js";
+import { compileFigureModel, exportFigureSvg, CORE_REGISTRY, CORE_RENDERERS, createRendererRegistry } from "../src/index.js";
 import { formatFactualValues, figureDescription } from "../src/factual-description.js";
 import { lineIdentityContract } from "../../ci/fixtures/line-identity.js";
 
@@ -78,4 +78,30 @@ for (const [renderer, first, second] of [
     assert.match(after.scene.panels[0].factualSummary, /A: n=0; no median\. B: n=2; median 12/);
   }
 }
-console.log("factual descriptions: 6 core fixtures, precision/raw-table controls and 2 updates PASS");
+// Sentinels prove prose consumes the prepared paint authority, not a second
+// statistical calculation or a duplicate cached median field.
+for (const renderer of ["scatter", "strip_summary"]) {
+  const registry = createRendererRegistry(CORE_RENDERERS.map((definition) => definition.key !== renderer ? definition : {
+    ...definition,
+    prepare(contract) {
+      const prepared = definition.prepare(contract);
+      if (renderer === "scatter") prepared.fit = { ...prepared.fit, slope: 0.125, intercept: 42 };
+      else prepared.medians[0].y = 42;
+      return prepared;
+    },
+  }));
+  const fixture = cases.find(([key, data]) => key === renderer && data.summary);
+  const contract = make(fixture[0], fixture[1]);
+  contract.panels[0].yScale.domain = [-10, 50];
+  const model = compileFigureModel(contract, { registry });
+  const panel = model.scene.panels[0];
+  if (renderer === "scatter") {
+    const mark = panel.marks.find((item) => item.kind === "summary-line");
+    assert.deepEqual([mark.slope, mark.intercept], [0.125, 42]);
+    assert.match(panel.factualSummary, /slope 0.125; intercept 42/);
+  } else {
+    assert.equal(panel.marks.find((item) => item.kind === "median-rule").y, 42);
+    assert.match(panel.factualSummary, /A: n=2; median 42/);
+  }
+}
+console.log("factual descriptions: 6 core fixtures, precision/raw-table controls, 2 updates and 2 prepared-authority sentinels PASS");
