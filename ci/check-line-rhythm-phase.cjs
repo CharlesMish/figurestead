@@ -19,6 +19,7 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
       const api = await import('/web/src/index.js');
       const { drawResolvedPanel } = await import('/web/src/canvas-scene.js');
       const { lineIdentityContract } = await import('/ci/fixtures/line-identity.js');
+      const { cubicShape, monotoneCases } = await import('/ci/fixtures/monotone-interpolation.js');
       const theme = (await (await fetch('/src/figurestead/themes/lavender_fog_notebook.json')).json()).themes.lavender_fog_notebook;
       const failures = [], comparisons = [], images = {}, controls = {}, check = (ok, label) => { if (!ok) failures.push(label); };
       const contract = (n, rhythm, stride = 1) => {
@@ -112,6 +113,34 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
       check(cm.every(m=>Number(cdoc.querySelector(`[data-mark-id="${m.id}"]`).getAttribute('stroke-dashoffset')??0)===(m.pathDistance??0)),'SVG monotone phase');
       // Byte controls use complete product figures, including legends/direct
       // labels. Comparing these with the baseline is an external review check.
+      // Live Canvas and its SVG export share the corrected monotone geometry.
+      // Analytic extrema/derivative assertions are independent of the helper's
+      // tangent formula, so agreement between wrong renderers cannot pass.
+      let monotoneIntervals=0;
+      for(const [index,fixture] of monotoneCases.entries()) {
+        const c=lineIdentityContract(theme);c.panels[0].encoding.interpolation='monotone';
+        c.panels[0].data={x:fixture.x,revealOrder:'x',series:[{key:'S1',label:'Observed',y:fixture.y}]};
+        c.spec.title=c.panels[0].spec.title='Opt-in monotone interpolation';
+        if(index===1)c.panels[0].yScale={type:'linear',domain:[0,10]};
+        const canvas=document.createElement('canvas');canvas.style.cssText='width:640px;height:480px';document.body.append(canvas);
+        const context=canvas.getContext('2d'),curves=[],bezier=context.bezierCurveTo.bind(context);
+        context.bezierCurveTo=(...args)=>{curves.push(args);return bezier(...args);};
+        const f=api.createFigurestead(canvas,c,{autoplay:false,reducedMotion:true,dprCap:1});
+        try {
+          const panel=f.getComposedScene().panels[0],svg=api.resolvedSceneToSvg(f.getComposedScene());
+          const documentSvg=new DOMParser().parseFromString(svg,'image/svg+xml');
+          check(!f.getState().runtimeFailed,`monotone ${index}: native renderer failed`);
+          for(const mark of panel.marks.filter(m=>m.kind==='segment')) {
+            const shape=cubicShape(mark.geometry);
+            check(shape.contained&&shape.monotone,`monotone ${index}: interval shape`);
+            const g=mark.geometry,expected=[g.c1x,g.c1y,g.c2x,g.c2y,g.x2,g.y2];
+            check(curves.some(values=>values.every((value,i)=>Math.abs(value-expected[i])<1e-9)),`monotone ${index}: Canvas controls`);
+            check(documentSvg.querySelector(`[data-mark-id="${mark.id}"]`)?.getAttribute('d')===`M ${g.x1} ${g.y1} C ${expected.join(' ')}`,`monotone ${index}: SVG controls`);
+            monotoneIntervals++;
+          }
+          if(index===1)images['monotone-repair']={png:canvas.toDataURL(),svg};
+        } finally {f.destroy();canvas.remove();}
+      }
       for(const stride of [1,4])for(const direct of [false,true]) {
         const c=lineIdentityContract(theme);c.style.markerStride=stride;c.style.directLabels=direct;
         c.panels[0].data.yDomain=[0,6];c.panels[0].data.series.forEach(s=>s.y=[1,2,3]);
@@ -120,7 +149,7 @@ const base = process.env.FIGURESTEAD_BASE_URL || 'http://127.0.0.1:4179/';
         try {controls[`solid-${stride}-${direct?'direct':'legend'}`]={png:canvas.toDataURL(),svg:api.resolvedSceneToSvg(f.getComposedScene())};}
         finally {f.destroy();canvas.remove();}
       }
-      return {comparisons,motion,curve:{offsets},failures,images,controls};
+      return {comparisons,motion,curve:{offsets},monotoneIntervals,failures,images,controls};
     });
     const crypto=require('node:crypto');
     result.controls=Object.fromEntries(Object.entries(result.controls).map(([name,a])=>[name,{png:crypto.createHash('sha256').update(Buffer.from(a.png.split(',')[1],'base64')).digest('hex'),svg:crypto.createHash('sha256').update(a.svg).digest('hex')}]));
