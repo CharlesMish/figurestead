@@ -61,6 +61,16 @@ function drawAxes(context, panel, theme) {
   const rotateX = layout.text?.rotateX ?? (axes.xType === "band" && axes.xTicks.some((tick) => context.measureText(tick.label).width > xSlot * 0.92));
   context.textAlign = rotateX ? "right" : "center"; context.textBaseline = "top";
   axes.xTicks.forEach((tick) => {
+    if (tick.display) {
+      const display = tick.display;
+      context.save(); context.textAlign = display.textAnchor === "end" ? "right" : "center"; context.textBaseline = display.baseline;
+      if (display.rotation) {
+        context.translate(display.x, display.y); context.rotate(display.rotation * Math.PI / 180);
+        context.fillText(tick.displayLabel, 0, 0);
+      } else context.fillText(tick.displayLabel, display.x, display.y);
+      context.restore();
+      return;
+    }
     const x = tickPosition(axes.x, tick), label = fitLabel(context, tick.label, rotateX ? xSlot * 1.75 : xSlot * 0.92);
     const y = layout.text?.xTickY ?? plot.bottom + 7 * layout.scale;
     if (rotateX) { context.save(); context.translate(x, y); context.rotate(-Math.PI / 4); context.fillText(label, 0, 0); context.restore(); }

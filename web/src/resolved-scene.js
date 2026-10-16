@@ -5,6 +5,7 @@ import { planDirectLabels } from "./direct-labels.js";
 import { lineMarkerGeometry } from "./line-identity.js";
 import { deriveFigureLayout } from "./figure-layout.js";
 import { refineScientificLayout } from "./scientific-layout.js";
+import { resolveCategoryTickDisplays } from "./category-ticks.js";
 import { markMotionState } from "./motion-plan.js";
 import { monotoneSegmentControls } from "./renderers/line.js";
 import { bandScale, formatTick, formatTimeTick, linearScale, timeScale, ticks, timeTicks } from "./scales.js";
@@ -88,7 +89,7 @@ function resolveAxes(panel, layout, plotOverride = null) {
   const y = yType === "band" ? bandScale(yCategories ?? [], [plot.top, plot.bottom], { padding: panel.scales.y.padding }) : numericScale(yType, panel.domain.y, [plot.bottom, plot.top]);
   const xTicks = xType === "band" ? (xCategories ?? []).map((value) => ({ value, label: panel.categoryLabels?.x?.[value] ?? value })) : numericTicks(xType, panel.domain.x);
   const yTicks = yType === "band" ? (yCategories ?? []).map((value) => ({ value, label: panel.categoryLabels?.y?.[value] ?? value })) : numericTicks(yType, panel.domain.y);
-  return { x, y, xTicks, yTicks, xType, yType, plot };
+  return resolveCategoryTickDisplays({ x, y, xTicks, yTicks, xType, yType, plot }, layout, panel.id);
 }
 
 function pointGeometry(mark, axes, radius) {

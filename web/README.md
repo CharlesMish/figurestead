@@ -25,6 +25,16 @@ Accessibility descriptions use the same effective axis labels as the visible
 figure. Plot-relative annotation positions are identified as such, rather than
 reported as data coordinates.
 
+Current source resolves categorical x-axis tick display once for Canvas and SVG.
+Long labels may be rotated and abbreviated to preserve the plot and fit the
+figure; accessible data tables and abbreviated SVG ticks retain the full label.
+Live Canvas resolution uses the actual font metrics; standalone SVG resolution
+uses deterministic fallback metrics, so the exact abbreviation can differ.
+If even a compact tick cannot fit, resolution raises `FiguresteadConfigError`
+with an insufficient-category-space message. Enlarge the host or shorten the
+authored labels; a rejected `setConfig()` leaves the existing figure intact.
+This does not change category values, their ordering, or numeric-axis labels.
+
 ## First figure
 
 Rendering requires a complete normalized figure contract. The repository's

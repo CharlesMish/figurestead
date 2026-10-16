@@ -298,6 +298,9 @@ jobs:
       - name: Verify browser title and provenance legibility
         run: npm run test:browser-readability
 
+      - name: Verify shared categorical tick layout in Chromium and Firefox
+        run: npm run test:browser-category-ticks
+
       - name: Verify standalone SVG font inheritance and subtitle visibility
         run: npm run test:svg-typography
 
