@@ -25,6 +25,16 @@ Accessibility descriptions use the same effective axis labels as the visible
 figure. Plot-relative annotation positions are identified as such, rather than
 reported as data coordinates.
 
+Current source resolves categorical x-axis tick display once for Canvas and SVG.
+Long labels may be rotated and abbreviated to preserve the plot and fit the
+figure; accessible data tables and abbreviated SVG ticks retain the full label.
+Live Canvas resolution uses the actual font metrics; standalone SVG resolution
+uses deterministic fallback metrics, so the exact abbreviation can differ.
+If even a compact tick cannot fit, resolution raises `FiguresteadConfigError`
+with an insufficient-category-space message. Enlarge the host or shorten the
+authored labels; a rejected `setConfig()` leaves the existing figure intact.
+This does not change category values, their ordering, or numeric-axis labels.
+
 ## First figure
 
 Rendering requires a complete normalized figure contract. The repository's
@@ -150,6 +160,12 @@ Opt-in `style.markerStride` controls marker display by authored observation inde
 See the [release notes](https://github.com/CharlesMish/figurestead/blob/ffe4337afb64a19fafc9371b03352426b422c6d1/release/notes/0.9.0a3-web-alpha.4.md) and [line semantics](https://github.com/CharlesMish/figurestead/blob/ffe4337afb64a19fafc9371b03352426b422c6d1/docs/line-series-semantics.md). Browser y missingness remains unsupported. These additions do not expand the bounded reference designation or direct-label profile.
 
 ## Controller failures
+
+Current source generates compact factual descriptions for core line, scatter,
+and strip-summary figures from their prepared observations and summaries.
+Authored narrative remains separate context, including after `setData`; raw
+tables retain full values. See [factual descriptions](https://github.com/CharlesMish/figurestead/blob/main/docs/factual-descriptions.md)
+for the supported facts, precision policy, and source-note channels.
 
 `setConfig(next)` is transactional: a validation, compilation, renderer
 preparation, scene-resolution, composition, or accessibility-description error

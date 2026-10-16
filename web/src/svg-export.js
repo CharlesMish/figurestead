@@ -10,6 +10,7 @@ import { resolveExportSize } from "./physical-export.js";
 import { FiguresteadConfigError, validateThemeColors } from "./schema.js";
 import { assertMarkKind } from "./scene-marks.js";
 import { fixedResponsiveHeader, RESPONSIVE_HEADER_MAX_WIDTH } from "./responsive-header.js";
+import { figureDescription } from "./factual-description.js";
 
 const xmlValue = (value) => String(value).replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/gu, "\uFFFD");
 const esc = (value) => xmlValue(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[char]));
@@ -165,7 +166,11 @@ function axes(panel, theme) {
   const plot = panel.axes.plot ?? panel.layout.plot, { font } = panel.layout, pieces = [`<path ${attrs({ d: `M ${plot.left} ${plot.top} L ${plot.left} ${plot.bottom} L ${plot.right} ${plot.bottom}`, fill: "none", stroke: theme.spine })}/>`];
   const slot = panel.axes.x.step?.() ?? Math.max(40, (plot.right - plot.left) / Math.max(1, panel.axes.xTicks.length));
   const rotate = panel.layout.text?.rotateX ?? (panel.axes.xType === "band" && panel.axes.xTicks.some((tick) => String(tick.label).length * font.axis * 0.62 > slot * 0.92));
-  panel.axes.xTicks.forEach((tick) => { const x = tickPosition(panel.axes.x, tick), y = panel.layout.text?.xTickBaselineY ?? plot.bottom + 16 * panel.layout.scale; pieces.push(`<text ${attrs({ x, y, fill: theme.secondary, "font-size": font.axis, "text-anchor": rotate ? "end" : "middle", transform: rotate ? `rotate(-45 ${x} ${y})` : null })}>${esc(tick.label)}</text>`); });
+  panel.axes.xTicks.forEach((tick) => {
+    const display = tick.display, x = display?.x ?? tickPosition(panel.axes.x, tick), y = display?.svgY ?? panel.layout.text?.xTickBaselineY ?? plot.bottom + 16 * panel.layout.scale;
+    const angle = display?.rotation ?? (rotate ? -45 : 0), label = tick.displayLabel ?? tick.label, abbreviated = label !== tick.label;
+    pieces.push(`<text ${attrs({ x, y, fill: theme.secondary, "font-size": font.axis, "text-anchor": display?.textAnchor ?? (rotate ? "end" : "middle"), transform: angle ? `rotate(${angle} ${x} ${y})` : null, "data-full-label": abbreviated ? tick.label : null })}>${abbreviated ? `<title>${esc(tick.label)}</title>` : ""}${esc(label)}</text>`);
+  });
   panel.axes.yTicks.forEach((tick) => pieces.push(`<text ${attrs({ x: plot.left - 7 * panel.layout.scale, y: tickPosition(panel.axes.y, tick), fill: theme.secondary, "font-size": font.axis, "text-anchor": "end", "dominant-baseline": "middle" })}>${esc(tick.label)}</text>`));
   if (panel.spec.xLabel) pieces.push(`<text ${attrs({ x: (plot.left + plot.right) / 2, y: panel.layout.text?.xLabelBaselineY ?? panel.layout.rect.bottom - 6 * panel.layout.scale, fill: theme.label, "font-size": font.axis, "text-anchor": "middle" })}>${esc(panel.spec.xLabel)}</text>`);
   if (panel.spec.yLabel) { const x = panel.layout.text?.yLabelX ?? panel.layout.rect.left + 12 * panel.layout.scale; pieces.push(`<text ${attrs({ x, y: (plot.top + plot.bottom) / 2, fill: theme.label, "font-size": font.axis, transform: `rotate(-90 ${x} ${(plot.top + plot.bottom) / 2})`, "text-anchor": "middle", "dominant-baseline": "hanging" })}>${esc(panel.spec.yLabel)}</text>`); }
@@ -276,7 +281,7 @@ export function resolvedSceneToSvg(resolved, options = {}) {
   validateThemeColors(composed.theme, "scene.theme");
   const scene = options.sourceScene, namespace = svgNamespace(composed, scene, options);
   const exportSize = options.exportSize ?? resolveExportSize({ ...options, width: composed.width, height: composed.height });
-  const title = composed.spec.title, description = [composed.spec.description || composed.spec.subtitle || "Scientific figure", composed.spec.note, ...composed.panels.flatMap((panel) => panel.notes ?? [])].filter(Boolean).join(" ");
+  const title = composed.spec.title, description = figureDescription(composed);
   // Preserve established resource names when unique, but never trust the
   // short mark hash as identity. Every resource is reserved within this export.
   const usedIds = new Set();

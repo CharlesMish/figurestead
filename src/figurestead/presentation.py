@@ -102,6 +102,10 @@ def monotone_curve(x, y, *, samples_per_segment: int = 18):
     tangent[0], tangent[-1] = delta[0], delta[-1]
     if len(x) > 2:
         tangent[1:-1] = (delta[:-1] + delta[1:]) / 2
+        # A shared derivative at a reversal must suit both adjacent intervals.
+        # Magnitude limiting alone cannot repair an opposite-sign derivative.
+        reversals = ((delta[:-1] < 0) & (delta[1:] > 0)) | ((delta[:-1] > 0) & (delta[1:] < 0))
+        tangent[1:-1][reversals] = 0
     for index, slope in enumerate(delta):
         if slope == 0:
             tangent[index:index + 2] = 0

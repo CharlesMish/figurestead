@@ -59,6 +59,9 @@ jobs:
       - name: Verify scientific geometry contracts
         run: python audit/current-head-hardening/test_scientific_geometry.py
 
+      - name: Verify opt-in monotone interpolation interval shape
+        run: python audit/current-head-hardening/test_monotone_interpolation.py
+
       - name: Verify rendered series contrast
         run: python audit/current-head-hardening/test_rendered_contrast.py
 
@@ -148,7 +151,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for suite in scientific_geometry rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity direct_labels subtitle note_layout safe_export signature_layout strip_count_layout python_motion_inputs; do
+          for suite in scientific_geometry monotone_interpolation rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity direct_labels subtitle note_layout safe_export signature_layout strip_count_layout python_motion_inputs; do
             python "audit/current-head-hardening/test_${suite}.py"
           done
 
@@ -295,6 +298,9 @@ jobs:
       - name: Verify browser title and provenance legibility
         run: npm run test:browser-readability
 
+      - name: Verify shared categorical tick layout in Chromium and Firefox
+        run: npm run test:browser-category-ticks
+
       - name: Verify standalone SVG font inheritance and subtitle visibility
         run: npm run test:svg-typography
 
@@ -324,6 +330,9 @@ jobs:
 
       - name: Verify controller transactionality and runtime errors
         run: npm run test:browser-controller-integrity
+
+      - name: Verify current factual descriptions against rendered summaries
+        run: npm run test:browser-factual-descriptions
 
       - name: Verify dense numeric admission and atomic sparse-array rejection
         run: npm run test:browser-numeric-array-validation

@@ -31,14 +31,21 @@ class SvgSerializationRegression(unittest.TestCase):
         )
         cls.results = json.loads(completed.stdout)
 
-    def test_normal_svg_bytes_and_xml_structure_remain_stable(self) -> None:
+    def test_normal_svg_geometry_and_structure_remain_stable_with_current_facts(self) -> None:
         structures = {}
         for name, svg in self.results["valid"].items():
             root = ET.fromstring(svg)
             self.assertEqual(root.tag, f"{SVG}svg")
             structures[name] = [element.tag for element in root.iter()]
             expected_bytes, expected_hash = EXPECTED_NORMAL[name]
-            payload = svg.encode("utf-8")
+            # Only the intentional, additive description differs from this
+            # authenticated control. Keep its old hash to bind all other bytes.
+            description = ("Authored context: inert structural proof "
+                           "1 connected series; 2 observations per series (2 total). "
+                           "Observed x range 0 to 1; observed y range 0 to 1.")
+            self.assertEqual(root.find(f"{SVG}desc").text, description)
+            self.assertEqual(svg.count(description), 1)
+            payload = svg.replace(description, "inert structural proof", 1).encode("utf-8")
             self.assertEqual(len(payload), expected_bytes)
             self.assertEqual(hashlib.sha256(payload).hexdigest(), expected_hash)
         self.assertEqual(structures["exportFigureSvg"], structures["exportFigureArtifacts"])

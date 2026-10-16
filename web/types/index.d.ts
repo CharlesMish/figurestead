@@ -571,6 +571,8 @@ export interface ScenePanel<M extends Mark = Mark> extends UnknownRecord {
   readonly id: string;
   readonly renderer: string;
   readonly marks: readonly M[];
+  /** Current generated facts; authored spec.description remains separate context. */
+  readonly factualSummary?: string;
 }
 export type TerminalScenePanel = ScenePanel<Mark>;
 export interface ResolvedScenePanel extends ScenePanel<ResolvedMark> { readonly resolved: boolean }

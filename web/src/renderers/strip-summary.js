@@ -5,11 +5,12 @@ import { compileProgress, drawAxes, drawScopePoint, drawText, pointMotionState }
 export function prepareStrip(contract) {
   const keys=[...new Set(contract.data.series)], random=mulberry32(deriveSeed(contract.motion.seed,"strip:jitter"));
   const points=contract.data.values.map((y,i)=>({ x:contract.data.groups.indexOf(contract.data.group[i])+(random()-.5)*.28, y, group:contract.data.group[i], series:contract.data.series[i], colorIndex:keys.indexOf(contract.data.series[i]), index:i }));
-  const medians = contract.data.groups.flatMap((group, index) => {
+  const groups = contract.data.groups.map((group, index) => {
     const values = contract.data.values.filter((_, i) => contract.data.group[i] === group);
-    return values.length ? [{ group, x: index, y: median(values) }] : [];
+    return { group, x: index, n: values.length, median: values.length ? median(values) : null };
   });
-  return { points:arrival(points,contract), legend:keys.map((key,colorIndex)=>({label:contract.data.seriesLabels[key],colorIndex})), medians };
+  const medians = groups.filter((group) => group.n).map(({ group, x, median: y }) => ({ group, x, y }));
+  return { points:arrival(points,contract), legend:keys.map((key,colorIndex)=>({label:contract.data.seriesLabels[key],colorIndex})), groups, medians };
 }
 
 export function compileStripScene({ panel, contract, prepared, styles, markId }) {

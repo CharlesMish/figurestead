@@ -180,12 +180,36 @@ legend sample. This includes a single finite observation in either runtime and
 Python observations isolated by NaN gaps. A real segment retains the actual
 line rhythm plus marker. No segment is invented for the legend.
 
+### Opt-in monotone interpolation
+
+Ordinary lines remain linear. Python `line(pose="scientific")` and
+`monotone_curve()`, or browser `encoding.interpolation: "monotone"`, opt into
+an interpolated presentation. For finite, strictly increasing x, each cubic
+interval preserves its endpoints' y range and direction; a local reversal has
+a zero shared tangent. Measured observations and their markers are unchanged.
+This is an interpolation choice, not a scientific model or missing-data policy.
+Python poses still reject gaps, authored rhythm and sparse marker cadence.
+
+Current-source repair: the monotone path now zeros opposite-sign interior
+tangents before its existing limiter, preventing unexpected extrema. This
+changes affected opt-in curve shapes; it is not a change to the published
+alpha.6 artifacts or historical images. Browser evidence coverage remains an
+observation/domain audit, not a certificate for all rendered ink or model
+extrapolation. Curve range and derivative invariants are tested separately.
+
 ### Auxiliary scenes and other point families
 
-`compile_terminal_scene()` is finite-only for line and scatter coordinates. It
-is not a transport for ordinary Python NaN gaps; portable/browser missingness
-remains unsupported. Its explicit glyph list determines the authored rhythm
-block size, and supported per-key style fields override that allocation.
+`compile_terminal_scene()` is an auxiliary **basic line/scatter subset** with
+finite coordinates and no statistical summaries. Unsupported renderer or
+non-null `data.summary` requests now reject instead of silently returning an
+empty or incomplete scene. Thus a valid `export_contract()` for `strip_summary`
+or scatter `linear_fit` is not necessarily input this helper can compile; use
+the browser compiler for those portable contracts. It is not a browser-renderer
+parity API, a Python renderer, or a transport for ordinary Python NaN gaps.
+Portable/browser missingness remains unsupported. Its explicit glyph list
+determines the authored rhythm block size, and supported per-key style fields
+override that allocation. Existing basic finite line/scatter records are
+unchanged.
 
 Python scatter/strip series colors and legend order follow first appearance
 within each fresh call, matching browser initial category ownership. This does
