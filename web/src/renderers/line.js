@@ -40,6 +40,9 @@ export function monotoneSegmentControls(points) {
   const tangent = points.map((_, index) => {
     if (index === 0) return delta[0];
     if (index === points.length - 1) return delta[delta.length - 1];
+    // A shared derivative at a reversal must suit both adjacent intervals.
+    // Magnitude limiting alone cannot repair an opposite-sign derivative.
+    if ((delta[index - 1] < 0 && delta[index] > 0) || (delta[index - 1] > 0 && delta[index] < 0)) return 0;
     return (delta[index - 1] + delta[index]) / 2;
   });
   delta.forEach((slope, index) => {
