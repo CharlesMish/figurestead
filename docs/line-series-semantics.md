@@ -199,10 +199,17 @@ extrapolation. Curve range and derivative invariants are tested separately.
 
 ### Auxiliary scenes and other point families
 
-`compile_terminal_scene()` is finite-only for line and scatter coordinates. It
-is not a transport for ordinary Python NaN gaps; portable/browser missingness
-remains unsupported. Its explicit glyph list determines the authored rhythm
-block size, and supported per-key style fields override that allocation.
+`compile_terminal_scene()` is an auxiliary **basic line/scatter subset** with
+finite coordinates and no statistical summaries. Unsupported renderer or
+non-null `data.summary` requests now reject instead of silently returning an
+empty or incomplete scene. Thus a valid `export_contract()` for `strip_summary`
+or scatter `linear_fit` is not necessarily input this helper can compile; use
+the browser compiler for those portable contracts. It is not a browser-renderer
+parity API, a Python renderer, or a transport for ordinary Python NaN gaps.
+Portable/browser missingness remains unsupported. Its explicit glyph list
+determines the authored rhythm block size, and supported per-key style fields
+override that allocation. Existing basic finite line/scatter records are
+unchanged.
 
 Python scatter/strip series colors and legend order follow first appearance
 within each fresh call, matching browser initial category ownership. This does

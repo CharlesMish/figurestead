@@ -1,4 +1,4 @@
-"""Backend-neutral terminal evidence scene used by static and expressive output."""
+"""Auxiliary semantic records for finite basic line and scatter contracts."""
 
 from __future__ import annotations
 
@@ -48,12 +48,21 @@ def _finite_coordinates(values, path):
 
 
 def compile_terminal_scene(contract: Mapping[str, Any]) -> dict[str, Any]:
-    """Compile finite-only semantic records; not a transport for Python NaN gaps."""
+    """Compile basic finite line/scatter records without statistical summaries.
+
+    This auxiliary subset is not the browser compiler, a Python renderer, or a
+    transport for Python NaN gaps. Exported portable contracts may support more
+    renderers and summaries than this helper; unsupported requests reject.
+    """
     source = deepcopy(dict(contract))
     # Validate before constructing any marks, including coordinates zip would omit.
     for panel_index, panel in enumerate(source.get("panels", [])):
         data = panel["data"]
         path = f"panels[{panel_index}].data"
+        if panel["renderer"] not in ("line", "scatter"):
+            raise ValueError(f"panels[{panel_index}].renderer: auxiliary scenes support only basic line and scatter; {panel['renderer']!r} is unsupported")
+        if data.get("summary") is not None:
+            raise ValueError(f"{path}.summary: auxiliary scenes do not implement statistical summaries; use the browser compiler for this portable contract")
         if panel["renderer"] in ("line", "scatter"):
             _finite_coordinates(data["x"], f"{path}.x")
             if panel["renderer"] == "line":

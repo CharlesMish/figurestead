@@ -98,7 +98,7 @@ export function createFigurestead(canvas, input, options = {}) {
   composedScene = initialResolution.composed;
   surface = { ...surface, layout: resolvedScene.layout };
   clock = new AnimationClock({ durationMs: contract.motion.durationMs, draw, onState: options.onState, onError: options.onError });
-  companion = createAccessibilityCompanion(canvas, contract, registry, { ...options.accessibility, composedScene });
+  companion = createAccessibilityCompanion(canvas, contract, registry, { ...options.accessibility, composedScene, descriptions: preparedPanels.map((state) => state.description) });
   clock.render(isReduced() ? 1 : 0);
   commitNegotiation(initialResolution, initialBox);
 
@@ -117,7 +117,7 @@ export function createFigurestead(canvas, input, options = {}) {
     const box = observedBox();
     const baseline = box.visible ? heightNegotiator.baseline(box.width, box.height) : { value: null, error: null };
     const nextResolution = prepareResolution(nextModel.scene, surface.layout.width, surface.layout.height, baseline);
-    const nextCompanion = prepareAccessibilityCompanion(canvas, nextModel.contract, registry, { ...options.accessibility, composedScene: nextResolution.composed });
+    const nextCompanion = prepareAccessibilityCompanion(canvas, nextModel.contract, registry, { ...options.accessibility, composedScene: nextResolution.composed, descriptions: nextModel.preparedPanels.map((state) => state.description) });
     const nextSurface = resizeCanvas(canvas, { dprCap: options.dprCap ?? 2, layoutFactory: (width, height) => layoutFactory(width, height, nextModel.contract) });
     clock.pause();
     applyModel(nextModel);

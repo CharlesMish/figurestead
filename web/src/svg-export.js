@@ -10,6 +10,7 @@ import { resolveExportSize } from "./physical-export.js";
 import { FiguresteadConfigError, validateThemeColors } from "./schema.js";
 import { assertMarkKind } from "./scene-marks.js";
 import { fixedResponsiveHeader, RESPONSIVE_HEADER_MAX_WIDTH } from "./responsive-header.js";
+import { figureDescription } from "./factual-description.js";
 
 const xmlValue = (value) => String(value).replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/gu, "\uFFFD");
 const esc = (value) => xmlValue(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[char]));
@@ -276,7 +277,7 @@ export function resolvedSceneToSvg(resolved, options = {}) {
   validateThemeColors(composed.theme, "scene.theme");
   const scene = options.sourceScene, namespace = svgNamespace(composed, scene, options);
   const exportSize = options.exportSize ?? resolveExportSize({ ...options, width: composed.width, height: composed.height });
-  const title = composed.spec.title, description = [composed.spec.description || composed.spec.subtitle || "Scientific figure", composed.spec.note, ...composed.panels.flatMap((panel) => panel.notes ?? [])].filter(Boolean).join(" ");
+  const title = composed.spec.title, description = figureDescription(composed);
   // Preserve established resource names when unique, but never trust the
   // short mark hash as identity. Every resource is reserved within this export.
   const usedIds = new Set();

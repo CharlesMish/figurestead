@@ -151,6 +151,12 @@ See the [release notes](https://github.com/CharlesMish/figurestead/blob/ffe4337a
 
 ## Controller failures
 
+Current source generates compact factual descriptions for core line, scatter,
+and strip-summary figures from their prepared observations and summaries.
+Authored narrative remains separate context, including after `setData`; raw
+tables retain full values. See [factual descriptions](https://github.com/CharlesMish/figurestead/blob/main/docs/factual-descriptions.md)
+for the supported facts, precision policy, and source-note channels.
+
 `setConfig(next)` is transactional: a validation, compilation, renderer
 preparation, scene-resolution, composition, or accessibility-description error
 leaves the last accepted contract, scenes, pixels, companion, and motion state
