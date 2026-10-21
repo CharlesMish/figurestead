@@ -83,6 +83,9 @@ jobs:
       - name: Verify categorical matrix authored domains
         run: python audit/current-head-hardening/test_matrix_domains.py
 
+      - name: Verify complete categorical matrix decoration containment
+        run: python audit/current-head-hardening/test_matrix_layout.py
+
       - name: Verify Python gapped lines
         run: python audit/current-head-hardening/test_gapped_lines.py
 
@@ -154,6 +157,9 @@ jobs:
           for suite in scientific_geometry monotone_interpolation rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity direct_labels subtitle note_layout safe_export signature_layout strip_count_layout python_motion_inputs; do
             python "audit/current-head-hardening/test_${suite}.py"
           done
+
+      - name: Verify matrix decoration containment at declared minimum
+        run: python audit/current-head-hardening/test_matrix_layout.py
 
       - name: Execute histogram recipe at declared minimum
         run: python examples/python-histogram-small-multiples.py --output-dir "$RUNNER_TEMP/histogram-small-multiples"
