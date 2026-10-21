@@ -1,8 +1,8 @@
 # Standalone SVG typography and panel subtitles
 
 Available since browser `0.9.0-alpha.5`, including published `0.9.0-alpha.6`; historical alpha.4 does not include this repair.
-The published package and retained exports are unchanged; consuming this repair
-from npm requires a separately reviewed new release.
+Historical alpha.4 packages and retained exports remain unchanged; install the
+published alpha.6 package to use this repair.
 
 SVG exports now declare their existing intended font stack on the root element:
 `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`. Ordinary SVG
