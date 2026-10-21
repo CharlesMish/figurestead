@@ -71,6 +71,10 @@ def visible_intervals(a, b, centers, marker, size, padding=0.):
                 else:
                     hi = min(hi, -value / rate)
         if max(0., lo) < min(1., hi):
+            if lo <= 0 and hi >= 1:
+                # One hole covers this entire segment. No later hole can
+                # restore ink; dense/coincident observations need no union.
+                return
             blocked.append((max(0., lo), min(1., hi)))
     cursor = 0.
     for lo, hi in sorted(blocked):
@@ -79,6 +83,44 @@ def visible_intervals(a, b, centers, marker, size, padding=0.):
         cursor = max(cursor, hi)
     if cursor < 1:
         yield cursor, 1.
+
+
+class _MarkerCandidates:
+    """Draw-local broad phase in renderer coordinates, never observation indices.
+
+    A padded convex glyph fits in a circle of radius R * (1 + padding / r),
+    where R/r are its circumradius/inradius about the marker origin. Scaling
+    by this factor moves *every* edge outward by at least padding. Thus the
+    expanded segment box is a conservative superset, including nonadjacent
+    crossings and the triangle/diamond miter corners. Exact hole geometry is
+    still decided by visible_intervals. Storage is linear, not segment × marker.
+    """
+
+    def __init__(self, centers, marker, size, padding):
+        if np.ma.isMaskedArray(centers):
+            centers = centers[~np.ma.getmaskarray(centers).any(axis=1)].data
+        centers = np.asarray(centers)
+        centers = centers[np.isfinite(centers).all(axis=1)]
+        self.centers = centers[np.argsort(centers[:, 0], kind="stable")]
+        self.x = self.centers[:, 0]
+        if marker == "o":
+            radius = size / 2 + padding
+        else:
+            shape = MarkerStyle(marker)
+            v = shape.get_path().transformed(shape.get_transform()).vertices[:-1]
+            edge = np.roll(v, -1, axis=0) - v
+            inradius = np.min(np.abs(edge[:, 0] * v[:, 1] - edge[:, 1] * v[:, 0])
+                              / np.linalg.norm(edge, axis=1))
+            radius = np.max(np.linalg.norm(v, axis=1)) * (size + padding / inradius)
+        # Round outward; a boundary candidate must never be lost to rounding.
+        self.radius = np.nextafter(radius, np.inf)
+
+    def for_segment(self, a, b):
+        low = np.nextafter(np.minimum(a, b) - self.radius, -np.inf)
+        high = np.nextafter(np.maximum(a, b) + self.radius, np.inf)
+        start, stop = np.searchsorted(self.x, [low[0], high[0]], side="left")
+        candidates = self.centers[start:stop]
+        return candidates[(candidates[:, 1] >= low[1]) & (candidates[:, 1] <= high[1])]
 
 
 class IdentityLine(Line2D):
@@ -105,6 +147,8 @@ class IdentityLine(Line2D):
         travelled = 0.
         offset, dashes = self._unscaled_dash_pattern
         dash_scale = self.get_linewidth() if mpl.rcParams["lines.scale_dashes"] else 1.
+        clearance = renderer.points_to_pixels(self.get_linewidth() + getattr(self, "identity_edge_width", 0.)) / 2
+        candidates = _MarkerCandidates(centers, self.identity_marker, size, clearance)
         for a, b in zip(vertices, vertices[1:]):
             if not (np.isfinite(a).all() and np.isfinite(b).all()):
                 # Missingness removes a connection. Unlike a marker hole, it
@@ -114,8 +158,7 @@ class IdentityLine(Line2D):
             length = np.linalg.norm(b - a)
             # Conservative stroke clearance also excludes oblique/self-crossing strokes,
             # not just the mathematical centerline. Existing edge strokes count too.
-            clearance = renderer.points_to_pixels(self.get_linewidth() + getattr(self, "identity_edge_width", 0.)) / 2
-            for lo, hi in visible_intervals(a, b, centers, self.identity_marker, size, clearance):
+            for lo, hi in visible_intervals(a, b, candidates.for_segment(a, b), self.identity_marker, size, clearance):
                 ends = np.array([a + lo * (b - a), a + hi * (b - a)])
                 proxy.set_data(ends[:, 0], ends[:, 1])
                 if dashes is not None and dash_scale:
