@@ -1,6 +1,6 @@
 # Figurestead documentation
 
-Start with the published **Python 0.9.0a4 / browser 0.9.0-alpha.5** packages.
+Start with the published **Python 0.9.0a5 / browser 0.9.0-alpha.6** packages.
 The Python and browser counters are independent; npm `latest` remains alpha.1.
 
 ## Make a figure
@@ -11,7 +11,7 @@ The Python and browser counters are independent; npm `latest` remains alpha.1.
 - [Choose among the six themes](theme-selection.md)
 - [Complete browser consumer example](../web/README.md#first-figure)
 - [Compare ordinary legends and direct labels](../examples/direct-series-labels/README.md)
-- [Run the current published-package gallery](../examples/published-gallery/README.md)
+- [Inspect the retained a4/alpha.5 gallery](../examples/published-gallery/README.md)
 
 ## Behavior and limits
 
@@ -30,6 +30,6 @@ The Python and browser counters are independent; npm `latest` remains alpha.1.
 - [Historical Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
 - [Historical specimen study and design records](../specimen-study/README.md)
 
-Historical images and manifests retain their original versions. Open source
-work in Python PRs #51 → #53 → #55 and browser PR #52 is not included in the
-published packages above; follow the [release/source distinction](getting-started.md#published-release-versus-source-work).
+Historical images and manifests retain their original versions. PR #60's
+interpolation, factual-description/auxiliary-boundary and category-tick changes
+are unreleased; follow the [release/source distinction](getting-started.md#published-release-versus-source-work).

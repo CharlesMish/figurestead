@@ -2,27 +2,25 @@
 
 Figurestead is an experimental scientific figure system with Python and framework-free browser surfaces. It shares figure-contract and theme semantics across runtimes while keeping scientific output deterministic and inspectable.
 
-Published 2026-10-04: Python `figurestead==0.9.0a4` and browser `@figurestead/web@0.9.0-alpha.5` ([alpha.5 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5)). The counters are independent. npm `alpha` points to alpha.5; `latest` intentionally remains alpha.1. Use the exact versions below to reproduce this release. The [retained release records](release/README.md) bind the published artifacts.
+Published October 14, 2026 (America/Chicago; October 15 UTC): Python `figurestead==0.9.0a5` and browser `@figurestead/web@0.9.0-alpha.6` ([alpha.6 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6)). The counters are independent. npm `alpha` points to alpha.6; `latest` intentionally remains alpha.1. The [retained release records](release/README.md) bind the exact published artifacts to `56faf759a282d428602d0c02027112f6a508e471` (PR #59).
 
-## Candidate awaiting review: a5 / alpha.6
+## Current published release: a5 / alpha.6
 
-This branch prepares Python `0.9.0a5` and browser `0.9.0-alpha.6` from the
-reviewed integration. These versions are not published. Registry installation
-commands below still identify the published baseline. Candidate testing must
-install the retained local archives described in
-[the candidate notes](release/notes/0.9.0a5-web-alpha.6.md). This corrected
-candidate also rejects missing numeric category identities before coercion,
-keeps accumulated Python legends attributable, and aligns browser accessibility
-labels and annotation coordinate meaning with the visible figure.
+This release adds measured note/count placement, safe path exports with
+`save_figure`, histogram exclusion warnings, browser band rendering and scene-mark
+coverage, plus corrections to category admission, accumulated Python legends and
+browser accessibility. See the [published changes and limits](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6).
 
-## Current maintenance release: a4 / alpha.5
+## Unreleased source after alpha.6
 
-This release repairs standalone browser SVG typography/subtitles, browser dense
-numeric-array admission, Python DirectLabels lifecycle, authored matrix domains,
-and minimum-dependency compatibility. See the [published changes and verification](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5).
-Retained preparation notes and package-embedded READMEs describe their earlier
-pre-publication state; this living README and the GitHub release record the
-completed publication. Historical images keep their original version labels.
+[PR #60](https://github.com/CharlesMish/figurestead/pull/60), merged at
+`2df0023cb81a7b04c231ad889306f1dc4c4f0a20`, corrects opt-in monotone interpolation,
+prepared browser factual descriptions and the auxiliary Python compiler boundary,
+and shared browser category-tick layout. These changes are **not** in the
+published a5/alpha.6 archives. A source checkout still reports those version
+strings; record its commit and import path as well. No next release identity is
+assigned here. Preparation notes, package-embedded READMEs and historical images
+retain the versions and status under which they were created.
 
 ## Start here
 
@@ -34,7 +32,7 @@ checks, and the Python/browser capability boundary.
 ### Python
 
 ```bash
-python -m pip install figurestead==0.9.0a4
+python -m pip install figurestead==0.9.0a5
 python -c "from importlib.metadata import version; print(version('figurestead'))"
 ```
 
@@ -52,17 +50,16 @@ to `figurestead-first-success.png`. [Open the exact Python example](examples/pyt
 For a complete labeled example with units, three named series and PNG/SVG output,
 run [the Lavender line example](examples/python-labeled-line.py).
 
-For the unreleased source checkout, `from figurestead import save_figure` adds
-safe path exports: `save_figure(figure, "figure.svg")` replaces the destination
-only after rendering and closing succeed. A failed save preserves an existing
-file and removes the temporary output. This helper is not in the retained wheel
-above; ordinary `figure.savefig()` remains Matplotlib's direct-write API. See
-[safe exports and footer recovery](docs/python-layout-and-comparison.md#safe-path-exports-090a5).
+Published Python a5 includes `from figurestead import save_figure` for safe path
+exports: `save_figure(figure, "figure.svg")` replaces the destination only after
+rendering and closing succeed. A failed save preserves an existing file and
+removes the temporary output. Ordinary `figure.savefig()` remains Matplotlib's
+direct-write API. See [safe exports and footer recovery](docs/python-layout-and-comparison.md#safe-path-exports-090a5).
 
 ### Browser
 
 ```bash
-npm install --save-exact @figurestead/web@0.9.0-alpha.5
+npm install --save-exact @figurestead/web@0.9.0-alpha.6
 npm ls @figurestead/web
 ```
 
@@ -77,11 +74,11 @@ Python and browser surfaces share normalized figure-contract vocabulary and sele
 
 Default line series combine color with persistent open **circle (S1), square (S2), and upright triangle (S3)** markers and matching line-and-marker legends. Line rhythm remains an independent semantic channel. Python callers can carry `series_slots=[1, 2]` when rebuilding filtered S2/S3 rows; browser `setData` retains established keyed identity through supported filtering/reordering and partial style overrides. `setConfig` replaces the contract.
 
-Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.5/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
+Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.6/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
 
 Opt in with Python `line(..., direct_labels=True)` or browser `style: { directLabels: true }`. Direct labels reuse the actual body marker identity beside the traces. V1 covers ordinary one-panel, 2–3-series line figures with single-line printable ASCII labels. Unsupported or insufficient layouts fall back atomically to the ordinary legend. This treatment does not support Unicode, multiline or math interpretation; printable ASCII math punctuation is literal. Active browser transitions use ordinary treatment until settled, and exports without trustworthy measurement retain the ordinary legend.
 
-See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/v0.9.0-alpha.5/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.5/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.5/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
+See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/v0.9.0-alpha.6/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.6/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.6/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
 
 ## Features carried forward from a3 / alpha.4
 
@@ -94,9 +91,9 @@ See the [ordinary/direct-label example](https://github.com/CharlesMish/figureste
 
 See [line semantics and limits](docs/line-series-semantics.md). These features are available in the published versions above. No new reference-theme or accessibility qualification is implied.
 
-## Current published-package gallery
+## Retained a4 / alpha.5 gallery
 
-[Browse six a4/alpha.5 examples](https://charlesmish.github.io/figurestead/#published-gallery) or [run their exact source](examples/published-gallery/README.md). The new files preserve historical images and show only behavior available in these registry versions.
+[Browse six a4/alpha.5 examples](https://charlesmish.github.io/figurestead/#published-gallery) or [run their exact source](examples/published-gallery/README.md). These version-bound examples remain a4/alpha.5 output, not fresh renders of a5/alpha.6 or later source.
 
 ## Figurestead at a glance
 
@@ -124,11 +121,12 @@ Figurestead's two surfaces share a normalized contract vocabulary, selected them
 - [Historical Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
 - [Getting started with the current published packages](docs/getting-started.md)
 - [Python first-success example](examples/python-first-success.py)
-- [Python sizing, calendar ticks and comparison recipes](docs/python-layout-and-comparison.md) — includes unreleased note/count layout repairs
+- [Literal dollars and intentional MathText](docs/python-plotting.md#literal-dollars-and-intentional-mathtext) — inspect wrapped subtitles at the target width
+- [Python sizing, calendar ticks and comparison recipes](docs/python-layout-and-comparison.md) — includes published a5 note/count layout repairs
 - [Browser first-success example](examples/browser-first-success/)
 - [Python sequential heatmap ramp](docs/sequential-heatmaps.md) — published color mapping; numeric normalization unchanged
 - [Static palette versus rendered-series contrast](docs/rendered-series-contrast.md)
-- [Browser scene marks and coverage policy](docs/browser-scene-marks.md) — unreleased band-rendering and mark-contract repair
+- [Browser scene marks and coverage policy](docs/browser-scene-marks.md) — published alpha.6 band-rendering and mark-contract repair
 - [Reference light/dark themes for the bounded three-series line profile](docs/reference-themes.md) — bounded exemplars, not universal qualification
 - [Deterministic specimen corpus and local visual lab](specimen-study/README.md)
 - [Technical-showcase reviewer packet](technical-showcase/reviewer-packet/README.md) — repository-local and undeployed

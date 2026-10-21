@@ -1,18 +1,18 @@
 # Getting started with the published packages
 
-Release snapshot: **2026-10-04**. Figurestead is an experimental scientific
+Release snapshot: **2026-10-14 America/Chicago (2026-10-15 UTC)**. Figurestead is an experimental scientific
 figure system. Start with Python for a static figure or report; use the browser
 package for a Canvas page or browser integration.
 
 | Surface | Exact package | Consumer runtime |
 | --- | --- | --- |
-| Python | `figurestead==0.9.0a4` | Python >=3.10 |
-| Browser | `@figurestead/web@0.9.0-alpha.5` | Node >=22.22.0 |
+| Python | `figurestead==0.9.0a5` | Python >=3.10 |
+| Browser | `@figurestead/web@0.9.0-alpha.6` | Node >=22.22.0 |
 
-The [alpha.5 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5)
-records publication at `889b8d15f364b4edbc71a9eec4ce572f73d705b5` and links the
+The [alpha.6 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6)
+records publication at `56faf759a282d428602d0c02027112f6a508e471` and links the
 verification runs. The Python and browser alpha counters are independent.
-npm `alpha` currently follows alpha.5; `latest` remains alpha.1. Exact versions
+npm `alpha` currently follows alpha.6; `latest` remains alpha.1. Exact versions
 select this release explicitly. Preserve your dependency lockfile or environment
 record as well; the package pin alone does not fix every dependency version.
 
@@ -38,11 +38,11 @@ py -3 -m venv .venv
 Use `.venv\Scripts\python.exe` in place of `python` below; activation is optional.
 
 ```sh
-python -m pip install figurestead==0.9.0a4
+python -m pip install figurestead==0.9.0a5
 python -c "from importlib.metadata import version; print(version('figurestead'))"
 ```
 
-The version check should print `0.9.0a4`. Save this as `first_figure.py`:
+The version check should print `0.9.0a5`. Save this as `first_figure.py`:
 
 ```python
 from figurestead import line
@@ -68,7 +68,7 @@ python -m pip freeze > requirements-resolved.txt
 Keep the three-point example above as a quick installation check. For named
 series and axis units, copy [python-labeled-line.py](../examples/python-labeled-line.py)
 into the same consumer directory and run `python python-labeled-line.py`. It uses
-only the published a4 API and writes both PNG and SVG. See [theme selection](theme-selection.md)
+only the published a5 API and writes both PNG and SVG. See [theme selection](theme-selection.md)
 and the [five-plotter reference](python-plotting.md) for the next step.
 
 ## First browser figure
@@ -82,7 +82,7 @@ npm ls @figurestead/web
 node --input-type=module -e 'import { FIGURESTEAD_PACKAGE_VERSION } from "@figurestead/web"; console.log(FIGURESTEAD_PACKAGE_VERSION)'
 ```
 
-Both checks should identify `0.9.0-alpha.5`. Retain `package-lock.json`.
+Both checks should identify `0.9.0-alpha.6`. Retain `package-lock.json`.
 The browser API consumes a complete normalized contract; the Python convenience
 plotter's short argument list is not a browser API.
 
@@ -103,18 +103,23 @@ plotter's short argument list is not a browser API.
 
 ## Published release versus source work
 
-This guide targets a4/alpha.5. The open Python work in [#51](https://github.com/CharlesMish/figurestead/pull/51),
-[#53](https://github.com/CharlesMish/figurestead/pull/53) and [#55](https://github.com/CharlesMish/figurestead/pull/55)
-and browser work in [#52](https://github.com/CharlesMish/figurestead/pull/52) are
-not part of those registry artifacts. In particular, these examples do not use
-the proposed `save_figure` API, later footer/count-layout fixes or browser band
-repairs. A source merge alone does not change an installed release.
+This guide targets published a5/alpha.6 from PR #59. It includes `save_figure`,
+measured Python note/count layout, histogram exclusion warnings and browser band
+repairs. [PR #60](https://github.com/CharlesMish/figurestead/pull/60), merged at
+`2df0023cb81a7b04c231ad889306f1dc4c4f0a20`, subsequently repaired monotone
+interpolation, prepared factual descriptions / auxiliary compiler rejection, and
+browser category ticks. Those changes are not in the registry packages.
+A source merge alone does not change an installed release, and the checkout's
+unchanged version string does not prove equivalence to the published bytes.
+
+For Python text, read the [MathText and literal-dollar note](python-plotting.md#literal-dollars-and-intentional-mathtext)
+before using monetary values, especially in wrapped subtitles.
 
 ## Documentation and agent version context
 
 Start with this page and the live root/browser READMEs for current installation
 status. The released packages contain immutable preparation-time READMEs that
-may describe a4/alpha.5 as unpublished. Historical release notes, review records,
+may describe their own release as unpublished. Historical release notes, review records,
 specimen images and older website pages also retain their own version context.
 The completed GitHub release records publication; a new build is not needed to
 resolve that historical wording.

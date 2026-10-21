@@ -1,6 +1,6 @@
 # Standalone SVG typography and panel subtitles
 
-Status: current-source repair after the published browser `0.9.0-alpha.4`.
+Available since browser `0.9.0-alpha.5`, including published `0.9.0-alpha.6`; historical alpha.4 does not include this repair.
 The published package and retained exports are unchanged; consuming this repair
 from npm requires a separately reviewed new release.
 
