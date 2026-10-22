@@ -4,11 +4,21 @@ This directory defines the retained-candidate lifecycle for
 `@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
 already-published first alpha used this repaired process.
 
-## Current published alpha.5 (2026-10-04)
+## Current published alpha.6 (2026-10-14 America/Chicago; 2026-10-15 UTC)
+
+`@figurestead/web@0.9.0-alpha.6` is public from the exact corrected retained
+archive under `0.9.0-alpha.6`. npm `alpha` points to alpha.6; `latest` intentionally
+remains alpha.1. The [coordinated release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6)
+targets PR #59 merge `56faf759a282d428602d0c02027112f6a508e471` and records the
+public hash and installed-consumer verification. Frozen PR #57's original bytes
+remain separate. Preparation notes, ledgers and the packed README are unchanged.
+PR #60's subsequent source corrections are not in this tarball.
+
+## Historical published alpha.5 (2026-10-04)
 
 `@figurestead/web@0.9.0-alpha.5` is published from the exact retained tarball under
-its versioned directory. npm `alpha` points to alpha.5; `latest` intentionally
-remains alpha.1. [Install the package](../../web/README.md#first-figure).
+its versioned directory. At publication, npm `alpha` pointed to alpha.5; `latest`
+remained alpha.1. [Install the package](../../web/README.md#first-figure).
 
 [Run 37227522331](https://github.com/CharlesMish/figurestead/actions/runs/37227522331)
 completed publication and bounded public readback at accepted merge

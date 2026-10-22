@@ -1,6 +1,6 @@
-# Categorical matrix authored domains — current source
+# Categorical matrix authored domains
 
-This source correction is not part of the published Python `0.9.0a3` artifact.
+Available since Python `0.9.0a4`, including published `0.9.0a5`; the historical `0.9.0a3` artifact does not include this correction.
 It does not migrate the categorical matrix's retained color ramp or add an API.
 
 `figurestead.extensions.matrix.categorical_matrix` keeps its explicit

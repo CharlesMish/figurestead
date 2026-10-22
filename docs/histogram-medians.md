@@ -69,14 +69,14 @@ sample size: common edges do not normalize unequal-length datasets. Translucent
 overlapping fills can remain difficult to separate; inspect the exported figure
 and consider separate panels with the same edges and axis scales.
 
-## Unreleased: disclose observations outside authored bins
+## Published in a5: disclose observations outside authored bins
 
 In Python `0.9.0a5`, explicit bin edges that exclude observations emit
 one `UserWarning` per affected dataset. Each warning identifies the dataset
 index and label, reports the excluded and total observations, and states that
 the median still uses the full dataset. The last bin includes its right edge,
 as in NumPy. Covered data and integer-bin requests emit no exclusion warning.
-Published Python `0.9.0a4` does not yet emit this warning.
+Historical Python `0.9.0a4` does not emit this warning.
 
 The warning does not change counts, edges, medians, colors, or axis limits.
 It is emitted before axes are allocated or changed, so promoting this warning

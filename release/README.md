@@ -4,28 +4,39 @@ Python artifacts and npm candidates use separate retained-byte
 lifecycles. See [`npm/README.md`](npm/README.md) for the npm
 candidate process; no original npm `0.9.0-alpha.1` candidate is present here.
 
-Current published versions (2026-10-04): Python `0.9.0a4` and browser
-`0.9.0-alpha.5`. [Install the packages](../docs/getting-started.md) or read the
-[completed release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5).
+Current published versions: Python `0.9.0a5` and browser `0.9.0-alpha.6`,
+published October 14, 2026 (America/Chicago; October 15 UTC) at accepted PR #59
+merge `56faf759a282d428602d0c02027112f6a508e471`.
+[Install the packages](../docs/getting-started.md) or read the
+[completed release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6).
 
-## Candidate a5 / alpha.6 — publication on hold
+## Published a5 / alpha.6 — corrected candidate preserved
 
-The next candidate is Python `0.9.0a5` / browser `0.9.0-alpha.6`.
-[Candidate notes](notes/0.9.0a5-web-alpha.6.md) describe changes and limitations.
-Its local archives and ledgers are separate from every published version.
-This corrected candidate includes merged PR58. Frozen PR57 at
-`a823a13393d1a0fbae5e7cb8a50fbb5a0df80722` retains the earlier candidate
-unchanged; its checksums and acceptance do not apply to these new bytes.
-Independent candidate review and owner publication authorization are required;
-no dispatch is authorized by this branch. The Python package description now
-comes from `docs/package-python.md`, bound in the a5 source ledger. Historical
-versions retain their original root-README metadata binding.
+The exact reviewed corrected archives under `python/0.9.0a5` and
+`npm/0.9.0-alpha.6` were published without rebuilding. The
+[original candidate notes](notes/0.9.0a5-web-alpha.6.md) and review/source ledgers
+remain preparation-time records, not current publication status. Frozen PR #57 at
+`a823a13393d1a0fbae5e7cb8a50fbb5a0df80722` retains the earlier candidate unchanged;
+its checksums and acceptance do not apply to this release. The Python description
+comes from `docs/package-python.md`, bound in the a5 ledger; historical versions
+retain their original root-README metadata binding.
 
 Read-only checks: `python release/python/verify_candidate.py --version 0.9.0a5`
 and `python release/python/test_publish_workflow.py`. Use `--check-source` only
-against the producing inputs. The future manual phrases are
-`publish figurestead 0.9.0a5 to testpypi` and
-`publish figurestead 0.9.0a5 to pypi`; these are documentation, not authorization.
+against the producing inputs, never arbitrary later main. The protected-main,
+confirmation and named-environment publishers consume retained bytes, not a fresh
+build. Their completed runs are recorded below; do not repeat publication.
+
+Completed exact-byte publisher runs at the release target:
+[TestPyPI 38661556420](https://github.com/CharlesMish/figurestead/actions/runs/38661556420),
+[PyPI 38661752851](https://github.com/CharlesMish/figurestead/actions/runs/38661752851),
+and [npm 38662248318](https://github.com/CharlesMish/figurestead/actions/runs/38662248318)
+all succeeded. npm `alpha` points to alpha.6; `latest` remains alpha.1.
+
+PR #60 source at `2df0023cb81a7b04c231ad889306f1dc4c4f0a20` contains later
+interpolation, factual-description/auxiliary-boundary and category-tick repairs.
+Those are unreleased and do not replace these archives. Future publication still
+requires separate acceptance and authorization.
 
 ## Python registry workflow
 
@@ -54,8 +65,8 @@ The retained Python files are under `python/0.9.0a4`; the npm tarball is under
 The notes, preparation record and package-embedded READMEs intentionally retain
 their preparation-time status; the
 [GitHub release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.5)
-and publisher runs record completed publication. npm `alpha` points to alpha.5;
-`latest` remains alpha.1.
+and publisher runs record completed publication. At that release, npm `alpha` pointed to alpha.5;
+`latest` remained alpha.1.
 
 Read-only verification:
 
@@ -98,4 +109,4 @@ Both dispatches used `expected_commit=9260af190e60c621244072675c238db4822b8632`.
 
 ## Integrity rule
 
-The updated workflow consumes only the two versioned a5 candidate distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.
+The current workflow consumes only the two versioned retained a5 distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.

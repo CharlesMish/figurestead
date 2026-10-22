@@ -1,7 +1,7 @@
 # Browser scene marks
 
 Availability: browser `0.9.0-alpha.6`.
-The published alpha.5 package does not include this repair.
+Published alpha.6 includes this repair; historical alpha.5 does not.
 
 ## Closed vocabulary
 
