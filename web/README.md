@@ -2,7 +2,9 @@
 
 Version `0.9.0-alpha.6`. Framework-free scientific figures for the browser,
 with Canvas and standalone SVG output. Requires Node >=22.22.0;
-repository/release tooling has its own Node pin.
+repository/release tooling uses patched Node 24.22.1 with bundled npm 11.19.1.
+The Node 22 consumer check uses 22.23.4 / npm 10.9.9; the public engine floor
+remains >=22.22.0. Prefer a maintained, security-patched Node release.
 
 ```sh
 npm install --save-exact @figurestead/web@0.9.0-alpha.6
@@ -47,7 +49,7 @@ repository's consumer checks:
 ```sh
 npm init -y
 npm install --save-exact @figurestead/web@0.9.0-alpha.6
-npm install --save-dev --save-exact vite@8.2.1
+npm install --save-dev --save-exact vite@8.2.4
 ```
 
 Save these two files in that directory:

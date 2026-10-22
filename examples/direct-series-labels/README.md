@@ -16,7 +16,7 @@ Browser (Node >=22.22.0): copy this folder outside the checkout, install the pub
 ```sh
 npm init -y
 npm install --save-exact @figurestead/web@0.9.0-alpha.6
-npm install --save-dev --save-exact vite@8.2.1
+npm install --save-dev --save-exact vite@8.2.4
 npx vite --host 127.0.0.1
 ```
 

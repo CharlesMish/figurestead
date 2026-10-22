@@ -35,10 +35,41 @@ const cases = [
   ["public readback no longer relies on immediate npm pack", !/npm pack/.test(publicReadback)],
 ];
 
+// Secure runners are separate from the unchanged public consumer engine floor.
+const correctness = readFileSync(path.join(repositoryRoot, ".github/workflows/pr-correctness.yml"), "utf8");
+function verifyToolchains(publisher, ci) {
+  assert.deepEqual([...publisher.matchAll(/node-version: ([^\s]+)/g)].map((match) => match[1]),
+    ["24.22.1", "24.22.1", "24.22.1"], "publisher Node pins");
+  assert.equal(publisher.split('test "$(node --version)" = "v24.22.1"').length - 1, 2, "publisher Node assertions");
+  assert.equal(publisher.split('test "$(npm --version)" = "11.19.1"').length - 1, 2, "publisher npm assertions");
+  assert.deepEqual([...ci.matchAll(/node-version: ([^\s]+)/g)].map((match) => match[1]).sort(),
+    ["22.23.4", "24.22.1", "24.22.1", "24.22.1"], "correctness Node pins");
+  for (const [node, npm, count] of [["24.22.1", "11.19.1", 3], ["22.23.4", "10.9.9", 1]]) {
+    assert.equal(ci.split(`test "$(node --version)" = "v${node}"`).length - 1, count, "correctness Node assertions");
+    assert.equal(ci.split(`test "$(npm --version)" = "${npm}"`).length - 1, count, "correctness npm assertions");
+  }
+}
+verifyToolchains(workflow, correctness);
+cases.push(["secure Node and bundled npm pins and runtime assertions agree", true]);
+const publicPackage = JSON.parse(readFileSync(path.join(repositoryRoot, "web/package.json"), "utf8"));
+cases.push(["public consumer engine floor remains distinct from runner pins", publicPackage.engines.node === ">=22.22.0"]);
+// A stale setup pin or exact-version assertion must fail before publication.
+for (const [name, publisher, ci] of [
+  ["publisher Node pin", workflow.replace("node-version: 24.22.1", "node-version: 24.17.0"), correctness],
+  ["publisher Node assertion", workflow.replace('= "v24.22.1"', '= "v24.17.0"'), correctness],
+  ["publisher npm assertion", workflow.replace('= "11.19.1"', '= "11.13.0"'), correctness],
+  ["Node22 CI pin", workflow, correctness.replace("node-version: 22.23.4", "node-version: 22.22.0")],
+  ["Node22 npm assertion", workflow, correctness.replace('= "10.9.9"', '= "10.9.0"')],
+  ["Node24 CI assertion", workflow, correctness.replace('= "v24.22.1"', '= "v24.17.0"')],
+]) {
+  assert.throws(() => verifyToolchains(publisher, ci), assert.AssertionError, name);
+  cases.push([`stale ${name} rejects`, true]);
+}
+
 for (const [name, passed] of cases) assert.equal(passed, true, name);
 console.log(JSON.stringify({
   suite: "npm-publish-workflow-integrity",
-  expectedCaseCount: 16,
+  expectedCaseCount: 24,
   executedCaseCount: cases.length,
   result: "PASS",
   cases: cases.map(([name]) => name),

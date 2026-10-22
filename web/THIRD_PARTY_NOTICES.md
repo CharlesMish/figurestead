@@ -27,7 +27,7 @@ only system font families and carries no downloaded font bytes or remote URL.
 
 The alpha verification environment uses Playwright 1.62.0 and
 playwright-core 1.62.0 as Apache-2.0 development/test tooling, TypeScript 7.0.2
-as Apache-2.0 declaration-conformance tooling, and Vite 8.2.1 as MIT browser
+as Apache-2.0 declaration-conformance tooling, and Vite 8.2.4 as MIT browser
 package-consumer tooling. Vite's resolved test-only tree includes rolldown
 1.2.4, @rolldown/pluginutils 1.0.1, @oxc-project/types 0.144.0, fdir 6.5.0,
 nanoid 3.3.18, picocolors 1.1.1, picomatch 4.0.5, postcss 8.5.26,
