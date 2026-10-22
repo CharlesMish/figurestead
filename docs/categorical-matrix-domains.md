@@ -79,3 +79,39 @@ This is not universal finite-domain qualification. The preexisting
 `[-8e307, 8e307]` image/tick arithmetic limitation remains separate: minimum
 Matplotlib can lose cell colors despite a representable span, and current
 Matplotlib can emit overflow warnings. This repair does not change that case.
+
+## Complete decoration containment — unreleased source correction
+
+The Python categorical-matrix route measures rotated category ticks, axis
+labels, title/subtitle, the colorbar and its label, the required status legend,
+and any source note as one decoration set. The status key sits below the actual
+x-axis decoration; the source note sits below the key. Missing and insufficient
+cells keep their existing distinct treatments and never become numeric zero.
+
+On figures created by `categorical_matrix`, the matrix and colorbar allocation
+can shrink to reserve measured decoration space. Normal, uncropped drawing or
+export either keeps every required decoration inside the canvas without
+collisions, or raises `ValueError` with size/margin advice. Very long status
+labels are not silently truncated or rewritten. A text-box collision can be
+rejected conservatively even where rotated glyph ink would not actually touch.
+The geometry tolerance is `1e-7` display pixels for floating-point round-off;
+allocation uses a 3-point exterior gap only where space must be added.
+
+For caller-supplied `ax=`, Figurestead preserves the axes positions after the
+existing Matplotlib colorbar allocation. Insufficient space raises instead of
+moving caller axes or covering another panel. Enlarge the figure, shorten
+labels, or use caller-controlled subplot margins. Select tight/constrained
+layout before creating a matrix and its colorbar; switching a gridspec-based
+colorbar to constrained layout afterward is rejected with that instruction.
+A layout engine that cannot settle within its existing bounded subtitle passes
+also fails explicitly. Tight-cropped export is supported after ordinary
+containment has succeeded; cropping is not a substitute for that validation.
+
+This is a matrix-specific layout correction. It does not change values,
+normalization, category order, the categorical ramp, status semantics, other
+plot families, or historical evidence. The optional signature may still omit
+itself when spare footer space is unavailable.
+
+```sh
+python audit/current-head-hardening/test_matrix_layout.py
+```

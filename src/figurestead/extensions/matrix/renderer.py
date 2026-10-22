@@ -14,7 +14,9 @@ from matplotlib.patches import Patch, Rectangle
 from matplotlib.ticker import FuncFormatter, Locator
 import numpy as np
 
-from figurestead.core import PlotSpec, add_note, ensure_axes, resolve, style_axes
+from figurestead.core import PlotSpec, ensure_axes, resolve, style_axes
+from figurestead._note import NoteText
+from ._layout import MatrixLayout, MatrixLegend, MatrixNote
 
 
 FORMATS = {"percent", "integer", "decimal"}
@@ -269,6 +271,7 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
     norm = _value_norm(data["valueScale"]["domain"])
     spec = spec or PlotSpec("Categorical matrix")
     theme, profile = resolve(theme, profile)
+    owned = ax is None
     fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec, atmosphere=False)
     ax.grid(False)
@@ -317,6 +320,16 @@ def categorical_matrix(data, *, spec=None, theme="slipware", profile="deep_scope
     if "missing" in present_statuses:
         handles.append(Patch(facecolor=theme.field, edgecolor=theme.spine, label=data["statusLabels"]["missing"]))
     if handles:
-        ax.legend(handles=handles, frameon=False, fontsize=7, labelcolor=theme.label, loc="upper left", bbox_to_anchor=(0, -0.16))
-    add_note(ax, spec, theme)
+        legend = MatrixLegend(ax, handles, [handle.get_label() for handle in handles],
+                              frameon=False, fontsize=7, labelcolor=theme.label,
+                              loc="upper left", borderaxespad=0)
+        ax.legend_ = legend
+        legend._remove_method = ax._remove_legend
+    for text in list(ax.texts):
+        if isinstance(text, NoteText):
+            text.remove()
+    if spec.note:
+        MatrixNote(ax, spec.note, color=theme.warm, fontsize=6.5,
+                   fontfamily="DejaVu Sans Mono", style="italic")
+    MatrixLayout(ax, image, colorbar, owned=owned)
     return fig, ax

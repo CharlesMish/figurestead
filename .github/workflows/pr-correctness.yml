@@ -17,7 +17,7 @@ jobs:
   core-python:
     name: Core Python / ${{ matrix.python-version }}
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     env:
       MPLBACKEND: Agg
       MPLCONFIGDIR: /tmp/figurestead-matplotlib
@@ -83,6 +83,9 @@ jobs:
       - name: Verify categorical matrix authored domains
         run: python audit/current-head-hardening/test_matrix_domains.py
 
+      - name: Verify complete categorical matrix decoration containment
+        run: python audit/current-head-hardening/test_matrix_layout.py
+
       - name: Verify Python gapped lines
         run: python audit/current-head-hardening/test_gapped_lines.py
 
@@ -127,7 +130,7 @@ jobs:
   minimum-python-line:
     name: Minimum Python line compatibility / 3.10
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       MPLBACKEND: Agg
       MPLCONFIGDIR: /tmp/figurestead-matplotlib
@@ -157,6 +160,9 @@ jobs:
           for suite in scientific_geometry monotone_interpolation rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity line_candidates direct_labels subtitle note_layout safe_export signature_layout strip_count_layout python_motion_inputs; do
             python "audit/current-head-hardening/test_${suite}.py"
           done
+
+      - name: Verify matrix decoration containment at declared minimum
+        run: python audit/current-head-hardening/test_matrix_layout.py
 
       - name: Execute histogram recipe at declared minimum
         run: python examples/python-histogram-small-multiples.py --output-dir "$RUNNER_TEMP/histogram-small-multiples"
