@@ -54,7 +54,7 @@ jobs:
       - name: Set up the accepted Node/npm runtime
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 24.17.0
+          node-version: 24.22.1
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
@@ -78,8 +78,8 @@ jobs:
           test "$GITHUB_SHA" = "$EXPECTED_COMMIT"
           test "$CONFIRMATION" = "publish @figurestead/web $VERSION with tag $DIST_TAG from accepted tarball"
           case "$DIST_TAG" in alpha|next|latest) ;; *) exit 64 ;; esac
-          test "$(node --version)" = "v24.17.0"
-          test "$(npm --version)" = "11.13.0"
+          test "$(node --version)" = "v24.22.1"
+          test "$(npm --version)" = "11.19.1"
           test "$(node -p 'require("./web/package.json").version')" = "$VERSION"
 
           node release/npm/verify-candidate.mjs \
@@ -114,7 +114,7 @@ jobs:
       - name: Set up the accepted Node/npm runtime
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 24.17.0
+          node-version: 24.22.1
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
@@ -131,8 +131,8 @@ jobs:
           test "$GITHUB_REF" = "refs/heads/main"
           test "$REF_PROTECTED" = "true"
           test "$GITHUB_SHA" = "$EXPECTED_COMMIT"
-          test "$(node --version)" = "v24.17.0"
-          test "$(npm --version)" = "11.13.0"
+          test "$(node --version)" = "v24.22.1"
+          test "$(npm --version)" = "11.19.1"
           test "$(node -p 'require("./web/package.json").version')" = "$VERSION"
           node release/npm/verify-candidate.mjs \
             --version "$VERSION" \
@@ -178,7 +178,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 24.17.0
+          node-version: 24.22.1
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
