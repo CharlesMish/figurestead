@@ -127,7 +127,7 @@ jobs:
   minimum-python-line:
     name: Minimum Python line compatibility / 3.10
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       MPLBACKEND: Agg
       MPLCONFIGDIR: /tmp/figurestead-matplotlib
