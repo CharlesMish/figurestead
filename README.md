@@ -11,16 +11,20 @@ This release adds measured note/count placement, safe path exports with
 coverage, plus corrections to category admission, accumulated Python legends and
 browser accessibility. See the [published changes and limits](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6).
 
-## Unreleased source after alpha.6
+## Preparation candidate: a6 / alpha.7
 
-[PR #60](https://github.com/CharlesMish/figurestead/pull/60), merged at
-`2df0023cb81a7b04c231ad889306f1dc4c4f0a20`, corrects opt-in monotone interpolation,
-prepared browser factual descriptions and the auxiliary Python compiler boundary,
-and shared browser category-tick layout. These changes are **not** in the
-published a5/alpha.6 archives. A source checkout still reports those version
-strings; record its commit and import path as well. No next release identity is
-assigned here. Preparation notes, package-embedded READMEs and historical images
-retain the versions and status under which they were created.
+The unpublished candidate incorporates accepted PR #60's opt-in monotone
+interpolation, prepared factual descriptions / auxiliary compiler boundary and
+shared browser category-tick corrections; PR #62's Python line-performance
+repair; and PR #63's complete matrix-decoration containment. See the
+[candidate changes and limits](release/notes/0.9.0a6-web-alpha.7.md).
+PR #61 reconciled living documentation, not a new package capability. PR #64
+patched release/test tooling and Vite without changing consumer compatibility.
+
+Candidate bytes require independent exact-artifact review and separate
+integration/publication authorization. The public installs below remain
+**a5 / alpha.6** until publication succeeds. Historical releases, images and
+source ledgers retain their original authority.
 
 ## Start here
 
@@ -63,7 +67,7 @@ npm install --save-exact @figurestead/web@0.9.0-alpha.6
 npm ls @figurestead/web
 ```
 
-Requires Node >=22.22.0. Follow the [installed-package first figure](web/README.md#first-figure)
+Requires Node >=22.22.0. Follow the [installed-package first figure](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/web/README.md#first-figure)
 for the complete `index.html`, `main.js`, and Vite command. The package exports
 `createFigurestead`; rendering requires a complete normalized figure contract.
 The [repository example](examples/browser-first-success/) is a separate source-development route.

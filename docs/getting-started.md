@@ -73,7 +73,7 @@ and the [five-plotter reference](python-plotting.md) for the next step.
 
 ## First browser figure
 
-In a fresh project, follow the [complete installed-package example](../web/README.md#first-figure).
+In a fresh project, follow the [complete installed-package example](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/web/README.md#first-figure).
 It supplies both files and the Vite start command and needs no repository clone.
 Check `node --version` before installation. After installation, confirm:
 

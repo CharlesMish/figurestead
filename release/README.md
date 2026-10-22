@@ -10,6 +10,28 @@ merge `56faf759a282d428602d0c02027112f6a508e471`.
 [Install the packages](../docs/getting-started.md) or read the
 [completed release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6).
 
+## Unpublished a6 / alpha.7 preparation
+
+The new candidate incorporates accepted source through PR #64. See
+[scope and compatibility](notes/0.9.0a6-web-alpha.7.md). The producing commit
+freezes package inputs; the retaining commit adds the exact wheel, sdist and npm
+tarball, strict checksums and source bindings. Historical archives are not rebuilt.
+The coordinated record is `release/reviews/0.9.0a6-web-alpha.7.json`.
+
+Verify `python release/python/verify_candidate.py --version 0.9.0a6` and the
+publication guard tests. Use `--check-source` only with the producing inputs or
+authenticated disposable source fixtures. Ordinary CI verifies frozen authority,
+not equality with arbitrary future main. The a6 ledger additionally binds factual
+descriptions and the a6/alpha.7 notes without redefining previous inventories.
+
+After independent acceptance and merge, a separate owner authorization is required
+for protected-main dispatch. Intended Python confirmations are
+`publish figurestead 0.9.0a6 to testpypi`, then
+`publish figurestead 0.9.0a6 to pypi`, each with the exact eventual merged
+`expected_commit`. PyPI must reauthenticate the identical TestPyPI bytes first.
+The npm publisher remains parameterized, uses `alpha`, and must leave `latest`
+unchanged. No publication or deployment is performed by preparation.
+
 ## Published a5 / alpha.6 — corrected candidate preserved
 
 The exact reviewed corrected archives under `python/0.9.0a5` and
@@ -109,4 +131,4 @@ Both dispatches used `expected_commit=9260af190e60c621244072675c238db4822b8632`.
 
 ## Integrity rule
 
-The current workflow consumes only the two versioned retained a5 distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.
+The current candidate workflow consumes only the two versioned retained a6 distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.
