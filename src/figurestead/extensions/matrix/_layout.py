@@ -117,7 +117,7 @@ class MatrixLayout(Artist):
     def __init__(self, ax, image, colorbar, *, owned):
         super().__init__()
         self.ax, self.image = ax, image
-        self.layout_axes = (ax, colorbar.ax)
+        self.colorbar_ax = colorbar.ax
         self.owned = owned
         self.baseline = tuple(a.get_position(original=True).frozen() for a in self.layout_axes)
         self.last = self.baseline
@@ -134,9 +134,15 @@ class MatrixLayout(Artist):
             ax.figure._figurestead_matrix_draw = original, adapter
             ax.figure.draw = adapter
 
+    @property
+    def layout_axes(self):
+        # Native Colorbar.remove() retires only that optional decoration, not
+        # containment of the surviving matrix, status key, labels and note.
+        return ((self.ax, self.colorbar_ax) if self.colorbar_ax in self.ax.figure.axes
+                else (self.ax,))
+
     def active(self):
-        return (self.ax in self.figure.axes and self.layout_axes[1] in self.figure.axes
-                and self.image in self.ax.images)
+        return self.ax in self.figure.axes and self.image in self.ax.images
 
     def cropped(self):
         return tuple(self.figure.transFigure.transform_bbox(Bbox.unit()).bounds) != tuple(self.figure.bbox.bounds)
@@ -144,14 +150,16 @@ class MatrixLayout(Artist):
     def start(self):
         engine = self.figure.get_layout_engine()
         if (engine is not None and not engine.colorbar_gridspec
-                and self.layout_axes[1].get_subplotspec() is not None):
+                and self.colorbar_ax in self.figure.axes
+                and self.colorbar_ax.get_subplotspec() is not None):
             raise _error("select constrained layout before creating the matrix/colorbar")
         if not self.owned or self.cropped():
             return
         current = tuple(a.get_position(original=True).frozen() for a in self.layout_axes)
         # Honor explicit caller adjustments between draws. Our own allocation
         # is always measured again from the same input, not accumulated.
-        if any(not np.array_equal(a.extents, b.extents) for a, b in zip(current, self.last)):
+        if (len(current) != len(self.last)
+                or any(not np.array_equal(a.extents, b.extents) for a, b in zip(current, self.last))):
             self.baseline = current
             self.subplot = {k: getattr(self.figure.subplotpars, k) for k in self.subplot}
         self.figure.subplotpars.update(**self.subplot)
@@ -186,7 +194,8 @@ class MatrixLayout(Artist):
                     text(prefix + kind + " offset", axis.offsetText)
             for title in (ax.title, ax._left_title, ax._right_title):
                 text(prefix + "title", title)
-        boxes.append(("colorbar", self.layout_axes[1].bbox.frozen()))
+        if self.colorbar_ax in self.figure.axes:
+            boxes.append(("colorbar", self.colorbar_ax.bbox.frozen()))
         legend = self.ax.get_legend()
         if isinstance(legend, MatrixLegend):
             if not legend.get_visible():

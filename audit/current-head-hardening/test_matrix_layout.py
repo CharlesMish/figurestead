@@ -46,16 +46,18 @@ def fixture(long_x=False, long_y=False, statuses=2, long_status=False):
     return data
 
 
-def boxes(fig, ax):
+def boxes(fig, ax, renderer=None):
     """Independent renderer oracle: no implementation-provided decoration list."""
-    renderer = fig.canvas.get_renderer()
+    renderer = renderer or fig.canvas.get_renderer()
     found = []
     def add(name, artist):
         if artist.get_visible() and (not isinstance(artist, Text) or artist.get_text()):
             box = artist.get_window_extent(renderer)
             if box.width and box.height:
                 found.append((name, box))
-    for index, axes in enumerate((ax, ax.images[0].colorbar.ax)):
+    bar = ax.images[0].colorbar
+    axes_to_check = (ax, bar.ax) if bar is not None and bar.ax in fig.axes else (ax,)
+    for index, axes in enumerate(axes_to_check):
         prefix = 'colorbar ' if index else ''
         for axis in (axes.xaxis, axes.yaxis):
             if axis.get_visible():
@@ -75,12 +77,13 @@ def boxes(fig, ax):
     if legend is not None:
         assert legend.get_visible(), 'required status legend absent'
         add('legend', legend)
-    found.append(('colorbar', ax.images[0].colorbar.ax.bbox.frozen()))
+    if bar is not None and bar.ax in fig.axes:
+        found.append(('colorbar', bar.ax.bbox.frozen()))
     return found
 
 
-def assert_contained(test, fig, ax):
-    found = boxes(fig, ax)
+def assert_contained(test, fig, ax, renderer=None):
+    found = boxes(fig, ax, renderer)
     tolerance = 1e-7
     for name, box in found:
         test.assertTrue(np.isfinite(box.extents).all(), name)
@@ -119,6 +122,84 @@ class MatrixLayoutTests(unittest.TestCase):
             fig.savefig(output, format='png')
             self.assertEqual(Image.open(output).size, (1008, 624))
             self.assertEqual(len(ax.get_legend().get_texts()), statuses)
+
+    def test_colorbar_removal_preserves_remaining_decorations_on_first_draw_and_export(self):
+        for drawn, engine, note in itertools.product(
+                (False, True), (None, 'tight', 'constrained'), ('', NOTE)):
+            with self.subTest(drawn=drawn, engine=engine, note=bool(note)):
+                fig, ax = make(engine=engine, note=note)
+                if drawn:
+                    fig.canvas.draw()
+                    assert_contained(self, fig, ax)
+                image, bar = ax.images[0], ax.images[0].colorbar
+                bar.remove()
+                self.assertIsNone(image.colorbar)
+                self.assertIsNone(image.colorbar_cid)
+                self.assertEqual(fig.axes, [ax])
+                counts = (len(fig.artists), len(ax.texts), len(ax.patches))
+                original = fig.draw
+                painted = []
+
+                def checked_draw(renderer):
+                    result = original(renderer)
+                    # Use the actual PNG/SVG renderer and uncropped frame,
+                    # independently of MatrixLayout's decoration collector.
+                    assert_contained(self, fig, ax, renderer)
+                    painted.append(type(renderer).__name__)
+                    return result
+
+                with patch.object(fig, 'draw', checked_draw), patch.object(
+                        bar.ax, 'apply_aspect', side_effect=AssertionError('removed colorbar was measured')):
+                    # Also exercise export as the first operation after removal.
+                    for fmt in ('png', 'svg', 'png', 'svg'):
+                        output = io.BytesIO()
+                        fig.savefig(output, format=fmt)
+                        self.assertTrue(output.getvalue())
+                        if fmt == 'png':
+                            self.assertEqual(Image.open(output).size, (1008, 624))
+                    positions, pixels = [], []
+                    for _ in range(2):
+                        fig.canvas.draw()
+                        positions.append(ax.get_position().extents.copy())
+                        pixels.append(np.asarray(fig.canvas.buffer_rgba()).copy())
+                self.assertGreaterEqual(len(painted), 6)
+                np.testing.assert_array_equal(positions[0], positions[1])
+                np.testing.assert_array_equal(pixels[0], pixels[1])
+                self.assertEqual(len(ax.get_legend().get_texts()), 2)
+                self.assertEqual(counts, (len(fig.artists), len(ax.texts), len(ax.patches)))
+                self.assertEqual(fig.axes, [ax])
+                plt.close(fig)
+
+    def test_colorbar_removal_preserves_capacity_failure_and_caller_axes(self):
+        fig, ax = make()
+        fig.canvas.draw()
+        ax.images[0].colorbar.remove()
+        fig.canvas.draw()
+        assert_contained(self, fig, ax)
+        position = ax.get_position(original=True).frozen()
+        fig.set_size_inches(1, 1)
+        for fmt in ('png', 'svg'):
+            with self.assertRaisesRegex(ValueError, 'categorical_matrix: insufficient decoration space'):
+                fig.savefig(io.BytesIO(), format=fmt)
+            np.testing.assert_array_equal(ax.get_position(original=True).extents, position.extents)
+        fig.set_size_inches(8.4, 5.2)
+        fig.canvas.draw()
+        assert_contained(self, fig, ax)
+
+        external, axes = plt.subplots(1, 2, figsize=(12, 5.2), dpi=120)
+        axes[0].plot([0, 1], [0, 1])
+        _, target = make(ax=axes[1], size=(12, 5.2))
+        target.images[0].colorbar.remove()
+        positions = [a.get_position(original=True).frozen() for a in external.axes]
+        for fmt in ('png', 'svg'):
+            try:
+                external.savefig(io.BytesIO(), format=fmt)
+            except ValueError as error:
+                self.assertRegex(str(error), 'categorical_matrix: insufficient decoration space')
+            else:
+                assert_contained(self, external, target)
+            for a, expected in zip(external.axes, positions):
+                np.testing.assert_array_equal(a.get_position(original=True).extents, expected.extents)
 
     def test_measured_footer_stack_includes_rotated_ticks_legend_and_note(self):
         for engine in (None, 'tight', 'constrained'):
