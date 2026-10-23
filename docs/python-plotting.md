@@ -1,6 +1,6 @@
 # Python plotting reference
 
-This compact reference targets published **figurestead==0.9.0a5**. Each plotter
+This compact reference targets published **figurestead==0.9.0a6**. Each plotter
 below returns `(figure, axes)`. Use `save_figure(figure, "figure.png", dpi=150)`
 from `figurestead` for a transactional single-path export, or Matplotlib's
 `figure.savefig("figure.svg")` for its direct-write behavior. Start with [installation](getting-started.md) and the

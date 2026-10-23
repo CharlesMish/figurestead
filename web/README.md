@@ -1,13 +1,12 @@
 # @figurestead/web experimental public alpha
 
-Preparation candidate `0.9.0-alpha.7` (not yet published). Framework-free scientific figures for the browser,
+Published version `0.9.0-alpha.7`. Framework-free scientific figures for the browser,
 with Canvas and standalone SVG output. Requires Node >=22.22.0;
 repository/release tooling uses patched Node 24.22.1 with bundled npm 11.19.1.
 The Node 22 consumer check uses 22.23.4 / npm 10.9.9; the public engine floor
 remains >=22.22.0. Prefer a maintained, security-patched Node release.
 
-The commands below target this version after publication. For current public
-installation use `0.9.0-alpha.6`; for candidate review install the retained tarball.
+The commands below install the exact published alpha.7 package; npm `alpha` points here, while `latest` intentionally remains alpha.1. Historical packed READMEs may retain preparation-time wording.
 
 ```sh
 npm install --save-exact @figurestead/web@0.9.0-alpha.7
@@ -30,7 +29,7 @@ Accessibility descriptions use the same effective axis labels as the visible
 figure. Plot-relative annotation positions are identified as such, rather than
 reported as data coordinates.
 
-New in the alpha.7 candidate: Figurestead resolves categorical x-axis tick display once for Canvas and SVG.
+New in alpha.7: Figurestead resolves categorical x-axis tick display once for Canvas and SVG.
 Long labels may be rotated and abbreviated to preserve the plot and fit the
 figure; accessible data tables and abbreviated SVG ticks retain the full label.
 Live Canvas resolution uses the actual font metrics; standalone SVG resolution
@@ -40,7 +39,7 @@ with an insufficient-category-space message. Enlarge the host or shorten the
 authored labels; a rejected `setConfig()` leaves the existing figure intact.
 This does not change category values, their ordering, or numeric-axis labels.
 
-The alpha.7 candidate also corrects opt-in monotone interpolation so each
+Alpha.7 also corrects opt-in monotone interpolation so each
 interval stays within its endpoint bounds, including uneven x spacing and
 direction changes. Authored data and the default interpolation policy remain
 unchanged. Compact browser layouts still have bounded text/host capacity.
@@ -171,7 +170,7 @@ See the [release notes](https://github.com/CharlesMish/figurestead/blob/7b9482a9
 
 ## Controller failures
 
-New in the alpha.7 candidate: Figurestead generates compact factual descriptions for core line, scatter,
+New in alpha.7: Figurestead generates compact factual descriptions for core line, scatter,
 and strip-summary figures from their prepared observations and summaries.
 Authored narrative remains separate context, including after `setData`; raw
 tables retain full values. See [factual descriptions](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/factual-descriptions.md)

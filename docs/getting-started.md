@@ -1,16 +1,16 @@
 # Getting started with the published packages
 
-Release snapshot: **2026-10-14 America/Chicago (2026-10-15 UTC)**. Figurestead is an experimental scientific
+Release snapshot: **2026-10-23 (America/Chicago)**. Figurestead is an experimental scientific
 figure system. Start with Python for a static figure or report; use the browser
 package for a Canvas page or browser integration.
 
 | Surface | Exact package | Consumer runtime |
 | --- | --- | --- |
-| Python | `figurestead==0.9.0a5` | Python >=3.10 |
-| Browser | `@figurestead/web@0.9.0-alpha.6` | Node >=22.22.0 |
+| Python | `figurestead==0.9.0a6` | Python >=3.10 |
+| Browser | `@figurestead/web@0.9.0-alpha.7` | Node >=22.22.0 |
 
-The [alpha.6 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6)
-records publication at `56faf759a282d428602d0c02027112f6a508e471` and links the
+The [alpha.7 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7)
+records publication at `7d5d959ad9c4387c445a6b34a8b67a18505ed477` and links the
 verification runs. The Python and browser alpha counters are independent.
 npm `alpha` currently follows alpha.6; `latest` remains alpha.1. Exact versions
 select this release explicitly. Preserve your dependency lockfile or environment
@@ -38,11 +38,11 @@ py -3 -m venv .venv
 Use `.venv\Scripts\python.exe` in place of `python` below; activation is optional.
 
 ```sh
-python -m pip install figurestead==0.9.0a5
+python -m pip install figurestead==0.9.0a6
 python -c "from importlib.metadata import version; print(version('figurestead'))"
 ```
 
-The version check should print `0.9.0a5`. Save this as `first_figure.py`:
+The version check should print `0.9.0a6`. Save this as `first_figure.py`:
 
 ```python
 from figurestead import line
@@ -82,7 +82,7 @@ npm ls @figurestead/web
 node --input-type=module -e 'import { FIGURESTEAD_PACKAGE_VERSION } from "@figurestead/web"; console.log(FIGURESTEAD_PACKAGE_VERSION)'
 ```
 
-Both checks should identify `0.9.0-alpha.6`. Retain `package-lock.json`.
+Both checks should identify `0.9.0-alpha.7`. Retain `package-lock.json`.
 The browser API consumes a complete normalized contract; the Python convenience
 plotter's short argument list is not a browser API.
 
@@ -103,17 +103,11 @@ plotter's short argument list is not a browser API.
 
 ## Published release versus source work
 
-This guide targets published a5/alpha.6 from PR #59. It includes `save_figure`,
-measured Python note/count layout, histogram exclusion warnings and browser band
-repairs. [PR #60](https://github.com/CharlesMish/figurestead/pull/60), merged at
-`2df0023cb81a7b04c231ad889306f1dc4c4f0a20`, subsequently repaired monotone
-interpolation, prepared factual descriptions / auxiliary compiler rejection, and
-browser category ticks. Those changes are not in the registry packages.
-A source merge alone does not change an installed release, and the checkout's
-unchanged version string does not prove equivalence to the published bytes.
+This guide targets **published a6/alpha.7** from PR #65. It carries forward a5/alpha.6's `save_figure`, measured Python note/count layout, histogram exclusion warnings and browser bands. It now also includes PR #60's opt-in monotone interpolation repair, prepared factual descriptions and auxiliary compiler rejection, plus shared browser category-tick fitting; PR #62's Python line-marker optimization; and PR #63's complete categorical-matrix decoration containment.
 
-For Python text, read the [MathText and literal-dollar note](python-plotting.md#literal-dollars-and-intentional-mathtext)
-before using monetary values, especially in wrapped subtitles.
+A historical release, earlier source checkout and a newly published package are distinct authorities. Record exact versions and import paths rather than assuming that matching version strings imply identical historical bytes. The a4/alpha.5 example gallery intentionally remains historical.
+
+For Python text, read the [MathText and literal-dollar note](python-plotting.md#literal-dollars-and-intentional-mathtext) before using monetary values, especially in wrapped subtitles.
 
 ## Documentation and agent version context
 

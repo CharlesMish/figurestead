@@ -4,29 +4,17 @@ This directory defines the retained-candidate lifecycle for
 `@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
 already-published first alpha used this repaired process.
 
-## Unpublished alpha.7 preparation
+## Current published alpha.7 (2026-10-23 America/Chicago)
 
-The alpha.7 candidate uses the patched Node 24.22.1 / npm 11.19.1 release
-toolchain. Node 22.23.4 / npm 10.9.9 exercises the unchanged public engine floor
-`>=22.22.0`; Vite 8.2.4 is development/consumer-test tooling, not a package runtime
-dependency. See [candidate notes](../notes/0.9.0a6-web-alpha.7.md).
+`@figurestead/web@0.9.0-alpha.7` is public from the exact independently reviewed retained archive under `0.9.0-alpha.7`, at accepted protected-main commit `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65). npm `alpha` points to alpha.7 and `latest` remains alpha.1. The [coordinated GitHub release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7) records the reviewed download hash and source bindings.
 
-The new version directory contains only `SHA256SUMS.txt` and `dist/`. Source-input,
-archive-member and toolchain records live separately under `release/reviews`.
-Publication requires exact retained bytes, the accepted SHA-256, an authenticated
-protected-main commit, OIDC and explicit confirmation:
-`publish @figurestead/web 0.9.0-alpha.7 with tag alpha from accepted tarball`.
-Do not publish during preparation or move `latest`.
+[Publication run 39905884506](https://github.com/CharlesMish/figurestead/actions/runs/39905884506) succeeded. Its registry readback converged on the last bounded attempt, with only one publish command. Public bytes, integrity, provenance and consumers were verified. Historical candidate archives and package-embedded preparation README bytes remain unchanged.
 
-## Current published alpha.6 (2026-10-14 America/Chicago; 2026-10-15 UTC)
+Release tooling uses patched Node 24.22.1 / npm 11.19.1 and checks Node 22.23.4 / npm 10.9.9 against the existing public engine floor `>=22.22.0`. Vite 8.2.4 is development/test tooling, not a Figurestead runtime dependency. Future publication still requires exact retained bytes, protected main, accepted hash, OIDC and confirmation. Do not repeat a completed publication.
 
-`@figurestead/web@0.9.0-alpha.6` is public from the exact corrected retained
-archive under `0.9.0-alpha.6`. npm `alpha` points to alpha.6; `latest` intentionally
-remains alpha.1. The [coordinated release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6)
-targets PR #59 merge `56faf759a282d428602d0c02027112f6a508e471` and records the
-public hash and installed-consumer verification. Frozen PR #57's original bytes
-remain separate. Preparation notes, ledgers and the packed README are unchanged.
-PR #60's subsequent source corrections are not in this tarball.
+## Historical published alpha.6 (2026-10-14 America/Chicago)
+
+`@figurestead/web@0.9.0-alpha.6` was published from the retained archive under `0.9.0-alpha.6` at PR #59 merge `56faf759a282d428602d0c02027112f6a508e471`. At publication, npm `alpha` pointed to alpha.6 and `latest` remained alpha.1. Its [coordinated release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6), preparation notes and package-embedded READMEs remain historical. Frozen PR #57's earlier rejected candidate bytes are not this release.
 
 ## Historical published alpha.5 (2026-10-04)
 

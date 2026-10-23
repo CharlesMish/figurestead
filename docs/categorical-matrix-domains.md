@@ -80,7 +80,7 @@ This is not universal finite-domain qualification. The preexisting
 Matplotlib can lose cell colors despite a representable span, and current
 Matplotlib can emit overflow warnings. This repair does not change that case.
 
-## Complete decoration containment — a6 preparation candidate
+## Complete decoration containment — published a6
 
 The Python categorical-matrix route measures rotated category ticks, axis
 labels, title/subtitle, the colorbar and its label, the required status legend,
