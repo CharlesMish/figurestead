@@ -6,9 +6,7 @@ strip-summary and heatmap figures with explicit labels and themes.
 ## Python 0.9.0a6
 
 Requires Python >=3.10, Matplotlib >=3.7, NumPy >=1.24 and Pillow >=10.
-Preparation candidate: the command below is for this version after publication.
-For the currently published release, use Python 0.9.0a5. To review now, install
-the exact retained candidate wheel or sdist. In a fresh virtual environment:
+Published on PyPI from the independently reviewed retained a6 artifacts. In a fresh virtual environment:
 
 ```sh
 python -m pip install figurestead==0.9.0a6
@@ -43,7 +41,7 @@ Numeric NaN/infinity category identities reject before string coercion; literal
 string labels remain valid. Appended labeled lines retain truthful accumulated
 legends; anonymous scatter/strip layers do not acquire scientific labels.
 
-New in the a6 candidate: opt-in monotone interpolation preserves each interval's
+New in published a6: opt-in monotone interpolation preserves each interval's
 endpoint bounds; ordinary line drawing limits marker-protection work to nearby
 candidates while preserving marker interiors and continuous authored rhythm.
 The categorical-matrix extension measures all required decorations, including

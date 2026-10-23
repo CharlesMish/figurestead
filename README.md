@@ -2,29 +2,13 @@
 
 Figurestead is an experimental scientific figure system with Python and framework-free browser surfaces. It shares figure-contract and theme semantics across runtimes while keeping scientific output deterministic and inspectable.
 
-Published October 14, 2026 (America/Chicago; October 15 UTC): Python `figurestead==0.9.0a5` and browser `@figurestead/web@0.9.0-alpha.6` ([alpha.6 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6)). The counters are independent. npm `alpha` points to alpha.6; `latest` intentionally remains alpha.1. The [retained release records](release/README.md) bind the exact published artifacts to `56faf759a282d428602d0c02027112f6a508e471` (PR #59).
+Published October 23, 2026 (America/Chicago): Python `figurestead==0.9.0a6` and browser `@figurestead/web@0.9.0-alpha.7` ([alpha.7 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7)). The package counters are independent. npm `alpha` points to alpha.7; `latest` intentionally remains alpha.1. The [retained release records](release/README.md) bind these exact published artifacts to protected-main release commit `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65).
 
-## Current published release: a5 / alpha.6
+## Current published release: a6 / alpha.7
 
-This release adds measured note/count placement, safe path exports with
-`save_figure`, histogram exclusion warnings, browser band rendering and scene-mark
-coverage, plus corrections to category admission, accumulated Python legends and
-browser accessibility. See the [published changes and limits](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.6).
+This alpha ships PR #60's opt-in shape-preserving monotone interpolation, factual browser descriptions and measured categorical ticks; PR #62's Python line-marker performance correction; and PR #63's complete categorical-matrix decoration containment. These preserve source observations and the existing schema/API while improving faithful presentation and explicit failure behavior. Read the [published changes and limits](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7) and [current-source documentation](docs/README.md).
 
-## Preparation candidate: a6 / alpha.7
-
-The unpublished candidate incorporates accepted PR #60's opt-in monotone
-interpolation, prepared factual descriptions / auxiliary compiler boundary and
-shared browser category-tick corrections; PR #62's Python line-performance
-repair; and PR #63's complete matrix-decoration containment. See the
-[candidate changes and limits](release/notes/0.9.0a6-web-alpha.7.md).
-PR #61 reconciled living documentation, not a new package capability. PR #64
-patched release/test tooling and Vite without changing consumer compatibility.
-
-Candidate bytes require independent exact-artifact review and separate
-integration/publication authorization. The public installs below remain
-**a5 / alpha.6** until publication succeeds. Historical releases, images and
-source ledgers retain their original authority.
+PR #61 reconciled public documentation; PR #64 patched development and publishing tooling, not Figurestead's consumer dependency floor. Historical a5/alpha.6 artifacts, gallery generations and original preparation records remain version-bound. No new universal contrast, accessibility, print or high-series identity qualification is claimed.
 
 ## Start here
 
@@ -36,7 +20,7 @@ checks, and the Python/browser capability boundary.
 ### Python
 
 ```bash
-python -m pip install figurestead==0.9.0a5
+python -m pip install figurestead==0.9.0a6
 python -c "from importlib.metadata import version; print(version('figurestead'))"
 ```
 
@@ -63,7 +47,7 @@ direct-write API. See [safe exports and footer recovery](docs/python-layout-and-
 ### Browser
 
 ```bash
-npm install --save-exact @figurestead/web@0.9.0-alpha.6
+npm install --save-exact @figurestead/web@0.9.0-alpha.7
 npm ls @figurestead/web
 ```
 
@@ -78,11 +62,11 @@ Python and browser surfaces share normalized figure-contract vocabulary and sele
 
 Default line series combine color with persistent open **circle (S1), square (S2), and upright triangle (S3)** markers and matching line-and-marker legends. Line rhythm remains an independent semantic channel. Python callers can carry `series_slots=[1, 2]` when rebuilding filtered S2/S3 rows; browser `setData` retains established keyed identity through supported filtering/reordering and partial style overrides. `setConfig` replaces the contract.
 
-Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.6/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
+Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.7/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
 
 Opt in with Python `line(..., direct_labels=True)` or browser `style: { directLabels: true }`. Direct labels reuse the actual body marker identity beside the traces. V1 covers ordinary one-panel, 2–3-series line figures with single-line printable ASCII labels. Unsupported or insufficient layouts fall back atomically to the ordinary legend. This treatment does not support Unicode, multiline or math interpretation; printable ASCII math punctuation is literal. Active browser transitions use ordinary treatment until settled, and exports without trustworthy measurement retain the ordinary legend.
 
-See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/v0.9.0-alpha.6/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.6/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.6/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
+See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/v0.9.0-alpha.7/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.7/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/v0.9.0-alpha.7/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
 
 ## Features carried forward from a3 / alpha.4
 
@@ -97,7 +81,7 @@ See [line semantics and limits](docs/line-series-semantics.md). These features a
 
 ## Retained a4 / alpha.5 gallery
 
-[Browse six a4/alpha.5 examples](https://charlesmish.github.io/figurestead/#published-gallery) or [run their exact source](examples/published-gallery/README.md). These version-bound examples remain a4/alpha.5 output, not fresh renders of a5/alpha.6 or later source.
+[Browse six a4/alpha.5 examples](https://charlesmish.github.io/figurestead/#published-gallery) or [run their exact source](examples/published-gallery/README.md). These version-bound examples remain a4/alpha.5 output, not fresh renders of a6/alpha.7.
 
 ## Figurestead at a glance
 

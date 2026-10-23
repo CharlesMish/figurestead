@@ -26,11 +26,11 @@ ACCEPTED_FILES = {
     "published-a4-alpha5/manifest.json": "7798e95007b1ceff342b396bde14c66ecd2719c73732ad66f1b9196b54ecf40a",
     "favicon.svg": "4e51267c44e3f6b0697c3fd881b1faf8f70bdb9b56a64acce4d866eb89a42f2e",
     "current-alpha/manifest.json": "f59b8f0215a844444223bf9845f96c1154259d043822f3aa8bd6ea54f793563b",
-    "index.html": "da5554b77d967d1f787afa1bf50fa20a253e7340afa7c85963849d80bc308315",
+    "index.html": "f1795509490c62df9381e012fd074cd8a86a3634965013cd6cb0184ee2b65963",
     "earlier-alpha.html": "61071c661b27defaa208f2e91d57128892d306c91c8730668d4de37faf413cfd",
     "evidence/index.html": "b2a7b8a1a66f9d908951e3f82b19aa874d6e1eec0a9fa0ae0aca1e15d957a077",
     "styles.css": "45c701c26fe73147f65fc194c2edc481616f8f5d5b2ebb24142d62792ea72cde",
-    "README.md": "cc478cf62ea802b813c5ae4a336f73dd0b1d5de78d0dff92a1ec852a9441abd7",
+    "README.md": "0182c477bfd577ea1ec36fded710fd5bd2140a448bb349e5b1f25e69eafe42c8",
     "public-alpha-set.json": "9a711b915d1d51f4ec28c3f13692a07df3d44196729ff4bb1fce47ac4f37c952",
     "WEB_ASSET_MANIFEST.json": "f5865fc6cc06703358e6cd859fb88c8ed950c17c1d96041413d81fab91522d07",
 }

@@ -1,7 +1,6 @@
 # Current facts and authored context
 
-Begins with the unpublished alpha.7 candidate. The retained alpha.6 packages and
-their historical outputs remain unchanged.
+Published in browser alpha.7. The retained alpha.6 packages and their historical outputs remain unchanged.
 
 Browser core line, scatter and strip-summary descriptions report current finite
 observations. Line/scatter ranges are **observed data ranges**, not fitted-curve
