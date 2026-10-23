@@ -4,6 +4,20 @@ This directory defines the retained-candidate lifecycle for
 `@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
 already-published first alpha used this repaired process.
 
+## Unpublished alpha.7 preparation
+
+The alpha.7 candidate uses the patched Node 24.22.1 / npm 11.19.1 release
+toolchain. Node 22.23.4 / npm 10.9.9 exercises the unchanged public engine floor
+`>=22.22.0`; Vite 8.2.4 is development/consumer-test tooling, not a package runtime
+dependency. See [candidate notes](../notes/0.9.0a6-web-alpha.7.md).
+
+The new version directory contains only `SHA256SUMS.txt` and `dist/`. Source-input,
+archive-member and toolchain records live separately under `release/reviews`.
+Publication requires exact retained bytes, the accepted SHA-256, an authenticated
+protected-main commit, OIDC and explicit confirmation:
+`publish @figurestead/web 0.9.0-alpha.7 with tag alpha from accepted tarball`.
+Do not publish during preparation or move `latest`.
+
 ## Current published alpha.6 (2026-10-14 America/Chicago; 2026-10-15 UTC)
 
 `@figurestead/web@0.9.0-alpha.6` is public from the exact corrected retained

@@ -1,7 +1,7 @@
 # Current facts and authored context
 
-Current-source behavior; this does not relabel the retained alpha.6 packages or
-their historical outputs.
+Begins with the unpublished alpha.7 candidate. The retained alpha.6 packages and
+their historical outputs remain unchanged.
 
 Browser core line, scatter and strip-summary descriptions report current finite
 observations. Line/scatter ranges are **observed data ranges**, not fitted-curve

@@ -13,13 +13,19 @@ PyPI, npm and GitHub. See [retained release records](release/README.md) and
 [current package onboarding](docs/getting-started.md). Schema 0.4, renderer API 1,
 dependency floors and the private tooling version are unchanged.
 
-## Source after publication
+## Unpublished preparation candidate: a6 / alpha.7
 
-Main at `2df0023cb81a7b04c231ad889306f1dc4c4f0a20` includes PR #60's monotone
-interpolation repair, prepared factual descriptions / auxiliary compiler boundary,
-and shared browser category-tick layout. These are unreleased source changes;
-they do not redefine the a5/alpha.6 package bytes. Source version strings alone
-cannot distinguish these states. No next candidate identity is assigned.
+Candidate identities are Python `0.9.0a6`, browser `0.9.0-alpha.7` and future
+coordinated tag `v0.9.0-alpha.7`, prepared from protected main `7b9482a939da77bfc0d256682707ef03ee02332a`
+after accepted PRs #60–#64. Registry and tag availability were checked before
+preparation. They are not published versions; availability must be rechecked
+immediately before any separately authorized publication.
+
+See [candidate notes](release/notes/0.9.0a6-web-alpha.7.md). Schema 0.4,
+renderer API 1 and consumer dependency floors remain unchanged. npm publication
+is intended for `alpha`; `latest` must remain unchanged. A producing commit binds
+package inputs, and a later retaining commit binds the exact archives and ledgers.
+Neither source version strings nor a successful local build establish publication.
 
 ## Historical a4 / alpha.5 release
 

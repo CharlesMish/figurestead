@@ -1,0 +1,2 @@
+f2bf81b9a8fbfc4a55b718fbb528e83aa9516d3535458f54cb6dfe9a89657466  figurestead-0.9.0a6-py3-none-any.whl
+a1c6226df334c23f4dc8c005e0119e440a7429a7fe61d7af43730a6c4172d565  figurestead-0.9.0a6.tar.gz

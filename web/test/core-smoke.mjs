@@ -31,7 +31,7 @@ const contract = {
 
 const cases = [
   () => {
-    assert.equal(FIGURESTEAD_PACKAGE_VERSION, "0.9.0-alpha.6");
+    assert.equal(FIGURESTEAD_PACKAGE_VERSION, "0.9.0-alpha.7");
     assert.deepEqual(CORE_RENDERERS.map((renderer) => renderer.key), ["line", "scatter", "strip_summary"]);
   },
   () => {

@@ -60,6 +60,10 @@ class HistoricalA4Integrity(CandidateIntegrity):
     version = '0.9.0a4'
 
 
+class HistoricalA5Integrity(CandidateIntegrity):
+    version = '0.9.0a5'
+
+
 class SourceInventory(unittest.TestCase):
     version = '0.9.0a3'
     def setUp(self):
@@ -117,12 +121,12 @@ class HistoricalA4SourceInventory(SourceInventory):
         })
 
 
-class CurrentSourceInventory(HistoricalA4SourceInventory):
-    version = VERSION
+class HistoricalA5SourceInventory(HistoricalA4SourceInventory):
+    version = '0.9.0a5'
 
     def test_new_docs_are_bound_without_redefining_a4(self):
         previous = source_inputs(self.root, '0.9.0a4')
-        current = source_inputs(self.root, VERSION)
+        current = source_inputs(self.root, '0.9.0a5')
         self.assertEqual(set(current) - set(previous), {
             'docs/package-python.md', 'docs/python-layout-and-comparison.md',
             'docs/browser-scene-marks.md', 'examples/python-histogram-small-multiples.py',
@@ -133,6 +137,17 @@ class CurrentSourceInventory(HistoricalA4SourceInventory):
         (self.root / 'docs/package-python.md').write_text('changed')
         with self.assertRaisesRegex(ValueError, 'source input identity'):
             verify(self.root, check_source=True, version=self.version)
+
+
+class CurrentSourceInventory(HistoricalA5SourceInventory):
+    version = VERSION
+
+    def test_new_docs_are_bound_without_redefining_a5(self):
+        previous = source_inputs(self.root, '0.9.0a5')
+        current = source_inputs(self.root, VERSION)
+        self.assertEqual(set(current) - set(previous), {
+            'docs/factual-descriptions.md', 'release/notes/0.9.0a6-web-alpha.7.md',
+        })
 
 
 if __name__ == '__main__':unittest.main()
