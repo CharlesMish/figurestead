@@ -12,7 +12,7 @@ package for a Canvas page or browser integration.
 The [alpha.7 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7)
 records publication at `7d5d959ad9c4387c445a6b34a8b67a18505ed477` and links the
 verification runs. The Python and browser alpha counters are independent.
-npm `alpha` currently follows alpha.6; `latest` remains alpha.1. Exact versions
+npm `alpha` currently follows alpha.7; `latest` remains alpha.1. Exact versions
 select this release explicitly. Preserve your dependency lockfile or environment
 record as well; the package pin alone does not fix every dependency version.
 
