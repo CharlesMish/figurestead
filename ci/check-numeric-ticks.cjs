@@ -6,6 +6,7 @@ const apiPath = process.env.FIGURESTEAD_TICK_API || "/web/src/index.js";
 const output = process.env.FIGURESTEAD_TICK_OUTPUT;
 (async () => {
   const results = []; let assertions = 0;
+  const rawMetrics = [];
   const check = (condition, message) => { assertions++; assert.ok(condition, message); };
   for (const [engine, type] of Object.entries({ chromium, firefox })) {
     const browser = await type.launch({ headless: true });
@@ -83,8 +84,42 @@ const output = process.env.FIGURESTEAD_TICK_OUTPUT;
           fs.mkdirSync(output,{recursive:true}); await page.locator("canvas").screenshot({ path:path.join(output,`${engine}-${fixture.name}.png`) });
         }
       }
+      const raw = await page.evaluate(async ({ apiPath }) => {
+        const root = apiPath.slice(0, apiPath.lastIndexOf("/") + 1);
+        const { drawAxes } = await import(root + "marks.js"), { drawTemporalAxes } = await import(root + "extensions/temporal/shared.js");
+        const theme = (await (await fetch("/src/figurestead/themes/slipware.json")).json()).themes.slipware;
+        const canvas = document.createElement("canvas"); canvas.width = 1000; canvas.height = 600;
+        const ctx = canvas.getContext("2d"), rows = [], t = Date.UTC(2024, 2, 1);
+        const config = { theme, profile: { gridX: false, gridY: false }, spec: {} };
+        const layout = { width: 1000, height: 600, scale: 1, font: { axis: 12 }, plot: { left: 50, right: 900, top: 80, bottom: 500 } };
+        for (const route of ["ordinary", "temporal"]) for (const align of ["left", "right", "center"]) for (const baseline of ["alphabetic", "bottom"]) {
+          ctx.clearRect(0, 0, 1000, 600); ctx.font = "10px sans-serif"; ctx.textAlign = align; ctx.textBaseline = baseline;
+          const scales = { x: v => route === "ordinary" ? 100 + (v - 2000) * 40 : 100 + (v - t) / 27000,
+            y: v => 500 - (v - 1040) * 10, xDomain: [t, t + 21600000], xTicks: [t, t + 10800000, t + 21600000], yTicks: [1040, 1060] };
+          const draw = geometry => route === "ordinary"
+            ? drawAxes(ctx, { config, layout: geometry, scales, xTicks: [2000, 2010, 2020], yTicks: scales.yTicks })
+            : drawTemporalAxes(ctx, { contract: config, layout: geometry, scales });
+          draw(layout);
+          const restored = ctx.textAlign === align && ctx.textBaseline === baseline && ctx.font === "10px sans-serif";
+          const png = canvas.toDataURL(); let rejected = false;
+          try { draw({ ...layout, plot: { ...layout.plot, left: 5 } }); } catch(e) { rejected = /insufficient y numeric tick space/.test(e.message); }
+          rows.push({ route, align, baseline, png, restored, rejected,
+            rejectedStateRestored: ctx.textAlign === align && ctx.textBaseline === baseline && ctx.font === "10px sans-serif" });
+        }
+        const api = await import(apiPath), { numericTickContract } = await import("/ci/fixtures/numeric-ticks.js");
+        let fractionalError;
+        try { api.exportFigureSvg(numericTickContract(theme, { type: "time", domain: [0, 2] })); }
+        catch(e) { fractionalError = e.message; }
+        return { rows, fractionalError };
+      }, { apiPath });
+      check(/fractional-millisecond formatting is unsupported/.test(raw.fractionalError), `${engine}: reject distinct sub-millisecond ticks rather than truncate`);
+      for (const row of raw.rows) {
+        check(row.restored && row.rejected && row.rejectedStateRestored, `${engine}/${row.route}/${row.align}/${row.baseline}: inherited Canvas text state restored`);
+        check(row.png === raw.rows.find(r => r.route === row.route).png, `${engine}/${row.route}: caller alignment must not change capacity or output`);
+        const { png, ...record } = row; rawMetrics.push({ engine, ...record });
+      }
     } finally { await browser.close(); }
   }
-  if(output){fs.mkdirSync(output,{recursive:true});fs.writeFileSync(path.join(output,'numeric-ticks.json'),JSON.stringify({assertions,results},null,2));}
-  console.log(JSON.stringify({suite:"native-numeric-ticks",cases:results.length,assertions,result:"PASS"}));
+  if(output){fs.mkdirSync(output,{recursive:true});fs.writeFileSync(path.join(output,'numeric-ticks.json'),JSON.stringify({assertions,results,rawMetrics},null,2));}
+  console.log(JSON.stringify({suite:"native-numeric-ticks",cases:results.length,rawMetricCases:rawMetrics.length,assertions,result:"PASS"}));
 })().catch(error=>{console.error(error);process.exitCode=1;});

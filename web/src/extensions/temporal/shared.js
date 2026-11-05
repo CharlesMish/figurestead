@@ -135,10 +135,11 @@ export function postMarksProgress(progress, prepared, timeline) {
 }
 
 export function drawTemporalAxes(context, { contract, layout, scales, plot = layout.plot, yLabels = null, showX = true, showY = true }) {
-  const previousFont = context.font;
+  const previousText = { font: context.font, textAlign: context.textAlign, textBaseline: context.textBaseline };
   let numeric;
   try {
     context.font = `${layout.font.axis}px ${FONT_STACK}`;
+    context.textAlign = "left"; context.textBaseline = "alphabetic";
     const xs = formatTimeTicks(scales.xTicks, scales.xDomain), ys = formatNumericTicks(scales.yTicks);
     numeric = resolveNumericTickDisplays({ ...scales, plot, xType: "time", yType: yLabels ? "band" : "linear",
       xTicks: showX ? scales.xTicks.map((value, i) => ({ value, label: xs[i] })) : [],
@@ -147,7 +148,7 @@ export function drawTemporalAxes(context, { contract, layout, scales, plot = lay
       text: { ...layout.text, xTickY: layout.text?.xTickY ?? plot.bottom + 9 * layout.scale,
         xTickBaselineY: layout.text?.xTickBaselineY ?? plot.bottom + 9 * layout.scale + layout.font.axis * .78 } },
     contract.panelId ?? "axes", text => normalizedMetric(context.measureText ? s => context.measureText(s) : null, text, layout.font.axis));
-  } finally { context.font = previousFont; }
+  } finally { Object.assign(context, previousText); }
   context.save();
   context.lineWidth = Math.max(0.5, 0.6 * layout.scale);
   context.strokeStyle = contract.theme.grid;

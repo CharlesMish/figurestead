@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { compileTerminalScene, resolveTerminalScene, resolvedSceneToSvg, timeTicks, formatTimeTick } from "../src/index.js";
+import { compileTerminalScene, resolveTerminalScene, resolvedSceneToSvg, exportFigureSvg, timeTicks, formatTimeTick } from "../src/index.js";
 import { formatNumericTicks, formatTimeTicks, ticks } from "../src/scales.js";
 import { drawAxes } from "../src/marks.js";
 import { drawTemporalAxes } from "../src/extensions/temporal/shared.js";
@@ -49,6 +49,13 @@ assert.equal(Date.parse(formatTimeTick(instant + 123)), instant + 123);
 assert.deepEqual(formatTimeTicks([instant, instant]), ["2024-03", "2024-03"]);
 // Explicit non-goal: preserve the independently reported generator defect.
 assert.deepEqual(timeTicks([instant, instant + 4], 5), Array(5).fill(instant));
+// Unlike the deferred epoch-rounding defect, these coordinates are distinct.
+// Date cannot faithfully format them: reject instead of silently truncating.
+assert.deepEqual(timeTicks([0, 2], 5), [0, .5, 1, 1.5, 2]);
+for (const value of [.5, -.5, 1.5]) assert.throws(() => formatTimeTick(value), /fractional-millisecond formatting is unsupported/);
+const subMillisecond = numericTickContract(theme, { type: "time", domain: [0, 2] });
+assert.throws(() => resolveTerminalScene(compileTerminalScene(subMillisecond)), /fractional-millisecond formatting is unsupported/);
+assert.throws(() => exportFigureSvg(subMillisecond), /fractional-millisecond formatting is unsupported/);
 const contract = numericTickContract(theme, NUMERIC_TICK_CASES.find(f => f.name === "years"));
 assert.throws(() => resolveTerminalScene(compileTerminalScene(contract), { width: 320, height: 360,
   measureText: text => ({ width: text.length * 100, actualBoundingBoxAscent: 10, actualBoundingBoxDescent: 2 }) }),

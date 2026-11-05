@@ -83,10 +83,11 @@ export function drawScopePoint(context, state, { color, edge = null, radius, tra
 export function drawAxes(context, { config, layout, scales, xTicks, yTicks, xCategories = null }) {
   const { theme, profile, spec } = config;
   const { plot, font } = layout;
-  const previousFont = context.font;
+  const previousText = { font: context.font, textAlign: context.textAlign, textBaseline: context.textBaseline };
   let numeric;
   try {
     context.font = `${font.axis}px ${FONT_STACK}`;
+    context.textAlign = "left"; context.textBaseline = "alphabetic";
     const xLabels = formatNumericTicks(xTicks), yLabels = formatNumericTicks(yTicks);
     numeric = resolveNumericTickDisplays({ ...scales, plot, xType: xCategories ? "band" : "linear", yType: "linear",
       xTicks: xTicks.map((value, i) => ({ value, label: xLabels[i] })), yTicks: yTicks.map((value, i) => ({ value, label: yLabels[i] })) },
@@ -94,7 +95,7 @@ export function drawAxes(context, { config, layout, scales, xTicks, yTicks, xCat
       text: { ...layout.text, xTickY: layout.text?.xTickY ?? plot.bottom + 10 * layout.scale,
         xTickBaselineY: layout.text?.xTickBaselineY ?? plot.bottom + 10 * layout.scale + font.axis * .78 } },
     config.panelId ?? "axes", text => normalizedMetric(context.measureText ? s => context.measureText(s) : null, text, font.axis));
-  } finally { context.font = previousFont; }
+  } finally { Object.assign(context, previousText); }
   context.save();
   context.lineWidth = Math.max(0.5, 0.6 * layout.scale);
   if (profile.gridY) {

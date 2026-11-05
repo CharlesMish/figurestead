@@ -12,6 +12,14 @@ includes time, and `Z` makes its UTC interpretation explicit. Longer ISO labels
 can use two lines at the date/time boundary; joining those lines gives the full
 resolved label. No local-time conversion is introduced.
 
+Fractional-millisecond numeric tick coordinates cannot be faithfully formatted by
+JavaScript Date. They now raise `RangeError` explicitly rather than silently
+truncating distinct coordinates to the same timestamp. For example, the existing
+generator produces distinct half-millisecond ticks on `[0, 2]`; those coordinates
+are preserved, but their unsupported formatting rejects. This is separate from
+the repeated-coordinate generator defect below; sub-millisecond UTC formatting
+would require its own design.
+
 Canvas and SVG consume the same measured numeric text plan. Numeric ticks do not
 pass through categorical-label or legend abbreviation, and Canvas does not
 compress them with `fillText`'s optional maximum width. Full text participates in

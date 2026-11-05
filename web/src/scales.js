@@ -39,6 +39,9 @@ function tickSpacing(values) {
 
 export function formatTimeTicks(values, domain = null) {
   const numeric = values.map(value => parseTime(value));
+  numeric.forEach((value, index) => {
+    if (!Number.isInteger(value)) throw new RangeError(`time tick[${index}]: UTC tick labels require integer-millisecond coordinates; fractional-millisecond formatting is unsupported`);
+  });
   const spacing = tickSpacing(numeric);
   const interval = Number.isFinite(spacing) ? spacing
     : domain ? Math.abs(parseTime(domain[1]) - parseTime(domain[0])) : Infinity;
@@ -58,9 +61,6 @@ export function formatTimeTicks(values, domain = null) {
     const labels = iso.map(candidates[precision]);
     if (labels.every((label, i) => Date.parse(label) === numeric[i])) return labels;
   }
-  // Date has millisecond precision. This retains the prior Date interpretation
-  // for fractional milliseconds; the independent tick-generator issue is not
-  // repaired, deduplicated, or hidden here.
   return iso;
 }
 
