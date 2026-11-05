@@ -4,11 +4,12 @@ import { FiguresteadConfigError } from "./schema.js";
 import { planDirectLabels } from "./direct-labels.js";
 import { lineMarkerGeometry } from "./line-identity.js";
 import { deriveFigureLayout } from "./figure-layout.js";
-import { refineScientificLayout } from "./scientific-layout.js";
+import { resolveNumericTickDisplays } from "./numeric-ticks.js";
+import { refineScientificLayout, normalizedMetric } from "./scientific-layout.js";
 import { resolveCategoryTickDisplays } from "./category-ticks.js";
 import { markMotionState } from "./motion-plan.js";
 import { monotoneSegmentControls } from "./renderers/line.js";
-import { bandScale, formatTick, formatTimeTick, linearScale, timeScale, ticks, timeTicks } from "./scales.js";
+import { bandScale, formatNumericTicks, formatTimeTicks, linearScale, timeScale, ticks, timeTicks } from "./scales.js";
 
 export const RESOLVED_SCENE_VERSION = "figurestead.resolved-scene/1";
 export const RESOLVED_RENDERERS = Object.freeze([
@@ -79,7 +80,8 @@ function numericScale(type, domain, range) {
 
 function numericTicks(type, domain) {
   const values = type === "time" ? timeTicks(domain, 5) : ticks(domain, 5);
-  return values.map((value) => ({ value, label: type === "time" ? formatTimeTick(value, domain) : formatTick(value) }));
+  const labels = type === "time" ? formatTimeTicks(values, domain) : formatNumericTicks(values);
+  return values.map((value, i) => ({ value, label: labels[i] }));
 }
 
 function resolveAxes(panel, layout, plotOverride = null) {
@@ -303,6 +305,7 @@ export function resolveTerminalScene(scene, options = {}) {
     else if (panel.renderer === "temporal_coverage") { const coverage = coverageGeometry(panel, resolvedLayout, radius); marks = coverage.marks; axes = coverage.axes; plots = coverage.plots; }
     else if (["interval_comparison", "strip_summary", "temporal_observations", "paired_points", "reference_improvement"].includes(panel.renderer)) marks = extensionGeometry(panel, axes, resolvedLayout, radius);
     else marks = fallbackPointGeometry(panel, axes, radius);
+    axes = resolveNumericTickDisplays(axes, resolvedLayout, panel.id, text => normalizedMetric(options.measureText, text, resolvedLayout.font.axis));
     const evidenceFrame = cloneRect(plots ? resolvedLayout.plot : (axes.plot ?? resolvedLayout.plot));
     return { ...panel, layout: resolvedLayout, axes, plots, evidenceFrame, marks, resolved: isResolvedRenderer(panel.renderer) };
   });

@@ -1,4 +1,5 @@
 import { planCategoryTicks } from "./category-ticks.js";
+import { numericTickMetric } from "./numeric-ticks.js";
 
 const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
 
@@ -12,7 +13,7 @@ function fallbackMetric(text, fontSize) {
   };
 }
 
-function normalizedMetric(measureText, text, fontSize) {
+export function normalizedMetric(measureText, text, fontSize) {
   const measured = measureText?.(String(text), fontSize) ?? fallbackMetric(text, fontSize);
   const ascent = measured.ascent ?? measured.actualBoundingBoxAscent ?? fontSize * 0.78;
   const descent = measured.descent ?? measured.actualBoundingBoxDescent ?? fontSize * 0.22;
@@ -35,7 +36,7 @@ function annotationGaps(scale) {
 
 function xTickDepth(axes, plot, metric) {
   const slot = axes.x.step?.() ?? Math.max(40, (plot.right - plot.left) / Math.max(1, axes.xTicks.length));
-  const metrics = axes.xTicks.map((tick) => metric(tick.label));
+  const metrics = axes.xTicks.map((tick) => axes.xType === "band" ? metric(tick.label) : numericTickMetric(tick, axes.xType, metric));
   const rotate = axes.xType === "band" && metrics.some((value) => value.width > slot * 0.92);
   const depth = metrics.length
     ? Math.max(...metrics.map((value) => rotate ? (value.width + value.height) / Math.sqrt(2) : value.height))
@@ -67,7 +68,7 @@ export function refineScientificLayout(source, panel, axes, options = {}) {
 
   const provisionalPlot = { ...layout.plot };
   let xTick = xTickDepth(axes, provisionalPlot, axisMetric);
-  const yTickMetrics = axes.yTicks.map((tick) => axisMetric(tick.label));
+  const yTickMetrics = axes.yTicks.map((tick) => axes.yType === "band" ? axisMetric(tick.label) : numericTickMetric(tick, axes.yType, axisMetric));
   const yTickWidth = yTickMetrics.length ? Math.max(...yTickMetrics.map((value) => value.width)) : 0;
 
   let cursorBottom = rect.bottom - gaps.outer;

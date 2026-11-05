@@ -1,5 +1,7 @@
+import { resolveNumericTickDisplays, paintNumericTick } from "../../numeric-ticks.js";
+import { normalizedMetric } from "../../scientific-layout.js";
 import { FiguresteadConfigError, requiredObject, requiredString, sameLength } from "../../schema.js";
-import { extent, formatTick, formatTimeTick, linearScale, parseTime, ticks, timeScale, timeTicks } from "../../scales.js";
+import { extent, formatNumericTicks, formatTimeTicks, linearScale, parseTime, ticks, timeScale, timeTicks } from "../../scales.js";
 import { smooth } from "../../marks.js";
 
 export const DAY = 24 * 60 * 60 * 1000;
@@ -133,6 +135,19 @@ export function postMarksProgress(progress, prepared, timeline) {
 }
 
 export function drawTemporalAxes(context, { contract, layout, scales, plot = layout.plot, yLabels = null, showX = true, showY = true }) {
+  const previousFont = context.font;
+  let numeric;
+  try {
+    context.font = `${layout.font.axis}px ${FONT_STACK}`;
+    const xs = formatTimeTicks(scales.xTicks, scales.xDomain), ys = formatNumericTicks(scales.yTicks);
+    numeric = resolveNumericTickDisplays({ ...scales, plot, xType: "time", yType: yLabels ? "band" : "linear",
+      xTicks: showX ? scales.xTicks.map((value, i) => ({ value, label: xs[i] })) : [],
+      yTicks: showY && !yLabels ? scales.yTicks.map((value, i) => ({ value, label: ys[i] })) : [] },
+    { ...layout, rect: layout.rect ?? { left: 0, top: 0, right: layout.width, bottom: layout.height }, numericTickGap: 9,
+      text: { ...layout.text, xTickY: layout.text?.xTickY ?? plot.bottom + 9 * layout.scale,
+        xTickBaselineY: layout.text?.xTickBaselineY ?? plot.bottom + 9 * layout.scale + layout.font.axis * .78 } },
+    contract.panelId ?? "axes", text => normalizedMetric(context.measureText ? s => context.measureText(s) : null, text, layout.font.axis));
+  } finally { context.font = previousFont; }
   context.save();
   context.lineWidth = Math.max(0.5, 0.6 * layout.scale);
   context.strokeStyle = contract.theme.grid;
@@ -151,12 +166,12 @@ export function drawTemporalAxes(context, { contract, layout, scales, plot = lay
   context.fillStyle = contract.theme.secondary; context.font = `${layout.font.axis}px ${FONT_STACK}`;
   if (showX) {
     context.textAlign = "center"; context.textBaseline = "top";
-    scales.xTicks.forEach((value) => context.fillText(formatTimeTick(value, scales.xDomain), scales.x(value), layout.text?.xTickY ?? plot.bottom + 9 * layout.scale));
+    numeric.xTicks.forEach(tick => paintNumericTick(context, tick, "x"));
   }
   if (showY) {
     context.textAlign = "right"; context.textBaseline = "middle";
     if (yLabels) yLabels.forEach((label, index) => context.fillText(label, plot.left - 9 * layout.scale, scales.y(index), Math.max(30, plot.left - 14 * layout.scale)));
-    else scales.yTicks.forEach((value) => context.fillText(formatTick(value), plot.left - 9 * layout.scale, scales.y(value)));
+    else numeric.yTicks.forEach(tick => paintNumericTick(context, tick, "y"));
   }
   if (showX && contract.spec.xLabel) {
     context.textAlign = "center"; context.textBaseline = "bottom"; context.fillStyle = contract.theme.label;

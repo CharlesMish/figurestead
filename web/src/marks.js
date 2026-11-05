@@ -1,4 +1,6 @@
-import { formatTick } from "./scales.js";
+import { resolveNumericTickDisplays, paintNumericTick } from "./numeric-ticks.js";
+import { normalizedMetric } from "./scientific-layout.js";
+import { formatNumericTicks } from "./scales.js";
 import { windowProgress } from "./schema.js";
 
 export const clamp01 = (value) => Math.max(0, Math.min(1, value));
@@ -81,6 +83,18 @@ export function drawScopePoint(context, state, { color, edge = null, radius, tra
 export function drawAxes(context, { config, layout, scales, xTicks, yTicks, xCategories = null }) {
   const { theme, profile, spec } = config;
   const { plot, font } = layout;
+  const previousFont = context.font;
+  let numeric;
+  try {
+    context.font = `${font.axis}px ${FONT_STACK}`;
+    const xLabels = formatNumericTicks(xTicks), yLabels = formatNumericTicks(yTicks);
+    numeric = resolveNumericTickDisplays({ ...scales, plot, xType: xCategories ? "band" : "linear", yType: "linear",
+      xTicks: xTicks.map((value, i) => ({ value, label: xLabels[i] })), yTicks: yTicks.map((value, i) => ({ value, label: yLabels[i] })) },
+    { ...layout, rect: layout.rect ?? { left: 0, top: 0, right: layout.width, bottom: layout.height }, numericTickGap: 9,
+      text: { ...layout.text, xTickY: layout.text?.xTickY ?? plot.bottom + 10 * layout.scale,
+        xTickBaselineY: layout.text?.xTickBaselineY ?? plot.bottom + 10 * layout.scale + font.axis * .78 } },
+    config.panelId ?? "axes", text => normalizedMetric(context.measureText ? s => context.measureText(s) : null, text, font.axis));
+  } finally { context.font = previousFont; }
   context.save();
   context.lineWidth = Math.max(0.5, 0.6 * layout.scale);
   if (profile.gridY) {
@@ -112,13 +126,13 @@ export function drawAxes(context, { config, layout, scales, xTicks, yTicks, xCat
   context.font = `${font.axis}px ${FONT_STACK}`;
   context.textAlign = "right";
   context.textBaseline = "middle";
-  yTicks.forEach((value) => context.fillText(formatTick(value), plot.left - 9 * layout.scale, scales.y(value)));
+  numeric.yTicks.forEach(tick => paintNumericTick(context, tick, "y"));
   context.textAlign = "center";
   context.textBaseline = "top";
   if (xCategories) {
     xCategories.forEach((label, index) => context.fillText(label, scales.x(index), layout.text?.xTickY ?? plot.bottom + 10 * layout.scale));
   } else {
-    xTicks.forEach((value) => context.fillText(formatTick(value), scales.x(value), layout.text?.xTickY ?? plot.bottom + 10 * layout.scale));
+    numeric.xTicks.forEach(tick => paintNumericTick(context, tick, "x"));
   }
 
   if (spec.xLabel) {

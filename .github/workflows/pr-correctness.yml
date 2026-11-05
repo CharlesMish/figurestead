@@ -300,6 +300,9 @@ jobs:
       - name: Execute exact browser first success
         run: npm run test:browser-first-success
 
+      - name: Verify truthful numeric and UTC ticks in both painters
+        run: npm run test:browser-numeric-ticks
+
       - name: Verify packed curated theme in Chromium and Firefox
         shell: bash
         run: |

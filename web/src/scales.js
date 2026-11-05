@@ -29,13 +29,43 @@ export function timeTicks(domain, count = 6) {
   return ticks(numeric, count);
 }
 
+// Internal axis helpers keep public time APIs unchanged. Precision is selected
+// for the tick interval, then checked against the actual instant/value: merely
+// producing distinct strings is not enough to identify scientific coordinates.
+function tickSpacing(values) {
+  const ordered = [...new Set(values)].sort((a, b) => a - b);
+  return ordered.slice(1).reduce((step, value, i) => Math.min(step, value - ordered[i]), Infinity);
+}
+
+export function formatTimeTicks(values, domain = null) {
+  const numeric = values.map(value => parseTime(value));
+  const spacing = tickSpacing(numeric);
+  const interval = Number.isFinite(spacing) ? spacing
+    : domain ? Math.abs(parseTime(domain[1]) - parseTime(domain[0])) : Infinity;
+  const day = 86400000;
+  const first = interval >= 365 * day ? 0 : interval >= 28 * day ? 1 : interval >= day ? 2
+    : interval >= 60000 ? 3 : interval >= 1000 ? 4 : 5;
+  const iso = numeric.map(value => new Date(value).toISOString());
+  const candidates = [
+    text => text.split("T")[0].slice(0, -6),
+    text => text.split("T")[0].slice(0, -3),
+    text => text.split("T")[0],
+    text => text.replace(/:\d{2}\.\d{3}Z$/, "Z"),
+    text => text.replace(/\.\d{3}Z$/, "Z"),
+    text => text,
+  ];
+  for (let precision = first; precision < candidates.length; precision++) {
+    const labels = iso.map(candidates[precision]);
+    if (labels.every((label, i) => Date.parse(label) === numeric[i])) return labels;
+  }
+  // Date has millisecond precision. This retains the prior Date interpretation
+  // for fractional milliseconds; the independent tick-generator issue is not
+  // repaired, deduplicated, or hidden here.
+  return iso;
+}
+
 export function formatTimeTick(value, domain = null) {
-  const date = new Date(parseTime(value));
-  const span = domain ? Math.abs(parseTime(domain[1]) - parseTime(domain[0])) : 0;
-  const options = span > 1000 * 60 * 60 * 24 * 730 ? { year: "numeric" }
-    : span > 1000 * 60 * 60 * 24 * 60 ? { month: "short", year: "2-digit" }
-      : { month: "short", day: "numeric" };
-  return new Intl.DateTimeFormat("en-US", { timeZone: "UTC", ...options }).format(date);
+  return formatTimeTicks([value], domain)[0];
 }
 
 export function extent(values, padding = 0.08, floor = null) {
@@ -61,8 +91,29 @@ export function ticks(domain, count = 6) {
   return result.length >= 2 ? result : [start, end];
 }
 
-export function formatTick(value) {
+function legacyTick(value) {
   if (Math.abs(value) >= 1000 || (Math.abs(value) > 0 && Math.abs(value) < 0.01)) return value.toExponential(1);
   if (Number.isInteger(value)) return String(value);
   return Number(value.toFixed(2)).toString();
+}
+
+export function formatNumericTicks(values) {
+  const previous = values.map(legacyTick);
+  if (previous.every((label, i) => Number(label) === values[i])) return previous;
+  const spacing = tickSpacing(values), magnitude = Math.max(...values.map(Math.abs));
+  const first = Number.isFinite(spacing) && spacing > 0 && magnitude > 0
+    ? Math.max(1, Math.min(17, Math.floor(Math.log10(magnitude)) - Math.floor(Math.log10(spacing)) + 1)) : 1;
+  for (let precision = first; precision <= 17; precision++) {
+    const labels = values.map(value => {
+      const rounded = Number(value.toPrecision(precision));
+      const plain = String(rounded), exponential = rounded.toExponential();
+      return plain.length <= exponential.length ? plain : exponential;
+    });
+    if (labels.every((label, i) => Number(label) === values[i])) return labels;
+  }
+  return values.map(String);
+}
+
+export function formatTick(value) {
+  return formatNumericTicks([value])[0];
 }

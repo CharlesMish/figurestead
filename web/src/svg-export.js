@@ -166,12 +166,19 @@ function axes(panel, theme) {
   const plot = panel.axes.plot ?? panel.layout.plot, { font } = panel.layout, pieces = [`<path ${attrs({ d: `M ${plot.left} ${plot.top} L ${plot.left} ${plot.bottom} L ${plot.right} ${plot.bottom}`, fill: "none", stroke: theme.spine })}/>`];
   const slot = panel.axes.x.step?.() ?? Math.max(40, (plot.right - plot.left) / Math.max(1, panel.axes.xTicks.length));
   const rotate = panel.layout.text?.rotateX ?? (panel.axes.xType === "band" && panel.axes.xTicks.some((tick) => String(tick.label).length * font.axis * 0.62 > slot * 0.92));
+  const numericText = (tick, axis) => {
+    const { lines, align } = tick.numericDisplay;
+    const first = lines[0];
+    const content = lines.length === 1 ? esc(first.text) : lines.map(line => `<tspan ${attrs({ x: line.x, y: line.svgY })}>${esc(line.text)}</tspan>`).join("");
+    return `<text ${attrs({ x: first.x, y: first.svgY, fill: theme.secondary, "font-size": font.axis, "text-anchor": align, "dominant-baseline": axis === "y" ? "middle" : null })}>${content}</text>`;
+  };
   panel.axes.xTicks.forEach((tick) => {
+    if (tick.numericDisplay) { pieces.push(numericText(tick, "x")); return; }
     const display = tick.display, x = display?.x ?? tickPosition(panel.axes.x, tick), y = display?.svgY ?? panel.layout.text?.xTickBaselineY ?? plot.bottom + 16 * panel.layout.scale;
     const angle = display?.rotation ?? (rotate ? -45 : 0), label = tick.displayLabel ?? tick.label, abbreviated = label !== tick.label;
     pieces.push(`<text ${attrs({ x, y, fill: theme.secondary, "font-size": font.axis, "text-anchor": display?.textAnchor ?? (rotate ? "end" : "middle"), transform: angle ? `rotate(${angle} ${x} ${y})` : null, "data-full-label": abbreviated ? tick.label : null })}>${abbreviated ? `<title>${esc(tick.label)}</title>` : ""}${esc(label)}</text>`);
   });
-  panel.axes.yTicks.forEach((tick) => pieces.push(`<text ${attrs({ x: plot.left - 7 * panel.layout.scale, y: tickPosition(panel.axes.y, tick), fill: theme.secondary, "font-size": font.axis, "text-anchor": "end", "dominant-baseline": "middle" })}>${esc(tick.label)}</text>`));
+  panel.axes.yTicks.forEach((tick) => pieces.push(tick.numericDisplay ? numericText(tick, "y") : `<text ${attrs({ x: plot.left - 7 * panel.layout.scale, y: tickPosition(panel.axes.y, tick), fill: theme.secondary, "font-size": font.axis, "text-anchor": "end", "dominant-baseline": "middle" })}>${esc(tick.label)}</text>`));
   if (panel.spec.xLabel) pieces.push(`<text ${attrs({ x: (plot.left + plot.right) / 2, y: panel.layout.text?.xLabelBaselineY ?? panel.layout.rect.bottom - 6 * panel.layout.scale, fill: theme.label, "font-size": font.axis, "text-anchor": "middle" })}>${esc(panel.spec.xLabel)}</text>`);
   if (panel.spec.yLabel) { const x = panel.layout.text?.yLabelX ?? panel.layout.rect.left + 12 * panel.layout.scale; pieces.push(`<text ${attrs({ x, y: (plot.top + plot.bottom) / 2, fill: theme.label, "font-size": font.axis, transform: `rotate(-90 ${x} ${(plot.top + plot.bottom) / 2})`, "text-anchor": "middle", "dominant-baseline": "hanging" })}>${esc(panel.spec.yLabel)}</text>`); }
   return pieces.join("");
