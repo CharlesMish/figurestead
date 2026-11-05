@@ -1,6 +1,6 @@
 # Choose a theme
 
-For published Python **0.9.0a5** and browser **0.9.0-alpha.6**. A theme chooses
+For published Python **0.9.0a6** and browser **0.9.0-alpha.7**. A theme chooses
 colors; a profile chooses typography, markers and emphasis. Python plotters
 default to `theme="slipware", profile="deep_scope"`. Selecting a reference theme
 does not change that default or qualify every plot family.
