@@ -39,6 +39,14 @@ with an insufficient-category-space message. Enlarge the host or shorten the
 authored labels; a rejected `setConfig()` leaves the existing figure intact.
 This does not change category values, their ordering, or numeric-axis labels.
 
+Current source additionally preserves numeric tick values in their labels and
+includes the necessary UTC time components for intraday axes. Canvas and SVG
+paint the complete resolved text; figures too narrow for it reject explicitly
+instead of abbreviating numeric coordinates. The repository's
+`docs/browser-axis-ticks.md` records the scope and the separately deferred
+millisecond tick-generation issue. This is a source change,
+not a claim about the published alpha.7 package.
+
 Alpha.7 also corrects opt-in monotone interpolation so each
 interval stays within its endpoint bounds, including uneven x spacing and
 direction changes. Authored data and the default interpolation policy remain

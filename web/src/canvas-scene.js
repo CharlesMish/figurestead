@@ -1,3 +1,4 @@
+import { paintNumericTick } from "./numeric-ticks.js";
 import { DIRECT_FONT } from "./direct-labels.js";
 import { appendMarkerPath, clipOwnLine, lineMarkerGeometry } from "./line-identity.js";
 import { partitionPanelMarks, withCanvasPlotClip } from "./render-layers.js";
@@ -61,6 +62,10 @@ function drawAxes(context, panel, theme) {
   const rotateX = layout.text?.rotateX ?? (axes.xType === "band" && axes.xTicks.some((tick) => context.measureText(tick.label).width > xSlot * 0.92));
   context.textAlign = rotateX ? "right" : "center"; context.textBaseline = "top";
   axes.xTicks.forEach((tick) => {
+    if (tick.numericDisplay) {
+      paintNumericTick(context, tick, "x");
+      return;
+    }
     if (tick.display) {
       const display = tick.display;
       context.save(); context.textAlign = display.textAnchor === "end" ? "right" : "center"; context.textBaseline = display.baseline;
@@ -77,7 +82,11 @@ function drawAxes(context, panel, theme) {
     else context.fillText(label, x, y);
   });
   context.textAlign = "right"; context.textBaseline = "middle";
-  axes.yTicks.forEach((tick) => context.fillText(fitLabel(context, tick.label, Math.max(26, plot.left - layout.rect.left - 12 * layout.scale)), plot.left - 7 * layout.scale, tickPosition(axes.y, tick)));
+  axes.yTicks.forEach((tick) => {
+    if (tick.numericDisplay) {
+      paintNumericTick(context, tick, "y");
+    } else context.fillText(fitLabel(context, tick.label, Math.max(26, plot.left - layout.rect.left - 12 * layout.scale)), plot.left - 7 * layout.scale, tickPosition(axes.y, tick));
+  });
   if (spec.xLabel) { context.fillStyle = theme.label; context.textAlign = "center"; context.textBaseline = "bottom"; context.fillText(spec.xLabel, (plot.left + plot.right) / 2, layout.text?.xLabelY ?? layout.rect.bottom - 6 * layout.scale); }
   if (spec.yLabel) { context.save(); context.translate(layout.text?.yLabelX ?? layout.rect.left + 12 * layout.scale, (plot.top + plot.bottom) / 2); context.rotate(-Math.PI / 2); context.fillStyle = theme.label; context.textAlign = "center"; context.textBaseline = "top"; context.fillText(spec.yLabel, 0, 0); context.restore(); }
   context.restore();
