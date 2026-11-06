@@ -23,6 +23,7 @@ from .core import (
 )
 from ._sequential import sequential_colormap
 from ._histogram_legend import histogram_legend
+from ._legend import authored_label, legend_entries
 from ._line_identity import IdentityLine, IdentityLegend, LINE_IDENTITIES, line_marker_indices
 from .presentation import FocusAnnotation, draw_focus_annotation, monotone_curve, resolve_pose
 
@@ -243,8 +244,10 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
         mask = series == label
         x = np.array([positions[item] for item in groups[mask]], dtype=float)
         x += jitter[mask]
-        draw_points(ax, x, values[mask], color=color, theme=theme,
+        points = draw_points(ax, x, values[mask], color=color, theme=theme,
                     profile=profile, label="_nolegend_" if anonymous_series else str(label))
+        if not anonymous_series:
+            authored_label(points, label)
 
     ax.set_xticks(range(len(order)), order)
     # Keep counts out of the observation rectangle, including caller-authored
@@ -299,8 +302,10 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
     style_axes(ax, theme, profile, spec)
     for label, color in zip(series_keys, series_colors(theme)):
         mask = series == label
-        draw_points(ax, x[mask], y[mask], color=color, theme=theme,
+        points = draw_points(ax, x[mask], y[mask], color=color, theme=theme,
                     profile=profile, label="_nolegend_" if anonymous_series else str(label))
+        if not anonymous_series:
+            authored_label(points, label)
     if len(series_keys) > 1:
         style_legend(ax, theme)
     add_note(ax, spec, theme)
@@ -426,6 +431,7 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
             path = IdentityLine(draw_x, draw_y, color=color, linewidth=width,
                                 alpha=0.88, label=label, zorder=3, **rhythm)
             ax.add_line(path)
+        authored_label(path, label)
         identity_lines.append(path)
         if theme.series_edges:
             path.set_path_effects([pe.Stroke(linewidth=width + 1.45, foreground=theme.series_edges[series_index % len(theme.series_edges)], alpha=0.75), pe.Normal()])
@@ -449,9 +455,8 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
             path.identity_edge_width = 1.45 if theme.series_edges else 0.
     # Appended calls share one ordinary legend. Count eligible axes artists,
     # not just this call's rows; anonymous point layers opt out explicitly.
-    # Retain the existing multi-row trigger (including underscore labels),
-    # whose empty legend also supplies direct-label typography.
-    if len(ys) > 1 or len(ax.get_legend_handles_labels()[0]) > 1:
+    # Explicit underscore labels are literal, unlike anonymous support artists.
+    if len(ys) > 1 or len(legend_entries(ax)[0]) > 1:
         style_legend(ax, theme, location=presentation.legend_location if presentation else "best",
                      handler_map={IdentityLine: IdentityLegend()})
     if focus is not None:
@@ -502,6 +507,7 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
     for data, label, color in zip(datasets, labels, series_colors(theme)):
         _, _, patches = ax.hist(data, bins=bins, histtype="stepfilled", color=color, alpha=0.15,
                                 edgecolor=color, linewidth=1.0, label=label, zorder=3)
+        authored_label(patches[0], label)
         median = np.median(data)
         rule = ax.axvline(median, color=color if multiple else theme.summary_core, linewidth=1.1,
                           alpha=0.85, zorder=4)

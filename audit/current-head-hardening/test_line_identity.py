@@ -421,14 +421,17 @@ class AccumulatedLegendTests(unittest.TestCase):
                         self.assertGreater(len(output.getvalue()), 100)
                     plt.close(fig)
 
-    def test_fresh_single_line_and_ineligible_labels_preserve_legend_behavior(self):
+    def test_fresh_single_line_stays_quiet_but_authored_underscore_appends(self):
         for direct in (False, True):
             fig, ax = line([0, 1], [1, 2], labels=['Only'], direct_labels=direct)
             fig.canvas.draw()
             self.assertIsNone(ax.get_legend())
             line([0, 1], [2, 3], labels=['_private'], ax=ax, direct_labels=direct)
             fig.canvas.draw()
-            self.assertIsNone(ax.get_legend())
+            # Deliberate compatibility correction: an authored underscore is
+            # literal attribution, not Matplotlib's anonymous-artist sentinel.
+            self.assertEqual([t.get_text() for t in ax.get_legend().get_texts()], ['Only', '_private'])
+            self.assertTrue(ax.get_legend().get_visible())
             plt.close(fig)
 
     def test_anonymous_point_layers_never_acquire_internal_zero_legend(self):

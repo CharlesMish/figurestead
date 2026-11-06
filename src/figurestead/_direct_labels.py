@@ -2,6 +2,7 @@
 import math
 import numpy as np
 import matplotlib as mpl
+from ._legend import legend_entries
 from matplotlib.artist import Artist
 from matplotlib.collections import PathCollection
 from matplotlib.lines import Line2D
@@ -107,7 +108,7 @@ class DirectLabels(Artist):
         super().__init__(); self.ax=ax; self.lines=lines; self.labels=labels; self.slots=slots; self.theme=theme
         # The complete ordinary legend must survive if another plotted layer
         # owns any of its entries (including repeated line() calls without cla).
-        self.unsupported=unsupported or any(h not in lines for h in ax.get_legend_handles_labels()[0])
+        self.unsupported=unsupported or any(h not in lines for h in legend_entries(ax)[0])
         self.export_unsupported=False; self.baseline=ax.get_position(original=True).frozen()
         self.installed=self.baseline; self.artists=[]; self.result={'status':'fallback','reason':'unsupported-layout'}
         self.clip_boxes={id(line):(line.get_clip_box(),getattr(line,"identity_points",line).get_clip_box()) for line in lines}
@@ -233,8 +234,7 @@ class DirectLabels(Artist):
             if not(base.x0+half<=anchor[0]<=base.x1-half and base.y0+half<=anchor[1]<=base.y1-half):
                 self.fail('terminal-marker-clipped'); return
             try:
-                # Legend.prop is resolved even when automatic underscore filtering
-                # leaves no text rows; it is also the font source for those rows.
+                # Use the resolved legend font directly, independently of rows.
                 text=Text(0,0,label,fontproperties=self.legend.prop.copy(),
                           color=self.theme.label,ha='left',va='baseline',parse_math=False,usetex=False,transform=IdentityTransform())
                 text.set_figure(fig); box=text.get_window_extent(renderer)

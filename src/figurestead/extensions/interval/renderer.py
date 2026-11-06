@@ -10,6 +10,7 @@ from typing import Any, Mapping
 import numpy as np
 
 from figurestead.core import PlotSpec, add_note, ensure_axes, resolve, style_axes, style_legend
+from figurestead._legend import authored_label
 from figurestead.registry import PlotRegistration
 
 
@@ -237,7 +238,9 @@ def interval_comparison(data, *, spec=None, theme="slipware", profile="deep_scop
                 low, high = row.values[definition.key]
                 y = positions[row.category]
                 label = definition.label if index == 0 else "_nolegend_"
-                ax.hlines(y, low, high, color=color, linewidth=linewidth, alpha=alpha, label=label, zorder=4)
+                handle = ax.hlines(y, low, high, color=color, linewidth=linewidth, alpha=alpha, label=label, zorder=4)
+                if index == 0:
+                    authored_label(handle, definition.label)
                 ax.vlines([low, high], y - 0.075, y + 0.075, color=color, linewidth=max(0.8, linewidth * 0.72), alpha=alpha, zorder=5)
         else:
             x = [row.values[definition.key] for row in normalized.rows]
@@ -246,11 +249,12 @@ def interval_comparison(data, *, spec=None, theme="slipware", profile="deep_scop
             size = 54 if definition.role == "summary" else 31 if definition.role == "observed" else 28
             hollow = definition.role in {"reference", "context"}
             if definition.role == "summary":
-                ax.scatter(x, y, marker=marker, s=size, c=color, linewidths=1.15,
+                handle = ax.scatter(x, y, marker=marker, s=size, c=color, linewidths=1.15,
                            alpha=0.96, label=definition.label, zorder=7)
             else:
-                ax.scatter(x, y, marker=marker, s=size, facecolors="none" if hollow else color,
+                handle = ax.scatter(x, y, marker=marker, s=size, facecolors="none" if hollow else color,
                            edgecolors=color, linewidths=1.15, alpha=0.96, label=definition.label, zorder=7)
+            authored_label(handle, definition.label)
 
     ax.set_xlim(*_limits(normalized))
     ax.set_ylim(-0.5, len(normalized.categories) - 0.5)
