@@ -15,6 +15,23 @@ fig, ax = line(
 
 `series_keys` is an optional row-aligned sequence of unique, nonblank strings. `line_styles` requires those keys and accepts only `solid`, `dash`, `dot`, and `dash-dot`. A missing active key means solid; mapping entries for temporarily inactive keys are allowed and validated. Carry keys and slots with their rows when filtering/reordering. Repeated slots remain legal for ordinary lines: two traces can share marker/color identity while distinct keys select different rhythms. Display labels can be duplicated or changed without changing either channel.
 
+Current source includes a deliberate Python legend compatibility correction,
+not yet part of the published a6/alpha.7 release: Figurestead-authored series
+labels such as `_control`, `_reference`, and literal `_nolegend_` remain eligible
+for attribution. Leading underscores no longer silently remove those entries
+from ordinary legends or direct-label export fallbacks. This also applies to
+authored scatter/strip categories and extension legend handles; it does not add
+persistent slots to those families. Histogram's paired median legend retains
+its existing literal labels.
+
+Genuinely anonymous scatter/strip series remain excluded. Fresh single-series
+calls retain their existing no-legend behavior, while appended line calls count
+all eligible attached handles. Figurestead-owned line samples retain their
+paired identity handler when mixed with point layers. Removed or cleared artists
+do not remain registered. Caller-owned Matplotlib artists keep native eligibility;
+Figurestead does not change their labels or patch `Axes.legend`. Calling native
+`ax.legend()` directly still uses Matplotlib's own underscore conventions.
+
 Omitting both arguments preserves the previous behavior. Keys do not allocate marker/color slots or create a registry. Explicit poses are rejected when `line_styles` is supplied because they replace the supported default line grammar. Ordinary legends inherit the actual resolved body line, so a public authored rhythm requires no later artist mutation or legend reconstruction.
 
 ## Browser replacement boundary

@@ -98,14 +98,14 @@ class DirectLabelTests(unittest.TestCase):
             self.assertEqual(count,len(a.get_children()))
         b=io.BytesIO();f.savefig(b,format='png',dpi=180);self.assertEqual(d.result['status'],'placed')
         f.canvas.draw();self.assertEqual(rect,a.get_position().bounds)
-    def test_literal_underscore_labels_draw_and_export_without_legend_rows(self):
+    def test_literal_underscore_labels_have_complete_ordinary_fallback_rows(self):
         for labels in (['_A','_B','_C'],['_nolegend_']*3,['A','_B','_C']):
             with self.subTest(labels=labels), warnings.catch_warnings(record=True):
                 warnings.simplefilter('always')
                 f,a=self.make(labels=labels);legend=a.get_legend();d=a._figurestead_direct_labels
-                self.assertEqual([t.get_text() for t in legend.get_texts()], [t for t in labels if not t.startswith('_')])
+                self.assertEqual([t.get_text() for t in legend.get_texts()], labels)
                 font=legend.prop.copy();count=len(a.get_children())
-                # No visible or fake legend text row may provide direct typography.
+                # Direct typography still comes from legend.prop, not a row.
                 with patch.object(legend,'get_texts',side_effect=AssertionError('legend row accessed')):
                     f.canvas.draw()
                     png=self.png(f);self.assertTrue(png.startswith(b'\x89PNG\r\n\x1a\n'))
@@ -145,13 +145,13 @@ class DirectLabelTests(unittest.TestCase):
                 finally:
                     logger.removeHandler(handler);handler.close()
                 self.assertFalse(hasattr(a,'_figurestead_direct_labels'))
-                self.assertEqual([t.get_text() for t in a.get_legend().get_texts()], [t for t in labels if not t.startswith('_')])
+                self.assertEqual([t.get_text() for t in a.get_legend().get_texts()], labels)
                 observations.append((png,[(w.category.__name__,str(w.message)) for w in caught],messages))
                 figures.append(f)
             self.assertEqual(observations[0],observations[1])
-            if all(t.startswith('_') for t in labels):
-                diagnostics=[message for _,message in observations[0][1]]+observations[0][2]
-                self.assertTrue(any('No artists with labels' in message for message in diagnostics))
+            # Authored underscore labels now produce real rows at both bounds.
+            diagnostics=[message for _,message in observations[0][1]]+observations[0][2]
+            self.assertFalse(any('No artists with labels' in message for message in diagnostics))
             for f in figures:plt.close(f)
     def test_underscore_fallback_restores_ordinary_draw_export_lifecycle(self):
         with warnings.catch_warnings(record=True):
@@ -165,7 +165,7 @@ class DirectLabelTests(unittest.TestCase):
             d=a._figurestead_direct_labels
             self.assertEqual(d.result['reason'],'terminal-marker-clipped');self.assertEqual(d.artists,[])
             self.assertEqual(a.get_position().bounds,baseline);self.assertTrue(a.get_legend().get_visible())
-            self.assertEqual(a.get_legend().get_texts(),[]);self.assertEqual(self.png(f),self.png(g))
+            self.assertEqual([t.get_text() for t in a.get_legend().get_texts()],['_A','_B','_C']);self.assertEqual(self.png(f),self.png(g))
             x,y=io.BytesIO(),io.BytesIO()
             with matplotlib.rc_context({'svg.hashsalt':'underscore-fallback'}):
                 f.savefig(x,format='svg',metadata={'Date':None});g.savefig(y,format='svg',metadata={'Date':None})

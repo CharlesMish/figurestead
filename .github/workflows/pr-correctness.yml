@@ -98,6 +98,9 @@ jobs:
       - name: Verify open line identity
         run: python audit/current-head-hardening/test_line_identity.py
 
+      - name: Verify literal authored legend attribution and exports
+        run: python audit/current-head-hardening/test_literal_legends.py
+
       - name: Verify renderer-space marker candidates and rhythm oracles
         run: python audit/current-head-hardening/test_line_candidates.py
 
@@ -157,7 +160,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for suite in scientific_geometry monotone_interpolation rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity line_candidates direct_labels subtitle note_layout safe_export signature_layout strip_count_layout python_motion_inputs; do
+          for suite in scientific_geometry monotone_interpolation rendered_contrast python_plot_inputs regular_headings histogram_ownership sequential_heatmap matrix_domains gapped_lines hostile_closure scene_rhythm line_identity literal_legends line_candidates direct_labels subtitle note_layout safe_export signature_layout strip_count_layout python_motion_inputs; do
             python "audit/current-head-hardening/test_${suite}.py"
           done
 

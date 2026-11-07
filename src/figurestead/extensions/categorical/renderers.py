@@ -10,6 +10,7 @@ import numpy as np
 from matplotlib.ticker import PercentFormatter
 
 from ...core import PlotSpec, add_note, ensure_axes, resolve, series_colors, style_axes, style_legend
+from ..._legend import authored_label
 from .validation import normalize_categorical_data
 
 
@@ -82,9 +83,10 @@ def categorical_bar(
         present = np.array([value is not None and value > 0 for value in item["values"]])
         values = np.array([0 if value is None else value for value in item["values"]], dtype=float)
         if data["orientation"] == "horizontal":
-            ax.barh(offsets[present], values[present], height=width * 0.76, color=color, edgecolor=color, alpha=0.62, linewidth=0.7, label=item["label"], zorder=3)
+            bars = ax.barh(offsets[present], values[present], height=width * 0.76, color=color, edgecolor=color, alpha=0.62, linewidth=0.7, label=item["label"], zorder=3)
         else:
-            ax.bar(offsets[present], values[present], width=width * 0.76, color=color, edgecolor=color, alpha=0.62, linewidth=0.7, label=item["label"], zorder=3)
+            bars = ax.bar(offsets[present], values[present], width=width * 0.76, color=color, edgecolor=color, alpha=0.62, linewidth=0.7, label=item["label"], zorder=3)
+        authored_label(bars, item["label"])
         for index, value in enumerate(item["values"]):
             if value is None or value == 0:
                 _marker(ax, offsets[index], horizontal=data["orientation"] == "horizontal", missing=value is None, color=theme.warm if value is None else color)
@@ -114,9 +116,10 @@ def categorical_layered_bar(
         values = np.array([0 if value is None else value for value in item["values"]], dtype=float)
         alpha = 0.30 if series_index == 0 else 0.68
         if data["orientation"] == "horizontal":
-            ax.barh(positions[present], values[present], height=width, color=color, edgecolor=color, alpha=alpha, linewidth=0.8, label=item["label"], zorder=3 + series_index)
+            bars = ax.barh(positions[present], values[present], height=width, color=color, edgecolor=color, alpha=alpha, linewidth=0.8, label=item["label"], zorder=3 + series_index)
         else:
-            ax.bar(positions[present], values[present], width=width, color=color, edgecolor=color, alpha=alpha, linewidth=0.8, label=item["label"], zorder=3 + series_index)
+            bars = ax.bar(positions[present], values[present], width=width, color=color, edgecolor=color, alpha=alpha, linewidth=0.8, label=item["label"], zorder=3 + series_index)
+        authored_label(bars, item["label"])
         for index, value in enumerate(item["values"]):
             if value is None or value == 0:
                 _marker(ax, positions[index], horizontal=data["orientation"] == "horizontal", missing=value is None, color=theme.warm if value is None else color)

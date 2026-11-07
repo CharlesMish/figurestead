@@ -12,6 +12,7 @@ import numpy as np
 
 from .profiles import PROFILES, Profile, get_profile
 from .themes import Theme, get_theme
+from ._legend import legend_entries, legend_handlers, literal_legend
 
 
 GLYPHS = np.array(list("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>[]{}|+-=αβγδε∑∫≈≠±∞"))
@@ -151,17 +152,18 @@ def draw_points(ax, x, y, *, color, theme: Theme, profile: Profile, label=None):
         if profile.point_glow:
             ax.scatter(x, y, s=profile.marker_size * 1.75, facecolors="none",
                        edgecolors=color, linewidths=1.8, alpha=0.055, zorder=2)
-        ax.scatter(x, y, s=profile.marker_size, facecolors="none",
+        points = ax.scatter(x, y, s=profile.marker_size, facecolors="none",
                    edgecolors=color, linewidths=profile.edge_width,
                    alpha=profile.marker_alpha, label=label, zorder=3)
         ax.scatter(x, y, s=profile.marker_size * profile.core_fraction,
                    c=color, edgecolors="none", alpha=profile.marker_alpha * 0.58,
                    zorder=4)
     else:
-        ax.scatter(x, y, s=profile.marker_size, c=color,
+        points = ax.scatter(x, y, s=profile.marker_size, c=color,
                    edgecolors=theme.field if profile.edge_width else "none",
                    linewidths=profile.edge_width, alpha=profile.marker_alpha,
                    label=label, zorder=3)
+    return points
 
 
 def draw_summary_line(ax, x0, x1, y, *, theme: Theme, profile: Profile):
@@ -176,9 +178,10 @@ def draw_summary_line(ax, x0, x1, y, *, theme: Theme, profile: Profile):
 
 
 def style_legend(ax, theme: Theme, *, location="best", handler_map=None):
-    legend = ax.legend(frameon=False, fontsize=7, labelcolor=theme.label,
-                       handletextpad=0.5, borderaxespad=0.3, loc=location, handler_map=handler_map)
-    return legend
+    handles, labels = legend_entries(ax, handler_map)
+    return literal_legend(ax, handles, labels, frameon=False, fontsize=7, labelcolor=theme.label,
+                          handletextpad=0.5, borderaxespad=0.3, loc=location,
+                          handler_map=legend_handlers(handler_map))
 
 
 def add_note(ax, spec: PlotSpec, theme: Theme):
