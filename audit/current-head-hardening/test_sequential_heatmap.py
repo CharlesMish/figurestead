@@ -13,8 +13,10 @@ matplotlib.use("Agg")
 from matplotlib import colors
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.ticker import FixedLocator
 from figurestead import heatmap, PlotSpec
 from figurestead._sequential import sequential_colormap
+from figurestead.profiles import PROFILES
 from figurestead.themes import THEMES
 from figurestead.extensions.matrix import categorical_matrix
 
@@ -36,6 +38,18 @@ def lstar(rgb):
 def old_colormap(theme):
     return colors.LinearSegmentedColormap.from_list(
         f"figurestead_{theme.key}", [theme.field, theme.panel, theme.primary, theme.summary_core])
+
+
+def visible_gridlines(ax):
+    """Major and minor gridlines that would paint, on this axes only."""
+    lines = []
+    for getter in (ax.get_xgridlines, ax.get_ygridlines):
+        lines.extend(getter())
+    for axis in (ax.xaxis, ax.yaxis):
+        lines.extend(tick.gridline for tick in axis.get_minor_ticks())
+    return [line for line in lines
+            if line.get_visible() and line.get_linewidth() > 0
+            and (line.get_alpha() is None or line.get_alpha() > 0)]
 
 
 def artist_contract(fig, ax):
@@ -170,6 +184,62 @@ class SequentialHeatmapTests(unittest.TestCase):
                 np.testing.assert_array_equal(ax.images[0].cmap(np.linspace(0, 1, 256)), expected(np.linspace(0, 1, 256)))
                 self.assertEqual(np.ma.count_masked(ax.images[0].get_array()), 2)
                 fig.canvas.draw(); plt.close(fig)
+
+    def test_profile_gridlines_do_not_cross_heatmap_cells(self):
+        values = np.array([[1., 3., 5.], [2., 8., 4.], [7., 6., 9.]])
+        xlabels, ylabels = ["low", "mid", "high"], ["north", "center", "south"]
+        for theme_key, theme in THEMES.items():
+            for profile_key in PROFILES:
+                for labeled in (False, True):
+                    with self.subTest(theme=theme_key, profile=profile_key, labeled=labeled):
+                        kwargs = {"theme": theme_key, "profile": profile_key}
+                        if labeled:
+                            kwargs.update(xlabels=xlabels, ylabels=ylabels)
+                        fig, ax = heatmap(values, **kwargs)
+                        fig.canvas.draw()
+                        self._assert_heatmap_field(ax, values, theme, xlabels if labeled else None, ylabels if labeled else None)
+                        plt.close(fig)
+        constant = np.full((2, 2), 4.)
+        fig, ax = heatmap(constant, xlabels=["a", "b"], ylabels=["c", "d"])
+        fig.canvas.draw()
+        self._assert_heatmap_field(ax, constant, THEMES["slipware"], ["a", "b"], ["c", "d"])
+        plt.close(fig)
+        # A caller-owned axes keeps its own labels, and a sibling axes keeps its grid.
+        fig, (ax, other) = plt.subplots(1, 2)
+        other.plot([0, 1], [0, 1])
+        other.grid(axis="y")
+        fig, ax = heatmap(values, xlabels=xlabels, ylabels=ylabels, ax=ax)
+        fig.canvas.draw()
+        self._assert_heatmap_field(ax, values, THEMES["slipware"], xlabels, ylabels)
+        self.assertTrue(visible_gridlines(other))
+        plt.close(fig)
+
+    def _assert_heatmap_field(self, ax, values, theme, xlabels, ylabels):
+        self.assertEqual(visible_gridlines(ax), [])
+        image = ax.images[0]
+        np.testing.assert_array_equal(image.get_array(), values)
+        np.testing.assert_array_equal(
+            image.get_cmap()(np.linspace(0, 1, 256)), sequential_colormap(theme)(np.linspace(0, 1, 256)))
+        self.assertIsInstance(image.norm, colors.Normalize)
+        # A varying field keeps the data range. A constant field keeps Matplotlib's
+        # existing non-degenerate scale; the colorbar must use that same norm.
+        if np.ptp(values) > 0:
+            np.testing.assert_array_equal([image.norm.vmin, image.norm.vmax], [values.min(), values.max()])
+        else:
+            self.assertTrue(np.isfinite([image.norm.vmin, image.norm.vmax]).all())
+        colorbar = image.colorbar
+        self.assertIs(colorbar.mappable, image)
+        self.assertIs(colorbar.norm, image.norm)
+        np.testing.assert_array_equal(
+            colorbar.cmap(np.linspace(0, 1, 256)), image.get_cmap()(np.linspace(0, 1, 256)))
+        if xlabels is not None:
+            self.assertIsInstance(ax.xaxis.get_major_locator(), FixedLocator)
+            self.assertEqual([tick.get_text() for tick in ax.get_xticklabels()], xlabels)
+            self.assertEqual([tick.get_position()[0] for tick in ax.get_xticklabels()], list(range(len(xlabels))))
+        if ylabels is not None:
+            self.assertIsInstance(ax.yaxis.get_major_locator(), FixedLocator)
+            self.assertEqual([tick.get_text() for tick in ax.get_yticklabels()], ylabels)
+            self.assertEqual([tick.get_position()[1] for tick in ax.get_yticklabels()], list(range(len(ylabels))))
 
 
 if __name__ == "__main__":
