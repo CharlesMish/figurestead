@@ -198,7 +198,12 @@ function legend(panel, theme, namespace, allocateId) {
     const x = entry?.markerX ?? (panel.layout.legend.outside ? panel.layout.legend.left : panel.layout.plot.right - 24 * panel.layout.scale);
     const textX = entry?.textX ?? (panel.layout.legend.outside ? x + 12 * panel.layout.scale : x - 10 * panel.layout.scale);
     const y = entry?.y ?? (panel.layout.legend.outside ? panel.layout.legend.top + (14 + index * 20) * panel.layout.scale : insideTop + index * 20 * panel.layout.scale), style = item.style ?? {};
-    let point = `<circle ${attrs({ cx: x, cy: y, r: 4 * panel.layout.scale, fill: "none", stroke: style.color ?? theme.series[item.colorIndex % theme.series.length] })}/>`;
+    const color = style.color ?? theme.series[item.colorIndex % theme.series.length];
+    // Same open glyph as body marks. Canvas point legends stroke the resolved
+    // edge when a series has one, otherwise the series color, at this width.
+    let point = marker(
+      { id: null, style: { glyph: style.glyph ?? "ring", color }, geometry: { cx: x, cy: y, radius: 4 * panel.layout.scale } },
+      { stroke: style.edge ?? color, "stroke-width": Math.max(1, 1.2 * panel.layout.scale) });
     if (panel.renderer === "line") {
       const mark = { id: `${safeId(panel.id)}-legend-${index}`, lineIdentity: true, style,
         geometry: { cx: x, cy: y, ...lineMarkerGeometry(style, panel.layout.scale, panel.presentation?.markerScale ?? 1) } };
