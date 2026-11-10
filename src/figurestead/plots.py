@@ -534,6 +534,9 @@ def heatmap(matrix, *, xlabels=None, ylabels=None, spec=None,
     # Rain is intentionally suppressed on dense color fields; the identity is
     # carried by typography, structure, and the semantic palette instead.
     style_axes(ax, theme, profile, spec, atmosphere=False)
+    # Profile gridlines are drawn with the axes, above imshow, and would
+    # recolor cell centers. categorical_matrix keeps the same field clear.
+    ax.grid(False)
     cmap = sequential_colormap(theme)
     image = ax.imshow(matrix, cmap=cmap, aspect="auto", interpolation="nearest")
     if xlabels is not None:
