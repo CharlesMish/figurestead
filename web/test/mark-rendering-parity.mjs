@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { CORE_REGISTRY, compileTerminalScene, resolveTerminalScene } from '../src/index.js';
+import { CORE_REGISTRY, compileTerminalScene, composeResolvedScene, resolveTerminalScene } from '../src/index.js';
+import { lineMarkerGeometry } from '../src/line-identity.js';
 import { TEMPORAL_RENDERERS } from '../src/extensions/temporal/index.js';
 import { resolveSceneFrame } from '../src/resolved-scene.js';
 import { drawResolvedPanel } from '../src/canvas-scene.js';
@@ -211,6 +212,121 @@ test('unknown kinds fail before null-geometry and hidden-motion skipping', () =>
   }
 });
 
+function legendContract(renderer, profileKey) {
+  const keys = ['A', 'B', 'C', 'D'];
+  const spec = { title: 'Legend glyph', subtitle: '', xLabel: 'x', yLabel: 'y', signature: 'figurestead', description: 'Point-series legend glyph parity' };
+  const panel = { id: 'panel', renderer, spec: { title: spec.title, xLabel: 'x', yLabel: 'y' }, annotations: [], encoding: { interpolation: 'linear' } };
+  if (renderer === 'scatter') {
+    panel.xScale = { type: 'linear' }; panel.yScale = { type: 'linear' };
+    panel.data = { x: [0, 1, 2, 3], y: [1, 2, 3, 4], series: keys, seriesLabels: Object.fromEntries(keys.map(key => [key, key])), summary: null };
+  } else if (renderer === 'strip_summary') {
+    panel.xScale = { type: 'band' }; panel.yScale = { type: 'linear' };
+    panel.data = { groups: ['G1', 'G2'], group: ['G1', 'G1', 'G2', 'G2'], values: [1, 2, 3, 4], series: keys, seriesLabels: Object.fromEntries(keys.map(key => [key, key])), summary: 'median' };
+  } else {
+    panel.xScale = { type: 'linear' }; panel.yScale = { type: 'linear' };
+    panel.data = { x: [0, 1, 2], revealOrder: 'x', series: keys.map((key, index) => ({ key, label: key, y: [index + 1, index + 1.2, index + 1.1] })) };
+  }
+  return {
+    schemaVersion: '0.4', rendererApiVersion: '1', theme, profile,
+    timeline: contract.timeline, motion: contract.motion,
+    style: { glyphs: ['ring', 'square', 'triangle', 'diamond'], lineStyles: ['solid'], series: {} },
+    spec, layout: contract.layout,
+    view: { profile: profileKey, motion: 'none', ambient: 'none', strategy: 'none' },
+    panels: [panel],
+  };
+}
+function legendLayer(svg) {
+  const start = svg.indexOf('<g data-layer="legend">');
+  assert.notEqual(start, -1);
+  let depth = 0;
+  for (let index = start; index < svg.length; index += 1) {
+    if (svg.startsWith('<g', index)) { depth += 1; index += 1; continue; }
+    if (svg.startsWith('</g>', index)) { depth -= 1; if (depth === 0) return svg.slice(start, index + 4); index += 3; }
+  }
+  assert.fail('legend layer was not closed');
+}
+function glyphPath(path, glyph, x, y, radius) {
+  if (glyph === 'square') return path.some(part => JSON.stringify(part) === JSON.stringify(['rect', x - radius, y - radius, radius * 2, radius * 2]));
+  if (glyph === 'triangle') return path.some(part => JSON.stringify(part) === JSON.stringify(['moveTo', x, y - radius]))
+    && path.some(part => JSON.stringify(part) === JSON.stringify(['lineTo', x + radius, y + radius]));
+  if (glyph === 'diamond') return path.some(part => JSON.stringify(part) === JSON.stringify(['moveTo', x, y - radius]))
+    && path.some(part => JSON.stringify(part) === JSON.stringify(['lineTo', x + radius, y]));
+  return path.some(part => JSON.stringify(part) === JSON.stringify(['arc', x, y, radius, 0, Math.PI * 2]));
+}
+function pointSwatch(glyph, x, y, radius, stroke, width) {
+  const common = `fill="none" stroke="${stroke}" stroke-width="${width}"`;
+  if (glyph === 'square') return `<rect ${common} x="${x - radius}" y="${y - radius}" width="${radius * 2}" height="${radius * 2}"/>`;
+  if (glyph === 'triangle') return `<path ${common} d="M ${x} ${y - radius} L ${x + radius} ${y + radius} L ${x - radius} ${y + radius} Z"/>`;
+  if (glyph === 'diamond') return `<path ${common} d="M ${x} ${y - radius} L ${x + radius} ${y} L ${x} ${y + radius} L ${x - radius} ${y} Z"/>`;
+  return `<circle ${common} cx="${x}" cy="${y}" r="${radius}"/>`;
+}
+function lineGlyph(glyph, id, x, y, radius, stroke, width) {
+  const common = `data-mark-id="${id}" fill="none" stroke="${stroke}" stroke-width="${width}"`;
+  if (glyph === 'square') return `<rect ${common} x="${x - radius}" y="${y - radius}" width="${radius * 2}" height="${radius * 2}"/>`;
+  if (glyph === 'triangle') return `<path ${common} d="M ${x} ${y - radius} L ${x + radius} ${y + radius} L ${x - radius} ${y + radius} Z"/>`;
+  if (glyph === 'diamond') return `<path ${common} d="M ${x} ${y - radius} L ${x + radius} ${y} L ${x} ${y + radius} L ${x - radius} ${y} Z"/>`;
+  return `<circle ${common} cx="${x}" cy="${y}" r="${radius}"/>`;
+}
+const legendLayouts = [
+  ['atlas', 760, 520, 'normal'],
+  ['atlas', 320, 240, 'compact'],
+  ['paper', 760, 520, 'normal'],
+  ['paper', 320, 240, 'compact'],
+  ['atlas', 1160, 700, 'design'],
+  ['paper', 1160, 700, 'design'],
+];
+for (const renderer of ['scatter', 'strip_summary']) for (const [profile, width, height, size] of legendLayouts) {
+  test(`${renderer} ${profile} ${size} legend uses the series glyph, edge, and stroke width`, () => {
+    const composed = composeResolvedScene(resolveTerminalScene(compileTerminalScene(legendContract(renderer, profile)), { width, height }));
+    const panel = composed.panels[0], svg = resolvedSceneToSvg(composed), legend = legendLayer(svg), ctx = runCanvas(composed);
+    const radius = 4 * panel.layout.scale, widthPx = Math.max(1, 1.2 * panel.layout.scale);
+    assert.equal((legend.match(/<circle /g) ?? []).length, 1, 'only the ring series keeps a circle');
+    assert.doesNotMatch(legend, /mask-type="luminance"/);
+    panel.legend.forEach((item, index) => {
+      const entry = panel.layout.legend.entries[index];
+      const stroke = item.style.edge ?? item.style.color;
+      const swatch = pointSwatch(item.style.glyph, entry.markerX, entry.y, radius, stroke, widthPx);
+      assert.equal(legend.split(swatch).length - 1, 1, `${item.key} ${item.style.glyph}`);
+      if (profile === 'paper') {
+        assert.notEqual(item.style.edge, item.style.color);
+        assert.equal(item.style.edge, composed.theme.seriesEdges[item.style.colorIndex]);
+        assert.doesNotMatch(swatch, new RegExp(`stroke="${item.style.color}"`));
+      } else assert.equal(item.style.edge, null);
+      const paints = ctx.calls.filter(call => call.method === 'stroke' && call.strokeStyle === stroke && call.lineWidth === widthPx
+        && glyphPath(call.path, item.style.glyph, entry.markerX, entry.y, radius));
+      assert.equal(paints.length, 1, `${item.key} canvas legend paint`);
+      const mark = panel.marks.find(candidate => candidate.kind === 'point' && candidate.series === item.key);
+      const body = svgMark(svg, mark.id);
+      assert.ok(body.includes(`stroke="${mark.style.color}"`) && body.includes('stroke-width="1.5"'), 'observation ink stays on the data glyph');
+      assert.ok(body.includes(item.style.glyph === 'ring' ? '<circle ' : item.style.glyph === 'square' ? '<rect ' : '<path '));
+      assert.ok(!legend.includes(`data-mark-id="${mark.id}"`));
+    });
+    if (renderer === 'strip_summary') {
+      const median = panel.marks.find(mark => mark.kind === 'median-rule');
+      const summary = svgMark(svg, median.id);
+      assert.match(summary, /<path /);
+      assert.ok(summary.includes(`stroke="${median.style.color}"`));
+      assert.ok(!legend.includes(median.id));
+    }
+  });
+}
+for (const [profile, width, height, size] of legendLayouts) test(`line ${profile} ${size} legend keeps its sample and series glyph`, () => {
+  const composed = composeResolvedScene(resolveTerminalScene(compileTerminalScene(legendContract('line', profile)), { width, height }));
+  const panel = composed.panels[0], legend = legendLayer(resolvedSceneToSvg(composed));
+  const scale = panel.layout.scale, half = 12 * Math.max(1, scale);
+  assert.equal((legend.match(/mask-type="luminance"/g) ?? []).length, panel.legend.length);
+  panel.legend.forEach((item, index) => {
+    const entry = panel.layout.legend.entries[index];
+    const geometry = lineMarkerGeometry(item.style, scale, panel.presentation.markerScale ?? 1);
+    const id = `panel-legend-${index}`;
+    if (item.style.edge) assert.ok(legend.includes(lineGlyph(item.style.glyph, id, entry.markerX, entry.y, geometry.radius, item.style.edge, geometry.outlineWidth + 1.3)));
+    assert.ok(legend.includes(lineGlyph(item.style.glyph, id, entry.markerX, entry.y, geometry.radius, item.style.color, geometry.outlineWidth)));
+    assert.ok(legend.includes(`d="M ${entry.markerX - half} ${entry.y} L ${entry.markerX + half} ${entry.y}"`));
+    assert.notEqual(geometry.radius, 4 * scale);
+  });
+  assert.ok(!legend.includes(`r="${4 * scale}"`), 'line legends do not fall through to the point-series radius');
+});
+
 test('renderer-mark is an explicitly unsupported built-in paint placeholder', () => {
   for (const geometry of [null, { cx: 210, cy: 210, radius: 4 }]) {
     for (const opacity of [0, 1]) {
@@ -228,4 +344,4 @@ test('renderer-mark is an explicitly unsupported built-in paint placeholder', ()
 for (const { name, run } of cases) { try { run(); } catch (error) { error.message = `${name}: ${error.message}`; throw error; } }
 console.log(JSON.stringify({ suite: 'mark-rendering-parity', result: 'PASS', cases: cases.length,
   builtInPaintingKinds: Object.keys(fixtures).length, placeholderKinds: 1,
-  checks: ['geometry', 'clipping', 'reference-before-data', 'terminal-and-intermediate-band-paint', 'unknown-hidden-null-rejection'] }));
+  checks: ['geometry', 'clipping', 'reference-before-data', 'terminal-and-intermediate-band-paint', 'unknown-hidden-null-rejection', 'point-series-legend-glyphs', 'line-legend-preserved'] }));
