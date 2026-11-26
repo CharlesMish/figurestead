@@ -1,6 +1,9 @@
 # Browser numeric and UTC axis ticks
 
-Current source resolves numeric tick labels as a set before measuring or
+Begins with the unpublished browser `0.9.0-alpha.8` candidate. Published
+alpha.7 packages and their historical outputs remain unchanged.
+
+The candidate resolves numeric tick labels as a set before measuring or
 painting them. Precision starts from tick spacing and increases until each label
 reads back to the actual numeric tick value. Distinct strings alone are not
 sufficient: ticks at 1040 and 1060 must not be labelled 1000 and 1100. Existing

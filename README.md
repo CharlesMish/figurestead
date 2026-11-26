@@ -10,6 +10,12 @@ This alpha ships PR #60's opt-in shape-preserving monotone interpolation, factua
 
 PR #61 reconciled public documentation; PR #64 patched development and publishing tooling, not Figurestead's consumer dependency floor. Historical a5/alpha.6 artifacts, gallery generations and original preparation records remain version-bound. No new universal contrast, accessibility, print or high-series identity qualification is claimed.
 
+## Preparation candidate: a7 / alpha.8
+
+The unpublished candidate incorporates the accepted corrections already on protected main `a702efa5376572fdecd6236abe588659e6b09c74`: PR #67's truthful browser numeric and UTC tick labels, PR #68's literal Python legend labels, PR #69's SVG point-series legend glyphs, and PR #70's heatmap profile-grid suppression. See the [candidate changes and limits](release/notes/0.9.0a7-web-alpha.8.md). PR #66 reconciled living publication documentation after a6/alpha.7; it did not add a package capability.
+
+Candidate bytes require independent exact-artifact review and separate publication authorization. The public installs below remain **a6 / alpha.7** until publication succeeds. Historical releases, images and source ledgers retain their original authority.
+
 ## Start here
 
 Install from the public registries; a repository checkout is not required.

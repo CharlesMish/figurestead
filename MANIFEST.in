@@ -19,3 +19,5 @@ include docs/browser-scene-marks.md
 include release/notes/0.9.0a5-web-alpha.6.md
 include docs/factual-descriptions.md
 include release/notes/0.9.0a6-web-alpha.7.md
+include docs/browser-axis-ticks.md
+include release/notes/0.9.0a7-web-alpha.8.md

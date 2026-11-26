@@ -3,13 +3,15 @@
 Experimental scientific figures for Python: line, scatter, histogram,
 strip-summary and heatmap figures with explicit labels and themes.
 
-## Python 0.9.0a6
+## Python 0.9.0a7
 
 Requires Python >=3.10, Matplotlib >=3.7, NumPy >=1.24 and Pillow >=10.
-Published on PyPI from the independently reviewed retained a6 artifacts. In a fresh virtual environment:
+Preparation candidate: the command below is for this version after publication.
+For the currently published release, use Python 0.9.0a6. To review now, install
+the exact retained candidate wheel or sdist. In a fresh virtual environment:
 
 ```sh
-python -m pip install figurestead==0.9.0a6
+python -m pip install figurestead==0.9.0a7
 ```
 
 ```python
@@ -34,7 +36,7 @@ Carried forward from a5: measured note and sample-count placement, warnings when
 explicit histogram edges exclude observations, and optional signatures fitted
 only where there is measured spare space. Callers supplying axes own their margins;
 an insufficient source-note footer raises sizing guidance. See the frozen
-[layout and export contract](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/python-layout-and-comparison.md)
+[layout and export contract](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/python-layout-and-comparison.md)
 for the behavior incorporated into this version.
 
 Numeric NaN/infinity category identities reject before string coercion; literal
@@ -52,12 +54,20 @@ bounded line-identity profile. Performance gains depend on geometry and density.
 The auxiliary `compile_terminal_scene` rejects unsupported contracts rather than
 silently claiming fidelity; it remains finite-only and is not NaN-gap transport.
 
+New in the a7 candidate: Figurestead-authored legend labels that begin with an
+underscore, including literal `_nolegend_`, stay eligible for ordinary legends
+and direct-label fallback. Caller-owned Matplotlib artists keep Matplotlib's
+own underscore rules. Ordinary `heatmap()` turns profile gridlines off after
+axis styling so those lines do not cross cell centers. `line()` still draws its
+profile grid. Colormap, normalization, tick locators and the colorbar are
+unchanged. These repairs do not add observations, a new scale, or a browser heatmap.
+
 Inspect exports at their intended size. Shared Python/browser semantics do not
 imply identical pixels or matching renderer coverage. Reference themes have a
 bounded three-series line designation, not universal accessibility or physical
 print qualification.
 
-[Line behavior and limits](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/line-series-semantics.md)
+[Line behavior and limits](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/line-series-semantics.md)
 · [Source](https://github.com/CharlesMish/figurestead)
 · [Issue tracker](https://github.com/CharlesMish/figurestead/issues)
 

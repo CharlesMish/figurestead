@@ -4,6 +4,10 @@ This directory defines the retained-candidate lifecycle for
 `@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
 already-published first alpha used this repaired process.
 
+## Unpublished alpha.8 preparation
+
+`0.9.0-alpha.8` is an unpublished candidate prepared from protected main `a702efa5376572fdecd6236abe588659e6b09c74`. This tarball carries PR #67's tick-label correction and PR #69's SVG legend glyphs. The coordinated Python `0.9.0a7` candidate carries PR #68 and PR #70. The retained tarball, when present under `0.9.0-alpha.8`, is the only publishable browser archive for that version. npm `alpha` still points at alpha.7 and `latest` remains alpha.1. See [candidate notes](../notes/0.9.0a7-web-alpha.8.md). Do not dispatch publication from this preparation.
+
 ## Current published alpha.7 (2026-10-23 America/Chicago)
 
 `@figurestead/web@0.9.0-alpha.7` is public from the exact independently reviewed retained archive under `0.9.0-alpha.7`, at accepted protected-main commit `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65). npm `alpha` points to alpha.7 and `latest` remains alpha.1. The [coordinated GitHub release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7) records the reviewed download hash and source bindings.
