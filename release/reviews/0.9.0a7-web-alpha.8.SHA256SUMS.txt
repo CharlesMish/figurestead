@@ -1,0 +1,3 @@
+469691b5fd6ea617c9ad99fcb1824de24200ec2adc3f6868304bbae8ea548229  figurestead-0.9.0a7-py3-none-any.whl
+07c46905e271d5feae39a151c773437c6d9d8aacef633320994b66193866e1d5  figurestead-0.9.0a7.tar.gz
+1236ad8cfead12db6d979b8505cdd70fb80d6554faf974a2ae224248c5eb6113  figurestead-web-0.9.0-alpha.8.tgz
