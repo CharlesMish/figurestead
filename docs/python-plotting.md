@@ -109,7 +109,8 @@ group order. Omitting both leaves painting and the legend as they are.
 `draw_order` alone does not change legend reading order.
 
 An explicit order must be a list, tuple, or one-dimensional array and must
-name every active series once. Sets, frozensets, and mappings are rejected.
+name every active series once. Sets, frozensets, mappings, iterators, and
+other containers are rejected before they are read.
 Duplicates and unknown keys are rejected. A key that is declared in
 `series_slots` and is not in the data may be included; it is not drawn and
 does not add a legend entry. Key matching is the same as `series_slots`,

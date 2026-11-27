@@ -461,23 +461,26 @@ def _series_key_order(value, *, path: str, active, series_slots):
 
     Every active series appears once. Duplicates and unknown keys are rejected.
     A key declared in ``series_slots`` but absent from the data is allowed.
-    Sets, frozensets, and mappings are rejected before they are read. Lists,
-    tuples, and one-dimensional arrays keep their order.
+    Only lists, tuples, and one-dimensional arrays are read. Other containers
+    are rejected before iteration.
     """
     if value is None:
         return None
-    # Reject before list() so hash-ordered sets and mapping keys cannot become
-    # a paint or legend sequence.
-    if isinstance(value, (set, frozenset)) or isinstance(value, Mapping):
-        raise _input_error(path, "must be an ordered sequence of series keys")
-    if np.ma.isMaskedArray(value):
-        raise _input_error(path, "masked arrays are not currently supported")
-    if isinstance(value, _STRING_LIKE):
-        raise _input_error(path, "must be a non-string sequence of series keys")
-    try:
+    if isinstance(value, (list, tuple)):
         order = list(value)
-    except TypeError as exc:
-        raise _input_error(path, "must be a sequence of series keys") from exc
+    elif np.ma.isMaskedArray(value):
+        raise _input_error(path, "masked arrays are not currently supported")
+    elif isinstance(value, np.ndarray):
+        if value.ndim != 1:
+            raise _input_error(path, "must be a list, tuple, or one-dimensional array")
+        order = list(value)
+    elif isinstance(value, _STRING_LIKE):
+        raise _input_error(path, "must be a non-string sequence of series keys")
+    elif isinstance(value, (set, frozenset)) or isinstance(value, Mapping):
+        # Reject before list() so hash order cannot become a paint or legend sequence.
+        raise _input_error(path, "must be an ordered sequence of series keys")
+    else:
+        raise _input_error(path, "must be a list, tuple, or one-dimensional array")
     positions = {}
     for index, item in enumerate(order):
         item_path = f"{path}[{index}]"
@@ -613,9 +616,10 @@ def strip_summary(groups, values, *, series=None, series_slots=None,
     x-axis group order only. Omitting both leaves painting and the legend
     unchanged. ``legend_order`` alone does not change painting. ``draw_order``
     alone does not change the legend. An explicit order must name every active
-    series once. Sets, frozensets, and mappings are rejected before axes are
-    created or changed. Lists, tuples, and one-dimensional arrays keep their
-    order. Duplicates and unknown keys are rejected. Keys declared in
+    series once. Only a list, tuple, or one-dimensional array is accepted.
+    Sets, frozensets, mappings, iterators, and other containers are rejected
+    before they are read and before axes are created or changed. Duplicates
+    and unknown keys are rejected. Keys declared in
     ``series_slots`` but absent from the data may be included; they add no
     artist and no legend entry. Anonymous points are rejected before axes are
     created or changed. Key matching follows ``series_slots``, including
@@ -755,10 +759,11 @@ def scatter(x, y, *, series=None, series_slots=None, point_style=None,
     them in legend reading order. Both are optional. Omitting both leaves
     painting and the legend unchanged. ``legend_order`` alone does not change
     painting. ``draw_order`` alone does not change the legend. An explicit
-    order must name every active series once. Sets, frozensets, and mappings
-    are rejected before axes are created or changed. Lists, tuples, and
-    one-dimensional arrays keep their order. Duplicates and unknown keys are
-    rejected. Keys declared in ``series_slots`` but absent from the data may
+    order must name every active series once. Only a list, tuple, or
+    one-dimensional array is accepted. Sets, frozensets, mappings, iterators,
+    and other containers are rejected before they are read and before axes
+    are created or changed. Duplicates and unknown keys are rejected. Keys
+    declared in ``series_slots`` but absent from the data may
     be included; they add no artist and no legend entry. Anonymous points are
     rejected before axes are created or changed. Key matching follows
     ``series_slots``, including mixed-type string coercion and literal

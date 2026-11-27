@@ -668,8 +668,8 @@ class PythonPlotInputRegression(unittest.TestCase):
             (["A", "B", "quiet"], None, r"draw_order\[2\]: unknown series 'quiet'"),
             ("AB", None, r"draw_order: must be a non-string sequence of series keys"),
             (None, "BA", r"legend_order: must be a non-string sequence of series keys"),
-            (5, None, r"draw_order: must be a sequence of series keys"),
-            (None, object(), r"legend_order: must be a sequence of series keys"),
+            (5, None, r"draw_order: must be a list, tuple, or one-dimensional array"),
+            (None, object(), r"legend_order: must be a list, tuple, or one-dimensional array"),
             (np.ma.array(["A", "B"]), None, r"draw_order: masked arrays are not currently supported"),
             (["A", "B", math.nan], None, r"draw_order\[2\]: numeric series keys must be finite"),
             ([{"A": 1}, "B"], None, r"draw_order\[0\]: series keys must be hashable"),
@@ -826,6 +826,46 @@ class PythonPlotInputRegression(unittest.TestCase):
                         [text.get_text() for text in ax.get_legend().get_texts()],
                         ["Recent", "Historical"])
                     plt.close(fig)
+        from collections.abc import Set as AbstractSet
+
+        class _HashOrderedKeys(AbstractSet):
+            def __init__(self, values):
+                self._values = set(values)
+                self.iterated = False
+
+            def __iter__(self):
+                self.iterated = True
+                return iter(self._values)
+
+            def __contains__(self, value):
+                return value in self._values
+
+            def __len__(self):
+                return len(self._values)
+
+        unordered_views = (
+            ("iterator", lambda: iter({"Historical", "Recent"})),
+            ("set-like", lambda: _HashOrderedKeys({"Historical", "Recent"})),
+        )
+        for family in ("scatter", "strip"):
+            for kind, build in unordered_views:
+                for argument in ("draw_order", "legend_order"):
+                    with self.subTest(family=family, kind=kind, argument=argument):
+                        order = build()
+                        if family == "scatter":
+                            invoke = lambda order=order, argument=argument: scatter(
+                                [0, 0], [0, 0], series=["Historical", "Recent"],
+                                profile="monograph", **{argument: order})
+                        else:
+                            invoke = lambda order=order, argument=argument: strip_summary(
+                                ["East", "West"], [0, 0], series=["Historical", "Recent"],
+                                profile="monograph", **{argument: order})
+                        self.assert_rejected_before_allocation(
+                            invoke, rf"{argument}: must be a list, tuple, or one-dimensional array")
+                        if kind == "iterator":
+                            self.assertEqual(set(order), {"Historical", "Recent"})
+                        else:
+                            self.assertFalse(order.iterated)
 
     def test_valid_call_succeeds_after_rejected_input(self) -> None:
         self.assert_rejected_before_allocation(
