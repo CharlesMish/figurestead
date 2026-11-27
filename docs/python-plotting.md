@@ -108,21 +108,24 @@ group order. Omitting both leaves painting and the legend as they are.
 `legend_order` alone does not change which point layer is in front.
 `draw_order` alone does not change legend reading order.
 
-An explicit list must name every active series once. Duplicates and unknown
-keys are rejected. A key that is declared in `series_slots` and is not in the
-data may be included; it is not drawn and does not add a legend entry. Key
-matching is the same as `series_slots`, including mixed-type string coercion.
-`series=[0, "A"]` is stored as `"0"`. Underscore labels stay literal. Anonymous
-points have no keys, so either argument is rejected before axes are created
-or changed. A single series still omits its ordinary legend.
+An explicit order must be a list, tuple, or one-dimensional array and must
+name every active series once. Sets, frozensets, and mappings are rejected.
+Duplicates and unknown keys are rejected. A key that is declared in
+`series_slots` and is not in the data may be included; it is not drawn and
+does not add a legend entry. Key matching is the same as `series_slots`,
+including mixed-type string coercion. `series=[0, "A"]` is stored as `"0"`.
+Underscore labels stay literal. Anonymous points have no keys, so either
+argument is rejected before axes are created or changed. A single series
+still omits its ordinary legend.
 
 Explicit `draw_order` places every layer of a background series under every
 layer of a foreground series: glow, theme edge, primary mark, and core.
 Those observation layers stay below strip median bars. The guarantee applies
 only to observations from that call. Caller-owned artists keep their depths.
-Legend order applies only to that call's handles; other handles stay in
-native order. A later plot that rebuilds the legend keeps these handles in
-the recorded order. The arguments do not change first-appearance colors,
+Legend order applies only to that call's handles. A later plot that rebuilds
+the legend reorders each call's surviving handles only within the positions
+those handles currently occupy; other handles stay in native order. The
+arguments do not change first-appearance colors,
 slots, resolved `point_style` or `series_styles`, which rows are drawn,
 offsets, seeded jitter, group counts, pooled medians, or axis limits. This
 is not a grayscale, color-vision, print, or accessibility qualification.

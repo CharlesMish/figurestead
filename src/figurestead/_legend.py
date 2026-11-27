@@ -85,23 +85,38 @@ def legend_entries(ax, handler_map=None):
     return _apply_legend_ranks(handles, texts)
 
 
-def _apply_legend_ranks(handles, texts):
-    """Reorder only handles that recorded a legend rank, in the slots they occupy.
+def _legend_call_rank(handle):
+    """Return ``(call_id, local_rank)`` for a handle stamped by one point call."""
+    rank = getattr(handle, "_figurestead_legend_rank", None)
+    if not isinstance(rank, tuple) or len(rank) != 2:
+        return None
+    return rank
 
-    Unranked handles, including caller-owned artists, stay where native order
-    put them. Ranks are private to scatter and strip_summary series orders.
+
+def _apply_legend_ranks(handles, texts):
+    """Reorder each call's ranked handles only inside the positions they occupy.
+
+    A rank is ``(call_id, local_rank)``. Surviving handles from one scatter or
+    strip_summary call trade places only with each other, so a caller-owned
+    guide between two populations stays between them after a refresh.
+    Unranked handles stay where native order put them.
     """
-    if not any(getattr(handle, "_figurestead_legend_rank", None) is not None for handle in handles):
-        return handles, texts
     pairs = list(zip(handles, texts))
-    ranked = [index for index, (handle, _) in enumerate(pairs)
-              if getattr(handle, "_figurestead_legend_rank", None) is not None]
-    chosen = sorted(
-        (pairs[index] for index in ranked),
-        key=lambda pair: pair[0]._figurestead_legend_rank,
-    )
-    for index, pair in zip(ranked, chosen):
-        pairs[index] = pair
+    groups = {}
+    for index, (handle, _) in enumerate(pairs):
+        rank = _legend_call_rank(handle)
+        if rank is None:
+            continue
+        groups.setdefault(rank[0], []).append(index)
+    if not groups:
+        return handles, texts
+    for indices in groups.values():
+        chosen = sorted(
+            (pairs[index] for index in indices),
+            key=lambda pair: pair[0]._figurestead_legend_rank[1],
+        )
+        for index, pair in zip(indices, chosen):
+            pairs[index] = pair
     return [handle for handle, _ in pairs], [text for _, text in pairs]
 
 

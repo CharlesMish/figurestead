@@ -760,6 +760,73 @@ class PythonPlotInputRegression(unittest.TestCase):
         self.assertEqual(len(ax.collections), 0)
         plt.close(fig)
 
+    def test_series_orders_reject_sets_frozensets_and_mappings(self) -> None:
+        unordered = (
+            ({"Historical", "Recent"}, "set"),
+            (frozenset({"Historical", "Recent"}), "frozenset"),
+            ({"Historical": 0, "Recent": 1}, "mapping"),
+        )
+        for family in ("scatter", "strip"):
+            for order, kind in unordered:
+                for argument in ("draw_order", "legend_order"):
+                    with self.subTest(family=family, kind=kind, argument=argument):
+                        if family == "scatter":
+                            invoke = lambda order=order, argument=argument: scatter(
+                                [0, 0], [0, 0], series=["Historical", "Recent"],
+                                profile="monograph", **{argument: order})
+                        else:
+                            invoke = lambda order=order, argument=argument: strip_summary(
+                                ["East", "West"], [0, 0], series=["Historical", "Recent"],
+                                profile="monograph", **{argument: order})
+                        self.assert_rejected_before_allocation(
+                            invoke, rf"{argument}: must be an ordered sequence of series keys")
+        order = {"Historical", "Recent"}
+        self.assert_rejected_before_allocation(
+            lambda: scatter(
+                [0, 0], [0, 0], series=["Historical", "Recent"], profile="monograph",
+                draw_order=order, legend_order=order),
+            r"scatter\.draw_order: must be an ordered sequence of series keys")
+        self.assert_rejected_before_allocation(
+            lambda: strip_summary(
+                ["East", "West"], [0, 0], series=["Historical", "Recent"], profile="monograph",
+                draw_order=order, legend_order=order),
+            r"strip_summary\.draw_order: must be an ordered sequence of series keys")
+        held, held_ax = plt.subplots()
+        held_ax.set_title("unchanged")
+        caller = held_ax.scatter([0], [1], c="black", label="Caller")
+        before = (held_ax.get_title(), len(held_ax.collections), len(held_ax.lines),
+                  caller.get_zorder(), held_ax.get_legend())
+        with self.assertRaisesRegex(ValueError, r"scatter\.draw_order: must be an ordered sequence"):
+            scatter([0, 0], [0, 0], series=["Historical", "Recent"], profile="monograph",
+                    draw_order=order, legend_order=order, ax=held_ax)
+        self.assertEqual(
+            (held_ax.get_title(), len(held_ax.collections), len(held_ax.lines),
+             caller.get_zorder(), held_ax.get_legend()),
+            before)
+        plt.close(held)
+        for family in ("scatter", "strip"):
+            for container in (
+                ["Historical", "Recent"],
+                ("Historical", "Recent"),
+                np.array(["Historical", "Recent"]),
+            ):
+                with self.subTest(family=family, container=type(container).__name__):
+                    kwargs = dict(
+                        series=["Historical", "Recent"], profile="monograph",
+                        draw_order=container, legend_order=list(reversed(container)))
+                    if family == "scatter":
+                        fig, ax = scatter([0, 0], [0, 0], **kwargs)
+                    else:
+                        fig, ax = strip_summary(["East", "West"], [0, 0], **kwargs)
+                    labelled = {artist.get_label(): artist for artist in ax.collections
+                                if getattr(artist, "_figurestead_authored_label", False)}
+                    self.assertEqual(set(labelled), {"Historical", "Recent"})
+                    self.assertLess(labelled["Historical"].get_zorder(), labelled["Recent"].get_zorder())
+                    self.assertEqual(
+                        [text.get_text() for text in ax.get_legend().get_texts()],
+                        ["Recent", "Historical"])
+                    plt.close(fig)
+
     def test_valid_call_succeeds_after_rejected_input(self) -> None:
         self.assert_rejected_before_allocation(
             lambda: histogram([[1, 2], [3, 4]], labels=["only"]), r"histogram\.labels"
@@ -773,6 +840,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 63:
-        raise SystemExit(f"expected exactly 63 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 64:
+        raise SystemExit(f"expected exactly 64 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)

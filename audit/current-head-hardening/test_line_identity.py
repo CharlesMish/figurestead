@@ -1292,6 +1292,49 @@ class PointSeriesSlotTests(unittest.TestCase):
         plt.close(fig)
         plt.close(fig2)
 
+    def test_reattached_calls_reorder_only_inside_their_own_legend_slots(self):
+        from figurestead import _legend, scatter
+        fig, ax = plt.subplots()
+        for keys, xy in ((["A", "B"], 0), (["C", "D"], 1)):
+            scatter([xy, xy], [xy, xy], series=keys, profile="monograph",
+                    legend_order=keys[::-1], ax=ax)
+        guide, = ax.plot([0, 1], [0, 1], label="guide")
+        for label in ("A", "B"):
+            artist = next(artist for artist in list(ax.collections)
+                          if getattr(artist, "_figurestead_authored_label", False)
+                          and artist.get_label() == label)
+            artist.remove()
+            ax.add_collection(artist)
+        captured = {}
+
+        def keep_native(handles, texts):
+            captured["texts"] = list(texts)
+            return handles, texts
+
+        original = _legend._apply_legend_ranks
+        _legend._apply_legend_ranks = keep_native
+        try:
+            _legend.legend_entries(ax)
+        finally:
+            _legend._apply_legend_ranks = original
+        self.assertEqual(captured["texts"], ["C", "D", "guide", "A", "B"])
+        ranks = {}
+        for artist in ax.collections:
+            if getattr(artist, "_figurestead_authored_label", False):
+                ranks[artist.get_label()] = artist._figurestead_legend_rank
+        self.assertEqual(ranks["A"][0], ranks["B"][0])
+        self.assertEqual(ranks["C"][0], ranks["D"][0])
+        self.assertNotEqual(ranks["A"][0], ranks["C"][0])
+        self.assertLess(ranks["B"][1], ranks["A"][1])
+        self.assertLess(ranks["D"][1], ranks["C"][1])
+        self.assertFalse(hasattr(guide, "_figurestead_legend_rank"))
+        line([0, 1], [1, 2], labels=["refresh"], ax=ax)
+        self.assertEqual(self.legend_texts(ax), ["D", "C", "guide", "B", "A", "refresh"])
+        refresh = next(artist for artist in ax.lines if artist.get_label() == "refresh")
+        self.assertFalse(hasattr(refresh, "_figurestead_legend_rank"))
+        self.assertFalse(hasattr(guide, "_figurestead_legend_rank"))
+        plt.close(fig)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

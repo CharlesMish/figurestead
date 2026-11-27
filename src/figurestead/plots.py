@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence, Mapping
+from itertools import count
 import warnings
 
 import matplotlib.pyplot as plt
@@ -460,9 +461,15 @@ def _series_key_order(value, *, path: str, active, series_slots):
 
     Every active series appears once. Duplicates and unknown keys are rejected.
     A key declared in ``series_slots`` but absent from the data is allowed.
+    Sets, frozensets, and mappings are rejected before they are read. Lists,
+    tuples, and one-dimensional arrays keep their order.
     """
     if value is None:
         return None
+    # Reject before list() so hash-ordered sets and mapping keys cannot become
+    # a paint or legend sequence.
+    if isinstance(value, (set, frozenset)) or isinstance(value, Mapping):
+        raise _input_error(path, "must be an ordered sequence of series keys")
     if np.ma.isMaskedArray(value):
         raise _input_error(path, "masked arrays are not currently supported")
     if isinstance(value, _STRING_LIKE):
@@ -536,19 +543,18 @@ def _point_paint_plan(styles, draw_order):
     return plan
 
 
+# One identifier per scatter or strip_summary call that records a legend order.
+_LEGEND_CALL_IDS = count()
+
+
 def _stamp_legend_ranks(owned, desired_keys) -> None:
-    """Record legend reading order on this call's labelled handles only."""
+    """Record this call's identifier and a local reading rank on its handles."""
     if not owned:
         return
-    ax = owned[0][1].axes
-    existing = [
-        getattr(artist, "_figurestead_legend_rank", None)
-        for artist in [*ax.get_children(), *getattr(ax, "containers", ())]
-    ]
-    base = max((rank for rank in existing if rank is not None), default=-1) + 1
+    call_id = next(_LEGEND_CALL_IDS)
     positions = {key: index for index, key in enumerate(desired_keys)}
     for key, handle in owned:
-        handle._figurestead_legend_rank = base + _category_key_value(positions, key)
+        handle._figurestead_legend_rank = (call_id, _category_key_value(positions, key))
 
 
 def _apply_point_legend(ax, theme, series_keys, owned, appearance, draw_order, legend_order) -> None:
@@ -607,7 +613,9 @@ def strip_summary(groups, values, *, series=None, series_slots=None,
     x-axis group order only. Omitting both leaves painting and the legend
     unchanged. ``legend_order`` alone does not change painting. ``draw_order``
     alone does not change the legend. An explicit order must name every active
-    series once. Duplicates and unknown keys are rejected. Keys declared in
+    series once. Sets, frozensets, and mappings are rejected before axes are
+    created or changed. Lists, tuples, and one-dimensional arrays keep their
+    order. Duplicates and unknown keys are rejected. Keys declared in
     ``series_slots`` but absent from the data may be included; they add no
     artist and no legend entry. Anonymous points are rejected before axes are
     created or changed. Key matching follows ``series_slots``, including
@@ -615,9 +623,10 @@ def strip_summary(groups, values, *, series=None, series_slots=None,
     still omits its ordinary legend. Explicit drawing stacks glow, theme edge,
     primary mark, and core of each background series under every layer of each
     foreground series, and keeps those observations below the median bars.
-    Only observations from this call are reordered. Colors, slots, resolved
-    point styles, inclusion, offsets, seeded jitter, counts, pooled medians,
-    and axis limits stay as they are.
+    Only observations from this call are reordered. A later legend rebuild
+    reorders this call's handles only inside the positions they occupy.
+    Colors, slots, resolved point styles, inclusion, offsets, seeded jitter,
+    counts, pooled medians, and axis limits stay as they are.
     """
     groups, _ = _category_vector(groups, path="strip_summary.groups", allow_empty=True)
     values = _numeric_array(
@@ -746,7 +755,9 @@ def scatter(x, y, *, series=None, series_slots=None, point_style=None,
     them in legend reading order. Both are optional. Omitting both leaves
     painting and the legend unchanged. ``legend_order`` alone does not change
     painting. ``draw_order`` alone does not change the legend. An explicit
-    order must name every active series once. Duplicates and unknown keys are
+    order must name every active series once. Sets, frozensets, and mappings
+    are rejected before axes are created or changed. Lists, tuples, and
+    one-dimensional arrays keep their order. Duplicates and unknown keys are
     rejected. Keys declared in ``series_slots`` but absent from the data may
     be included; they add no artist and no legend entry. Anonymous points are
     rejected before axes are created or changed. Key matching follows
@@ -754,8 +765,10 @@ def scatter(x, y, *, series=None, series_slots=None, point_style=None,
     underscore labels. A single series still omits its ordinary legend.
     Explicit drawing stacks glow, theme edge, primary mark, and core of each
     background series under every layer of each foreground series. Only
-    observations from this call are reordered. Colors, slots, resolved point
-    styles, which points are drawn, and axis limits stay as they are.
+    observations from this call are reordered. A later legend rebuild
+    reorders this call's handles only inside the positions they occupy.
+    Colors, slots, resolved point styles, which points are drawn, and axis
+    limits stay as they are.
     """
     x = _numeric_array(x, path="scatter.x", dimensions=(1,))
     y = _numeric_array(y, path="scatter.y", dimensions=(1,))
