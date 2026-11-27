@@ -198,7 +198,75 @@ def _validate_bins(datasets: list[np.ndarray], bins) -> np.ndarray:
         raise _input_error("histogram.bins", f"invalid bin specification: {exc}") from exc
 
 
-def strip_summary(groups, values, *, series=None, order=None, spec=None,
+_POINT_MARKERS = tuple(marker for marker, _size in LINE_IDENTITIES)
+
+
+def _category_text(key) -> str:
+    if isinstance(key, np.generic):
+        key = key.item()
+    return repr(key)
+
+
+def _point_slot_list(series_slots, observed, *, path: str):
+    """Slots aligned with observed keys, or None when the mapping is omitted.
+
+    Inactive keys are validated and ignored. Slot values follow the line-slot
+    rule: nonnegative Python or NumPy integers, never booleans.
+    """
+    if series_slots is None:
+        return None
+    if np.ma.isMaskedArray(series_slots):
+        raise _input_error(path, "masked arrays are not currently supported")
+    if isinstance(series_slots, _STRING_LIKE) or not isinstance(series_slots, Mapping):
+        raise _input_error(path, "must be a mapping from series keys to nonnegative integer slots")
+    validated = {}
+    for key, slot in series_slots.items():
+        if np.ma.isMaskedArray(slot):
+            raise _input_error(path, "masked arrays are not currently supported")
+        if isinstance(slot, (bool, np.bool_)) or not isinstance(slot, (int, np.integer)) or slot < 0:
+            raise _input_error(f"{path}[{key!r}]", "must be a nonnegative integer (not boolean)")
+        validated[key] = int(slot)
+    assigned = []
+    for key in observed:
+        if key in validated:
+            assigned.append(validated[key])
+            continue
+        plain = key.item() if isinstance(key, np.generic) else None
+        if plain is not None and plain in validated:
+            assigned.append(validated[plain])
+            continue
+        raise _input_error(path, f"observed series {_category_text(key)} has no slot")
+    return assigned
+
+
+def _reject_anonymous_point_slots(series_slots, *, path: str, anonymous: bool) -> None:
+    if anonymous and series_slots is not None:
+        raise _input_error(
+            path,
+            "keyed slots require an explicit series; anonymous points have no series keys",
+        )
+
+
+def _series_point_styles(series_keys, theme, assigned):
+    """Color, and optional slot marker/edge kwargs, in first-appearance order.
+
+    Omission yields the existing color cycle and no marker override. An assigned
+    slot cycles color, theme edge, and the circle/square/triangle/diamond
+    vocabulary independently. The edge is passed through even when it is None
+    so ring/core does not fall back to a color lookup.
+    """
+    if assigned is None:
+        for label, color in zip(series_keys, series_colors(theme)):
+            yield label, color, {}
+        return
+    for label, slot in zip(series_keys, assigned):
+        color = theme.series[slot % len(theme.series)]
+        marker = _POINT_MARKERS[slot % len(_POINT_MARKERS)]
+        edge = theme.series_edges[slot % len(theme.series_edges)] if theme.series_edges else None
+        yield label, color, {"marker": marker, "resolved_edge": edge}
+
+
+def strip_summary(groups, values, *, series=None, series_slots=None, order=None, spec=None,
                   theme="slipware", profile="deep_scope", ax=None, seed=42):
     """Jittered categorical points with class-level median bars.
 
@@ -206,6 +274,19 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
     Omitted series are anonymous and do not contribute legend entries.
     Counts occupy a separate row between the bottom axis and category labels;
     they do not consume data space or change the y limits.
+
+    ``series_slots`` optionally maps series keys to nonnegative integer slots
+    (Python or NumPy integers, not booleans). Omission keeps first-appearance
+    colors and the profile's circle marks. An explicit mapping must include
+    every observed key; inactive keys are allowed and still validated. Repeated
+    slots share one style. Colors and the circle/square/triangle/diamond cycle
+    follow the slot. Theme edges follow the slot on the ring/core profile that
+    already draws them; filled profiles keep their face and field edge. The
+    map is independent of row order, group order, and drawing order. It does
+    not change which observations are included, seeded jitter, x-group order,
+    per-group counts, or pooled group medians. Keyed slots on anonymous points
+    are rejected before axes are created or styled. Explicit category ``0`` is
+    a series. Underscore labels stay literal.
     """
     groups, _ = _category_vector(groups, path="strip_summary.groups", allow_empty=True)
     values = _numeric_array(
@@ -226,6 +307,10 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
     )
     observed = list(dict.fromkeys(groups.tolist()))
     order = observed if order is None else _explicit_order(order, observed=observed)
+    _reject_anonymous_point_slots(
+        series_slots, path="strip_summary.series_slots", anonymous=anonymous_series)
+    assigned = None if anonymous_series else _point_slot_list(
+        series_slots, series_keys, path="strip_summary.series_slots")
     spec = spec or PlotSpec("Strip summary")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax, note=bool(spec.note))
@@ -239,13 +324,13 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
         mask = series == label
         jitter[mask] = rng.uniform(-0.13, 0.13, size=mask.sum())
 
-    colors = series_colors(theme)
-    for label, color in zip(series_keys, colors):
+    for label, color, draw_kwargs in _series_point_styles(series_keys, theme, assigned):
         mask = series == label
         x = np.array([positions[item] for item in groups[mask]], dtype=float)
         x += jitter[mask]
         points = draw_points(ax, x, values[mask], color=color, theme=theme,
-                    profile=profile, label="_nolegend_" if anonymous_series else str(label))
+                    profile=profile, label="_nolegend_" if anonymous_series else str(label),
+                    **draw_kwargs)
         if not anonymous_series:
             authored_label(points, label)
 
@@ -284,9 +369,22 @@ def strip_summary(groups, values, *, series=None, order=None, spec=None,
     return fig, ax
 
 
-def scatter(x, y, *, series=None, spec=None, theme="slipware",
+def scatter(x, y, *, series=None, series_slots=None, spec=None, theme="slipware",
             profile="deep_scope", ax=None):
-    """Draw paired finite numeric vectors; omitted series have no legend entry."""
+    """Draw paired finite numeric vectors; omitted series have no legend entry.
+
+    ``series_slots`` optionally maps series keys to nonnegative integer slots
+    (Python or NumPy integers, not booleans). Omission keeps first-appearance
+    colors and the profile's circle marks. An explicit mapping must include
+    every observed key; inactive keys are allowed and still validated. Repeated
+    slots share one style. Colors and the circle/square/triangle/diamond cycle
+    follow the slot. Theme edges follow the slot on the ring/core profile that
+    already draws them; filled profiles keep their face and field edge. The
+    map is independent of row order and drawing order. It does not change
+    which points are drawn. Keyed slots on anonymous points are rejected before
+    axes are created or styled. Explicit category ``0`` is a series. Underscore
+    labels stay literal. A single series still omits its ordinary legend.
+    """
     x = _numeric_array(x, path="scatter.x", dimensions=(1,))
     y = _numeric_array(y, path="scatter.y", dimensions=(1,))
     anonymous_series = series is None
@@ -296,14 +394,19 @@ def scatter(x, y, *, series=None, spec=None, theme="slipware",
     else:
         series, series_keys = _category_vector(series, path="scatter.series")
     _same_length(("scatter.x", x), ("scatter.y", y), ("scatter.series", series))
+    _reject_anonymous_point_slots(
+        series_slots, path="scatter.series_slots", anonymous=anonymous_series)
+    assigned = None if anonymous_series else _point_slot_list(
+        series_slots, series_keys, path="scatter.series_slots")
     spec = spec or PlotSpec("Scatter")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec)
-    for label, color in zip(series_keys, series_colors(theme)):
+    for label, color, draw_kwargs in _series_point_styles(series_keys, theme, assigned):
         mask = series == label
         points = draw_points(ax, x[mask], y[mask], color=color, theme=theme,
-                    profile=profile, label="_nolegend_" if anonymous_series else str(label))
+                    profile=profile, label="_nolegend_" if anonymous_series else str(label),
+                    **draw_kwargs)
         if not anonymous_series:
             authored_label(points, label)
     if len(series_keys) > 1:

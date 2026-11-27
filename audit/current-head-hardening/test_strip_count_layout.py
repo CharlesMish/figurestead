@@ -97,6 +97,49 @@ class StripCountLayoutTests(unittest.TestCase):
                 self.assertFalse(ax.get_autoscaley_on())
                 np.testing.assert_array_equal(ax.collections[0].get_offsets()[:, 1], [1, 10])
 
+    def test_series_slots_do_not_change_counts_medians_order_or_jitter(self):
+        groups = ['Late', 'Early', 'Late', 'Early', 'Late', 'Early']
+        values = [9.0, 1.0, 3.0, 5.0, 6.0, 4.0]
+        series = ['B', 'A', 'A', 'B', 'C', 'A']
+        order = ['Early', 'Middle', 'Late']
+        slots = {'A': 5, 'B': 1, 'C': 3, 'unused': 0}
+        shared = dict(spec=PlotSpec('Site summary', xlabel='Site', ylabel='Response'))
+        ring, ring_ax = strip_summary(groups, values, series=series, order=order, seed=11,
+                                      profile='deep_scope', **shared)
+        ring_slotted, ring_slotted_ax = strip_summary(
+            groups, values, series=series, order=order, seed=11, profile='deep_scope',
+            series_slots=slots, **shared)
+        filled, filled_ax = strip_summary(groups, values, series=series, order=order, seed=11,
+                                          profile='monograph', **shared)
+        filled_slotted, filled_slotted_ax = strip_summary(
+            groups, values, series=series, order=order, seed=11, profile='monograph',
+            series_slots=slots, **shared)
+        for plain, styled in ((ring_ax, ring_slotted_ax), (filled_ax, filled_slotted_ax)):
+            self.assertEqual([text.get_text() for text in self.counts(plain)],
+                             [text.get_text() for text in self.counts(styled)])
+            self.assertEqual([text.get_text() for text in plain.get_xticklabels()],
+                             [text.get_text() for text in styled.get_xticklabels()])
+            self.assertEqual(len(plain.collections), len(styled.collections))
+            for one, two in zip(plain.collections, styled.collections):
+                np.testing.assert_array_equal(one.get_offsets(), two.get_offsets())
+            for one, two in zip(plain.lines, styled.lines):
+                np.testing.assert_array_equal(one.get_xydata(), two.get_xydata())
+        self.assertEqual([text.get_text() for text in self.counts(ring_slotted_ax)],
+                         ['n=3', 'n=0', 'n=3'])
+        self.assertEqual([text.get_text() for text in ring_slotted_ax.get_xticklabels()],
+                         ['Early', 'Middle', 'Late'])
+        self.assertEqual(sorted({float(line.get_ydata()[0]) for line in ring_slotted_ax.lines}),
+                         [4.0, 6.0])
+        labelled = [artist for artist in ring_slotted_ax.collections
+                    if getattr(artist, '_figurestead_authored_label', False)]
+        self.assertEqual(sum(len(artist.get_offsets()) for artist in labelled), len(values))
+        observed = np.concatenate([artist.get_offsets()[:, 1] for artist in labelled])
+        self.assertEqual(sorted(observed.tolist()), sorted(values))
+        ring.canvas.draw()
+        self.assert_count_band(ring, ring_ax)
+        ring_slotted.canvas.draw()
+        self.assert_count_band(ring_slotted, ring_slotted_ax)
+
     def test_empty_order_slots_and_reordered_categories_keep_correct_counts(self):
         fig, ax = strip_summary(['B', 'A', 'B'], [2, 3, 4],
                                order=['A', 'missing', 'B'], profile='monograph')

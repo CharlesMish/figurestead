@@ -57,10 +57,25 @@ Passing `ax` draws into an existing Matplotlib axes. Choose a
 | Call | Input and output meaning | Common optional arguments |
 | --- | --- | --- |
 | `line(x, ys)` | One finite shared x vector; one or more matching y series | `labels`, `series_slots`, `series_keys`, `line_styles`, `marker_stride=1`, `direct_labels=False` |
-| `scatter(x, y)` | Paired finite numeric vectors; no fit is inferred | `series` supplies one category per point |
+| `scatter(x, y)` | Paired finite numeric vectors; no fit is inferred | `series` supplies one category per point; optional `series_slots` maps those keys to identity slots |
 | `histogram(values)` | One finite vector or nested vectors; counts and dataset medians | `labels`, `bins=20`; explicit shared bin edges aid comparisons |
-| `strip_summary(groups, values)` | One group per finite value; deterministic jitter and group median bars | `series`, `order`, `seed=42` |
+| `strip_summary(groups, values)` | One group per finite value; deterministic jitter and group median bars | `series`, `order`, `seed=42`; optional `series_slots` uses the same key-to-slot map |
 | `heatmap(matrix)` | A nonempty finite 2D matrix; sequential color ramp and colorbar | `xlabels`, `ylabels` must match columns and rows |
+
+`scatter` and `strip_summary` accept an optional `series_slots` mapping from
+series keys to nonnegative integer slots. Booleans are not slots. Omitting the
+map keeps the profile's circle marks and first-appearance colors. An explicit
+map must name every observed key; unused keys are allowed and checked. Each
+slot selects that series' color and one step of the circle, square, triangle,
+diamond cycle. On the ring/core profile, the slot also selects the theme edge
+the profile already draws. Filled profiles keep their face and field edge.
+Repeated slots share one style. The map does not follow row order, category
+order, or drawing order, and it does not change which observations are drawn.
+On `strip_summary` it also leaves counts, pooled group medians, group order,
+and seeded jitter alone. Anonymous points have no keys, so a map is rejected.
+An explicit numeric category `0` is a real series. Underscore labels stay in
+the legend. This is a style assignment. It is not a grayscale, color-vision,
+print, or accessibility qualification.
 
 Do not pass mismatched vectors, silently discard missing observations, or treat
 these examples as statistical analysis. `order` must include every observed

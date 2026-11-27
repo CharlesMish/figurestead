@@ -1,6 +1,9 @@
 """Literal labels on owned artists, without changing Matplotlib's selection."""
 
+import numpy as np
+from matplotlib.collections import PathCollection
 from matplotlib.legend import Legend
+from matplotlib.legend_handler import HandlerPathCollection
 
 from ._line_identity import IdentityLine, IdentityLegend
 
@@ -16,8 +19,41 @@ def authored_label(artist, label):
     return artist
 
 
+class PointTreatmentLegend(HandlerPathCollection):
+    """Show the labelled point mark, and the ring/core theme edge when one was drawn.
+
+    Unslotted collections have no recorded treatment and use the ordinary
+    PathCollection glyph. A recorded edge is the larger open ring already drawn
+    behind a ring/core mark, at the same 1.18 area ratio and stroke.
+    """
+
+    def create_artists(self, legend, orig_handle, xdescent, ydescent, width, height, fontsize, trans):
+        artists = super().create_artists(
+            legend, orig_handle, xdescent, ydescent, width, height, fontsize, trans)
+        treatment = getattr(orig_handle, "_figurestead_point_treatment", None)
+        edge = None if not treatment else treatment.get("edge")
+        if not edge:
+            return artists
+        primary = artists[0]
+        sizes = np.asarray(primary.get_sizes(), dtype=float) * 1.18
+        widths = np.asarray(primary.get_linewidths(), dtype=float)
+        alpha = primary.get_alpha()
+        halo = type(primary)(
+            primary.get_paths(), sizes=sizes, offsets=np.array(primary.get_offsets()),
+            offset_transform=primary.get_offset_transform(), facecolors="none",
+            edgecolors=edge, linewidths=np.maximum(1.5, widths + 0.7),
+            alpha=None if alpha is None else float(np.max(np.atleast_1d(alpha))) * 0.75,
+        )
+        halo.set_transform(primary.get_transform())
+        halo.set_figure(primary.get_figure())
+        halo.set_clip_box(None)
+        halo.set_clip_path(None)
+        return [halo, primary]
+
+
 def legend_handlers(handler_map=None):
-    return {IdentityLine: IdentityLegend(), **(handler_map or {})}
+    return {IdentityLine: IdentityLegend(), PathCollection: PointTreatmentLegend(),
+            **(handler_map or {})}
 
 
 def legend_entries(ax, handler_map=None):

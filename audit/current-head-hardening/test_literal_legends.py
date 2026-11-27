@@ -155,6 +155,28 @@ class LiteralLegends(unittest.TestCase):
         self.assertEqual(d.result['reason'], 'terminal-marker-clipped')
         self.assertTrue(a.get_legend().get_visible()); self.assertEqual(self.texts(a), self.labels)
 
+    def test_point_slots_keep_literal_underscore_labels(self):
+        import numpy as np
+        from matplotlib.markers import MarkerStyle
+        slots = {'_control': 2, '_reference': 0, '_nolegend_': 3}
+
+        def vertices(marker):
+            style = MarkerStyle(marker)
+            return style.get_path().transformed(style.get_transform()).vertices
+
+        for family in ('scatter', 'strip'):
+            with self.subTest(family=family):
+                if family == 'scatter':
+                    f, a = scatter([0, 1, 2], [1, 2, 3], series=self.labels, series_slots=slots)
+                else:
+                    f, a = strip_summary(['A', 'A', 'B'], [1, 2, 3], series=self.labels, series_slots=slots)
+                f.canvas.draw()
+                self.assertEqual(self.texts(a), self.labels)
+                labelled = [artist for artist in a.collections if getattr(artist, '_figurestead_authored_label', False)]
+                for artist, marker in zip(labelled, ('^', 'o', 'D')):
+                    np.testing.assert_array_equal(artist.get_paths()[0].vertices, vertices(marker))
+                self.assertTrue(all(artist in a.collections for artist in labelled))
+
     def test_direct_labels_do_not_hide_other_owned_underscore_attribution(self):
         f, a = scatter([0, 1], [1, 2], series=['_prior', '_prior'])
         self.make('line', ax=a, direct=True); f.canvas.draw()
