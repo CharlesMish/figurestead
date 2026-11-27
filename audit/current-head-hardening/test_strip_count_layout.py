@@ -140,6 +140,52 @@ class StripCountLayoutTests(unittest.TestCase):
         ring_slotted.canvas.draw()
         self.assert_count_band(ring_slotted, ring_slotted_ax)
 
+    def test_point_styles_do_not_change_counts_medians_order_jitter_or_limits(self):
+        groups = ['Late', 'Early', 'Late', 'Early', 'Late', 'Early']
+        values = [9.0, 1.0, 3.0, 5.0, 6.0, 4.0]
+        series = ['B', 'A', 'A', 'B', 'C', 'A']
+        order = ['Early', 'Middle', 'Late']
+        slots = {'A': 5, 'B': 1, 'C': 3, 'unused': 0}
+        point_style = {'size': 12, 'alpha': 0.2}
+        series_styles = {'B': {'alpha': 0, 'size': 60, 'marker': 'diamond'}, 'unused': {'size': 8}}
+        shared = dict(spec=PlotSpec('Site summary', xlabel='Site', ylabel='Response'),
+                      series=series, order=order, seed=11, series_slots=slots)
+        for profile in ('deep_scope', 'instrument', 'monograph'):
+            with self.subTest(profile=profile):
+                plain, plain_ax = strip_summary(groups, values, profile=profile, **shared)
+                styled, styled_ax = strip_summary(
+                    groups, values, profile=profile, point_style=point_style,
+                    series_styles=series_styles, **shared)
+                self.assertEqual([text.get_text() for text in self.counts(styled_ax)],
+                                 ['n=3', 'n=0', 'n=3'])
+                self.assertEqual([text.get_text() for text in self.counts(plain_ax)],
+                                 [text.get_text() for text in self.counts(styled_ax)])
+                self.assertEqual([text.get_text() for text in plain_ax.get_xticklabels()],
+                                 [text.get_text() for text in styled_ax.get_xticklabels()])
+                self.assertEqual(plain_ax.get_xlim(), styled_ax.get_xlim())
+                self.assertEqual(plain_ax.get_ylim(), styled_ax.get_ylim())
+                self.assertEqual(tuple(plain_ax.dataLim.bounds), tuple(styled_ax.dataLim.bounds))
+                self.assertEqual(len(plain_ax.collections), len(styled_ax.collections))
+                for one, two in zip(plain_ax.collections, styled_ax.collections):
+                    np.testing.assert_array_equal(one.get_offsets(), two.get_offsets())
+                for one, two in zip(plain_ax.lines, styled_ax.lines):
+                    np.testing.assert_array_equal(one.get_xydata(), two.get_xydata())
+                self.assertEqual(sorted({float(line.get_ydata()[0]) for line in styled_ax.lines}),
+                                 [4.0, 6.0])
+                labelled = [artist for artist in styled_ax.collections
+                            if getattr(artist, '_figurestead_authored_label', False)]
+                self.assertEqual([artist.get_label() for artist in labelled], ['B', 'A', 'C'])
+                hidden = labelled[0]
+                self.assertEqual(hidden.get_alpha(), 0)
+                self.assertTrue(all(item.get_alpha() == 0 for item in styled_ax.collections
+                                    if np.array_equal(item.get_offsets(), hidden.get_offsets())))
+                observed = np.concatenate([artist.get_offsets()[:, 1] for artist in labelled])
+                self.assertEqual(sorted(observed.tolist()), sorted(values))
+                styled.canvas.draw()
+                self.assert_count_band(styled, styled_ax)
+                plt.close(plain)
+                plt.close(styled)
+
     def test_empty_order_slots_and_reordered_categories_keep_correct_counts(self):
         fig, ax = strip_summary(['B', 'A', 'B'], [2, 3, 4],
                                order=['A', 'missing', 'B'], profile='monograph')

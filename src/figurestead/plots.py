@@ -228,14 +228,10 @@ def _point_slot_list(series_slots, observed, *, path: str):
         validated[key] = int(slot)
     assigned = []
     for key in observed:
-        if key in validated:
-            assigned.append(validated[key])
-            continue
-        plain = key.item() if isinstance(key, np.generic) else None
-        if plain is not None and plain in validated:
-            assigned.append(validated[plain])
-            continue
-        raise _input_error(path, f"observed series {_category_text(key)} has no slot")
+        try:
+            assigned.append(_category_key_value(validated, key))
+        except KeyError:
+            raise _input_error(path, f"observed series {_category_text(key)} has no slot") from None
     return assigned
 
 
@@ -245,6 +241,153 @@ def _reject_anonymous_point_slots(series_slots, *, path: str, anonymous: bool) -
             path,
             "keyed slots require an explicit series; anonymous points have no series keys",
         )
+
+
+def _category_key_value(mapping, key):
+    """Return a category mapping entry, using the series_slots scalar fallback.
+
+    ``_category_vector`` already applies NumPy's mixed-type string coercion.
+    ``series=[0, "A"]`` is stored as the string ``"0"``, so an integer key
+    ``0`` does not match it. This lookup does not coerce a second time.
+    """
+    if key in mapping:
+        return mapping[key]
+    if isinstance(key, np.generic):
+        plain = key.item()
+        if plain in mapping:
+            return mapping[plain]
+    raise KeyError(key)
+
+
+_POINT_STYLE_MARKERS = {
+    "circle": "o",
+    "square": "s",
+    "triangle": "^",
+    "diamond": "D",
+}
+
+
+def _real_number(value):
+    if isinstance(value, (bool, np.bool_)) or np.ma.isMaskedArray(value):
+        return None
+    if isinstance(value, (int, np.integer, float, np.floating)):
+        number = float(value)
+        if np.isfinite(number):
+            return number
+    return None
+
+
+def _parse_point_style_record(value, path) -> dict:
+    if np.ma.isMaskedArray(value):
+        raise _input_error(path, "masked arrays are not currently supported")
+    if isinstance(value, _STRING_LIKE) or not isinstance(value, Mapping):
+        raise _input_error(path, "must be a mapping of marker fields (size, alpha, marker)")
+    parsed = {}
+    for field, item in value.items():
+        field_path = f"{path}[{field!r}]"
+        if field not in ("size", "alpha", "marker"):
+            raise _input_error(field_path, "unknown field")
+        if np.ma.isMaskedArray(item):
+            raise _input_error(field_path, "masked arrays are not currently supported")
+        if field == "marker":
+            if not isinstance(item, str) or item not in _POINT_STYLE_MARKERS:
+                raise _input_error(field_path, "must be circle, square, triangle, or diamond")
+            parsed["marker"] = _POINT_STYLE_MARKERS[item]
+            continue
+        number = _real_number(item)
+        if field == "size":
+            if number is None or number <= 0:
+                raise _input_error(field_path, "must be a finite positive marker area (not boolean)")
+            parsed["size"] = number
+        else:
+            if number is None or not 0 <= number <= 1:
+                raise _input_error(field_path, "must be a finite opacity from 0 through 1 (not boolean)")
+            parsed["alpha"] = number
+    return parsed
+
+
+def _parse_point_style(value, *, path: str) -> dict:
+    if value is None:
+        return {}
+    return _parse_point_style_record(value, path)
+
+
+def _parse_series_styles(value, *, path: str) -> dict:
+    if value is None:
+        return {}
+    if np.ma.isMaskedArray(value):
+        raise _input_error(path, "masked arrays are not currently supported")
+    if isinstance(value, _STRING_LIKE) or not isinstance(value, Mapping):
+        raise _input_error(path, "must be a mapping from series keys to marker styles")
+    return {
+        key: _parse_point_style_record(record, f"{path}[{key!r}]")
+        for key, record in value.items()
+    }
+
+
+def _reject_anonymous_series_styles(series_styles, *, path: str, anonymous: bool) -> None:
+    if anonymous and series_styles is not None:
+        raise _input_error(
+            path,
+            "keyed styles require an explicit series; anonymous points have no series keys",
+        )
+
+
+def _layered_point_style(slot_marker, point_style, series_style):
+    """Profile/slot glyph, then plot-wide style, then one series record.
+
+    Size and alpha stay None when neither record sets them, so the profile
+    values are not rewritten. An empty record changes nothing.
+    """
+    marker = slot_marker
+    size = None
+    alpha = None
+    for record in (point_style, series_style):
+        if not record:
+            continue
+        if "marker" in record:
+            marker = record["marker"]
+        if "size" in record:
+            size = record["size"]
+        if "alpha" in record:
+            alpha = record["alpha"]
+    return marker, size, alpha
+
+
+def _point_draw_kwargs(draw_kwargs, point_style, series_styles, label):
+    series_style = {}
+    if series_styles:
+        try:
+            series_style = _category_key_value(series_styles, label)
+        except KeyError:
+            series_style = {}
+    marker, size, alpha = _layered_point_style(
+        draw_kwargs.get("marker"), point_style, series_style)
+    kwargs = dict(draw_kwargs)
+    if marker is None:
+        kwargs.pop("marker", None)
+    else:
+        kwargs["marker"] = marker
+    if size is not None:
+        kwargs["marker_size"] = size
+    if alpha is not None:
+        kwargs["marker_alpha"] = alpha
+    return kwargs
+
+
+def _prepare_point_styles(point_style, series_styles, *, plot: str, anonymous: bool):
+    """Validate both controls before axes allocation.
+
+    ``series_styles`` follows the anonymous-series rule used by ``series_slots``:
+    any non-None mapping is rejected before its contents are read. Plot-wide
+    ``point_style`` remains valid for anonymous points.
+    """
+    parsed_point = _parse_point_style(point_style, path=f"{plot}.point_style")
+    _reject_anonymous_series_styles(
+        series_styles, path=f"{plot}.series_styles", anonymous=anonymous)
+    parsed_series = ({} if anonymous else
+                     _parse_series_styles(series_styles, path=f"{plot}.series_styles"))
+    return parsed_point, parsed_series
 
 
 def _series_point_styles(series_keys, theme, assigned):
@@ -266,7 +409,8 @@ def _series_point_styles(series_keys, theme, assigned):
         yield label, color, {"marker": marker, "resolved_edge": edge}
 
 
-def strip_summary(groups, values, *, series=None, series_slots=None, order=None, spec=None,
+def strip_summary(groups, values, *, series=None, series_slots=None,
+                  point_style=None, series_styles=None, order=None, spec=None,
                   theme="slipware", profile="deep_scope", ax=None, seed=42):
     """Jittered categorical points with class-level median bars.
 
@@ -287,6 +431,18 @@ def strip_summary(groups, values, *, series=None, series_slots=None, order=None,
     per-group counts, or pooled group medians. Keyed slots on anonymous points
     are rejected before axes are created or styled. Explicit category ``0`` is
     a series. Underscore labels stay literal.
+
+    ``point_style`` optionally sets plot-wide ``size`` (primary marker area in
+    pt²), ``alpha`` (opacity from 0 through 1), and ``marker`` (``circle``,
+    ``square``, ``triangle``, or ``diamond``). ``series_styles`` maps series
+    keys to partial records of those same fields. Resolution is the profile
+    and slot glyph, then ``point_style``, then that series' record. Empty
+    mappings change nothing. Unknown fields are rejected. Inactive style keys
+    are validated. Keyed styles on anonymous points are rejected before axes
+    are created or styled; a plot-wide style may still apply. Alpha 0 draws
+    no observation ink and still leaves every observation in the data, counts,
+    and pooled medians. Colors, slots, drawing order, and legend order stay
+    as they are. Lighter marks are not a foreground drawing-order control.
     """
     groups, _ = _category_vector(groups, path="strip_summary.groups", allow_empty=True)
     values = _numeric_array(
@@ -311,6 +467,8 @@ def strip_summary(groups, values, *, series=None, series_slots=None, order=None,
         series_slots, path="strip_summary.series_slots", anonymous=anonymous_series)
     assigned = None if anonymous_series else _point_slot_list(
         series_slots, series_keys, path="strip_summary.series_slots")
+    point_style, series_styles = _prepare_point_styles(
+        point_style, series_styles, plot="strip_summary", anonymous=anonymous_series)
     spec = spec or PlotSpec("Strip summary")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax, note=bool(spec.note))
@@ -330,7 +488,7 @@ def strip_summary(groups, values, *, series=None, series_slots=None, order=None,
         x += jitter[mask]
         points = draw_points(ax, x, values[mask], color=color, theme=theme,
                     profile=profile, label="_nolegend_" if anonymous_series else str(label),
-                    **draw_kwargs)
+                    **_point_draw_kwargs(draw_kwargs, point_style, series_styles, label))
         if not anonymous_series:
             authored_label(points, label)
 
@@ -369,7 +527,8 @@ def strip_summary(groups, values, *, series=None, series_slots=None, order=None,
     return fig, ax
 
 
-def scatter(x, y, *, series=None, series_slots=None, spec=None, theme="slipware",
+def scatter(x, y, *, series=None, series_slots=None, point_style=None,
+            series_styles=None, spec=None, theme="slipware",
             profile="deep_scope", ax=None):
     """Draw paired finite numeric vectors; omitted series have no legend entry.
 
@@ -384,6 +543,18 @@ def scatter(x, y, *, series=None, series_slots=None, spec=None, theme="slipware"
     which points are drawn. Keyed slots on anonymous points are rejected before
     axes are created or styled. Explicit category ``0`` is a series. Underscore
     labels stay literal. A single series still omits its ordinary legend.
+
+    ``point_style`` optionally sets plot-wide ``size`` (primary marker area in
+    pt²), ``alpha`` (opacity from 0 through 1), and ``marker`` (``circle``,
+    ``square``, ``triangle``, or ``diamond``). ``series_styles`` maps series
+    keys to partial records of those same fields. Resolution is the profile
+    and slot glyph, then ``point_style``, then that series' record. Empty
+    mappings change nothing. Unknown fields are rejected. Inactive style keys
+    are validated. Keyed styles on anonymous points are rejected before axes
+    are created or styled; a plot-wide style may still apply. Alpha 0 draws
+    no observation ink and still leaves every point in the data. Colors,
+    slots, drawing order, and legend order stay as they are. Lighter marks
+    are not a foreground drawing-order control.
     """
     x = _numeric_array(x, path="scatter.x", dimensions=(1,))
     y = _numeric_array(y, path="scatter.y", dimensions=(1,))
@@ -398,6 +569,8 @@ def scatter(x, y, *, series=None, series_slots=None, spec=None, theme="slipware"
         series_slots, path="scatter.series_slots", anonymous=anonymous_series)
     assigned = None if anonymous_series else _point_slot_list(
         series_slots, series_keys, path="scatter.series_slots")
+    point_style, series_styles = _prepare_point_styles(
+        point_style, series_styles, plot="scatter", anonymous=anonymous_series)
     spec = spec or PlotSpec("Scatter")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax, note=bool(spec.note))
@@ -406,7 +579,7 @@ def scatter(x, y, *, series=None, series_slots=None, spec=None, theme="slipware"
         mask = series == label
         points = draw_points(ax, x[mask], y[mask], color=color, theme=theme,
                     profile=profile, label="_nolegend_" if anonymous_series else str(label),
-                    **draw_kwargs)
+                    **_point_draw_kwargs(draw_kwargs, point_style, series_styles, label))
         if not anonymous_series:
             authored_label(points, label)
     if len(series_keys) > 1:

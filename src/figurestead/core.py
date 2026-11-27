@@ -147,8 +147,37 @@ class _OmittedEdge:
 _OMITTED_EDGE = _OmittedEdge()
 
 
+def _point_glow_alpha(profile: Profile, marker_alpha):
+    """Scale the fixed 0.055 glow when primary opacity is overridden.
+
+    Callers ask for this only when the treatment actually draws a glow.
+    Omitted opacity keeps 0.055. Zero primary opacity suppresses the glow.
+    A matching override keeps 0.055, and other in-range ratios keep
+    ``0.055 * authored / profile``. The derived value is saturated at 1:
+    a faint profile must not ask Matplotlib for an opacity above that.
+    The comparison is made before the division so a tiny positive profile
+    opacity cannot overflow.
+    """
+    if marker_alpha is None:
+        return 0.055
+    if marker_alpha == 0:
+        return 0.0
+    baseline = profile.marker_alpha
+    if not baseline:
+        return 0.055
+    # 0.055 * authored / baseline >= 1 exactly when baseline <= 0.055 * authored.
+    # Decide that without dividing, then use the original product only below 1.
+    if baseline > 0 and baseline <= 0.055 * marker_alpha:
+        return 1.0
+    glow = 0.055 * (marker_alpha / baseline)
+    if glow > 1.0:
+        return 1.0
+    return glow
+
+
 def draw_points(ax, x, y, *, color, theme: Theme, profile: Profile, label=None,
-                marker=None, resolved_edge=_OMITTED_EDGE):
+                marker=None, resolved_edge=_OMITTED_EDGE,
+                marker_size=None, marker_alpha=None):
     """Draw one point series with the profile's ring/core or filled treatment.
 
     ``marker=None`` keeps Matplotlib's circle. An explicit marker is applied to
@@ -156,41 +185,58 @@ def draw_points(ax, x, y, *, color, theme: Theme, profile: Profile, label=None,
     omitted edge still follows ``series_edge``. A resolved edge, including
     None, is the slot's theme edge and is drawn only where this profile already
     draws one: the ring/core halo. Filled marks keep their field edge.
+
+    ``marker_size`` and ``marker_alpha`` replace the profile primary area and
+    opacity. Ring, backing, core, and glow keep the same area ratios. Support
+    opacities stay on the same fractions of the primary opacity, and the glow
+    follows ``_point_glow_alpha``. Omitting both arguments keeps the profile
+    treatment, including the fixed glow alpha of 0.055.
     """
     x = np.asarray(x)
     y = np.asarray(y)
+    size = profile.marker_size if marker_size is None else marker_size
+    alpha = profile.marker_alpha if marker_alpha is None else marker_alpha
     placed = {} if marker is None else {"marker": marker}
     if profile.marker == "ring_core":
         edge = series_edge(theme, color) if resolved_edge is _OMITTED_EDGE else resolved_edge
         if edge:
-            ax.scatter(x, y, s=profile.marker_size * 1.18, facecolors="none",
+            ax.scatter(x, y, s=size * 1.18, facecolors="none",
                        edgecolors=edge, linewidths=max(1.5, profile.edge_width + 0.7),
-                       alpha=profile.marker_alpha * 0.75, zorder=2.8, **placed)
+                       alpha=alpha * 0.75, zorder=2.8, **placed)
         if profile.point_glow:
-            ax.scatter(x, y, s=profile.marker_size * 1.75, facecolors="none",
-                       edgecolors=color, linewidths=1.8, alpha=0.055, zorder=2, **placed)
-        points = ax.scatter(x, y, s=profile.marker_size, facecolors="none",
+            ax.scatter(x, y, s=size * 1.75, facecolors="none",
+                       edgecolors=color, linewidths=1.8,
+                       alpha=_point_glow_alpha(profile, marker_alpha), zorder=2, **placed)
+        points = ax.scatter(x, y, s=size, facecolors="none",
                    edgecolors=color, linewidths=profile.edge_width,
-                   alpha=profile.marker_alpha, label=label, zorder=3, **placed)
-        ax.scatter(x, y, s=profile.marker_size * profile.core_fraction,
-                   c=color, edgecolors="none", alpha=profile.marker_alpha * 0.58,
+                   alpha=alpha, label=label, zorder=3, **placed)
+        ax.scatter(x, y, s=size * profile.core_fraction,
+                   c=color, edgecolors="none", alpha=alpha * 0.58,
                    zorder=4, **placed)
         recorded_edge = None if resolved_edge is _OMITTED_EDGE else edge
     else:
-        points = ax.scatter(x, y, s=profile.marker_size, c=color,
+        points = ax.scatter(x, y, s=size, c=color,
                    edgecolors=theme.field if profile.edge_width else "none",
-                   linewidths=profile.edge_width, alpha=profile.marker_alpha,
+                   linewidths=profile.edge_width, alpha=alpha,
                    label=label, zorder=3, **placed)
         recorded_edge = None
-    if resolved_edge is not _OMITTED_EDGE:
+    if resolved_edge is not _OMITTED_EDGE or marker_size is not None or marker_alpha is not None:
         # Legend glyphs read this from the labelled artist. Support layers stay
-        # unlabelled. Absence of the attribute means the unslotted circle path.
-        points._figurestead_point_treatment = {
+        # unlabelled. Absence of the attribute means the unslotted circle path
+        # with the profile area and opacity. Size and alpha keys are present
+        # only when this call overrode them; the collection itself carries the
+        # resolved area and opacity into the ordinary legend handler.
+        treatment = {
             "marker": "o" if marker is None else marker,
             "color": color,
-            "edge": recorded_edge,
+            "edge": recorded_edge if resolved_edge is not _OMITTED_EDGE else None,
             "ring_core": profile.marker == "ring_core",
         }
+        if marker_size is not None:
+            treatment["size"] = float(size)
+        if marker_alpha is not None:
+            treatment["alpha"] = float(alpha)
+        points._figurestead_point_treatment = treatment
     return points
 
 
