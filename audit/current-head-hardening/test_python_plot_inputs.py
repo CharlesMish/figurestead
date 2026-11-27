@@ -493,6 +493,61 @@ class PythonPlotInputRegression(unittest.TestCase):
         self.assertEqual(after, before)
         plt.close(fig)
 
+    def test_point_series_slots_reject_before_axes(self) -> None:
+        invalid = (
+            ([0, 1], r"must be a mapping"),
+            ("AB", r"must be a mapping"),
+            (0, r"must be a mapping"),
+            (np.ma.array([0]), r"masked arrays are not currently supported"),
+            ({"A": True, "B": 0}, r"must be a nonnegative integer \(not boolean\)"),
+            ({"A": np.bool_(False), "B": 1}, r"must be a nonnegative integer \(not boolean\)"),
+            ({"A": -1, "B": 0}, r"must be a nonnegative integer \(not boolean\)"),
+            ({"A": 1.2, "B": 0}, r"must be a nonnegative integer \(not boolean\)"),
+            ({"A": None, "B": 0}, r"must be a nonnegative integer \(not boolean\)"),
+            ({"A": "0", "B": 1}, r"must be a nonnegative integer \(not boolean\)"),
+            ({"A": np.array([1]), "B": 0}, r"must be a nonnegative integer \(not boolean\)"),
+            ({"A": 0}, r"observed series 'B' has no slot"),
+            ({"A": 0, "B": 1, "quiet": -2}, r"series_slots\['quiet'\]"),
+        )
+        for family in ("scatter", "strip"):
+            for slots, pattern in invalid:
+                with self.subTest(family=family, slots=slots):
+                    if family == "scatter":
+                        invoke = lambda slots=slots: scatter(
+                            [0, 1], [1, 2], series=["A", "B"], series_slots=slots)
+                    else:
+                        invoke = lambda slots=slots: strip_summary(
+                            ["G", "G"], [1, 2], series=["A", "B"], series_slots=slots)
+                    self.assert_rejected_before_allocation(invoke, pattern)
+            with self.subTest(family=family, slots="anonymous"):
+                if family == "scatter":
+                    invoke = lambda: scatter([0, 1], [1, 2], series_slots={0: 1})
+                else:
+                    invoke = lambda: strip_summary(["G", "H"], [1, 2], series_slots={"G": 0})
+                self.assert_rejected_before_allocation(
+                    invoke, r"keyed slots require an explicit series")
+        self.assert_rejected_before_allocation(
+            lambda: scatter([0, 1], [1, 2], series=["A"], series_slots={"A": -1}),
+            r"scatter\.x: paired vectors must have equal lengths",
+        )
+        self.assert_rejected_before_allocation(
+            lambda: scatter([0, math.nan], [1, 2], series=["A", "B"], series_slots={"A": 0, "B": 1}),
+            r"scatter\.x: must contain only finite numbers",
+        )
+
+    def test_point_series_slots_accept_inactive_keys_and_explicit_numeric_zero(self) -> None:
+        fig, ax = scatter([0, 1, 2, 3], [1, 2, 3, 4], series=[0, 0, 1, 1],
+                          series_slots={0: np.int64(3), 1: np.uint64(0), "inactive": 4})
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()], ["0", "1"])
+        plt.close(fig)
+        fig, ax = strip_summary(["G", "G"], [1, 2], series=[0, 0], series_slots={0: 2, "quiet": 0})
+        self.assertIsNone(ax.get_legend())
+        plt.close(fig)
+        fig, ax = strip_summary([], [], series=[], series_slots={"quiet": 0}, order=["empty"])
+        self.assertEqual([text.get_text() for text in ax.get_xticklabels()], ["empty"])
+        self.assertIn("n=0", [text.get_text() for text in ax.texts])
+        plt.close(fig)
+
     def test_valid_call_succeeds_after_rejected_input(self) -> None:
         self.assert_rejected_before_allocation(
             lambda: histogram([[1, 2], [3, 4]], labels=["only"]), r"histogram\.labels"
@@ -506,6 +561,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 57:
-        raise SystemExit(f"expected exactly 57 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 59:
+        raise SystemExit(f"expected exactly 59 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)

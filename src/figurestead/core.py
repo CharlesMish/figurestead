@@ -140,29 +140,57 @@ def series_edge(theme: Theme, color: str) -> str | None:
         return None
 
 
-def draw_points(ax, x, y, *, color, theme: Theme, profile: Profile, label=None):
+class _OmittedEdge:
+    """Sentinel: resolve the theme edge from the color, as unslotted points do."""
+
+
+_OMITTED_EDGE = _OmittedEdge()
+
+
+def draw_points(ax, x, y, *, color, theme: Theme, profile: Profile, label=None,
+                marker=None, resolved_edge=_OMITTED_EDGE):
+    """Draw one point series with the profile's ring/core or filled treatment.
+
+    ``marker=None`` keeps Matplotlib's circle. An explicit marker is applied to
+    every layer of the same profile treatment, including a ring's core. The
+    omitted edge still follows ``series_edge``. A resolved edge, including
+    None, is the slot's theme edge and is drawn only where this profile already
+    draws one: the ring/core halo. Filled marks keep their field edge.
+    """
     x = np.asarray(x)
     y = np.asarray(y)
+    placed = {} if marker is None else {"marker": marker}
     if profile.marker == "ring_core":
-        edge = series_edge(theme, color)
+        edge = series_edge(theme, color) if resolved_edge is _OMITTED_EDGE else resolved_edge
         if edge:
             ax.scatter(x, y, s=profile.marker_size * 1.18, facecolors="none",
                        edgecolors=edge, linewidths=max(1.5, profile.edge_width + 0.7),
-                       alpha=profile.marker_alpha * 0.75, zorder=2.8)
+                       alpha=profile.marker_alpha * 0.75, zorder=2.8, **placed)
         if profile.point_glow:
             ax.scatter(x, y, s=profile.marker_size * 1.75, facecolors="none",
-                       edgecolors=color, linewidths=1.8, alpha=0.055, zorder=2)
+                       edgecolors=color, linewidths=1.8, alpha=0.055, zorder=2, **placed)
         points = ax.scatter(x, y, s=profile.marker_size, facecolors="none",
                    edgecolors=color, linewidths=profile.edge_width,
-                   alpha=profile.marker_alpha, label=label, zorder=3)
+                   alpha=profile.marker_alpha, label=label, zorder=3, **placed)
         ax.scatter(x, y, s=profile.marker_size * profile.core_fraction,
                    c=color, edgecolors="none", alpha=profile.marker_alpha * 0.58,
-                   zorder=4)
+                   zorder=4, **placed)
+        recorded_edge = None if resolved_edge is _OMITTED_EDGE else edge
     else:
         points = ax.scatter(x, y, s=profile.marker_size, c=color,
                    edgecolors=theme.field if profile.edge_width else "none",
                    linewidths=profile.edge_width, alpha=profile.marker_alpha,
-                   label=label, zorder=3)
+                   label=label, zorder=3, **placed)
+        recorded_edge = None
+    if resolved_edge is not _OMITTED_EDGE:
+        # Legend glyphs read this from the labelled artist. Support layers stay
+        # unlabelled. Absence of the attribute means the unslotted circle path.
+        points._figurestead_point_treatment = {
+            "marker": "o" if marker is None else marker,
+            "color": color,
+            "edge": recorded_edge,
+            "ring_core": profile.marker == "ring_core",
+        }
     return points
 
 

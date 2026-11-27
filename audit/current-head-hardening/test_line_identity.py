@@ -478,5 +478,241 @@ class AccumulatedLegendTests(unittest.TestCase):
                     fig.canvas.draw()
                     plt.close(fig)
 
+class PointSeriesSlotTests(unittest.TestCase):
+    """Keyed point slots reuse the line marker cycle without changing omission."""
+
+    continents = ["Asia", "Europe", "Africa", "North America", "South America", "Oceania"]
+    markers = ("o", "s", "^", "D")
+
+    def tearDown(self):
+        plt.close("all")
+
+    def slots(self, extra=None):
+        mapping = {name: index for index, name in enumerate(self.continents)}
+        if extra:
+            mapping.update(extra)
+        return mapping
+
+    def vertices(self, marker):
+        from matplotlib.markers import MarkerStyle
+        style = MarkerStyle(marker)
+        return style.get_path().transformed(style.get_transform()).vertices
+
+    def labelled(self, ax):
+        return [artist for artist in ax.collections
+                if getattr(artist, "_figurestead_authored_label", False)]
+
+    def assert_marker(self, artist, marker):
+        np.testing.assert_array_equal(artist.get_paths()[0].vertices, self.vertices(marker))
+
+    def png(self, fig):
+        output = BytesIO()
+        fig.savefig(output, format="png")
+        return output.getvalue()
+
+    def frame(self, names):
+        x, y, series, groups = [], [], [], []
+        for index, name in enumerate(names):
+            for step in range(4):
+                x.append(float(index) + step / 10)
+                y.append(float(index) + step)
+                series.append(name)
+                groups.append("East" if step % 2 == 0 else "West")
+        return x, y, series, groups
+
+    def draw(self, family, names, **kwargs):
+        from figurestead import scatter, strip_summary
+        x, y, series, groups = self.frame(names)
+        if family == "scatter":
+            return scatter(x, y, series=series, **kwargs)
+        return strip_summary(groups, y, series=series, **kwargs)
+
+    def test_omitted_and_none_match_and_explicit_slots_change_only_style(self):
+        from figurestead import scatter, strip_summary
+        from matplotlib.collections import PathCollection
+        for family in ("scatter", "strip"):
+            images = []
+            for options in ({}, {"series_slots": None}):
+                fig, ax = self.draw(family, ["A", "B", "C"], **options)
+                for artist in self.labelled(ax):
+                    self.assert_marker(artist, "o")
+                    self.assertFalse(hasattr(artist, "_figurestead_point_treatment"))
+                    self.assertIs(type(artist), PathCollection)
+                    self.assertIs(artist.axes, ax)
+                images.append(self.png(fig))
+                plt.close(fig)
+            self.assertEqual(images[0], images[1])
+            fig, ax = self.draw(family, ["A", "B", "C"], series_slots={"A": 0, "B": 1, "C": 2})
+            self.assertEqual([artist.get_label() for artist in self.labelled(ax)], ["A", "B", "C"])
+            for artist, marker in zip(self.labelled(ax), ["o", "s", "^"]):
+                self.assert_marker(artist, marker)
+            self.assertNotEqual(self.png(fig), images[0])
+            plt.close(fig)
+        # The helper above passes series. Anonymous omission is the scatter/strip default.
+        fig, ax = scatter([0, 1], [1, 2])
+        other, other_ax = scatter([0, 1], [1, 2], series_slots=None)
+        self.assertEqual(self.png(fig), self.png(other))
+        self.assertIsNone(ax.get_legend())
+        self.assertIsNone(other_ax.get_legend())
+        plt.close(fig)
+        plt.close(other)
+        fig, ax = strip_summary(["East", "West"], [1, 2], seed=5)
+        other, other_ax = strip_summary(["East", "West"], [1, 2], seed=5, series_slots=None)
+        self.assertEqual(self.png(fig), self.png(other))
+        plt.close(fig)
+        plt.close(other)
+
+    def test_continent_slots_survive_subset_and_reorder(self):
+        from figurestead import get_theme
+        theme = get_theme("lavender_fog_notebook")
+        full = self.draw("scatter", self.continents, series_slots=self.slots(), theme=theme)
+        _, full_ax = full
+        labels = [artist.get_label() for artist in self.labelled(full_ax)]
+        self.assertEqual(labels, self.continents)
+        pairs = []
+        for artist, name in zip(self.labelled(full_ax), self.continents):
+            slot = self.slots()[name]
+            marker = self.markers[slot % 4]
+            self.assert_marker(artist, marker)
+            from matplotlib.colors import to_rgba
+            self.assertTrue(np.allclose(artist.get_edgecolor()[0, :3], to_rgba(theme.series[slot])[:3]))
+            pairs.append((theme.series[slot], marker))
+        self.assertEqual(len(set(pairs)), 6)
+        self.assertEqual([text.get_text() for text in full_ax.get_legend().get_texts()], self.continents)
+        subset_names = ["Africa", "Oceania", "Europe"]
+        _, subset_ax = self.draw("scatter", subset_names, series_slots=self.slots(), theme=theme)
+        self.assertEqual([artist.get_label() for artist in self.labelled(subset_ax)], subset_names)
+        for artist, name in zip(self.labelled(subset_ax), subset_names):
+            slot = self.slots()[name]
+            self.assert_marker(artist, self.markers[slot % 4])
+            self.assertEqual(artist._figurestead_point_treatment["color"], theme.series[slot])
+        reordered = list(reversed(self.continents))
+        _, reorder_ax = self.draw("scatter", reordered, series_slots=self.slots(), theme=theme)
+        by_label = {artist.get_label(): artist for artist in self.labelled(reorder_ax)}
+        for name, original in zip(self.continents, self.labelled(full_ax)):
+            self.assert_marker(by_label[name], self.markers[self.slots()[name] % 4])
+            np.testing.assert_array_equal(by_label[name].get_edgecolor(), original.get_edgecolor())
+        _, strip_ax = self.draw("strip", subset_names, series_slots=self.slots({"quiet": 8}), theme=theme)
+        self.assertEqual([artist.get_label() for artist in self.labelled(strip_ax)], subset_names)
+        for artist, name in zip(self.labelled(strip_ax), subset_names):
+            self.assert_marker(artist, self.markers[self.slots()[name] % 4])
+
+    def test_repeated_slots_share_style_without_merging_series(self):
+        from figurestead import scatter
+        fig, ax = scatter([0, 1, 2, 3], [1, 2, 3, 4], series=["Asia", "Europe", "Asia", "Europe"],
+                          series_slots={"Asia": 1, "Europe": 1, "Africa": 4})
+        labelled = self.labelled(ax)
+        self.assertEqual([artist.get_label() for artist in labelled], ["Asia", "Europe"])
+        self.assert_marker(labelled[0], "s")
+        self.assert_marker(labelled[1], "s")
+        np.testing.assert_array_equal(labelled[0].get_edgecolor(), labelled[1].get_edgecolor())
+        self.assertEqual(len(labelled[0].get_offsets()), 2)
+        self.assertEqual(len(labelled[1].get_offsets()), 2)
+        np.testing.assert_array_equal(labelled[0].get_offsets()[:, 1], [1, 3])
+        np.testing.assert_array_equal(labelled[1].get_offsets()[:, 1], [2, 4])
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()], ["Asia", "Europe"])
+        fig.canvas.draw()
+        proxies = ax.get_legend().findobj(type(labelled[0]))
+        for body in labelled:
+            self.assertTrue(any(np.array_equal(body.get_paths()[0].vertices, proxy.get_paths()[0].vertices)
+                                for proxy in proxies))
+        plt.close(fig)
+
+    def test_cycles_edges_and_filled_profiles_keep_their_structure(self):
+        from matplotlib.collections import PathCollection
+        from matplotlib.colors import to_rgba
+        from figurestead import scatter, strip_summary
+        base, _ = resolve("lavender_fog_notebook", "deep_scope")
+        theme = replace(base, series=base.series[:3], series_edges=("#111111", "#222222"))
+        series = ["A", "B", "C", "D"]
+        mapping = {"A": np.int64(0), "B": np.uint64(5), "C": 2 ** 80, "D": 5, "quiet": 1}
+        expected_slots = [0, 5, 2 ** 80, 5]
+        fig, ax = scatter([0, 1, 2, 3], [1, 1, 1, 1], series=series, series_slots=mapping, theme=theme)
+        labelled = self.labelled(ax)
+        self.assertEqual([type(artist) for artist in labelled], [PathCollection] * 4)
+        for artist, slot in zip(labelled, expected_slots):
+            self.assert_marker(artist, self.markers[slot % 4])
+            self.assertEqual(artist._figurestead_point_treatment["color"], theme.series[slot % 3])
+            edge = theme.series_edges[slot % 2]
+            self.assertEqual(artist._figurestead_point_treatment["edge"], edge)
+            halo = [item for item in ax.collections
+                    if len(item.get_edgecolor())
+                    and np.allclose(item.get_edgecolor()[0, :3], to_rgba(edge)[:3])
+                    and np.array_equal(item.get_offsets(), artist.get_offsets())
+                    and np.array_equal(item.get_paths()[0].vertices, artist.get_paths()[0].vertices)]
+            self.assertGreaterEqual(len(halo), 1)
+            cores = [item for item in ax.collections
+                     if len(item.get_facecolor())
+                     and np.allclose(item.get_facecolor()[0, :3], to_rgba(theme.series[slot % 3])[:3])
+                     and np.array_equal(item.get_offsets(), artist.get_offsets())]
+            self.assertTrue(any(np.array_equal(core.get_paths()[0].vertices, artist.get_paths()[0].vertices)
+                                for core in cores))
+        fig.canvas.draw()
+        proxies = ax.get_legend().findobj(PathCollection)
+        for artist, slot in zip(labelled, expected_slots):
+            edge = theme.series_edges[slot % 2]
+            self.assertTrue(any(np.array_equal(proxy.get_paths()[0].vertices, artist.get_paths()[0].vertices)
+                                and np.allclose(proxy.get_edgecolor()[0], artist.get_edgecolor()[0])
+                                for proxy in proxies))
+            self.assertTrue(any(len(proxy.get_edgecolor())
+                                and np.allclose(proxy.get_edgecolor()[0, :3], to_rgba(edge)[:3])
+                                and np.array_equal(proxy.get_paths()[0].vertices, artist.get_paths()[0].vertices)
+                                for proxy in proxies))
+        plt.close(fig)
+        for profile in ("instrument", "monograph"):
+            fig, ax = strip_summary(["G", "G", "H", "H"], [1, 2, 3, 4], series=series,
+                                    series_slots=mapping, theme=theme, profile=profile, seed=3)
+            for artist, slot in zip(self.labelled(ax), expected_slots):
+                self.assert_marker(artist, self.markers[slot % 4])
+                self.assertIsNone(artist._figurestead_point_treatment["edge"])
+                self.assertFalse(any(np.allclose(item.get_edgecolor()[0, :3], to_rgba("#111111")[:3])
+                                     or np.allclose(item.get_edgecolor()[0, :3], to_rgba("#222222")[:3])
+                                     for item in ax.collections if len(item.get_edgecolor())))
+            plt.close(fig)
+
+    def test_explicit_zero_native_ownership_and_mixed_legend(self):
+        from matplotlib.collections import PathCollection
+        from figurestead import scatter, strip_summary
+        fig, ax = scatter([0, 1, 2, 3], [1, 2, 3, 4], series=[0, 0, 1, 1],
+                          series_slots={0: 3, 1: 0})
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()], ["0", "1"])
+        zero, one = self.labelled(ax)
+        self.assert_marker(zero, "D")
+        self.assert_marker(one, "o")
+        self.assertIs(type(zero), PathCollection)
+        self.assertIn(zero, ax.collections)
+        plt.close(fig)
+        held, held_ax = plt.subplots()
+        held_ax.set_title("unchanged")
+        caller = held_ax.scatter([0], [1], marker="*", c="black", label="Caller", s=40)
+        star = caller.get_paths()[0].vertices.copy()
+        with self.assertRaisesRegex(ValueError, r"scatter\.series_slots: keyed slots require an explicit series"):
+            scatter([0, 1], [2, 3], series_slots={0: 1}, ax=held_ax)
+        self.assertEqual(held_ax.get_title(), "unchanged")
+        self.assertEqual(len(held_ax.collections), 1)
+        scatter([0, 1, 2], [1, 2, 3], series=["_control", "Kept", "_control"],
+                series_slots={"_control": 2, "Kept": 0}, ax=held_ax, theme="lavender_fog_notebook")
+        line([0, 1], [4, 5], labels=["Reference"], series_slots=[2], ax=held_ax)
+        self.assertEqual([text.get_text() for text in held_ax.get_legend().get_texts()],
+                         ["Caller", "_control", "Kept", "Reference"])
+        np.testing.assert_array_equal(caller.get_paths()[0].vertices, star)
+        control, kept = self.labelled(held_ax)
+        self.assert_marker(control, "^")
+        self.assert_marker(kept, "o")
+        self.assertIs(type(control), PathCollection)
+        held.canvas.draw()
+        self.assertTrue(any(item.identity_marker == "^" for item in held_ax.get_legend().findobj(IdentityLine)))
+        proxies = held_ax.get_legend().findobj(PathCollection)
+        self.assertTrue(any(np.array_equal(proxy.get_paths()[0].vertices, star) for proxy in proxies))
+        self.assertTrue(any(np.array_equal(proxy.get_paths()[0].vertices, self.vertices("^")) for proxy in proxies))
+        plt.close(held)
+        bare, bare_ax = plt.subplots()
+        bare_ax.set_title("unchanged")
+        with self.assertRaisesRegex(ValueError, r"strip_summary\.series_slots: keyed slots require an explicit series"):
+            strip_summary(["G", "H"], [1, 2], series_slots={"G": 0}, ax=bare_ax)
+        self.assertEqual((bare_ax.get_title(), len(bare_ax.collections), len(bare_ax.lines)), ("unchanged", 0, 0))
+        plt.close(bare)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
