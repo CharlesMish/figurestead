@@ -1,15 +1,19 @@
 # @figurestead/web experimental public alpha
 
-Published version `0.9.0-alpha.7`. Framework-free scientific figures for the browser,
+Preparation candidate `0.9.0-alpha.8`. Framework-free scientific figures for the browser,
 with Canvas and standalone SVG output. Requires Node >=22.22.0;
 repository/release tooling uses patched Node 24.22.1 with bundled npm 11.19.1.
 The Node 22 consumer check uses 22.23.4 / npm 10.9.9; the public engine floor
 remains >=22.22.0. Prefer a maintained, security-patched Node release.
 
-The commands below install the exact published alpha.7 package; npm `alpha` points here, while `latest` intentionally remains alpha.1. Historical packed READMEs may retain preparation-time wording.
+The commands below name this candidate. It is not published. For the current
+public package, install `@figurestead/web@0.9.0-alpha.7`; npm `alpha` points
+there, while `latest` intentionally remains alpha.1. To review this candidate,
+install the exact retained tarball. Historical packed READMEs may retain
+preparation-time wording.
 
 ```sh
-npm install --save-exact @figurestead/web@0.9.0-alpha.7
+npm install --save-exact @figurestead/web@0.9.0-alpha.8
 npm ls @figurestead/web
 ```
 
@@ -39,13 +43,19 @@ with an insufficient-category-space message. Enlarge the host or shorten the
 authored labels; a rejected `setConfig()` leaves the existing figure intact.
 This does not change category values, their ordering, or numeric-axis labels.
 
-Current source additionally preserves numeric tick values in their labels and
-includes the necessary UTC time components for intraday axes. Canvas and SVG
-paint the complete resolved text; figures too narrow for it reject explicitly
-instead of abbreviating numeric coordinates. The repository's
-`docs/browser-axis-ticks.md` records the scope and the separately deferred
-millisecond tick-generation issue. This is a source change,
-not a claim about the published alpha.7 package.
+New in the alpha.8 candidate: numeric tick labels preserve the values they
+name, and UTC labels include the date and time components of the actual tick
+instant, including `Z`. Canvas and SVG paint that full text. A figure that
+cannot fit it rejects with an insufficient-numeric-tick-space error instead of
+abbreviating coordinates. Fractional-millisecond UTC coordinates raise
+`RangeError` rather than collapsing to one timestamp. Generated tick
+coordinates are unchanged, including the known repeated-coordinate case on a
+four-millisecond modern-epoch span. See
+[browser axis ticks](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/browser-axis-ticks.md).
+
+Scatter and strip-summary SVG legends use the series glyph, stroked with the
+resolved edge or series color. Line legends keep their line samples. This does
+not add a marker vocabulary or change Canvas legends.
 
 Alpha.7 also corrects opt-in monotone interpolation so each
 interval stays within its endpoint bounds, including uneven x spacing and
@@ -55,7 +65,7 @@ unchanged. Compact browser layouts still have bounded text/host capacity.
 ## First figure
 
 Rendering requires a complete normalized figure contract. The repository's
-[runnable browser first-success example](https://github.com/CharlesMish/figurestead/tree/7b9482a939da77bfc0d256682707ef03ee02332a/examples/browser-first-success)
+[runnable browser first-success example](https://github.com/CharlesMish/figurestead/tree/a702efa5376572fdecd6236abe588659e6b09c74/examples/browser-first-success)
 remains useful for source development. An installed-package consumer can render
 the same small scientific line without cloning the repository. In a new project
 directory, install the package and the Vite version used by the
@@ -63,7 +73,7 @@ repository's consumer checks:
 
 ```sh
 npm init -y
-npm install --save-exact @figurestead/web@0.9.0-alpha.7
+npm install --save-exact @figurestead/web@0.9.0-alpha.8
 npm install --save-dev --save-exact vite@8.2.4
 ```
 
@@ -147,10 +157,10 @@ curated subpaths are `registration-ink`, `ultraviolet-laboratory`,
 `lavender-fog-notebook`, `midnight-transit-signal-slate`, and
 `deep-observatory-sage-core` under `@figurestead/web/themes/`.
 
-See the [theme selection guide](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/theme-selection.md) for Python keys, browser paths and version-specific limits.
+See the [theme selection guide](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/theme-selection.md) for Python keys, browser paths and version-specific limits.
 
 The declarations and all six curated-theme subpaths above are included in
-`@figurestead/web@0.9.0-alpha.7`.
+`@figurestead/web@0.9.0-alpha.8`.
 
 Python and browser surfaces share normalized contract vocabulary and selected
 theme definitions. Shared semantics do not imply pixel-identical output or
@@ -162,11 +172,11 @@ matrix renderer.
 
 Default line series combine color with persistent open **circle (S1), square (S2), and upright triangle (S3)** markers and matching line-and-marker legends. Line rhythm remains an independent semantic channel. `setData` retains established keyed identity through supported filtering/reordering and partial style overrides. `setConfig` replaces the contract.
 
-Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
+Lavender Fog Notebook is the reference light theme; Ultraviolet Laboratory is the reference dark theme for the [bounded three-series line profile](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/reference-themes.md), not universal accessibility, CVD or print qualification. Default theme selections are unchanged.
 
 Opt in with `style: { ...contract.style, directLabels: true }` (`style.directLabels: true`). Direct labels reuse the actual body marker identity beside the traces. V1 covers ordinary one-panel, 2–3-series line figures with single-line printable ASCII labels. Unsupported or insufficient layouts fall back atomically to the ordinary legend. This treatment does not support Unicode, multiline or math interpretation; printable ASCII math punctuation is literal. Active browser transitions use ordinary treatment until settled, and exports without trustworthy measurement retain the ordinary legend.
 
-See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/7b9482a939da77bfc0d256682707ef03ee02332a/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
+See the [ordinary/direct-label example](https://github.com/CharlesMish/figurestead/tree/a702efa5376572fdecd6236abe588659e6b09c74/examples/direct-series-labels) and [detailed direct-label contract](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/direct-series-labels.md). The [explicit rendered-series contrast audit](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/rendered-series-contrast.md) measures caller-specified rendering facts separately from the static palette audit.
 
 ## Features carried forward from alpha.4
 
@@ -174,14 +184,14 @@ Opt-in `style.markerStride` controls marker display by authored observation inde
 
 `setData` now reserves first-encounter ranks for removed keys and assigns newcomers new ranks. `setConfig` still replaces/reset the contract. Empty strip groups retain categories without invented medians; point-only lines have marker-only legends; collision-safe IDs keep export resources associated with their own marks. Continuous authored rhythm survives segment subdivision and marker holes.
 
-See the [release notes](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/release/notes/0.9.0a3-web-alpha.4.md) and [line semantics](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/line-series-semantics.md). Browser y missingness remains unsupported. These additions do not expand the bounded reference designation or direct-label profile.
+See the [release notes](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/release/notes/0.9.0a3-web-alpha.4.md) and [line semantics](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/line-series-semantics.md). Browser y missingness remains unsupported. These additions do not expand the bounded reference designation or direct-label profile.
 
 ## Controller failures
 
 New in alpha.7: Figurestead generates compact factual descriptions for core line, scatter,
 and strip-summary figures from their prepared observations and summaries.
 Authored narrative remains separate context, including after `setData`; raw
-tables retain full values. See [factual descriptions](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/factual-descriptions.md)
+tables retain full values. See [factual descriptions](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/factual-descriptions.md)
 for the supported facts, precision policy, and source-note channels.
 
 `setConfig(next)` is transactional: a validation, compilation, renderer
@@ -285,7 +295,7 @@ marker cycling and theme colors without a distinguishability claim. Unconfigured
 lines remain solid at every series count; non-solid rhythm must be authored.
 Missing `style.lineStyles` normalizes to `["solid"]`; explicitly supplied arrays
 retain their existing glyph-block allocation, and per-key `lineStyle` wins.
-See the [line semantics](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/line-series-semantics.md).
+See the [line semantics](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/line-series-semantics.md).
 This behavior begins with alpha.4; it is not retroactively part of alpha.3.
 
 ## Scene-mark repairs in alpha.6
@@ -294,7 +304,7 @@ Alpha.6 repairs missing Canvas reference/row bands, exposes a
 closed `Mark` union and `MARK_KINDS`, and rejects unknown scene kinds instead of
 silently omitting them. Custom renderer drawing remains supported; opaque custom
 evidence is reported as incomplete coverage. See the [mark and coverage
-contract](https://github.com/CharlesMish/figurestead/blob/7b9482a939da77bfc0d256682707ef03ee02332a/docs/browser-scene-marks.md).
+contract](https://github.com/CharlesMish/figurestead/blob/a702efa5376572fdecd6236abe588659e6b09c74/docs/browser-scene-marks.md).
 These repairs begin with alpha.6; alpha.5 does not include them.
 
-Package version 0.9.0-alpha.7. [Source and full project documentation](https://github.com/CharlesMish/figurestead).
+Package version 0.9.0-alpha.8. [Source and full project documentation](https://github.com/CharlesMish/figurestead).

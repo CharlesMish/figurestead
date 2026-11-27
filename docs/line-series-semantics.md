@@ -15,8 +15,8 @@ fig, ax = line(
 
 `series_keys` is an optional row-aligned sequence of unique, nonblank strings. `line_styles` requires those keys and accepts only `solid`, `dash`, `dot`, and `dash-dot`. A missing active key means solid; mapping entries for temporarily inactive keys are allowed and validated. Carry keys and slots with their rows when filtering/reordering. Repeated slots remain legal for ordinary lines: two traces can share marker/color identity while distinct keys select different rhythms. Display labels can be duplicated or changed without changing either channel.
 
-Current source includes a deliberate Python legend compatibility correction,
-not yet part of the published a6/alpha.7 release: Figurestead-authored series
+The unpublished Python 0.9.0a7 candidate includes a deliberate legend compatibility correction.
+Published 0.9.0a6 does not: Figurestead-authored series
 labels such as `_control`, `_reference`, and literal `_nolegend_` remain eligible
 for attribution. Leading underscores no longer silently remove those entries
 from ordinary legends or direct-label export fallbacks. This also applies to

@@ -6,6 +6,14 @@ candidate process; no original npm `0.9.0-alpha.1` candidate is present here.
 
 Current published versions: Python `0.9.0a6` and browser `0.9.0-alpha.7`, published October 23, 2026 (America/Chicago) at protected-main release commit `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65). [Current onboarding](../docs/getting-started.md) and the [completed GitHub prerelease](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7) identify the installable packages.
 
+## Unpublished a7 / alpha.8 preparation
+
+The new candidate incorporates accepted corrections from PRs #67, #68, #69 and #70 on protected main `a702efa5376572fdecd6236abe588659e6b09c74`. See [scope and compatibility](notes/0.9.0a7-web-alpha.8.md). The producing commit freezes package inputs; the retaining commit adds the exact wheel, sdist and npm tarball, strict checksums and source bindings. Historical archives are not rebuilt. The coordinated record is `release/reviews/0.9.0a7-web-alpha.8.json`.
+
+Verify `python release/python/verify_candidate.py --version 0.9.0a7` and the publication guard tests. Use `--check-source` only with the producing inputs or authenticated disposable source fixtures. Ordinary CI verifies frozen authority, not equality with arbitrary future main. The a7 ledger additionally binds browser axis-tick scope and the a7/alpha.8 notes without redefining previous inventories.
+
+After independent acceptance and merge, a separate owner authorization is required for protected-main dispatch. Intended Python confirmations, not authorized by this preparation, are `publish figurestead 0.9.0a7 to testpypi`, then `publish figurestead 0.9.0a7 to pypi`. The npm confirmation would be `publish @figurestead/web 0.9.0-alpha.8 with tag alpha from accepted tarball`. `latest` must remain alpha.1. Do not dispatch, tag, or deploy Pages from this candidate.
+
 ## Published a6 / alpha.7 — exact reviewed candidate preserved
 
 The accepted producing commit is `26b169b38ad2c3d7afce6e3642cfebd569740b66`; retaining head `17e625b47d54fe8438043a989d2f890d6e2afbf9` preserves the exact wheel, sdist and npm archive, checksums and [source-input ledger](reviews/0.9.0a6-web-alpha.7.json). The [preparation notes](notes/0.9.0a6-web-alpha.7.md) and package-embedded READMEs remain immutable preparation-time records, not retroactive postpublication descriptions.

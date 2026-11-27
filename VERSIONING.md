@@ -1,5 +1,20 @@
 # Figurestead alpha version identities
 
+## Unpublished preparation candidate: a7 / alpha.8
+
+Candidate identities are Python `0.9.0a7`, browser `0.9.0-alpha.8` and future
+coordinated tag `v0.9.0-alpha.8`, prepared from protected main `a702efa5376572fdecd6236abe588659e6b09c74`
+after accepted PRs #67, #68, #69 and #70. PyPI, TestPyPI, npm and the GitHub
+tag were checked read-only before preparation and were absent. They are not
+published versions; availability must be rechecked immediately before any
+separately authorized publication.
+
+See [candidate notes](release/notes/0.9.0a7-web-alpha.8.md). Schema 0.4,
+renderer API 1 and consumer dependency floors remain unchanged. npm publication
+is intended for `alpha`; `latest` must remain unchanged. A producing commit binds
+package inputs, and a later retaining commit binds the exact archives and ledgers.
+Neither source version strings nor a successful local build establish publication.
+
 ## Current published release (2026-10-23 America/Chicago)
 
 - Python: `figurestead` **0.9.0a6**.
