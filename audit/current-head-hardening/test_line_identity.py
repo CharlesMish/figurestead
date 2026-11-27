@@ -950,6 +950,123 @@ class PointSeriesSlotTests(unittest.TestCase):
         self.assertEqual((bare_ax.get_title(), len(bare_ax.collections), len(bare_ax.lines)), ("unchanged", 0, 0))
         plt.close(bare)
 
+    def test_faint_ring_core_glow_stays_drawable_on_both_point_apis(self):
+        from dataclasses import replace
+        from figurestead import PROFILES, scatter, strip_summary
+
+        faint = replace(PROFILES["deep_scope"], marker_alpha=0.01)
+        tiny = replace(PROFILES["deep_scope"], marker_alpha=1e-320)
+        filled = replace(PROFILES["monograph"], marker_alpha=0.01)
+        self.assertEqual(faint.marker, "ring_core")
+        self.assertTrue(faint.point_glow)
+        self.assertGreater(tiny.marker_alpha, 0.0)
+        self.assertEqual(filled.marker, "filled")
+        self.assertFalse(filled.point_glow)
+        # The uncapped glow for this profile is 4.4, outside Matplotlib's opacity.
+        self.assertEqual(0.055 * (0.8 / faint.marker_alpha), 4.4)
+
+        x = [0.0, 1.0, 2.0, 3.0]
+        y = [1.0, 3.0, 5.0, 7.0]
+        series = ["Historical", "Recent", "Historical", "Recent"]
+        groups = ["East", "East", "West", "West"]
+
+        def primaries(ax):
+            labelled = self.labelled(ax)
+            self.assertEqual([artist.get_label() for artist in labelled], ["Historical", "Recent"])
+            self.assertEqual([len(artist.get_offsets()) for artist in labelled], [2, 2])
+            return labelled
+
+        def assert_saturated_glow(ax):
+            for artist in primaries(ax):
+                self.assertEqual(artist.get_alpha(), 0.8)
+                glow = [item for item in self.support_layers(ax, artist) if item.get_zorder() == 2]
+                self.assertEqual(len(glow), 1)
+                self.assertEqual(glow[0].get_alpha(), 1.0)
+                for item in self.support_layers(ax, artist):
+                    self.assertGreaterEqual(item.get_alpha(), 0.0)
+                    self.assertLessEqual(item.get_alpha(), 1.0)
+
+        for family in ("scatter", "strip"):
+            with self.subTest(family=family, profile="faint"):
+                held, held_ax = plt.subplots()
+                if family == "scatter":
+                    returned, returned_ax = scatter(
+                        x, y, series=series, point_style={"alpha": 0.8}, profile=faint, ax=held_ax)
+                else:
+                    returned, returned_ax = strip_summary(
+                        groups, y, series=series, point_style={"alpha": 0.8},
+                        profile=faint, seed=5, ax=held_ax)
+                self.assertIs(returned, held)
+                self.assertIs(returned_ax, held_ax)
+                assert_saturated_glow(held_ax)
+                plt.close(held)
+
+        for family in ("scatter", "strip"):
+            with self.subTest(family=family, profile="tiny"):
+                if family == "scatter":
+                    fig, ax = scatter(x, y, series=series, point_style={"alpha": 0.8}, profile=tiny)
+                else:
+                    fig, ax = strip_summary(
+                        groups, y, series=series, point_style={"alpha": 0.8}, profile=tiny, seed=5)
+                assert_saturated_glow(ax)
+                plt.close(fig)
+
+        for family in ("scatter", "strip"):
+            with self.subTest(family=family, profile="filled"):
+                if family == "scatter":
+                    fig, ax = scatter(x, y, series=series, point_style={"alpha": 0.8}, profile=filled)
+                else:
+                    fig, ax = strip_summary(
+                        groups, y, series=series, point_style={"alpha": 0.8}, profile=filled, seed=5)
+                for artist in primaries(ax):
+                    self.assertEqual(artist.get_alpha(), 0.8)
+                    self.assertFalse(any(item.get_zorder() == 2 for item in self.support_layers(ax, artist)))
+                    self.assertEqual(len(self.support_layers(ax, artist)), 1)
+                plt.close(fig)
+
+        fig, ax = scatter(x, y, series=series, point_style={"alpha": 0.25})
+        for artist in primaries(ax):
+            glow = next(item for item in self.support_layers(ax, artist) if item.get_zorder() == 2)
+            self.assertEqual(artist.get_alpha(), 0.25)
+            self.assertEqual(glow.get_alpha(), 0.055 * (0.25 / 0.80))
+        plt.close(fig)
+
+        fig, ax = scatter(x, y, series=series, point_style={"alpha": 0}, profile=faint)
+        for artist in primaries(ax):
+            self.assertEqual(artist.get_alpha(), 0.0)
+            layers = self.support_layers(ax, artist)
+            self.assertGreater(len(layers), 1)
+            self.assertTrue(all(item.get_alpha() == 0 for item in layers))
+        plt.close(fig)
+
+        plain, plain_ax = strip_summary(groups, y, series=series, profile=faint, seed=5)
+        styled, styled_ax = strip_summary(
+            groups, y, series=series, profile=faint, seed=5, point_style={"alpha": 0.8})
+        hidden, hidden_ax = strip_summary(
+            groups, y, series=series, profile=faint, seed=5, point_style={"alpha": 0})
+        for other in (styled_ax, hidden_ax):
+            self.assertEqual(
+                [text.get_text() for text in plain_ax.texts if getattr(text, "_figurestead_strip_count", False)],
+                [text.get_text() for text in other.texts if getattr(text, "_figurestead_strip_count", False)])
+            for one, two in zip(plain_ax.lines, other.lines):
+                np.testing.assert_array_equal(one.get_xydata(), two.get_xydata())
+            for one, two in zip(plain_ax.collections, other.collections):
+                np.testing.assert_array_equal(one.get_offsets(), two.get_offsets())
+            self.assertEqual(plain_ax.get_xlim(), other.get_xlim())
+            self.assertEqual(tuple(plain_ax.dataLim.bounds), tuple(other.dataLim.bounds))
+        self.assertEqual(
+            [text.get_text() for text in styled_ax.texts if getattr(text, "_figurestead_strip_count", False)],
+            ["n=2", "n=2"])
+        self.assertEqual(sorted({float(line.get_ydata()[0]) for line in styled_ax.lines}), [2.0, 6.0])
+        self.assertTrue(all(item.get_alpha() == 0.055 for item in plain_ax.collections if item.get_zorder() == 2))
+        for artist in self.labelled(styled_ax):
+            self.assertEqual(artist.get_alpha(), 0.8)
+        for artist in self.labelled(hidden_ax):
+            self.assertTrue(all(item.get_alpha() == 0 for item in self.support_layers(hidden_ax, artist)))
+        plt.close(plain)
+        plt.close(styled)
+        plt.close(hidden)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
