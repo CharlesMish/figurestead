@@ -1,31 +1,20 @@
 # Figurestead alpha version identities
 
-## Unpublished preparation candidate: a7 / alpha.8
+## Current published release (2026-11-26 America/Chicago)
 
-Candidate identities are Python `0.9.0a7`, browser `0.9.0-alpha.8` and future
-coordinated tag `v0.9.0-alpha.8`, prepared from protected main `a702efa5376572fdecd6236abe588659e6b09c74`
-after accepted PRs #67, #68, #69 and #70. PyPI, TestPyPI, npm and the GitHub
-tag were checked read-only before preparation and were absent. They are not
-published versions; availability must be rechecked immediately before any
-separately authorized publication.
+- Python: `figurestead` **0.9.0a7**.
+- Browser: `@figurestead/web` **0.9.0-alpha.8**.
+- Coordinated GitHub prerelease: [`v0.9.0-alpha.8`](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.8).
+- Release target: `6099ab719bab5ab8cdaea06777268cec18c38e84` (PR #71).
+- npm `alpha` points to alpha.8; `latest` intentionally remains alpha.1.
 
-See [candidate notes](release/notes/0.9.0a7-web-alpha.8.md). Schema 0.4,
-renderer API 1 and consumer dependency floors remain unchanged. npm publication
-is intended for `alpha`; `latest` must remain unchanged. A producing commit binds
-package inputs, and a later retaining commit binds the exact archives and ledgers.
-Neither source version strings nor a successful local build establish publication.
+The accepted exact wheel, sdist and npm tarball were published and verified on TestPyPI, PyPI, npm and GitHub without rebuilding. The [release record](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.8), [retained artifact index](release/README.md) and [current onboarding](docs/getting-started.md) are the living publication authorities. Schema 0.4, renderer API 1, dependency floors and package counters are unchanged.
 
-## Current published release (2026-10-23 America/Chicago)
+Changes newly shipped since a6/alpha.7 include PR #67's truthful browser numeric and UTC tick labels, PR #68's literal Python legend labels, PR #69's SVG point-series legend glyphs, and PR #70's heatmap profile-grid suppression. PR #66 reconciled living docs after a6/alpha.7. Accepted original source ledgers and preparation notes retain their historical status.
 
-- Python: `figurestead` **0.9.0a6**.
-- Browser: `@figurestead/web` **0.9.0-alpha.7**.
-- Coordinated GitHub prerelease: [`v0.9.0-alpha.7`](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7).
-- Release target: `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65).
-- npm `alpha` points to alpha.7; `latest` intentionally remains alpha.1.
+## Historical a6 / alpha.7 release
 
-The accepted exact wheel, sdist and npm tarball were published and verified on TestPyPI, PyPI, npm and GitHub without rebuilding. The [release record](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7), [retained artifact index](release/README.md) and [current onboarding](docs/getting-started.md) are the living publication authorities. Schema 0.4, renderer API 1, dependency floors and package counters are unchanged.
-
-Changes newly shipped since a5/alpha.6 include the PR #60 interpolation/factual-description/category-tick corrections, PR #62 Python line performance and PR #63 matrix decoration containment. PR #61 reconciled living docs; PR #64 patched build/publisher tooling. Accepted original source ledgers and preparation notes retain their historical status.
+Python `0.9.0a6` and browser `0.9.0-alpha.7` were published October 23, 2026 (America/Chicago) at `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65). The [alpha.7 release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7) records interpolation, factual descriptions, category-tick fitting, Python line performance and matrix decoration containment. Its exact retained bytes, source bindings, and version-specific descriptions are unchanged; at its publication, npm `alpha` pointed to alpha.7.
 
 ## Historical a5 / alpha.6 release
 
@@ -53,7 +42,7 @@ and retained artifacts remain available. Their features carry forward into later
 
 Python `0.9.0a2` and browser `0.9.0-alpha.3` remain published historical versions. Their coordinated [prerelease](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.3) was published 2026-09-20 UTC. B2 S1–S3 identity, `series_slots`, baseline direct labels and the bounded reference-theme designation already shipped there. Python a1 and browser alpha.1/alpha.2 remain historical as well.
 
-The public landing page retains version-bound a4/alpha.5 gallery examples and a2/alpha.3 specimens alongside an earlier-alpha archive. Their image bytes and manifests are historical authority, not a6/alpha.7 output. Website status updates and deployment are separate from package publication; use the current GitHub onboarding for install versions.
+The public landing page retains version-bound a4/alpha.5 gallery examples and a2/alpha.3 specimens alongside an earlier-alpha archive. Their image bytes and manifests are historical authority, not a7/alpha.8 output. Website status updates and deployment are separate from package publication; use the current GitHub onboarding for install versions.
 
 ## Version and retention conventions
 

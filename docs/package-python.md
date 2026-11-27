@@ -6,12 +6,10 @@ strip-summary and heatmap figures with explicit labels and themes.
 ## Python 0.9.0a7
 
 Requires Python >=3.10, Matplotlib >=3.7, NumPy >=1.24 and Pillow >=10.
-Preparation candidate: the command below is for this version after publication.
-For the currently published release, use Python 0.9.0a6. To review now, install
-the exact retained candidate wheel or sdist. In a fresh virtual environment:
+Published on PyPI from the independently reviewed retained a7 artifacts. In a fresh virtual environment:
 
 ```sh
-python -m pip install figurestead==0.9.0a7
+python -m pip install "figurestead==0.9.0a7"
 ```
 
 ```python
@@ -54,7 +52,7 @@ bounded line-identity profile. Performance gains depend on geometry and density.
 The auxiliary `compile_terminal_scene` rejects unsupported contracts rather than
 silently claiming fidelity; it remains finite-only and is not NaN-gap transport.
 
-New in the a7 candidate: Figurestead-authored legend labels that begin with an
+New in published a7: Figurestead-authored legend labels that begin with an
 underscore, including literal `_nolegend_`, stay eligible for ordinary legends
 and direct-label fallback. Caller-owned Matplotlib artists keep Matplotlib's
 own underscore rules. Ordinary `heatmap()` turns profile gridlines off after

@@ -1,19 +1,17 @@
 # @figurestead/web experimental public alpha
 
-Preparation candidate `0.9.0-alpha.8`. Framework-free scientific figures for the browser,
+Published version `0.9.0-alpha.8`. Framework-free scientific figures for the browser,
 with Canvas and standalone SVG output. Requires Node >=22.22.0;
 repository/release tooling uses patched Node 24.22.1 with bundled npm 11.19.1.
 The Node 22 consumer check uses 22.23.4 / npm 10.9.9; the public engine floor
 remains >=22.22.0. Prefer a maintained, security-patched Node release.
 
-The commands below name this candidate. It is not published. For the current
-public package, install `@figurestead/web@0.9.0-alpha.7`; npm `alpha` points
-there, while `latest` intentionally remains alpha.1. To review this candidate,
-install the exact retained tarball. Historical packed READMEs may retain
+The commands below install the exact published alpha.8 package; npm `alpha` points
+here, while `latest` intentionally remains alpha.1. Historical packed READMEs may retain
 preparation-time wording.
 
 ```sh
-npm install --save-exact @figurestead/web@0.9.0-alpha.8
+npm install @figurestead/web@0.9.0-alpha.8
 npm ls @figurestead/web
 ```
 
@@ -43,7 +41,7 @@ with an insufficient-category-space message. Enlarge the host or shorten the
 authored labels; a rejected `setConfig()` leaves the existing figure intact.
 This does not change category values, their ordering, or numeric-axis labels.
 
-New in the alpha.8 candidate: numeric tick labels preserve the values they
+New in alpha.8: numeric tick labels preserve the values they
 name, and UTC labels include the date and time components of the actual tick
 instant, including `Z`. Canvas and SVG paint that full text. A figure that
 cannot fit it rejects with an insufficient-numeric-tick-space error instead of
@@ -73,7 +71,7 @@ repository's consumer checks:
 
 ```sh
 npm init -y
-npm install --save-exact @figurestead/web@0.9.0-alpha.8
+npm install @figurestead/web@0.9.0-alpha.8
 npm install --save-dev --save-exact vite@8.2.4
 ```
 

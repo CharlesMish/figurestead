@@ -4,15 +4,19 @@ Python artifacts and npm candidates use separate retained-byte
 lifecycles. See [`npm/README.md`](npm/README.md) for the npm
 candidate process; no original npm `0.9.0-alpha.1` candidate is present here.
 
-Current published versions: Python `0.9.0a6` and browser `0.9.0-alpha.7`, published October 23, 2026 (America/Chicago) at protected-main release commit `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65). [Current onboarding](../docs/getting-started.md) and the [completed GitHub prerelease](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7) identify the installable packages.
+Current published versions: Python `0.9.0a7` and browser `0.9.0-alpha.8`, published November 26, 2026 (America/Chicago) at protected-main release commit `6099ab719bab5ab8cdaea06777268cec18c38e84` (PR #71). [Current onboarding](../docs/getting-started.md) and the [completed GitHub prerelease](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.8) identify the installable packages.
 
-## Unpublished a7 / alpha.8 preparation
+## Published a7 / alpha.8 — exact reviewed candidate preserved
 
-The new candidate incorporates accepted corrections from PRs #67, #68, #69 and #70 on protected main `a702efa5376572fdecd6236abe588659e6b09c74`. See [scope and compatibility](notes/0.9.0a7-web-alpha.8.md). The producing commit freezes package inputs; the retaining commit adds the exact wheel, sdist and npm tarball, strict checksums and source bindings. Historical archives are not rebuilt. The coordinated record is `release/reviews/0.9.0a7-web-alpha.8.json`.
+The accepted producing commit is `9afd3a08badf7bd3850008f1542829f03384b87a`; retaining head `9923e5231490a5a2307ba62b26ea035238619758` preserves the exact wheel, sdist and npm archive, checksums and [source-input ledger](reviews/0.9.0a7-web-alpha.8.json). The [preparation notes](notes/0.9.0a7-web-alpha.8.md) and package-embedded READMEs remain immutable preparation-time records, not retroactive postpublication descriptions.
 
-Verify `python release/python/verify_candidate.py --version 0.9.0a7` and the publication guard tests. Use `--check-source` only with the producing inputs or authenticated disposable source fixtures. Ordinary CI verifies frozen authority, not equality with arbitrary future main. The a7 ledger additionally binds browser axis-tick scope and the a7/alpha.8 notes without redefining previous inventories.
+The exact reviewed bytes were published without rebuilding:
 
-After independent acceptance and merge, a separate owner authorization is required for protected-main dispatch. Intended Python confirmations, not authorized by this preparation, are `publish figurestead 0.9.0a7 to testpypi`, then `publish figurestead 0.9.0a7 to pypi`. The npm confirmation would be `publish @figurestead/web 0.9.0-alpha.8 with tag alpha from accepted tarball`. `latest` must remain alpha.1. Do not dispatch, tag, or deploy Pages from this candidate.
+- [TestPyPI workflow](https://github.com/CharlesMish/figurestead/actions/runs/45926983382)
+- [PyPI workflow](https://github.com/CharlesMish/figurestead/actions/runs/45928610179)
+- [npm workflow](https://github.com/CharlesMish/figurestead/actions/runs/45928919912)
+
+npm `alpha` points to alpha.8; `latest` remains alpha.1. Recheck registry state before any future publication; these versioned bytes must never be republished or replaced. Retained artifact verifiers may be run read-only against their original source/ledger authority. Website publication is separate.
 
 ## Published a6 / alpha.7 — exact reviewed candidate preserved
 
@@ -24,7 +28,7 @@ The exact reviewed bytes were published without rebuilding; each stage verified 
 - [PyPI workflow](https://github.com/CharlesMish/figurestead/actions/runs/39905659408)
 - [npm workflow](https://github.com/CharlesMish/figurestead/actions/runs/39905884506)
 
-npm `alpha` points to alpha.7; `latest` remains alpha.1. npm public readback converged on the final bounded attempt, after a single successful publish command. Recheck registry state before any future publication; these versioned bytes must never be republished or replaced. Retained artifact verifiers may be run read-only against their original source/ledger authority. Website publication is separate.
+At that earlier release, npm `alpha` pointed to alpha.7; `latest` remained alpha.1. npm public readback converged on the final bounded attempt, after a single successful publish command. These versioned bytes must never be republished or replaced. Retained artifact verifiers may be run read-only against their original source/ledger authority. Website publication is separate.
 
 ## Published a5 / alpha.6 — corrected candidate preserved
 
@@ -124,4 +128,4 @@ Both dispatches used `expected_commit=9260af190e60c621244072675c238db4822b8632`.
 
 ## Integrity rule
 
-The configured Python workflow consumed only the two versioned retained a6 distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.
+The configured Python workflow consumed only the two versioned retained a7 distributions and their exact embedded hashes, after protected-main/commit/confirmation and source-input gates. PyPI requires the same bytes verified on TestPyPI first. Never replace historical a1/a2/a3 bytes or retag their records as a4. Candidate bytes and their bindings require independent acceptance before any authorized publication.

@@ -1,6 +1,6 @@
 # Figurestead documentation
 
-Start with the published **Python 0.9.0a6 / browser 0.9.0-alpha.7** packages.
+Start with the published **Python 0.9.0a7 / browser 0.9.0-alpha.8** packages.
 The Python and browser counters are independent; npm `latest` remains alpha.1.
 
 ## Make a figure
@@ -30,4 +30,4 @@ The Python and browser counters are independent; npm `latest` remains alpha.1.
 - [Historical Evidence Atlas](https://charlesmish.github.io/figurestead/evidence/)
 - [Historical specimen study and design records](../specimen-study/README.md)
 
-Historical images and manifests retain their original versions. PRs #60, #62 and #63 are included in the published a6/alpha.7 artifacts; the producing/retaining records remain historical. Follow the [release/source distinction](getting-started.md#published-release-versus-source-work).
+Historical images and manifests retain their original versions. PRs #67, #68, #69 and #70 are included in the published a7/alpha.8 artifacts; the producing/retaining records remain historical. Follow the [release/source distinction](getting-started.md#published-release-versus-source-work).
