@@ -57,9 +57,9 @@ Passing `ax` draws into an existing Matplotlib axes. Choose a
 | Call | Input and output meaning | Common optional arguments |
 | --- | --- | --- |
 | `line(x, ys)` | One finite shared x vector; one or more matching y series | `labels`, `series_slots`, `series_keys`, `line_styles`, `marker_stride=1`, `direct_labels=False` |
-| `scatter(x, y)` | Paired finite numeric vectors; no fit is inferred | `series` supplies one category per point; optional `series_slots` maps those keys to identity slots |
+| `scatter(x, y)` | Paired finite numeric vectors; no fit is inferred | `series` supplies one category per point; optional `series_slots`, `point_style`, and `series_styles` |
 | `histogram(values)` | One finite vector or nested vectors; counts and dataset medians | `labels`, `bins=20`; explicit shared bin edges aid comparisons |
-| `strip_summary(groups, values)` | One group per finite value; deterministic jitter and group median bars | `series`, `order`, `seed=42`; optional `series_slots` uses the same key-to-slot map |
+| `strip_summary(groups, values)` | One group per finite value; deterministic jitter and group median bars | `series`, `order`, `seed=42`; optional `series_slots`, `point_style`, and `series_styles` |
 | `heatmap(matrix)` | A nonempty finite 2D matrix; sequential color ramp and colorbar | `xlabels`, `ylabels` must match columns and rows |
 
 `scatter` and `strip_summary` accept an optional `series_slots` mapping from
@@ -76,6 +76,30 @@ and seeded jitter alone. Anonymous points have no keys, so a map is rejected.
 An explicit numeric category `0` is a real series. Underscore labels stay in
 the legend. This is a style assignment. It is not a grayscale, color-vision,
 print, or accessibility qualification.
+
+`point_style` and `series_styles` are optional on `scatter` and
+`strip_summary` only. `point_style` applies one record to every series,
+including anonymous points. `series_styles` maps series keys to records and
+is rejected when no series was supplied. Each record may set `size` (finite
+positive primary marker area in pt²), `alpha` (finite opacity from 0 through
+1), and `marker` (`circle`, `square`, `triangle`, or `diamond`). Other fields
+are rejected. A record may be partial. Inactive keys are checked and not
+drawn. Key lookup is the same as `series_slots`, including the existing
+mixed-type string coercion: `series=[0, "A"]` is stored as `"0"`.
+
+Resolution order is the profile and any slot glyph, then `point_style`, then
+the series record. The slot still chooses color and, unless a marker field
+overrides it, the glyph. Empty mappings leave the figure unchanged. Ring,
+backing, core, and glow keep their area ratios, and their opacities follow
+the resolved primary opacity. At alpha 0 every observation-mark layer for
+those observations is invisible; the observations stay in the data, strip
+counts, and pooled medians. The legend sample is the labelled primary mark, so its glyph, area, and
+opacity follow that resolution. When a theme-edge ring was recorded, the
+legend keeps that ring at 1.18 times the primary area and 0.75 times the
+primary opacity. Core and glow stay on the axes. Drawing order and legend
+order are unchanged. A lighter mark is not a foreground-order control. These
+arguments do not change coordinates, inclusion, seeded jitter, category
+order, data limits, or slot assignment.
 
 Do not pass mismatched vectors, silently discard missing observations, or treat
 these examples as statistical analysis. `order` must include every observed

@@ -22,9 +22,12 @@ def authored_label(artist, label):
 class PointTreatmentLegend(HandlerPathCollection):
     """Show the labelled point mark, and the ring/core theme edge when one was drawn.
 
-    Unslotted collections have no recorded treatment and use the ordinary
-    PathCollection glyph. A recorded edge is the larger open ring already drawn
-    behind a ring/core mark, at the same 1.18 area ratio and stroke.
+    The labelled collection carries the resolved glyph, area, and opacity, so
+    this handler does not apply a second size scale. A recorded edge is the
+    larger open ring already drawn behind a ring/core mark, at the same 1.18
+    area ratio and the primary opacity times 0.75. No recorded edge, including
+    an unslotted override that only changes area or opacity, keeps the ordinary
+    collection glyph.
     """
 
     def create_artists(self, legend, orig_handle, xdescent, ydescent, width, height, fontsize, trans):

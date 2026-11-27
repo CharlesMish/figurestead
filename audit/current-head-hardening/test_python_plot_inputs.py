@@ -548,6 +548,114 @@ class PythonPlotInputRegression(unittest.TestCase):
         self.assertIn("n=0", [text.get_text() for text in ax.texts])
         plt.close(fig)
 
+    def test_point_styles_reject_before_axes(self) -> None:
+        bad_point = (
+            ([14], r"must be a mapping"),
+            ("size", r"must be a mapping"),
+            (0, r"must be a mapping"),
+            (np.ma.array([14]), r"masked arrays are not currently supported"),
+            ({"size": True}, r"finite positive marker area"),
+            ({"size": np.bool_(False)}, r"finite positive marker area"),
+            ({"size": 0}, r"finite positive marker area"),
+            ({"size": -4}, r"finite positive marker area"),
+            ({"size": math.nan}, r"finite positive marker area"),
+            ({"size": math.inf}, r"finite positive marker area"),
+            ({"size": "14"}, r"finite positive marker area"),
+            ({"size": None}, r"finite positive marker area"),
+            ({"size": np.array(14.0)}, r"finite positive marker area"),
+            ({"alpha": True}, r"finite opacity"),
+            ({"alpha": False}, r"finite opacity"),
+            ({"alpha": np.bool_(True)}, r"finite opacity"),
+            ({"alpha": -0.01}, r"finite opacity"),
+            ({"alpha": 1.01}, r"finite opacity"),
+            ({"alpha": math.nan}, r"finite opacity"),
+            ({"alpha": math.inf}, r"finite opacity"),
+            ({"alpha": "0.5"}, r"finite opacity"),
+            ({"alpha": None}, r"finite opacity"),
+            ({"marker": "o"}, r"circle, square, triangle, or diamond"),
+            ({"marker": "Circle"}, r"circle, square, triangle, or diamond"),
+            ({"marker": None}, r"circle, square, triangle, or diamond"),
+            ({"marker": 1}, r"circle, square, triangle, or diamond"),
+            ({"linewidth": 1}, r"unknown field"),
+            ({"color": "#000000"}, r"unknown field"),
+            ({"s": 12}, r"unknown field"),
+        )
+        bad_series = (
+            ([{"size": 14}], r"must be a mapping from series keys"),
+            ("Recent", r"must be a mapping from series keys"),
+            (4, r"must be a mapping from series keys"),
+            (np.ma.array([14]), r"masked arrays are not currently supported"),
+            ({"A": 14}, r"must be a mapping of marker fields"),
+            ({"A": "circle"}, r"must be a mapping of marker fields"),
+            ({"quiet": {"size": -1}}, r"series_styles\['quiet'\]\['size'\]"),
+            ({"quiet": {"marker": "star"}}, r"series_styles\['quiet'\]\['marker'\]"),
+            ({"quiet": {"zorder": 5}}, r"unknown field"),
+            ({"A": {"alpha": np.ma.array(0.2, mask=True)}}, r"masked arrays are not currently supported"),
+            ({}, r"keyed styles require an explicit series"),
+        )
+        for family in ("scatter", "strip"):
+            for style, pattern in bad_point:
+                with self.subTest(family=family, style=style):
+                    if family == "scatter":
+                        invoke = lambda style=style: scatter(
+                            [0, 1], [1, 2], series=["A", "B"], point_style=style)
+                    else:
+                        invoke = lambda style=style: strip_summary(
+                            ["G", "G"], [1, 2], series=["A", "B"], point_style=style)
+                    self.assert_rejected_before_allocation(invoke, pattern)
+            for style, pattern in bad_series:
+                with self.subTest(family=family, series_styles=style):
+                    if family == "scatter":
+                        if style == {}:
+                            invoke = lambda: scatter([0, 1], [1, 2], series_styles={})
+                        else:
+                            invoke = lambda style=style: scatter(
+                                [0, 1], [1, 2], series=["A", "B"], series_styles=style)
+                    else:
+                        if style == {}:
+                            invoke = lambda: strip_summary(["G", "H"], [1, 2], series_styles={})
+                        else:
+                            invoke = lambda style=style: strip_summary(
+                                ["G", "G"], [1, 2], series=["A", "B"], series_styles=style)
+                    self.assert_rejected_before_allocation(invoke, pattern)
+            with self.subTest(family=family, series_styles="anonymous-invalid"):
+                if family == "scatter":
+                    invoke = lambda: scatter([0, 1], [1, 2], series_styles={"A": {"size": -5}})
+                else:
+                    invoke = lambda: strip_summary(
+                        ["G", "H"], [1, 2], series_styles={"G": {"marker": "star"}})
+                self.assert_rejected_before_allocation(
+                    invoke, r"keyed styles require an explicit series")
+
+    def test_point_styles_accept_inactive_empty_and_explicit_numeric_zero(self) -> None:
+        fig, ax = scatter(
+            [0, 1, 2, 3], [1, 2, 3, 4], series=[0, 0, 1, 1],
+            point_style={"size": np.float64(12), "alpha": np.float64(0.4)},
+            series_styles={0: {"marker": "diamond", "size": np.int64(20)}, "quiet": {"alpha": 0}},
+        )
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()], ["0", "1"])
+        plt.close(fig)
+        fig, ax = scatter(
+            [0, 1], [1, 2], series=[0, "A"],
+            series_styles={0: {"size": 10}, "0": {"size": 15}, "A": {"marker": "square"}},
+        )
+        labelled = [artist for artist in ax.collections if getattr(artist, "_figurestead_authored_label", False)]
+        self.assertEqual([artist.get_label() for artist in labelled], ["0", "A"])
+        self.assertEqual(float(labelled[0].get_sizes()[0]), 15.0)
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()], ["0", "A"])
+        plt.close(fig)
+        fig, ax = scatter([0, 1], [1, 2], series=["A", "B"], point_style={}, series_styles={})
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()], ["A", "B"])
+        plt.close(fig)
+        fig, ax = scatter([0, 1], [1, 2], point_style={"marker": "triangle", "alpha": 0, "size": 9})
+        self.assertIsNone(ax.get_legend())
+        plt.close(fig)
+        fig, ax = strip_summary(
+            [], [], series=[], series_styles={"quiet": {"alpha": 0, "marker": "circle"}}, order=["empty"])
+        self.assertEqual([text.get_text() for text in ax.get_xticklabels()], ["empty"])
+        self.assertIn("n=0", [text.get_text() for text in ax.texts])
+        plt.close(fig)
+
     def test_valid_call_succeeds_after_rejected_input(self) -> None:
         self.assert_rejected_before_allocation(
             lambda: histogram([[1, 2], [3, 4]], labels=["only"]), r"histogram\.labels"
@@ -561,6 +669,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 59:
-        raise SystemExit(f"expected exactly 59 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 61:
+        raise SystemExit(f"expected exactly 61 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)

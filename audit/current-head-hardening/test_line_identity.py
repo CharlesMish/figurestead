@@ -713,6 +713,243 @@ class PointSeriesSlotTests(unittest.TestCase):
         self.assertEqual((bare_ax.get_title(), len(bare_ax.collections), len(bare_ax.lines)), ("unchanged", 0, 0))
         plt.close(bare)
 
+    def same_offsets(self, ax):
+        return [artist.get_offsets().copy() for artist in ax.collections]
+
+    def support_layers(self, ax, artist):
+        return [item for item in ax.collections
+                if np.array_equal(item.get_offsets(), artist.get_offsets())]
+
+    def assert_legend_matches_primary(self, ax):
+        from matplotlib.collections import PathCollection
+        ax.figure.canvas.draw()
+        proxies = ax.get_legend().findobj(PathCollection)
+        for artist in self.labelled(ax):
+            self.assertTrue(any(
+                np.array_equal(proxy.get_paths()[0].vertices, artist.get_paths()[0].vertices)
+                and np.allclose(proxy.get_sizes(), artist.get_sizes())
+                and proxy.get_alpha() == artist.get_alpha()
+                for proxy in proxies
+            ), artist.get_label())
+            treatment = getattr(artist, "_figurestead_point_treatment", None) or {}
+            if treatment.get("edge"):
+                self.assertTrue(any(
+                    np.array_equal(proxy.get_paths()[0].vertices, artist.get_paths()[0].vertices)
+                    and np.allclose(proxy.get_sizes(), np.asarray(artist.get_sizes(), dtype=float) * 1.18)
+                    and proxy.get_alpha() == artist.get_alpha() * 0.75
+                    for proxy in proxies
+                ), artist.get_label())
+
+    def test_omitted_point_styles_match_empty_mappings(self):
+        from figurestead import PROFILES, scatter, strip_summary
+        for family in ("scatter", "strip"):
+            plain = self.png(self.draw(family, ["A", "B", "C"])[0])
+            plt.close("all")
+            for options in ({"point_style": None, "series_styles": None},
+                            {"point_style": {}, "series_styles": {}}):
+                fig, ax = self.draw(family, ["A", "B", "C"], **options)
+                self.assertEqual(self.png(fig), plain)
+                for artist in self.labelled(ax):
+                    self.assert_marker(artist, "o")
+                    self.assertNotIn("size", getattr(artist, "_figurestead_point_treatment", {}))
+                plt.close(fig)
+            slotted = self.png(self.draw(
+                family, ["A", "B", "C"], series_slots={"A": 0, "B": 1, "C": 2})[0])
+            plt.close("all")
+            for options in (
+                {"series_slots": {"A": 0, "B": 1, "C": 2}, "point_style": None, "series_styles": None},
+                {"series_slots": {"A": 0, "B": 1, "C": 2}, "point_style": {}, "series_styles": {}},
+            ):
+                fig, _ = self.draw(family, ["A", "B", "C"], **options)
+                self.assertEqual(self.png(fig), slotted)
+                plt.close(fig)
+        profile = PROFILES["deep_scope"]
+        fig, ax = scatter([0, 1, 2], [4, 5, 6], series=["A", "B", "A"])
+        other, other_ax = scatter([0, 1, 2], [4, 5, 6], series=["A", "B", "A"], point_style={})
+        self.assertEqual(self.png(fig), self.png(other))
+        for artist in self.labelled(ax):
+            self.assertEqual(float(artist.get_sizes()[0]), profile.marker_size)
+            self.assertEqual(artist.get_alpha(), profile.marker_alpha)
+            layers = self.support_layers(ax, artist)
+            glow = next(item for item in layers if item.get_zorder() == 2)
+            core = next(item for item in layers if item.get_zorder() == 4)
+            self.assertEqual(glow.get_alpha(), 0.055)
+            self.assertEqual(float(glow.get_sizes()[0]), profile.marker_size * 1.75)
+            self.assertEqual(float(core.get_sizes()[0]), profile.marker_size * profile.core_fraction)
+            self.assertEqual(core.get_alpha(), profile.marker_alpha * 0.58)
+        anon, anon_ax = scatter([0, 1], [1, 2], point_style={})
+        plain_anon, plain_anon_ax = scatter([0, 1], [1, 2])
+        self.assertEqual(self.png(anon), self.png(plain_anon))
+        self.assertIsNone(anon_ax.get_legend())
+        self.assertIsNone(plain_anon_ax.get_legend())
+        strip, strip_ax = strip_summary(["East", "West"], [1, 2], seed=5, point_style={})
+        plain_strip, plain_strip_ax = strip_summary(["East", "West"], [1, 2], seed=5)
+        self.assertEqual(self.png(strip), self.png(plain_strip))
+        self.assertEqual(strip_ax.get_xlim(), plain_strip_ax.get_xlim())
+        self.assertEqual(strip_ax.get_ylim(), plain_strip_ax.get_ylim())
+        plt.close("all")
+
+    def test_partial_styles_layer_over_slots_without_changing_color_or_offsets(self):
+        from dataclasses import replace
+        from matplotlib.colors import to_rgba
+        from figurestead import scatter, strip_summary
+        base_theme, _ = resolve("slipware", "deep_scope")
+        theme = replace(base_theme, series_edges=("#111111", "#222222", "#333333", "#444444"))
+        names = ["Historical", "Recent", "Other"]
+        slots = {"Historical": 0, "Recent": 2, "Other": 1, "Future": 4}
+        point_style = {"size": 14, "alpha": 0.25, "marker": "square"}
+        series_styles = {
+            "Recent": {"size": 52, "alpha": 0.95, "marker": "diamond"},
+            "Future": {"alpha": 0, "marker": "triangle"},
+        }
+        x, y, series, groups = self.frame(names)
+        shared = dict(series=series, series_slots=slots, theme=theme)
+        plain, plain_ax = scatter(x, y, **shared)
+        styled, styled_ax = scatter(x, y, point_style=point_style, series_styles=series_styles, **shared)
+        self.assertEqual([artist.get_label() for artist in self.labelled(plain_ax)], names)
+        self.assertEqual([artist.get_label() for artist in self.labelled(styled_ax)], names)
+        self.assertEqual([text.get_text() for text in plain_ax.get_legend().get_texts()],
+                         [text.get_text() for text in styled_ax.get_legend().get_texts()])
+        expected = {
+            "Historical": ("s", 14, 0.25, 0),
+            "Recent": ("D", 52, 0.95, 2),
+            "Other": ("s", 14, 0.25, 1),
+        }
+        for artist, plain_artist in zip(self.labelled(styled_ax), self.labelled(plain_ax)):
+            marker, size, alpha, slot = expected[artist.get_label()]
+            self.assert_marker(artist, marker)
+            self.assertEqual(float(artist.get_sizes()[0]), size)
+            self.assertEqual(artist.get_alpha(), alpha)
+            self.assertEqual(artist._figurestead_point_treatment["size"], size)
+            self.assertEqual(artist._figurestead_point_treatment["alpha"], alpha)
+            self.assertEqual(artist._figurestead_point_treatment["color"], theme.series[slot % len(theme.series)])
+            np.testing.assert_allclose(artist.get_edgecolor()[0, :3], plain_artist.get_edgecolor()[0, :3])
+            np.testing.assert_array_equal(artist.get_offsets(), plain_artist.get_offsets())
+            layers = self.support_layers(styled_ax, artist)
+            edge = theme.series_edges[slot % len(theme.series_edges)]
+            halo = [item for item in layers if item.get_zorder() == 2.8]
+            glow = [item for item in layers if item.get_zorder() == 2]
+            core = [item for item in layers if item.get_zorder() == 4]
+            self.assertEqual(len(halo), 1)
+            self.assertEqual(len(glow), 1)
+            self.assertEqual(len(core), 1)
+            self.assertEqual(float(halo[0].get_sizes()[0]), size * 1.18)
+            self.assertEqual(halo[0].get_alpha(), alpha * 0.75)
+            self.assertTrue(np.allclose(halo[0].get_edgecolor()[0, :3], to_rgba(edge)[:3]))
+            self.assertEqual(float(glow[0].get_sizes()[0]), size * 1.75)
+            self.assertEqual(glow[0].get_alpha(), 0.055 * (alpha / 0.80))
+            self.assert_marker(glow[0], marker)
+            self.assert_marker(core[0], marker)
+            self.assertEqual(float(core[0].get_sizes()[0]), size * 0.12)
+            self.assertEqual(core[0].get_alpha(), alpha * 0.58)
+        self.assert_legend_matches_primary(styled_ax)
+        self.assertEqual(styled_ax.get_xlim(), plain_ax.get_xlim())
+        self.assertEqual(styled_ax.get_ylim(), plain_ax.get_ylim())
+        self.assertEqual(tuple(styled_ax.dataLim.bounds), tuple(plain_ax.dataLim.bounds))
+        plt.close(plain)
+        plt.close(styled)
+        partial, partial_ax = scatter(
+            [0, 1, 2], [1, 2, 3], series=names, series_slots=slots,
+            series_styles={"Recent": {"alpha": 0.5}})
+        recent = next(artist for artist in self.labelled(partial_ax) if artist.get_label() == "Recent")
+        historical = next(artist for artist in self.labelled(partial_ax) if artist.get_label() == "Historical")
+        self.assert_marker(recent, "^")
+        self.assertEqual(recent.get_alpha(), 0.5)
+        self.assertEqual(float(recent.get_sizes()[0]), 46)
+        self.assert_marker(historical, "o")
+        self.assertEqual(historical.get_alpha(), 0.80)
+        self.assertNotIn("size", historical._figurestead_point_treatment)
+        plt.close(partial)
+        for profile in ("instrument", "monograph"):
+            fig, ax = strip_summary(
+                groups, y, series=series, series_slots=slots, seed=9, profile=profile,
+                theme="ultraviolet_laboratory", point_style={"size": 16, "alpha": 0.35},
+                series_styles={"Recent": {"marker": "triangle", "size": 40}})
+            by_label = {artist.get_label(): artist for artist in self.labelled(ax)}
+            self.assert_marker(by_label["Historical"], "o")
+            self.assertEqual(float(by_label["Historical"].get_sizes()[0]), 16)
+            self.assertEqual(by_label["Historical"].get_alpha(), 0.35)
+            self.assert_marker(by_label["Recent"], "^")
+            self.assertEqual(float(by_label["Recent"].get_sizes()[0]), 40)
+            self.assertEqual(by_label["Recent"].get_alpha(), 0.35)
+            self.assertTrue(all(artist._figurestead_point_treatment["edge"] is None for artist in self.labelled(ax)))
+            self.assertEqual(len(self.support_layers(ax, by_label["Recent"])), 1)
+            self.assert_legend_matches_primary(ax)
+            plt.close(fig)
+
+    def test_alpha_zero_hides_every_mark_layer_and_keeps_observations(self):
+        from figurestead import scatter, strip_summary
+        names = ["Historical", "Recent"]
+        x, y, series, groups = self.frame(names)
+        slots = {"Historical": 0, "Recent": 2}
+        plain, plain_ax = scatter(x, y, series=series, series_slots=slots, profile="deep_scope")
+        hidden, hidden_ax = scatter(
+            x, y, series=series, series_slots=slots, profile="deep_scope",
+            point_style={"alpha": 0.3}, series_styles={"Recent": {"alpha": 0}})
+        recent = next(artist for artist in self.labelled(hidden_ax) if artist.get_label() == "Recent")
+        historical = next(artist for artist in self.labelled(hidden_ax) if artist.get_label() == "Historical")
+        plain_recent = next(artist for artist in self.labelled(plain_ax) if artist.get_label() == "Recent")
+        self.assertEqual(recent.get_alpha(), 0)
+        self.assertTrue(all(item.get_alpha() == 0 for item in self.support_layers(hidden_ax, recent)))
+        self.assertGreater(len(self.support_layers(hidden_ax, recent)), 1)
+        np.testing.assert_array_equal(recent.get_offsets(), plain_recent.get_offsets())
+        self.assertEqual(historical.get_alpha(), 0.3)
+        self.assertEqual([text.get_text() for text in hidden_ax.get_legend().get_texts()], names)
+        self.assert_legend_matches_primary(hidden_ax)
+        self.assertEqual(tuple(hidden_ax.dataLim.bounds), tuple(plain_ax.dataLim.bounds))
+        plt.close(plain)
+        plt.close(hidden)
+        strip, strip_ax = strip_summary(
+            groups, y, series=series, series_slots=slots, seed=13,
+            series_styles={"Recent": {"alpha": 0, "size": 70}})
+        bare, bare_ax = strip_summary(groups, y, series=series, series_slots=slots, seed=13)
+        self.assertEqual([text.get_text() for text in strip_ax.texts if getattr(text, "_figurestead_strip_count", False)],
+                         [text.get_text() for text in bare_ax.texts if getattr(text, "_figurestead_strip_count", False)])
+        for one, two in zip(strip_ax.lines, bare_ax.lines):
+            np.testing.assert_array_equal(one.get_xydata(), two.get_xydata())
+        for one, two in zip(strip_ax.collections, bare_ax.collections):
+            np.testing.assert_array_equal(one.get_offsets(), two.get_offsets())
+        recent = next(artist for artist in self.labelled(strip_ax) if artist.get_label() == "Recent")
+        self.assertTrue(all(item.get_alpha() == 0 for item in self.support_layers(strip_ax, recent)))
+        self.assertEqual(len(recent.get_offsets()), 4)
+        plt.close(strip)
+        plt.close(bare)
+
+    def test_anonymous_point_style_and_rejected_styles_leave_caller_axes(self):
+        from matplotlib.collections import PathCollection
+        from figurestead import scatter, strip_summary
+        fig, ax = scatter([0, 1, 2, 3], [1, 4, 2, 8], point_style={"size": 10, "alpha": 0.15, "marker": "square"})
+        primary = next(artist for artist in ax.collections if artist.get_zorder() == 3)
+        self.assertIs(type(primary), PathCollection)
+        self.assert_marker(primary, "s")
+        self.assertEqual(float(primary.get_sizes()[0]), 10)
+        self.assertEqual(primary.get_alpha(), 0.15)
+        self.assertEqual(primary._figurestead_point_treatment["edge"], None)
+        glow = next(artist for artist in ax.collections if artist.get_zorder() == 2)
+        self.assertEqual(float(glow.get_sizes()[0]), 17.5)
+        self.assertEqual(glow.get_alpha(), 0.055 * (0.15 / 0.80))
+        self.assertIsNone(ax.get_legend())
+        np.testing.assert_array_equal(primary.get_offsets()[:, 0], [0, 1, 2, 3])
+        plt.close(fig)
+        held, held_ax = plt.subplots()
+        held_ax.set_title("unchanged")
+        held_ax.scatter([0], [1], c="black")
+        before = (held_ax.get_title(), len(held_ax.collections), len(held_ax.lines), tuple(held_ax.get_xlim()))
+        with self.assertRaisesRegex(ValueError, r"scatter\.point_style\['size'\]"):
+            scatter([0, 1], [2, 3], point_style={"size": 0}, ax=held_ax)
+        with self.assertRaisesRegex(ValueError, r"scatter\.series_styles: keyed styles require an explicit series"):
+            scatter([0, 1], [2, 3], series_styles={"Recent": {"size": 12}}, ax=held_ax)
+        self.assertEqual((held_ax.get_title(), len(held_ax.collections), len(held_ax.lines), tuple(held_ax.get_xlim())), before)
+        plt.close(held)
+        bare, bare_ax = plt.subplots()
+        bare_ax.set_title("unchanged")
+        with self.assertRaisesRegex(ValueError, r"strip_summary\.series_styles: keyed styles require an explicit series"):
+            strip_summary(["G", "H"], [1, 2], series_styles={}, ax=bare_ax)
+        with self.assertRaisesRegex(ValueError, r"strip_summary\.point_style\['marker'\]"):
+            strip_summary(["G", "H"], [1, 2], point_style={"marker": "star"}, ax=bare_ax)
+        self.assertEqual((bare_ax.get_title(), len(bare_ax.collections), len(bare_ax.lines)), ("unchanged", 0, 0))
+        plt.close(bare)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

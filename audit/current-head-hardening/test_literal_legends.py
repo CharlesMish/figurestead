@@ -177,6 +177,38 @@ class LiteralLegends(unittest.TestCase):
                     np.testing.assert_array_equal(artist.get_paths()[0].vertices, vertices(marker))
                 self.assertTrue(all(artist in a.collections for artist in labelled))
 
+    def test_point_styles_keep_literal_underscore_labels(self):
+        import numpy as np
+        from matplotlib.markers import MarkerStyle
+        slots = {'_control': 2, '_reference': 0, '_nolegend_': 3, '_quiet': 1}
+        styles = {'_nolegend_': {'marker': 'square', 'size': 18, 'alpha': 0.4}, '_quiet': {'size': 9}}
+
+        def vertices(marker):
+            style = MarkerStyle(marker)
+            return style.get_path().transformed(style.get_transform()).vertices
+
+        for family in ('scatter', 'strip'):
+            with self.subTest(family=family):
+                if family == 'scatter':
+                    f, a = scatter([0, 1, 2], [1, 2, 3], series=self.labels, series_slots=slots,
+                                   point_style={'alpha': 0.5}, series_styles=styles)
+                else:
+                    f, a = strip_summary(['A', 'A', 'B'], [1, 2, 3], series=self.labels, series_slots=slots,
+                                         point_style={'alpha': 0.5}, series_styles=styles, seed=4)
+                f.canvas.draw()
+                self.assertEqual(self.texts(a), self.labels)
+                labelled = [artist for artist in a.collections if getattr(artist, '_figurestead_authored_label', False)]
+                for artist, marker, size, alpha in zip(labelled, ('^', 'o', 's'), (None, None, 18), (0.5, 0.5, 0.4)):
+                    np.testing.assert_array_equal(artist.get_paths()[0].vertices, vertices(marker))
+                    self.assertEqual(artist.get_alpha(), alpha)
+                    if size is not None:
+                        self.assertEqual(float(artist.get_sizes()[0]), size)
+                self.assertTrue(all(artist in a.collections for artist in labelled))
+                proxies = a.get_legend().findobj(type(labelled[0]))
+                square = vertices('s')
+                self.assertTrue(any(np.array_equal(proxy.get_paths()[0].vertices, square)
+                                    and proxy.get_alpha() == 0.4 for proxy in proxies))
+
     def test_direct_labels_do_not_hide_other_owned_underscore_attribution(self):
         f, a = scatter([0, 1], [1, 2], series=['_prior', '_prior'])
         self.make('line', ax=a, direct=True); f.canvas.draw()
