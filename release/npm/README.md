@@ -4,17 +4,17 @@ This directory defines the retained-candidate lifecycle for
 `@figurestead/web`. It began after `0.9.0-alpha.1`; it does not claim that the
 already-published first alpha used this repaired process.
 
-## Unpublished alpha.8 preparation
+## Current published alpha.8 (2026-11-26 America/Chicago)
 
-`0.9.0-alpha.8` is an unpublished candidate prepared from protected main `a702efa5376572fdecd6236abe588659e6b09c74`. This tarball carries PR #67's tick-label correction and PR #69's SVG legend glyphs. The coordinated Python `0.9.0a7` candidate carries PR #68 and PR #70. The retained tarball, when present under `0.9.0-alpha.8`, is the only publishable browser archive for that version. npm `alpha` still points at alpha.7 and `latest` remains alpha.1. See [candidate notes](../notes/0.9.0a7-web-alpha.8.md). Do not dispatch publication from this preparation.
+`@figurestead/web@0.9.0-alpha.8` is public from the exact independently reviewed retained archive under `0.9.0-alpha.8`, at accepted protected-main commit `6099ab719bab5ab8cdaea06777268cec18c38e84` (PR #71). npm `alpha` points to alpha.8 and `latest` remains alpha.1. The [coordinated GitHub release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.8) records the reviewed download hash and source bindings.
 
-## Current published alpha.7 (2026-10-23 America/Chicago)
-
-`@figurestead/web@0.9.0-alpha.7` is public from the exact independently reviewed retained archive under `0.9.0-alpha.7`, at accepted protected-main commit `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65). npm `alpha` points to alpha.7 and `latest` remains alpha.1. The [coordinated GitHub release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7) records the reviewed download hash and source bindings.
-
-[Publication run 39905884506](https://github.com/CharlesMish/figurestead/actions/runs/39905884506) succeeded. Its registry readback converged on the last bounded attempt, with only one publish command. Public bytes, integrity, provenance and consumers were verified. Historical candidate archives and package-embedded preparation README bytes remain unchanged.
+[Publication run 45928919912](https://github.com/CharlesMish/figurestead/actions/runs/45928919912) succeeded. The retained tarball was published without repacking. Historical candidate archives and package-embedded preparation README bytes remain unchanged.
 
 Release tooling uses patched Node 24.22.1 / npm 11.19.1 and checks Node 22.23.4 / npm 10.9.9 against the existing public engine floor `>=22.22.0`. Vite 8.2.4 is development/test tooling, not a Figurestead runtime dependency. Future publication still requires exact retained bytes, protected main, accepted hash, OIDC and confirmation. Do not repeat a completed publication.
+
+## Historical published alpha.7 (2026-10-23 America/Chicago)
+
+`@figurestead/web@0.9.0-alpha.7` was published from the retained archive under `0.9.0-alpha.7` at protected-main commit `7d5d959ad9c4387c445a6b34a8b67a18505ed477` (PR #65). At publication, npm `alpha` pointed to alpha.7 and `latest` remained alpha.1. Its [coordinated release](https://github.com/CharlesMish/figurestead/releases/tag/v0.9.0-alpha.7), [publication run 39905884506](https://github.com/CharlesMish/figurestead/actions/runs/39905884506), preparation notes and package-embedded READMEs remain historical. Registry readback for that release converged on the last bounded attempt, with only one publish command.
 
 ## Historical published alpha.6 (2026-10-14 America/Chicago)
 

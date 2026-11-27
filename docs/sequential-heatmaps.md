@@ -22,7 +22,7 @@ Theme palettes themselves are unchanged. Line-series identity and browser render
 
 Python heatmaps now use a theme-derived sequential ramp with monotone lightness, replacing the field/panel/primary/summary token sequence. This changes heatmap colors while preserving data and normalization. Theme palettes and line-series identity are unchanged. The categorical-matrix extension retains its existing rendering until its separate migration.
 
-## Profile gridlines — a7 preparation candidate
+## Profile gridlines — published a7
 
 Ordinary `heatmap()` turns the axes grid off after `style_axes`. Profile
 gridlines would otherwise paint above the image and recolor cell centers.
