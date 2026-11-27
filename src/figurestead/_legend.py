@@ -82,7 +82,27 @@ def legend_entries(ax, handler_map=None):
         if label:
             handles.append(handle)
             texts.append(label)
-    return handles, texts
+    return _apply_legend_ranks(handles, texts)
+
+
+def _apply_legend_ranks(handles, texts):
+    """Reorder only handles that recorded a legend rank, in the slots they occupy.
+
+    Unranked handles, including caller-owned artists, stay where native order
+    put them. Ranks are private to scatter and strip_summary series orders.
+    """
+    if not any(getattr(handle, "_figurestead_legend_rank", None) is not None for handle in handles):
+        return handles, texts
+    pairs = list(zip(handles, texts))
+    ranked = [index for index, (handle, _) in enumerate(pairs)
+              if getattr(handle, "_figurestead_legend_rank", None) is not None]
+    chosen = sorted(
+        (pairs[index] for index in ranked),
+        key=lambda pair: pair[0]._figurestead_legend_rank,
+    )
+    for index, pair in zip(ranked, chosen):
+        pairs[index] = pair
+    return [handle for handle, _ in pairs], [text for _, text in pairs]
 
 
 def literal_legend(ax, handles, labels, **kwargs):

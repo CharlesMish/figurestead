@@ -656,6 +656,110 @@ class PythonPlotInputRegression(unittest.TestCase):
         self.assertIn("n=0", [text.get_text() for text in ax.texts])
         plt.close(fig)
 
+    def test_series_orders_reject_before_axes(self) -> None:
+        invalid = (
+            (["A", "B", "A"], None, r"draw_order\[2\]: duplicate series 'A'"),
+            (["A", "A"], None, r"draw_order\[1\]: duplicate series 'A'"),
+            (None, ["B", "A", "B"], r"legend_order\[2\]: duplicate series 'B'"),
+            (["A", "B", "Nope"], None, r"draw_order\[2\]: unknown series 'Nope'"),
+            (None, ["A", "B", "Missing"], r"legend_order\[2\]: unknown series 'Missing'"),
+            (["A"], None, r"draw_order: observed series 'B' is missing"),
+            (None, ["B"], r"legend_order: observed series 'A' is missing"),
+            (["A", "B", "quiet"], None, r"draw_order\[2\]: unknown series 'quiet'"),
+            ("AB", None, r"draw_order: must be a non-string sequence of series keys"),
+            (None, "BA", r"legend_order: must be a non-string sequence of series keys"),
+            (5, None, r"draw_order: must be a sequence of series keys"),
+            (None, object(), r"legend_order: must be a sequence of series keys"),
+            (np.ma.array(["A", "B"]), None, r"draw_order: masked arrays are not currently supported"),
+            (["A", "B", math.nan], None, r"draw_order\[2\]: numeric series keys must be finite"),
+            ([{"A": 1}, "B"], None, r"draw_order\[0\]: series keys must be hashable"),
+        )
+        for family in ("scatter", "strip"):
+            for draw_order, legend_order, pattern in invalid:
+                with self.subTest(family=family, draw_order=draw_order, legend_order=legend_order):
+                    styles = {"quiet": {"size": 8}}
+                    if family == "scatter":
+                        invoke = lambda draw_order=draw_order, legend_order=legend_order, styles=styles: scatter(
+                            [0, 1], [1, 2], series=["A", "B"], series_styles=styles,
+                            draw_order=draw_order, legend_order=legend_order)
+                    else:
+                        invoke = lambda draw_order=draw_order, legend_order=legend_order, styles=styles: strip_summary(
+                            ["G", "G"], [1, 2], series=["A", "B"], series_styles=styles,
+                            draw_order=draw_order, legend_order=legend_order)
+                    self.assert_rejected_before_allocation(invoke, pattern)
+            for argument in ("draw_order", "legend_order"):
+                with self.subTest(family=family, anonymous=argument):
+                    if family == "scatter":
+                        invoke = lambda argument=argument: scatter([0, 1], [1, 2], **{argument: 5})
+                    else:
+                        invoke = lambda argument=argument: strip_summary(
+                            ["G", "H"], [1, 2], **{argument: ["G"]})
+                    noun = "draw order" if argument == "draw_order" else "legend order"
+                    self.assert_rejected_before_allocation(
+                        invoke, rf"{noun} requires an explicit series")
+        held, held_ax = plt.subplots()
+        held_ax.set_title("unchanged")
+        caller = held_ax.scatter([0], [1], c="black", label="Caller")
+        before = (held_ax.get_title(), len(held_ax.collections), len(held_ax.lines),
+                  caller.get_zorder(), held_ax.get_legend())
+        with self.assertRaisesRegex(ValueError, r"scatter\.draw_order\[1\]: duplicate series 'A'"):
+            scatter([0, 1], [2, 3], series=["A", "B"], draw_order=["A", "A"], ax=held_ax)
+        self.assertEqual(
+            (held_ax.get_title(), len(held_ax.collections), len(held_ax.lines),
+             caller.get_zorder(), held_ax.get_legend()),
+            before)
+        with self.assertRaisesRegex(ValueError, r"scatter\.legend_order: legend order requires an explicit series"):
+            scatter([0, 1], [2, 3], legend_order=["A"], ax=held_ax)
+        self.assertEqual(
+            (held_ax.get_title(), len(held_ax.collections), len(held_ax.lines),
+             caller.get_zorder(), held_ax.get_legend()),
+            before)
+        plt.close(held)
+        bare, bare_ax = plt.subplots()
+        bare_ax.set_title("unchanged")
+        with self.assertRaisesRegex(ValueError, r"strip_summary\.draw_order: draw order requires an explicit series"):
+            strip_summary(["G", "H"], [1, 2], draw_order=["G"], ax=bare_ax)
+        self.assertEqual((bare_ax.get_title(), len(bare_ax.collections), len(bare_ax.lines)),
+                         ("unchanged", 0, 0))
+        plt.close(bare)
+        for invoke in (
+            lambda: line([0, 1], [0, 1], draw_order=["A"]),
+            lambda: histogram([0, 1], legend_order=["A"]),
+            lambda: heatmap([[1, 2], [3, 4]], draw_order=["A"]),
+        ):
+            with self.subTest(invoke=invoke):
+                before_figs = tuple(plt.get_fignums())
+                with patch("figurestead.plots.ensure_axes") as ensure_axes:
+                    with self.assertRaises(TypeError):
+                        invoke()
+                    ensure_axes.assert_not_called()
+                self.assertEqual(tuple(plt.get_fignums()), before_figs)
+
+    def test_series_orders_accept_inactive_slot_keys_without_phantoms(self) -> None:
+        slots = {"A": 0, "B": 1, "quiet": 4, 0: 2}
+        fig, ax = scatter(
+            [0, 1, 2, 3], [1, 2, 3, 4], series=["A", "B", "A", "B"], series_slots=slots,
+            draw_order=["quiet", "B", "A"], legend_order=["B", "quiet", "A"])
+        self.assertEqual([artist.get_label() for artist in ax.collections
+                          if getattr(artist, "_figurestead_authored_label", False)], ["B", "A"])
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()], ["B", "A"])
+        plt.close(fig)
+        fig, ax = strip_summary(
+            ["G", "G"], [1, 2], series=[0, "A"], series_slots={0: 3, "0": 1, "A": 0, "quiet": 2},
+            draw_order=[0, "0", "A"], legend_order=["A", "quiet", "0"])
+        labelled = [artist.get_label() for artist in ax.collections
+                    if getattr(artist, "_figurestead_authored_label", False)]
+        self.assertEqual(labelled, ["0", "A"])
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()], ["A", "0"])
+        self.assertNotIn("quiet", labelled)
+        plt.close(fig)
+        fig, ax = strip_summary([], [], series=[], series_slots={"quiet": 0},
+                                draw_order=["quiet"], legend_order=["quiet"], order=["empty"])
+        self.assertEqual([text.get_text() for text in ax.get_xticklabels()], ["empty"])
+        self.assertIsNone(ax.get_legend())
+        self.assertEqual(len(ax.collections), 0)
+        plt.close(fig)
+
     def test_valid_call_succeeds_after_rejected_input(self) -> None:
         self.assert_rejected_before_allocation(
             lambda: histogram([[1, 2], [3, 4]], labels=["only"]), r"histogram\.labels"
@@ -669,6 +773,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 61:
-        raise SystemExit(f"expected exactly 61 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 63:
+        raise SystemExit(f"expected exactly 63 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)

@@ -177,7 +177,7 @@ def _point_glow_alpha(profile: Profile, marker_alpha):
 
 def draw_points(ax, x, y, *, color, theme: Theme, profile: Profile, label=None,
                 marker=None, resolved_edge=_OMITTED_EDGE,
-                marker_size=None, marker_alpha=None):
+                marker_size=None, marker_alpha=None, layer_zorder=None):
     """Draw one point series with the profile's ring/core or filled treatment.
 
     ``marker=None`` keeps Matplotlib's circle. An explicit marker is applied to
@@ -191,34 +191,45 @@ def draw_points(ax, x, y, *, color, theme: Theme, profile: Profile, label=None,
     opacities stay on the same fractions of the primary opacity, and the glow
     follows ``_point_glow_alpha``. Omitting both arguments keeps the profile
     treatment, including the fixed glow alpha of 0.055.
+
+    ``layer_zorder`` optionally replaces the fixed depths of this series.
+    Omission keeps glow at 2, theme edge at 2.8, the primary mark at 3, and
+    the core at 4. Keys are ``glow``, ``edge``, ``primary``, and ``core``.
     """
     x = np.asarray(x)
     y = np.asarray(y)
     size = profile.marker_size if marker_size is None else marker_size
     alpha = profile.marker_alpha if marker_alpha is None else marker_alpha
     placed = {} if marker is None else {"marker": marker}
+    if layer_zorder is None:
+        glow_z, edge_z, primary_z, core_z = 2, 2.8, 3, 4
+    else:
+        glow_z = layer_zorder["glow"]
+        edge_z = layer_zorder["edge"]
+        primary_z = layer_zorder["primary"]
+        core_z = layer_zorder["core"]
     if profile.marker == "ring_core":
         edge = series_edge(theme, color) if resolved_edge is _OMITTED_EDGE else resolved_edge
         if edge:
             ax.scatter(x, y, s=size * 1.18, facecolors="none",
                        edgecolors=edge, linewidths=max(1.5, profile.edge_width + 0.7),
-                       alpha=alpha * 0.75, zorder=2.8, **placed)
+                       alpha=alpha * 0.75, zorder=edge_z, **placed)
         if profile.point_glow:
             ax.scatter(x, y, s=size * 1.75, facecolors="none",
                        edgecolors=color, linewidths=1.8,
-                       alpha=_point_glow_alpha(profile, marker_alpha), zorder=2, **placed)
+                       alpha=_point_glow_alpha(profile, marker_alpha), zorder=glow_z, **placed)
         points = ax.scatter(x, y, s=size, facecolors="none",
                    edgecolors=color, linewidths=profile.edge_width,
-                   alpha=alpha, label=label, zorder=3, **placed)
+                   alpha=alpha, label=label, zorder=primary_z, **placed)
         ax.scatter(x, y, s=size * profile.core_fraction,
                    c=color, edgecolors="none", alpha=alpha * 0.58,
-                   zorder=4, **placed)
+                   zorder=core_z, **placed)
         recorded_edge = None if resolved_edge is _OMITTED_EDGE else edge
     else:
         points = ax.scatter(x, y, s=size, c=color,
                    edgecolors=theme.field if profile.edge_width else "none",
                    linewidths=profile.edge_width, alpha=alpha,
-                   label=label, zorder=3, **placed)
+                   label=label, zorder=primary_z, **placed)
         recorded_edge = None
     if resolved_edge is not _OMITTED_EDGE or marker_size is not None or marker_alpha is not None:
         # Legend glyphs read this from the labelled artist. Support layers stay
