@@ -58,7 +58,7 @@ Passing `ax` draws into an existing Matplotlib axes. Choose a
 | --- | --- | --- |
 | `line(x, ys)` | One finite shared x vector; one or more matching y series | `labels`, `series_slots`, `series_keys`, `line_styles`, `marker_stride=1`, `direct_labels=False` |
 | `scatter(x, y)` | Paired finite numeric vectors; no fit is inferred | `series` supplies one category per point; optional `series_slots`, `point_style`, `series_styles`, `draw_order`, and `legend_order` |
-| `histogram(values)` | One finite vector or nested vectors; counts and dataset medians | `labels`, `bins=20`, `shared_bins=False`; explicit edges already name common intervals |
+| `histogram(values)` | One finite vector or nested vectors; counts or fractions, and dataset medians | `labels`, `bins=20`, `shared_bins=False`, `stat="count"`; explicit edges already name common intervals |
 | `strip_summary(groups, values)` | One group per finite value; deterministic jitter and group median bars | `series`, `order` (x-axis groups only), `seed=42`; optional `series_slots`, `point_style`, `series_styles`, `draw_order`, and `legend_order` |
 | `heatmap(matrix)` | A nonempty finite 2D matrix; sequential color ramp and colorbar | `xlabels`, `ylabels` must match columns and rows |
 
@@ -141,7 +141,30 @@ default, and edges `[0, 7, 14]` for both when the option is on. Explicit bin
 edges already select the intervals, so their counts, exclusion warnings, and
 full-dataset medians stay the same either way. `shared_bins` must be a boolean
 and is rejected before axes are created or changed. One dataset keeps the theme
-summary color and does not gain a legend. Counts remain raw counts.
+summary color and does not gain a legend. With `stat="count"`, the default,
+bar heights remain raw counts.
+
+`stat="fraction"` divides each bin's raw observation count by the full original
+size of that dataset. Observations outside explicit edges stay in that
+denominator, so the visible fractions can sum to less than one. Shared versus
+separate intervals stay under `shared_bins`. Automatic edges are resolved
+before the fraction is calculated. This is not a probability density and not
+an empirical distribution function, and it does not use Matplotlib's
+`density=True`. Unequal explicit widths are allowed. The height is the fraction
+of that dataset's observations in the interval, and the bar area is not a
+probability. Common equal-width bins are the right choice for visual
+comparison; pass the same edges when comparing datasets.
+
+An omitted fraction y-axis label is "Fraction of all observations per bin".
+A non-empty `PlotSpec.ylabel` is kept. When explicit edges exclude
+observations, the exported figure names each affected dataset and reports its
+excluded and total observations, including a call with one dataset. An authored
+note is kept, and the disclosure follows it in the measured note footer. A
+dataset with every observation outside the edges is valid: the bar heights are
+zero, the exclusion is disclosed, and the median is still the full-data median.
+Median ownership, the inclusive final bin edge, and the exclusion warnings are
+unchanged. Any `stat` other than the strings `count` and `fraction` is rejected
+before axes are created or changed.
 
 Do not pass mismatched vectors, silently discard missing observations, or treat
 these examples as statistical analysis. `order` must include every observed

@@ -9,6 +9,7 @@ from pathlib import Path
 import sys
 import unittest
 from unittest.mock import patch
+import warnings
 
 
 os.environ.setdefault("MPLBACKEND", "Agg")
@@ -156,6 +157,22 @@ class PythonPlotInputRegression(unittest.TestCase):
             lambda: histogram([[0, 2], [10, 14]], bins="not-a-rule", shared_bins=True),
             r"histogram\.bins: invalid bin specification",
         )
+
+    def test_histogram_rejects_invalid_stat_before_allocation(self) -> None:
+        invalid = (
+            "density", "ecdf", "probability", "Count", "fraction ", "counts",
+            "", None, True, False, 1, 0, b"count", np.array("fraction"),
+        )
+        for value in invalid:
+            with self.subTest(value=value):
+                with warnings.catch_warnings(record=True) as caught:
+                    warnings.simplefilter("always")
+                    self.assert_rejected_before_allocation(
+                        lambda value=value: histogram(
+                            [7, 9], bins=[0, 1, 3], stat=value, shared_bins=True),
+                        r"histogram\.stat: must be 'count' or 'fraction'",
+                    )
+                self.assertEqual(caught, [])
 
     def test_line_accepts_one_dimensional_single_series(self) -> None:
         fig, ax = line([0, 1, 2], [0, 1, 0])
@@ -894,6 +911,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 66:
-        raise SystemExit(f"expected exactly 66 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 67:
+        raise SystemExit(f"expected exactly 67 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)
