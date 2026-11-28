@@ -19,6 +19,7 @@ import numpy as np
 from figurestead import histogram, get_theme
 from figurestead.core import PlotSpec, style_axes, resolve
 from figurestead._histogram_legend import HistogramMedianLegend, median_labels
+from figurestead._note import NoteText
 
 THEMES = ('lavender_fog_notebook', 'ultraviolet_laboratory')
 DATA = ([1,5,9], [2,4,6.08,8], [8,9,9.4,10,12], [2,4,5,7.9,9,11])
@@ -426,5 +427,241 @@ class HistogramOwnershipTests(unittest.TestCase):
                  ax.get_autoscalex_on(), ax.get_autoscaley_on())
         self.assertEqual(after, before)
         self.assertEqual(plt.get_fignums(), before_numbers)
+
+    def _bin_heights(self, patch, edges):
+        vertices = patch.get_xy()
+        heights = []
+        edges = np.asarray(edges, dtype=float)
+        for left, right in zip(edges[:-1], edges[1:], strict=True):
+            matched = [y0 for (x0, y0), (x1, y1) in zip(vertices, vertices[1:])
+                       if y0 == y1 and x0 == left and x1 == right]
+            self.assertEqual(len(matched), 1)
+            heights.append(matched[0])
+        return np.asarray(heights, dtype=float)
+
+    def _note(self, ax):
+        notes = [text for text in ax.texts if isinstance(text, NoteText)]
+        self.assertEqual(len(notes), 1)
+        return notes[0]
+
+    def test_explicit_count_matches_the_default_including_shared_bins(self):
+        data = [[0, 2], [10, 14]]
+        for shared_bins in (False, True):
+            for bins in (2, [0, 7, 14]):
+                with self.subTest(shared_bins=shared_bins, bins=bins):
+                    _, default = histogram(data, labels=['Low', 'High'], bins=bins, shared_bins=shared_bins)
+                    _, explicit = histogram(data, labels=['Low', 'High'], bins=bins,
+                                            shared_bins=shared_bins, stat='count')
+                    for left, right in zip(default.patches, explicit.patches, strict=True):
+                        np.testing.assert_array_equal(left.get_xy(), right.get_xy())
+                        self.assertEqual(left.get_facecolor(), right.get_facecolor())
+                        self.assertEqual(left.get_label(), right.get_label())
+                    for left, right in zip(default.lines, explicit.lines, strict=True):
+                        np.testing.assert_array_equal(left.get_xdata(), right.get_xdata())
+                        self.assertEqual(left.get_color(), right.get_color())
+                    self.assertEqual(default.get_ylabel(), explicit.get_ylabel())
+                    self.assertEqual([text.get_text() for text in default.get_legend().get_texts()],
+                                     [text.get_text() for text in explicit.get_legend().get_texts()])
+                    plt.close(default.figure)
+                    plt.close(explicit.figure)
+
+    def test_fraction_contract_cases(self):
+        cases = (
+            ([0, 1, 2, 4], [0, 2, 4], [0.5, 0.5], 1.5, None),
+            ([-3, -2, 0, 1, 3], [0, 1, 3], [0.2, 0.4], 0, '2 of 5'),
+            ([7, 9], [0, 1, 3], [0, 0], 8, '2 of 2'),
+        )
+        for data, edges, fractions, median, disclosure in cases:
+            with self.subTest(data=data):
+                with warnings.catch_warnings(record=True) as caught:
+                    warnings.simplefilter('always', UserWarning)
+                    fig, ax = histogram(data, bins=edges, stat='fraction', labels=['Sample'])
+                expected = np.asarray(fractions, dtype=float)
+                np.testing.assert_array_equal(self._bin_heights(ax.patches[0], edges), expected)
+                raw = np.histogram(data, bins=edges)[0]
+                np.testing.assert_array_equal(raw / len(data), expected)
+                if raw.sum():
+                    density = np.histogram(np.asarray(data, dtype=float), bins=edges, density=True)[0]
+                    self.assertFalse(np.array_equal(density, expected))
+                self.assertEqual(ax.lines[0].get_xdata()[0], median)
+                self.assertEqual(ax.lines[0].get_color(), get_theme('slipware').summary_core)
+                self.assertIsNone(ax.get_legend())
+                self.assertEqual(ax.get_ylabel(), 'Fraction of all observations per bin')
+                if disclosure is None:
+                    self.assertEqual(caught, [])
+                    self.assertFalse(any(isinstance(text, NoteText) for text in ax.texts))
+                    self.assertEqual(ax.get_ylim(), (0.0, 0.525))
+                else:
+                    self.assertEqual(len(caught), 1)
+                    self.assertIn(disclosure, str(caught[0].message))
+                    self.assertIn('median still uses all', str(caught[0].message))
+                    note = self._note(ax)
+                    self.assertIn(f"Sample: {disclosure} observations are outside the bin intervals", note.authored)
+                    fig.canvas.draw()
+                    renderer = fig.canvas.get_renderer()
+                    box = note.get_window_extent(renderer)
+                    frame = fig.bbox
+                    self.assertGreaterEqual(box.y0, frame.y0 - 1e-6)
+                    self.assertLessEqual(box.y1, frame.y1 + 1e-6)
+                    self.assertLess(box.y1, ax.xaxis.get_tightbbox(renderer).y0)
+                    svg = BytesIO()
+                    fig.savefig(svg, format='svg')
+                    self.assertIn(disclosure, svg.getvalue().decode())
+                plt.close(fig)
+
+    def test_fraction_uses_resolved_edges_for_shared_and_separate_requests(self):
+        data = [[0, 2], [10, 14]]
+        labels = ['Low', 'High']
+        requests = (
+            (2, False),
+            (2, True),
+            (np.int64(2), True),
+            ('sturges', False),
+            ('sturges', True),
+            ([0, 5, 10, 15], False),
+            ([0, 5, 10, 15], True),
+        )
+        for bins, shared_bins in requests:
+            with self.subTest(bins=bins, shared_bins=shared_bins):
+                with warnings.catch_warnings(record=True) as caught:
+                    warnings.simplefilter('always', UserWarning)
+                    _, counts = histogram(data, labels=labels, bins=bins, shared_bins=shared_bins)
+                    _, fractions = histogram(data, labels=labels, bins=bins, shared_bins=shared_bins,
+                                             stat='fraction')
+                self.assertEqual(caught, [])
+                self.assertEqual(fractions.get_ylabel(), 'Fraction of all observations per bin')
+                self.assertEqual(counts.get_ylabel(), '')
+                self.assertEqual([line.get_xdata()[0] for line in fractions.lines], [1., 12.])
+                self.assertEqual([text.get_text() for text in fractions.get_legend().get_texts()],
+                                 ['Low · 1', 'High · 12'])
+                for row, count_body, fraction_body in zip(data, counts.patches, fractions.patches, strict=True):
+                    np.testing.assert_array_equal(count_body.get_xy()[:, 0], fraction_body.get_xy()[:, 0])
+                    np.testing.assert_array_equal(
+                        fraction_body.get_xy()[:, 1] * len(row), count_body.get_xy()[:, 1])
+                plt.close(counts.figure)
+                plt.close(fractions.figure)
+
+    def test_fraction_compares_different_population_sizes_on_explicit_edges(self):
+        edges = [0, 2, 4]
+        data = [[0, 1, 2, 4], [0, 3]]
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always', UserWarning)
+            _, counts = histogram(data, labels=['Four', 'Two'], bins=edges)
+            _, fractions = histogram(data, labels=['Four', 'Two'], bins=edges, stat='fraction')
+        self.assertEqual(caught, [])
+        np.testing.assert_array_equal(self._bin_heights(counts.patches[0], edges), [2, 2])
+        np.testing.assert_array_equal(self._bin_heights(counts.patches[1], edges), [1, 1])
+        np.testing.assert_array_equal(self._bin_heights(fractions.patches[0], edges), [0.5, 0.5])
+        np.testing.assert_array_equal(self._bin_heights(fractions.patches[1], edges), [0.5, 0.5])
+        self.assertEqual([line.get_xdata()[0] for line in fractions.lines], [1.5, 1.5])
+        self.assertFalse(any(isinstance(text, NoteText) for text in fractions.texts))
+
+    def test_fraction_disclosure_names_only_affected_datasets(self):
+        edges = [0, 1, 3]
+        data = [[-3, -2, 0, 1, 3], [7, 9], [0, 1, 2, 3]]
+        labels = ['Partial', 'Empty', 'Covered']
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always', UserWarning)
+            fig, ax = histogram(data, labels=labels, bins=edges, stat='fraction')
+        self.assertEqual(len(caught), 2)
+        note = self._note(ax).authored
+        self.assertIn('Partial: 2 of 5 observations are outside the bin intervals', note)
+        self.assertIn('Empty: 2 of 2 observations are outside the bin intervals', note)
+        self.assertNotIn('Covered:', note)
+        np.testing.assert_array_equal(self._bin_heights(ax.patches[0], edges), [0.2, 0.4])
+        np.testing.assert_array_equal(self._bin_heights(ax.patches[1], edges), [0, 0])
+        np.testing.assert_array_equal(self._bin_heights(ax.patches[2], edges), [0.25, 0.75])
+        self.assertEqual([line.get_xdata()[0] for line in ax.lines], [0, 8, 1.5])
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()],
+                         ['Partial · 0', 'Empty · 8', 'Covered · 1.5'])
+        fig.canvas.draw()
+        plt.close(fig)
+
+    def test_fraction_disclosure_preserves_authored_note_and_label(self):
+        spec = PlotSpec('Paths', ylabel='Share of paths', note='Authored source.')
+        before = (spec.title, spec.ylabel, spec.note, spec.subtitle, spec.signature)
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always', UserWarning)
+            fig, ax = histogram([-3, -2, 0, 1, 3], bins=[0, 1, 3], stat='fraction',
+                                labels=['Sample'], spec=spec)
+        self.assertEqual((spec.title, spec.ylabel, spec.note, spec.subtitle, spec.signature), before)
+        self.assertEqual(len(caught), 1)
+        self.assertEqual(ax.get_ylabel(), 'Share of paths')
+        note = self._note(ax)
+        self.assertTrue(note.authored.startswith('Authored source.\n'))
+        self.assertIn('Sample: 2 of 5 observations are outside the bin intervals', note.authored)
+        self.assertIn('the median still uses all 5 observations.', note.authored)
+        fig.canvas.draw()
+        svg = BytesIO()
+        fig.savefig(svg, format='svg')
+        exported = svg.getvalue().decode()
+        self.assertIn('Authored source.', exported)
+        self.assertIn('2 of 5', exported)
+        plt.close(fig)
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always', UserWarning)
+            _, counted = histogram([-3, -2, 0, 1, 3], bins=[0, 1, 3], labels=['Sample'], spec=spec)
+        self.assertEqual(len(caught), 1)
+        self.assertEqual(self._note(counted).authored, 'Authored source.')
+        self.assertEqual(counted.get_ylabel(), 'Share of paths')
+        plt.close(counted.figure)
+
+    def test_fraction_warning_as_error_does_not_allocate_or_mutate(self):
+        fig, ax = plt.subplots()
+        ax.plot([0, 1], [1, 2], label='Existing')
+        ax.set(title='Caller title', xlabel='Caller x', ylabel='Caller y',
+               xlim=(-10, 10), ylim=(-2, 5), facecolor='#abcdef')
+        before_numbers = plt.get_fignums()
+        before = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
+                  ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
+                  ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor())
+        spec = PlotSpec('Replacement', note='Keep', ylabel='Caller units')
+        with warnings.catch_warnings():
+            warnings.simplefilter('error', UserWarning)
+            with self.assertRaisesRegex(UserWarning, r"histogram\.values\[0\].*2 of 2"):
+                histogram([7, 9], bins=[0, 1, 3], stat='fraction', spec=spec, ax=ax)
+        after = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
+                 ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
+                 ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor())
+        self.assertEqual(after, before)
+        self.assertEqual(plt.get_fignums(), before_numbers)
+        self.assertEqual(spec.note, 'Keep')
+        self.assertEqual(spec.ylabel, 'Caller units')
+
+    def test_invalid_stat_does_not_mutate_caller_axes(self):
+        fig, ax = plt.subplots()
+        ax.plot([0, 1], [1, 2], label='Existing')
+        ax.set(title='Caller title', xlabel='Caller x', ylabel='Caller y',
+               xlim=(-10, 10), ylim=(-2, 5), facecolor='#abcdef')
+        before_numbers = plt.get_fignums()
+        before = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
+                  ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
+                  ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor())
+        for value in ('density', 'ecdf', None, True):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(ValueError, r"histogram\.stat: must be 'count' or 'fraction'"):
+                    histogram([7, 9], bins=[0, 1, 3], stat=value, spec=PlotSpec('Replacement'), ax=ax)
+                after = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
+                         ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
+                         ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor())
+                self.assertEqual(after, before)
+                self.assertEqual(plt.get_fignums(), before_numbers)
+
+    def test_fraction_on_caller_axes_keeps_limits(self):
+        fig, ax = plt.subplots()
+        caller, = ax.plot([0, 1], [1, 2], label='Caller')
+        ax.set(xlim=(-1, 15), ylim=(0, 8))
+        position = ax.get_position().bounds
+        histogram([[0, 2], [10, 14]], labels=['Low', 'High'], bins=2, shared_bins=True,
+                  stat='fraction', ax=ax)
+        self.assertIs(ax.lines[0], caller)
+        self.assertEqual(ax.get_xlim(), (-1, 15))
+        self.assertEqual(ax.get_ylim(), (0, 8))
+        self.assertEqual(ax.get_position().bounds, position)
+        self.assertFalse(ax.get_autoscalex_on())
+        self.assertFalse(ax.get_autoscaley_on())
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()],
+                         ['Low · 1', 'High · 12'])
+        self.assertEqual(ax.get_ylabel(), 'Fraction of all observations per bin')
 
 if __name__=='__main__':unittest.main(verbosity=2)

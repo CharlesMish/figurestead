@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence, Mapping
+from dataclasses import replace
 from itertools import count
 import warnings
 
@@ -974,8 +975,32 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     return fig, ax
 
 
-def histogram(values, *, labels=None, bins=20, shared_bins=False, spec=None,
-              theme="slipware", profile="deep_scope", ax=None):
+_HISTOGRAM_STATS = ("count", "fraction")
+_FRACTION_Y_LABEL = "Fraction of all observations per bin"
+
+
+def _histogram_fraction_disclosure(rows) -> str:
+    """One measured-note line per dataset with observations outside the bins."""
+    return "\n".join(
+        f"{label}: {excluded} of {total} observations are outside the bin intervals; "
+        f"the median still uses all {total} observations."
+        for label, excluded, total in rows
+    )
+
+
+def _scale_histogram_counts(polygon, total) -> None:
+    """Turn Matplotlib's raw-count step polygon into count / full dataset size.
+
+    Edges are already resolved. Dividing the drawn integer counts keeps the
+    inclusive final edge and does not use ``density=True``.
+    """
+    vertices = np.array(polygon.get_xy(), dtype=float, copy=True)
+    vertices[:, 1] /= total
+    polygon.set_xy(vertices)
+
+
+def histogram(values, *, labels=None, bins=20, shared_bins=False, stat="count",
+              spec=None, theme="slipware", profile="deep_scope", ax=None):
     """Draw finite distributions.
 
     A flat numeric sequence is one dataset. A nested sequence contains one
@@ -983,18 +1008,27 @@ def histogram(values, *, labels=None, bins=20, shared_bins=False, spec=None,
     Multi-dataset median rules inherit dataset color; the paired legend reports
     dataset labels and median values. Coincident medians are not displaced.
     A single dataset retains summary_core and its existing legend behavior.
-    Explicit bin edges exclude observations outside their intervals from counts,
-    with a UserWarning per affected dataset. Medians still use each full dataset.
+    Explicit bin edges exclude observations outside their intervals from the
+    bars, with a UserWarning per affected dataset. Medians still use each full
+    dataset.
+
+    ``stat="count"`` is the default: bar heights are raw observation counts.
+    ``stat="fraction"`` divides each of those counts by the full size of that
+    dataset, including observations outside explicit edges. Shared versus
+    separate intervals stay under ``shared_bins``. Automatic edges are resolved
+    before that division. Heights are fractions per interval, including when
+    the intervals have unequal width; the bar area is not a probability.
 
     ``shared_bins`` defaults to False. A scalar bin request is then resolved
     for each dataset. ``shared_bins=True`` resolves every scalar request NumPy
     accepts, including a boolean count, once on the pooled observations and
     draws every dataset with those exact edges. Explicit edges already name
     common intervals and keep their current counts, exclusions, and warnings.
-    Counts stay raw.
     """
     if not isinstance(shared_bins, bool):
         raise _input_error("histogram.shared_bins", "must be boolean")
+    if type(stat) is not str or stat not in _HISTOGRAM_STATS:
+        raise _input_error("histogram.stat", "must be 'count' or 'fraction'")
     datasets = _histogram_datasets(values)
     labels = ([f"series {index + 1}" for index in range(len(datasets))]
               if labels is None else _metadata(labels, path="histogram.labels", expected=len(datasets)))
@@ -1002,30 +1036,50 @@ def histogram(values, *, labels=None, bins=20, shared_bins=False, spec=None,
     # Classification follows successful validation. A scalar request has no
     # edge axis; NumPy accepts True as one bin. Explicit edges stay as given.
     use_shared_edges = shared_bins and np.ndim(bins) == 0
+    excluded_rows = []
     if np.ndim(bins) > 0:
         # Preflight before allocating or styling axes, including when a caller
         # promotes warnings to errors. NumPy owns the inclusive final edge.
         for index, (data, label) in enumerate(zip(datasets, labels)):
-            excluded = data.size - int(np.histogram(data, bins=edges)[0].sum())
+            total = int(data.size)
+            excluded = total - int(np.histogram(data, bins=edges)[0].sum())
             if excluded:
                 warnings.warn(
                     f"histogram.values[{index}] ({label!r}): {excluded} of "
-                    f"{data.size} observations are outside the supplied bin "
+                    f"{total} observations are outside the supplied bin "
                     f"intervals and excluded from counts; the median still uses "
-                    f"all {data.size} observations.",
+                    f"all {total} observations.",
                     UserWarning,
                     stacklevel=2,
                 )
+                excluded_rows.append((label, excluded, total))
     spec = spec or PlotSpec("Distribution")
+    # The caller's PlotSpec stays unchanged. Fraction disclosure is appended
+    # to the measured note; an authored note remains the prefix.
+    drawing = spec
+    if stat == "fraction":
+        if drawing.ylabel == "":
+            drawing = replace(drawing, ylabel=_FRACTION_Y_LABEL)
+        if excluded_rows:
+            disclosure = _histogram_fraction_disclosure(excluded_rows)
+            note = f"{drawing.note}\n{disclosure}" if drawing.note else disclosure
+            drawing = replace(drawing, note=note)
     theme, profile = resolve(theme, profile)
-    fig, ax = ensure_axes(ax, note=bool(spec.note))
-    style_axes(ax, theme, profile, spec)
+    fig, ax = ensure_axes(ax, note=bool(drawing.note))
+    style_axes(ax, theme, profile, drawing)
     multiple = len(datasets) > 1
     pairs, medians = [], []
+    fraction_bodies = []
     for data, label, color in zip(datasets, labels, series_colors(theme)):
         draw_bins = edges.copy() if use_shared_edges else bins
         _, _, patches = ax.hist(data, bins=draw_bins, histtype="stepfilled", color=color, alpha=0.15,
                                 edgecolor=color, linewidth=1.0, label=label, zorder=3)
+        if stat == "fraction":
+            # Histogram has already resolved these edges and stored raw counts.
+            _scale_histogram_counts(patches[0], data.size)
+            fraction_bodies.append((data, color, patches[0]))
+            authored_label(patches[0], label)
+            continue
         authored_label(patches[0], label)
         median = np.median(data)
         rule = ax.axvline(median, color=color if multiple else theme.summary_core, linewidth=1.1,
@@ -1033,9 +1087,21 @@ def histogram(values, *, labels=None, bins=20, shared_bins=False, spec=None,
         if multiple:
             pairs.append((patches[0], rule))
             medians.append(median)
+    if stat == "fraction":
+        # Rescale from the fraction polygons. Median rules are axes-fraction
+        # lines, so they are drawn after this and do not set the data range.
+        ax.relim()
+        ax.autoscale_view(scalex=False, scaley=ax.get_autoscaley_on())
+        for data, color, patch in fraction_bodies:
+            median = np.median(data)
+            rule = ax.axvline(median, color=color if multiple else theme.summary_core, linewidth=1.1,
+                              alpha=0.85, zorder=4)
+            if multiple:
+                pairs.append((patch, rule))
+                medians.append(median)
     if multiple:
         histogram_legend(ax, theme, pairs, labels, medians)
-    add_note(ax, spec, theme)
+    add_note(ax, drawing, theme)
     return fig, ax
 
 
