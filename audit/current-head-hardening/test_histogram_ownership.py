@@ -202,31 +202,208 @@ class HistogramOwnershipTests(unittest.TestCase):
                 self.assertEqual(caught, [])
 
     def test_exclusion_warning_as_error_does_not_mutate_caller(self):
+        for shared_bins in (False, True):
+            with self.subTest(shared_bins=shared_bins):
+                fig, ax = plt.subplots()
+                ax.plot([0, 1], [1, 2], label='Existing')
+                ax.set(title='Caller title', xlabel='Caller x', ylabel='Caller y',
+                       xlim=(-10, 10), ylim=(-2, 5), facecolor='#abcdef')
+                before = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
+                          ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
+                          ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor(),
+                          ax.get_autoscalex_on(), ax.get_autoscaley_on())
+                with warnings.catch_warnings():
+                    warnings.simplefilter('error', UserWarning)
+                    with self.assertRaisesRegex(UserWarning, "histogram.values\\[1\\].*1 of 2"):
+                        histogram([[0, 1], [1, 9]], labels=['Covered', 'Excluded'],
+                                  bins=[0, 1, 2], shared_bins=shared_bins,
+                                  spec=PlotSpec('Replacement'), ax=ax)
+                after = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
+                         ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
+                         ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor(),
+                         ax.get_autoscalex_on(), ax.get_autoscaley_on())
+                self.assertEqual(after, before)
+                plt.close(fig)
+
+    def test_exclusion_warning_as_error_allocates_no_figure(self):
+        for shared_bins in (False, True):
+            with self.subTest(shared_bins=shared_bins):
+                before = plt.get_fignums()
+                with warnings.catch_warnings():
+                    warnings.simplefilter('error', UserWarning)
+                    with self.assertRaisesRegex(UserWarning, "histogram.values\\[0\\].*1 of 2"):
+                        histogram([0, 4], bins=[0, 1, 2], shared_bins=shared_bins)
+                self.assertEqual(plt.get_fignums(), before)
+
+    def _edges_matching_body(self, ax, datasets, bins):
+        matched = []
+        for patch, data in zip(ax.patches, datasets, strict=True):
+            figure, control = plt.subplots()
+            counts, edges, patches = control.hist(data, bins=bins, histtype='stepfilled')
+            np.testing.assert_array_equal(patch.get_path().vertices, patches[0].get_path().vertices)
+            matched.append((np.asarray(counts), np.asarray(edges, dtype=float)))
+            plt.close(figure)
+        return matched
+
+    def test_default_shared_bins_keeps_separate_integer_edges(self):
+        data = [[0, 2], [10, 14]]
+        expected = (np.array([0., 1., 2.]), np.array([10., 12., 14.]))
+        snapshots = []
+        for kwargs in ({}, {'shared_bins': False}):
+            _, ax = histogram(data, labels=['Low', 'High'], bins=2, **kwargs)
+            matched = self._edges_matching_body(ax, data, 2)
+            for (counts, edges), row, target in zip(matched, data, expected, strict=True):
+                np.testing.assert_array_equal(edges, target)
+                np.testing.assert_array_equal(counts, np.histogram(row, bins=2)[0])
+            self.assertEqual([line.get_xdata()[0] for line in ax.lines], [1., 12.])
+            self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()],
+                             ['Low · 1', 'High · 12'])
+            snapshots.append((
+                [patch.get_path().vertices.copy() for patch in ax.patches],
+                [patch.get_facecolor() for patch in ax.patches],
+                [patch.get_edgecolor() for patch in ax.patches],
+                [(patch.get_alpha(), patch.get_linewidth(), patch.get_zorder()) for patch in ax.patches],
+                [(tuple(line.get_xdata()), line.get_color(), line.get_linewidth(), line.get_alpha()) for line in ax.lines],
+            ))
+            plt.close(ax.figure)
+        for left, right in zip(snapshots[0][0], snapshots[1][0], strict=True):
+            np.testing.assert_array_equal(left, right)
+        self.assertEqual(snapshots[0][1:], snapshots[1][1:])
+
+    def test_shared_integer_bins_use_pooled_edges(self):
+        data = [[0, 2], [10, 14]]
+        pooled = np.array([0., 7., 14.])
+        for bins in (2, np.int64(2), np.array(2)):
+            with self.subTest(bins=bins):
+                _, separate = histogram(data, labels=['_control', '_nolegend_'], bins=bins)
+                _, shared = histogram(data, labels=['_control', '_nolegend_'], bins=bins, shared_bins=True)
+                matched = self._edges_matching_body(shared, data, pooled)
+                self.assertEqual(len(matched), 2)
+                for (counts, edges), row in zip(matched, data, strict=True):
+                    np.testing.assert_array_equal(edges, pooled)
+                    np.testing.assert_array_equal(counts, np.histogram(row, bins=pooled)[0])
+                np.testing.assert_array_equal(matched[0][0], [2, 0])
+                np.testing.assert_array_equal(matched[1][0], [0, 2])
+                self.assertEqual([line.get_xdata()[0] for line in shared.lines], [1., 12.])
+                self.assertEqual([text.get_text() for text in shared.get_legend().get_texts()],
+                                 ['_control · 1', '_nolegend_ · 12'])
+                for left, right in zip(separate.patches, shared.patches, strict=True):
+                    self.assertEqual(left.get_facecolor(), right.get_facecolor())
+                    self.assertEqual(left.get_edgecolor(), right.get_edgecolor())
+                    self.assertEqual(
+                        (left.get_alpha(), left.get_linewidth(), left.get_zorder(), left.get_label()),
+                        (right.get_alpha(), right.get_linewidth(), right.get_zorder(), right.get_label()),
+                    )
+                for left, right in zip(separate.lines, shared.lines, strict=True):
+                    self.assertEqual(left.get_color(), right.get_color())
+                    self.assertEqual((left.get_linewidth(), left.get_alpha(), left.get_zorder()),
+                                     (right.get_linewidth(), right.get_alpha(), right.get_zorder()))
+                plt.close(separate.figure)
+                plt.close(shared.figure)
+
+    def test_shared_automatic_rule_is_resolved_once(self):
+        data = [[0, 2], [10, 14]]
+        rule = 'sturges'
+        pooled = np.histogram_bin_edges(np.concatenate(data), bins=rule)
+        per_dataset = [np.histogram_bin_edges(np.asarray(row, dtype=float), bins=rule) for row in data]
+        self.assertTrue(all(not np.array_equal(edges, pooled) for edges in per_dataset))
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always', UserWarning)
+            _, separate = histogram(data, labels=['Low', 'High'], bins=rule)
+            _, shared = histogram(data, labels=['Low', 'High'], bins=rule, shared_bins=True)
+        self.assertEqual(caught, [])
+        separate_edges = self._edges_matching_body(separate, data, rule)
+        for (_, edges), expected in zip(separate_edges, per_dataset, strict=True):
+            np.testing.assert_array_equal(edges, expected)
+        shared_edges = self._edges_matching_body(shared, data, pooled)
+        for (counts, edges), row in zip(shared_edges, data, strict=True):
+            np.testing.assert_array_equal(edges, pooled)
+            np.testing.assert_array_equal(counts, np.histogram(row, bins=pooled)[0])
+        self.assertEqual([line.get_xdata()[0] for line in shared.lines], [1., 12.])
+
+    def test_explicit_edges_ignore_shared_bins(self):
+        data = [[-1, 0, 2], [10, 14, 16]]
+        edges = [0, 7, 14]
+        bodies = []
+        messages = []
+        for shared_bins in (False, True):
+            with warnings.catch_warnings(record=True) as caught:
+                warnings.simplefilter('always', UserWarning)
+                _, ax = histogram(data, labels=['Low', 'High'], bins=edges, shared_bins=shared_bins)
+            messages.append([str(item.message) for item in caught])
+            self.assertEqual([item.category for item in caught], [UserWarning, UserWarning])
+            matched = self._edges_matching_body(ax, data, edges)
+            for (counts, returned), row in zip(matched, data, strict=True):
+                np.testing.assert_array_equal(returned, edges)
+                np.testing.assert_array_equal(counts, np.histogram(row, bins=edges)[0])
+            self.assertEqual([line.get_xdata()[0] for line in ax.lines], [0., 14.])
+            self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()],
+                             ['Low · 0', 'High · 14'])
+            bodies.append([patch.get_path().vertices.copy() for patch in ax.patches])
+        self.assertEqual(messages[0], messages[1])
+        self.assertIn("histogram.values[0] ('Low'): 1 of 3", messages[0][0])
+        self.assertIn("histogram.values[1] ('High'): 1 of 3", messages[0][1])
+        for left, right in zip(bodies[0], bodies[1], strict=True):
+            np.testing.assert_array_equal(left, right)
+
+    def test_shared_bins_preserves_single_dataset_treatment(self):
+        samples = (
+            ([0, 2, 10, 14], 2),
+            ([0, 2, 10, 14], np.int64(2)),
+            ([0, 2, 10, 14], 'sqrt'),
+            ([0, 2, 10, 14], [0, 7, 14]),
+            ([[0, 2, 10, 14]], 'sturges'),
+        )
+        for data, bins in samples:
+            with self.subTest(bins=bins, nested=isinstance(data[0], list)):
+                with warnings.catch_warnings(record=True) as caught:
+                    warnings.simplefilter('always', UserWarning)
+                    _, plain = histogram(data, bins=bins, labels=['Only'])
+                    _, shared = histogram(data, bins=bins, labels=['Only'], shared_bins=True)
+                self.assertEqual(caught, [])
+                np.testing.assert_array_equal(
+                    plain.patches[0].get_path().vertices, shared.patches[0].get_path().vertices)
+                self.assertEqual(shared.lines[0].get_color(), get_theme('slipware').summary_core)
+                self.assertEqual(plain.lines[0].get_color(), shared.lines[0].get_color())
+                self.assertIsNone(plain.get_legend())
+                self.assertIsNone(shared.get_legend())
+                self.assertEqual(list(shared.lines[0].get_xdata()), [np.median(np.ravel(data))] * 2)
+                plt.close(plain.figure)
+                plt.close(shared.figure)
+
+    def test_shared_bins_on_caller_axes_keeps_limits(self):
+        fig, ax = plt.subplots()
+        caller, = ax.plot([0, 1], [1, 2], label='Caller')
+        ax.set(xlim=(-1, 15), ylim=(0, 8))
+        position = ax.get_position().bounds
+        histogram([[0, 2], [10, 14]], labels=['Low', 'High'], bins=2, shared_bins=True, ax=ax)
+        self.assertIs(ax.lines[0], caller)
+        self.assertEqual(ax.get_xlim(), (-1, 15))
+        self.assertEqual(ax.get_ylim(), (0, 8))
+        self.assertEqual(ax.get_position().bounds, position)
+        self.assertFalse(ax.get_autoscalex_on())
+        self.assertFalse(ax.get_autoscaley_on())
+        self.assertEqual([text.get_text() for text in ax.get_legend().get_texts()],
+                         ['Low · 1', 'High · 12'])
+
+    def test_invalid_shared_bins_does_not_mutate_caller_axes(self):
         fig, ax = plt.subplots()
         ax.plot([0, 1], [1, 2], label='Existing')
         ax.set(title='Caller title', xlabel='Caller x', ylabel='Caller y',
                xlim=(-10, 10), ylim=(-2, 5), facecolor='#abcdef')
+        before_numbers = plt.get_fignums()
         before = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
                   ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
                   ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor(),
                   ax.get_autoscalex_on(), ax.get_autoscaley_on())
-        with warnings.catch_warnings():
-            warnings.simplefilter('error', UserWarning)
-            with self.assertRaisesRegex(UserWarning, "histogram.values\\[1\\].*1 of 2"):
-                histogram([[0, 1], [1, 9]], labels=['Covered', 'Excluded'],
-                          bins=[0, 1, 2], spec=PlotSpec('Replacement'), ax=ax)
+        with self.assertRaisesRegex(ValueError, r"histogram\.shared_bins: must be boolean"):
+            histogram([[0, 2], [10, 14]], bins=2, shared_bins='yes',
+                      spec=PlotSpec('Replacement'), ax=ax)
         after = (tuple(ax.get_children()), ax.get_xlim(), ax.get_ylim(),
                  ax.get_position().bounds, ax.get_title(), ax.get_xlabel(),
                  ax.get_ylabel(), ax.get_facecolor(), fig.get_facecolor(),
                  ax.get_autoscalex_on(), ax.get_autoscaley_on())
         self.assertEqual(after, before)
-
-    def test_exclusion_warning_as_error_allocates_no_figure(self):
-        before = plt.get_fignums()
-        with warnings.catch_warnings():
-            warnings.simplefilter('error', UserWarning)
-            with self.assertRaisesRegex(UserWarning, "histogram.values\\[0\\].*1 of 2"):
-                histogram([0, 4], bins=[0, 1, 2])
-        self.assertEqual(plt.get_fignums(), before)
+        self.assertEqual(plt.get_fignums(), before_numbers)
 
 if __name__=='__main__':unittest.main(verbosity=2)

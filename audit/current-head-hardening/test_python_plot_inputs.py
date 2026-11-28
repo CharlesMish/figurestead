@@ -143,6 +143,20 @@ class PythonPlotInputRegression(unittest.TestCase):
             lambda: histogram([1, 2, 3], bins=0), r"histogram\.bins: invalid bin specification"
         )
 
+    def test_histogram_rejects_nonboolean_shared_bins_before_allocation(self) -> None:
+        for value in ("yes", 1, 0, None, np.True_, np.int64(1)):
+            with self.subTest(value=value):
+                self.assert_rejected_before_allocation(
+                    lambda value=value: histogram([[0, 2], [10, 14]], bins=2, shared_bins=value),
+                    r"histogram\.shared_bins: must be boolean",
+                )
+
+    def test_histogram_rejects_unknown_shared_rule_before_allocation(self) -> None:
+        self.assert_rejected_before_allocation(
+            lambda: histogram([[0, 2], [10, 14]], bins="not-a-rule", shared_bins=True),
+            r"histogram\.bins: invalid bin specification",
+        )
+
     def test_line_accepts_one_dimensional_single_series(self) -> None:
         fig, ax = line([0, 1, 2], [0, 1, 0])
         self.assertEqual(len(ax.lines), 1)
@@ -880,6 +894,6 @@ class PythonPlotInputRegression(unittest.TestCase):
 if __name__ == "__main__":
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PythonPlotInputRegression)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != 64:
-        raise SystemExit(f"expected exactly 64 Python input-validation cases, ran {result.testsRun}")
+    if result.testsRun != 66:
+        raise SystemExit(f"expected exactly 66 Python input-validation cases, ran {result.testsRun}")
     raise SystemExit(0 if result.wasSuccessful() else 1)

@@ -199,6 +199,21 @@ def _validate_bins(datasets: list[np.ndarray], bins) -> np.ndarray:
         raise _input_error("histogram.bins", f"invalid bin specification: {exc}") from exc
 
 
+def _bins_resolve_once(bins) -> bool:
+    """Integer counts and automatic rules can be resolved on pooled data.
+
+    Explicit edge sequences already name the intervals. Booleans are not
+    integer bin counts; a zero-dimensional integer array is a count.
+    """
+    if isinstance(bins, (bool, np.bool_)):
+        return False
+    if isinstance(bins, (int, np.integer)):
+        return True
+    if isinstance(bins, str):
+        return True
+    return isinstance(bins, np.ndarray) and bins.shape == () and np.issubdtype(bins.dtype, np.integer)
+
+
 _POINT_MARKERS = tuple(marker for marker, _size in LINE_IDENTITIES)
 
 
@@ -974,8 +989,8 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     return fig, ax
 
 
-def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
-              profile="deep_scope", ax=None):
+def histogram(values, *, labels=None, bins=20, shared_bins=False, spec=None,
+              theme="slipware", profile="deep_scope", ax=None):
     """Draw finite distributions.
 
     A flat numeric sequence is one dataset. A nested sequence contains one
@@ -985,11 +1000,21 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
     A single dataset retains summary_core and its existing legend behavior.
     Explicit bin edges exclude observations outside their intervals from counts,
     with a UserWarning per affected dataset. Medians still use each full dataset.
+
+    ``shared_bins`` defaults to False. An integer bin count or a supported
+    automatic bin rule is then resolved for each dataset. ``shared_bins=True``
+    resolves that count or rule once on the pooled observations and draws every
+    dataset with those exact edges. Explicit edges already name common intervals
+    and keep their current counts, exclusions, and warnings. Counts stay raw.
     """
+    if not isinstance(shared_bins, bool):
+        raise _input_error("histogram.shared_bins", "must be boolean")
     datasets = _histogram_datasets(values)
     labels = ([f"series {index + 1}" for index in range(len(datasets))]
               if labels is None else _metadata(labels, path="histogram.labels", expected=len(datasets)))
     edges = _validate_bins(datasets, bins)
+    # Resolve before axes exist. Explicit edges stay caller-supplied.
+    use_shared_edges = shared_bins and _bins_resolve_once(bins)
     if np.ndim(bins) > 0:
         # Preflight before allocating or styling axes, including when a caller
         # promotes warnings to errors. NumPy owns the inclusive final edge.
@@ -1011,7 +1036,8 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
     multiple = len(datasets) > 1
     pairs, medians = [], []
     for data, label, color in zip(datasets, labels, series_colors(theme)):
-        _, _, patches = ax.hist(data, bins=bins, histtype="stepfilled", color=color, alpha=0.15,
+        draw_bins = edges.copy() if use_shared_edges else bins
+        _, _, patches = ax.hist(data, bins=draw_bins, histtype="stepfilled", color=color, alpha=0.15,
                                 edgecolor=color, linewidth=1.0, label=label, zorder=3)
         authored_label(patches[0], label)
         median = np.median(data)
