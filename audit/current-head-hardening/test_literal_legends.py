@@ -209,6 +209,29 @@ class LiteralLegends(unittest.TestCase):
                 self.assertTrue(any(np.array_equal(proxy.get_paths()[0].vertices, square)
                                     and proxy.get_alpha() == 0.4 for proxy in proxies))
 
+    def test_series_orders_keep_literal_underscore_labels_and_native_eligibility(self):
+        slots = {'_control': 2, '_reference': 0, '_nolegend_': 3, '_quiet': 1}
+        reading = ['_nolegend_', '_control', '_reference']
+        for family in ('scatter', 'strip'):
+            with self.subTest(family=family):
+                figure, axes = plt.subplots()
+                native, = axes.plot([0, 1], [0, 1], label='Native')
+                hidden, = axes.plot([0, 1], [2, 3], label='_native')
+                if family == 'scatter':
+                    scatter([0, 1, 2], [1, 2, 3], series=self.labels, series_slots=slots,
+                            draw_order=list(reversed(self.labels)), legend_order=reading, ax=axes)
+                else:
+                    strip_summary(['A', 'A', 'B'], [1, 2, 3], series=self.labels, series_slots=slots,
+                                  draw_order=list(reversed(self.labels)), legend_order=reading, seed=4, ax=axes)
+                figure.canvas.draw()
+                self.assertEqual(self.texts(axes), ['Native', *reading])
+                self.assertEqual(axes.get_legend_handles_labels()[1], ['Native'])
+                self.assertFalse(hasattr(native, '_figurestead_legend_rank'))
+                self.assertFalse(hasattr(hidden, '_figurestead_legend_rank'))
+                self.assertEqual([artist.get_label() for artist in axes.collections
+                                  if getattr(artist, '_figurestead_authored_label', False)],
+                                 list(reversed(self.labels)))
+
     def test_direct_labels_do_not_hide_other_owned_underscore_attribution(self):
         f, a = scatter([0, 1], [1, 2], series=['_prior', '_prior'])
         self.make('line', ax=a, direct=True); f.canvas.draw()

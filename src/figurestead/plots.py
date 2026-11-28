@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence, Mapping
+from itertools import count
 import warnings
 
 import matplotlib.pyplot as plt
@@ -409,8 +410,174 @@ def _series_point_styles(series_keys, theme, assigned):
         yield label, color, {"marker": marker, "resolved_edge": edge}
 
 
+# Explicit draw_order keeps every observation layer in [2, 5). Summary bars
+# start at z=5, so strip medians stay above the points from this call.
+_POINT_DEPTH_FLOOR = 2.0
+_POINT_DEPTH_LIMIT = 5.0
+_POINT_LAYER_FRACTIONS = (
+    ("glow", 0.08),
+    ("edge", 0.32),
+    ("primary", 0.56),
+    ("core", 0.80),
+)
+
+
+def _reject_anonymous_point_orders(draw_order, legend_order, *, plot: str, anonymous: bool) -> None:
+    """Reject either order before reading it when the points have no series."""
+    if not anonymous:
+        return
+    if draw_order is not None:
+        raise _input_error(
+            f"{plot}.draw_order",
+            "draw order requires an explicit series; anonymous points have no series keys",
+        )
+    if legend_order is not None:
+        raise _input_error(
+            f"{plot}.legend_order",
+            "legend order requires an explicit series; anonymous points have no series keys",
+        )
+
+
+def _declared_slot_key(series_slots, item) -> bool:
+    """True when item is a key of the supplied series_slots mapping."""
+    if series_slots is None:
+        return False
+    try:
+        if item in series_slots:
+            return True
+    except TypeError:
+        return False
+    if isinstance(item, np.generic):
+        plain = item.item()
+        try:
+            return plain in series_slots
+        except TypeError:
+            return False
+    return False
+
+
+def _series_key_order(value, *, path: str, active, series_slots):
+    """Validate an explicit series order. None means the argument was omitted.
+
+    Every active series appears once. Duplicates and unknown keys are rejected.
+    A key declared in ``series_slots`` but absent from the data is allowed.
+    Only lists, tuples, and one-dimensional arrays are read. Other containers
+    are rejected before iteration.
+    """
+    if value is None:
+        return None
+    if isinstance(value, (list, tuple)):
+        order = list(value)
+    elif np.ma.isMaskedArray(value):
+        raise _input_error(path, "masked arrays are not currently supported")
+    elif isinstance(value, np.ndarray):
+        if value.ndim != 1:
+            raise _input_error(path, "must be a list, tuple, or one-dimensional array")
+        order = list(value)
+    elif isinstance(value, _STRING_LIKE):
+        raise _input_error(path, "must be a non-string sequence of series keys")
+    elif isinstance(value, (set, frozenset)) or isinstance(value, Mapping):
+        # Reject before list() so hash order cannot become a paint or legend sequence.
+        raise _input_error(path, "must be an ordered sequence of series keys")
+    else:
+        raise _input_error(path, "must be a list, tuple, or one-dimensional array")
+    positions = {}
+    for index, item in enumerate(order):
+        item_path = f"{path}[{index}]"
+        try:
+            duplicate = item in positions
+            positions[item] = index
+        except TypeError as exc:
+            raise _input_error(item_path, "series keys must be hashable") from exc
+        if duplicate:
+            raise _input_error(item_path, f"duplicate series {_category_text(item)}")
+        if isinstance(item, (int, float, np.integer, np.floating)) and not np.isfinite(item):
+            raise _input_error(item_path, "numeric series keys must be finite")
+    matched = set()
+    for key in active:
+        try:
+            index = _category_key_value(positions, key)
+        except KeyError:
+            raise _input_error(path, f"observed series {_category_text(key)} is missing") from None
+        if index in matched:
+            raise _input_error(path, f"duplicate series {_category_text(key)}")
+        matched.add(index)
+    for index, item in enumerate(order):
+        if index in matched:
+            continue
+        if not _declared_slot_key(series_slots, item):
+            raise _input_error(f"{path}[{index}]", f"unknown series {_category_text(item)}")
+    return order
+
+
+def _active_key_sequence(order, active_keys):
+    """Active keys in explicit-order sequence, skipping inactive slot keys."""
+    positions = {item: index for index, item in enumerate(order)}
+    ranked = [(_category_key_value(positions, key), key) for key in active_keys]
+    ranked.sort(key=lambda pair: pair[0])
+    return [key for _, key in ranked]
+
+
+def _bounded_point_zorders(index: int, count: int) -> dict:
+    """Depths for one series so the whole series sits under the next series.
+
+    Index 0 is the back. Every layer stays strictly below the summary-bar floor.
+    """
+    slot = (_POINT_DEPTH_LIMIT - _POINT_DEPTH_FLOOR) / count
+    base = _POINT_DEPTH_FLOOR + index * slot
+    return {name: base + fraction * slot for name, fraction in _POINT_LAYER_FRACTIONS}
+
+
+def _point_paint_plan(styles, draw_order):
+    """Paint tuples ``(label, color, draw kwargs, layer z or None)``.
+
+    Omitted ``draw_order`` keeps first appearance and the profile depths.
+    """
+    if draw_order is None:
+        return [(label, color, kwargs, None) for label, color, kwargs in styles]
+    appearance = [label for label, _, _ in styles]
+    sequence = _active_key_sequence(draw_order, appearance)
+    count = len(sequence)
+    by_key = {label: (color, kwargs) for label, color, kwargs in styles}
+    plan = []
+    for index, key in enumerate(sequence):
+        color, kwargs = _category_key_value(by_key, key)
+        plan.append((key, color, kwargs, _bounded_point_zorders(index, count)))
+    return plan
+
+
+# One identifier per scatter or strip_summary call that records a legend order.
+_LEGEND_CALL_IDS = count()
+
+
+def _stamp_legend_ranks(owned, desired_keys) -> None:
+    """Record this call's identifier and a local reading rank on its handles."""
+    if not owned:
+        return
+    call_id = next(_LEGEND_CALL_IDS)
+    positions = {key: index for index, key in enumerate(desired_keys)}
+    for key, handle in owned:
+        handle._figurestead_legend_rank = (call_id, _category_key_value(positions, key))
+
+
+def _apply_point_legend(ax, theme, series_keys, owned, appearance, draw_order, legend_order) -> None:
+    """Refresh the ordinary legend without letting paint order replace it.
+
+    Omitted orders leave handles unranked, so legend collection stays native.
+    An explicit order ranks only this call's handles. A later rebuild keeps
+    those ranks and leaves unranked artists in place. One series still omits
+    its ordinary legend.
+    """
+    if draw_order is not None or legend_order is not None:
+        desired = appearance if legend_order is None else _active_key_sequence(legend_order, appearance)
+        _stamp_legend_ranks(owned, desired)
+    if len(series_keys) > 1:
+        style_legend(ax, theme)
+
+
 def strip_summary(groups, values, *, series=None, series_slots=None,
-                  point_style=None, series_styles=None, order=None, spec=None,
+                  point_style=None, series_styles=None,
+                  draw_order=None, legend_order=None, order=None, spec=None,
                   theme="slipware", profile="deep_scope", ax=None, seed=42):
     """Jittered categorical points with class-level median bars.
 
@@ -443,6 +610,27 @@ def strip_summary(groups, values, *, series=None, series_slots=None,
     no observation ink and still leaves every observation in the data, counts,
     and pooled medians. Colors, slots, drawing order, and legend order stay
     as they are. Lighter marks are not a foreground drawing-order control.
+
+    ``draw_order`` lists series keys from back to front. ``legend_order`` lists
+    them in legend reading order. Both are optional. ``order`` remains the
+    x-axis group order only. Omitting both leaves painting and the legend
+    unchanged. ``legend_order`` alone does not change painting. ``draw_order``
+    alone does not change the legend. An explicit order must name every active
+    series once. Only a list, tuple, or one-dimensional array is accepted.
+    Sets, frozensets, mappings, iterators, and other containers are rejected
+    before they are read and before axes are created or changed. Duplicates
+    and unknown keys are rejected. Keys declared in
+    ``series_slots`` but absent from the data may be included; they add no
+    artist and no legend entry. Anonymous points are rejected before axes are
+    created or changed. Key matching follows ``series_slots``, including
+    mixed-type string coercion and literal underscore labels. A single series
+    still omits its ordinary legend. Explicit drawing stacks glow, theme edge,
+    primary mark, and core of each background series under every layer of each
+    foreground series, and keeps those observations below the median bars.
+    Only observations from this call are reordered. A later legend rebuild
+    reorders this call's handles only inside the positions they occupy.
+    Colors, slots, resolved point styles, inclusion, offsets, seeded jitter,
+    counts, pooled medians, and axis limits stay as they are.
     """
     groups, _ = _category_vector(groups, path="strip_summary.groups", allow_empty=True)
     values = _numeric_array(
@@ -469,6 +657,12 @@ def strip_summary(groups, values, *, series=None, series_slots=None,
         series_slots, series_keys, path="strip_summary.series_slots")
     point_style, series_styles = _prepare_point_styles(
         point_style, series_styles, plot="strip_summary", anonymous=anonymous_series)
+    _reject_anonymous_point_orders(
+        draw_order, legend_order, plot="strip_summary", anonymous=anonymous_series)
+    draw_order = _series_key_order(
+        draw_order, path="strip_summary.draw_order", active=series_keys, series_slots=series_slots)
+    legend_order = _series_key_order(
+        legend_order, path="strip_summary.legend_order", active=series_keys, series_slots=series_slots)
     spec = spec or PlotSpec("Strip summary")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax, note=bool(spec.note))
@@ -482,15 +676,19 @@ def strip_summary(groups, values, *, series=None, series_slots=None,
         mask = series == label
         jitter[mask] = rng.uniform(-0.13, 0.13, size=mask.sum())
 
-    for label, color, draw_kwargs in _series_point_styles(series_keys, theme, assigned):
+    styles = list(_series_point_styles(series_keys, theme, assigned))
+    owned = []
+    for label, color, draw_kwargs, layer_zorder in _point_paint_plan(styles, draw_order):
         mask = series == label
         x = np.array([positions[item] for item in groups[mask]], dtype=float)
         x += jitter[mask]
         points = draw_points(ax, x, values[mask], color=color, theme=theme,
                     profile=profile, label="_nolegend_" if anonymous_series else str(label),
+                    layer_zorder=layer_zorder,
                     **_point_draw_kwargs(draw_kwargs, point_style, series_styles, label))
         if not anonymous_series:
             authored_label(points, label)
+            owned.append((label, points))
 
     ax.set_xticks(range(len(order)), order)
     # Keep counts out of the observation rectangle, including caller-authored
@@ -521,15 +719,16 @@ def strip_summary(groups, values, *, series=None, series_slots=None,
         count._figurestead_strip_count = True
 
     ax.set_xlim(-0.55, len(order) - 0.45)
-    if len(series_keys) > 1:
-        style_legend(ax, theme)
+    _apply_point_legend(
+        ax, theme, series_keys, owned, [label for label, _, _ in styles],
+        draw_order, legend_order)
     add_note(ax, spec, theme)
     return fig, ax
 
 
 def scatter(x, y, *, series=None, series_slots=None, point_style=None,
-            series_styles=None, spec=None, theme="slipware",
-            profile="deep_scope", ax=None):
+            series_styles=None, draw_order=None, legend_order=None, spec=None,
+            theme="slipware", profile="deep_scope", ax=None):
     """Draw paired finite numeric vectors; omitted series have no legend entry.
 
     ``series_slots`` optionally maps series keys to nonnegative integer slots
@@ -555,6 +754,26 @@ def scatter(x, y, *, series=None, series_slots=None, point_style=None,
     no observation ink and still leaves every point in the data. Colors,
     slots, drawing order, and legend order stay as they are. Lighter marks
     are not a foreground drawing-order control.
+
+    ``draw_order`` lists series keys from back to front. ``legend_order`` lists
+    them in legend reading order. Both are optional. Omitting both leaves
+    painting and the legend unchanged. ``legend_order`` alone does not change
+    painting. ``draw_order`` alone does not change the legend. An explicit
+    order must name every active series once. Only a list, tuple, or
+    one-dimensional array is accepted. Sets, frozensets, mappings, iterators,
+    and other containers are rejected before they are read and before axes
+    are created or changed. Duplicates and unknown keys are rejected. Keys
+    declared in ``series_slots`` but absent from the data may
+    be included; they add no artist and no legend entry. Anonymous points are
+    rejected before axes are created or changed. Key matching follows
+    ``series_slots``, including mixed-type string coercion and literal
+    underscore labels. A single series still omits its ordinary legend.
+    Explicit drawing stacks glow, theme edge, primary mark, and core of each
+    background series under every layer of each foreground series. Only
+    observations from this call are reordered. A later legend rebuild
+    reorders this call's handles only inside the positions they occupy.
+    Colors, slots, resolved point styles, which points are drawn, and axis
+    limits stay as they are.
     """
     x = _numeric_array(x, path="scatter.x", dimensions=(1,))
     y = _numeric_array(y, path="scatter.y", dimensions=(1,))
@@ -571,19 +790,30 @@ def scatter(x, y, *, series=None, series_slots=None, point_style=None,
         series_slots, series_keys, path="scatter.series_slots")
     point_style, series_styles = _prepare_point_styles(
         point_style, series_styles, plot="scatter", anonymous=anonymous_series)
+    _reject_anonymous_point_orders(
+        draw_order, legend_order, plot="scatter", anonymous=anonymous_series)
+    draw_order = _series_key_order(
+        draw_order, path="scatter.draw_order", active=series_keys, series_slots=series_slots)
+    legend_order = _series_key_order(
+        legend_order, path="scatter.legend_order", active=series_keys, series_slots=series_slots)
     spec = spec or PlotSpec("Scatter")
     theme, profile = resolve(theme, profile)
     fig, ax = ensure_axes(ax, note=bool(spec.note))
     style_axes(ax, theme, profile, spec)
-    for label, color, draw_kwargs in _series_point_styles(series_keys, theme, assigned):
+    styles = list(_series_point_styles(series_keys, theme, assigned))
+    owned = []
+    for label, color, draw_kwargs, layer_zorder in _point_paint_plan(styles, draw_order):
         mask = series == label
         points = draw_points(ax, x[mask], y[mask], color=color, theme=theme,
                     profile=profile, label="_nolegend_" if anonymous_series else str(label),
+                    layer_zorder=layer_zorder,
                     **_point_draw_kwargs(draw_kwargs, point_style, series_styles, label))
         if not anonymous_series:
             authored_label(points, label)
-    if len(series_keys) > 1:
-        style_legend(ax, theme)
+            owned.append((label, points))
+    _apply_point_legend(
+        ax, theme, series_keys, owned, [label for label, _, _ in styles],
+        draw_order, legend_order)
     add_note(ax, spec, theme)
     return fig, ax
 

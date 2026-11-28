@@ -57,9 +57,9 @@ Passing `ax` draws into an existing Matplotlib axes. Choose a
 | Call | Input and output meaning | Common optional arguments |
 | --- | --- | --- |
 | `line(x, ys)` | One finite shared x vector; one or more matching y series | `labels`, `series_slots`, `series_keys`, `line_styles`, `marker_stride=1`, `direct_labels=False` |
-| `scatter(x, y)` | Paired finite numeric vectors; no fit is inferred | `series` supplies one category per point; optional `series_slots`, `point_style`, and `series_styles` |
+| `scatter(x, y)` | Paired finite numeric vectors; no fit is inferred | `series` supplies one category per point; optional `series_slots`, `point_style`, `series_styles`, `draw_order`, and `legend_order` |
 | `histogram(values)` | One finite vector or nested vectors; counts and dataset medians | `labels`, `bins=20`; explicit shared bin edges aid comparisons |
-| `strip_summary(groups, values)` | One group per finite value; deterministic jitter and group median bars | `series`, `order`, `seed=42`; optional `series_slots`, `point_style`, and `series_styles` |
+| `strip_summary(groups, values)` | One group per finite value; deterministic jitter and group median bars | `series`, `order` (x-axis groups only), `seed=42`; optional `series_slots`, `point_style`, `series_styles`, `draw_order`, and `legend_order` |
 | `heatmap(matrix)` | A nonempty finite 2D matrix; sequential color ramp and colorbar | `xlabels`, `ylabels` must match columns and rows |
 
 `scatter` and `strip_summary` accept an optional `series_slots` mapping from
@@ -100,6 +100,36 @@ primary opacity. Core and glow stay on the axes. Drawing order and legend
 order are unchanged. A lighter mark is not a foreground-order control. These
 arguments do not change coordinates, inclusion, seeded jitter, category
 order, data limits, or slot assignment.
+
+`draw_order` and `legend_order` are optional on `scatter` and `strip_summary`
+only. `draw_order` lists series keys from back to front. `legend_order` lists
+them in legend reading order. On `strip_summary`, `order` stays the x-axis
+group order. Omitting both leaves painting and the legend as they are.
+`legend_order` alone does not change which point layer is in front.
+`draw_order` alone does not change legend reading order.
+
+An explicit order must be a list, tuple, or one-dimensional array and must
+name every active series once. Sets, frozensets, mappings, iterators, and
+other containers are rejected before they are read.
+Duplicates and unknown keys are rejected. A key that is declared in
+`series_slots` and is not in the data may be included; it is not drawn and
+does not add a legend entry. Key matching is the same as `series_slots`,
+including mixed-type string coercion. `series=[0, "A"]` is stored as `"0"`.
+Underscore labels stay literal. Anonymous points have no keys, so either
+argument is rejected before axes are created or changed. A single series
+still omits its ordinary legend.
+
+Explicit `draw_order` places every layer of a background series under every
+layer of a foreground series: glow, theme edge, primary mark, and core.
+Those observation layers stay below strip median bars. The guarantee applies
+only to observations from that call. Caller-owned artists keep their depths.
+Legend order applies only to that call's handles. A later plot that rebuilds
+the legend reorders each call's surviving handles only within the positions
+those handles currently occupy; other handles stay in native order. The
+arguments do not change first-appearance colors,
+slots, resolved `point_style` or `series_styles`, which rows are drawn,
+offsets, seeded jitter, group counts, pooled medians, or axis limits. This
+is not a grayscale, color-vision, print, or accessibility qualification.
 
 Do not pass mismatched vectors, silently discard missing observations, or treat
 these examples as statistical analysis. `order` must include every observed

@@ -292,6 +292,50 @@ class StripCountLayoutTests(unittest.TestCase):
         self.assertLess(note.get_window_extent(renderer).y1,
                         min(text.get_window_extent(renderer).y0 for text in self.counts(ax)))
 
+    def test_series_orders_do_not_change_counts_medians_jitter_or_limits(self):
+        groups = ['Late', 'Early', 'Late', 'Early', 'Late', 'Early']
+        values = [9.0, 1.0, 3.0, 5.0, 6.0, 4.0]
+        series = ['B', 'A', 'A', 'B', 'C', 'A']
+        order = ['Early', 'Middle', 'Late']
+        slots = {'A': 5, 'B': 1, 'C': 3, 'unused': 0}
+        shared = dict(series=series, order=order, seed=11, series_slots=slots,
+                      point_style={'size': 18, 'alpha': 0.4},
+                      series_styles={'B': {'size': 52, 'alpha': 0.95, 'marker': 'diamond'}})
+        for profile in ('deep_scope', 'instrument', 'monograph'):
+            with self.subTest(profile=profile):
+                plain, plain_ax = strip_summary(groups, values, profile=profile, **shared)
+                ordered, ordered_ax = strip_summary(
+                    groups, values, profile=profile, draw_order=['unused', 'C', 'A', 'B'],
+                    legend_order=['C', 'unused', 'A', 'B'], **shared)
+                self.assertEqual([text.get_text() for text in self.counts(ordered_ax)],
+                                 ['n=3', 'n=0', 'n=3'])
+                self.assertEqual([text.get_text() for text in self.counts(plain_ax)],
+                                 [text.get_text() for text in self.counts(ordered_ax)])
+                self.assertEqual([text.get_text() for text in ordered_ax.get_xticklabels()],
+                                 ['Early', 'Middle', 'Late'])
+                self.assertEqual(plain_ax.get_xlim(), ordered_ax.get_xlim())
+                self.assertEqual(plain_ax.get_ylim(), ordered_ax.get_ylim())
+                self.assertEqual(tuple(plain_ax.dataLim.bounds), tuple(ordered_ax.dataLim.bounds))
+                labelled_plain = [artist for artist in plain_ax.collections
+                                  if getattr(artist, '_figurestead_authored_label', False)]
+                labelled = [artist for artist in ordered_ax.collections
+                            if getattr(artist, '_figurestead_authored_label', False)]
+                self.assertEqual([artist.get_label() for artist in labelled], ['C', 'A', 'B'])
+                by_label = {artist.get_label(): artist for artist in labelled}
+                for artist in labelled_plain:
+                    np.testing.assert_array_equal(by_label[artist.get_label()].get_offsets(), artist.get_offsets())
+                for one, two in zip(plain_ax.lines, ordered_ax.lines):
+                    np.testing.assert_array_equal(one.get_xydata(), two.get_xydata())
+                self.assertEqual(sorted({float(line.get_ydata()[0]) for line in ordered_ax.lines}), [4.0, 6.0])
+                point_z = [artist.get_zorder() for artist in ordered_ax.collections]
+                self.assertLess(max(point_z), min(line.get_zorder() for line in ordered_ax.lines))
+                self.assertEqual([text.get_text() for text in ordered_ax.get_legend().get_texts()],
+                                 ['C', 'A', 'B'])
+                ordered.canvas.draw()
+                self.assert_count_band(ordered, ordered_ax)
+                plt.close(plain)
+                plt.close(ordered)
+
 
 if __name__ == '__main__':
     unittest.main()

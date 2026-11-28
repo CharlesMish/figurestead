@@ -1067,6 +1067,274 @@ class PointSeriesSlotTests(unittest.TestCase):
         plt.close(styled)
         plt.close(hidden)
 
+    def legend_texts(self, ax):
+        legend = ax.get_legend()
+        if legend is None:
+            return None
+        return [text.get_text() for text in legend.get_texts()]
+
+    def fresh_layers(self, ax, before, paint_order):
+        ours = [artist for artist in ax.collections if id(artist) not in before]
+        count = len(paint_order)
+        self.assertGreater(count, 0)
+        self.assertEqual(len(ours) % count, 0)
+        width = len(ours) // count
+        layers = {}
+        for index, label in enumerate(paint_order):
+            chunk = ours[index * width:(index + 1) * width]
+            labelled = [artist for artist in chunk if getattr(artist, "_figurestead_authored_label", False)]
+            self.assertEqual([artist.get_label() for artist in labelled], [str(label)])
+            layers[str(label)] = chunk
+        return layers
+
+    def assert_whole_series_stacked(self, layers, paint_order):
+        previous = None
+        for label in paint_order:
+            chunk = layers[str(label)]
+            depths = [artist.get_zorder() for artist in chunk]
+            self.assertEqual(len(depths), len(set(depths)))
+            if previous is not None:
+                self.assertLess(max(previous), min(depths))
+            previous = depths
+
+    def test_omitted_series_orders_match_current_painting_and_legend(self):
+        from figurestead import scatter, strip_summary
+        for family in ("scatter", "strip"):
+            plain_fig, plain_ax = self.draw(family, ["A", "B", "C"], series_slots={"A": 0, "B": 1, "C": 2, "quiet": 4},
+                                            point_style={"size": 18, "alpha": 0.4})
+            plain = self.png(plain_fig)
+            plt.close(plain_fig)
+            for options in ({"draw_order": None, "legend_order": None}, {}):
+                fig, ax = self.draw(family, ["A", "B", "C"], series_slots={"A": 0, "B": 1, "C": 2, "quiet": 4},
+                                    point_style={"size": 18, "alpha": 0.4}, **options)
+                self.assertEqual(self.png(fig), plain)
+                self.assertEqual(self.legend_texts(ax), ["A", "B", "C"])
+                for artist in self.labelled(ax):
+                    depths = sorted(item.get_zorder() for item in self.support_layers(ax, artist))
+                    self.assertEqual(depths, [2, 3, 4])
+                    self.assertFalse(hasattr(artist, "_figurestead_legend_rank"))
+                plt.close(fig)
+        fig, ax = scatter([0, 1], [1, 2], series=["Only", "Only"], draw_order=["Only"], legend_order=["Only"])
+        self.assertIsNone(ax.get_legend())
+        plt.close(fig)
+        fig, ax = scatter([0, 1], [1, 2], series=["A", "B"])
+        scatter([2], [3], series=["Only"], draw_order=["Only"], legend_order=["Only"], ax=ax)
+        self.assertEqual(self.legend_texts(ax), ["A", "B"])
+        plt.close(fig)
+        fig, ax = strip_summary(["East", "West"], [1, 2], seed=5)
+        other, other_ax = strip_summary(["East", "West"], [1, 2], seed=5, draw_order=None, legend_order=None)
+        self.assertEqual(self.png(fig), self.png(other))
+        self.assertEqual(ax.get_xlim(), other_ax.get_xlim())
+        plt.close(fig)
+        plt.close(other)
+
+    def test_legend_order_does_not_change_painting_and_draw_order_keeps_legend(self):
+        from figurestead import scatter, strip_summary
+        slots = {"Historical": 0, "Recent": 2, "Future": 4}
+        styles = {"Recent": {"size": 52, "alpha": 0.95, "marker": "diamond"}}
+        point_style = {"size": 18, "alpha": 0.4}
+        for family in ("scatter", "strip"):
+            with self.subTest(family=family):
+                shared = dict(series_slots=slots, point_style=point_style, series_styles=styles)
+                if family == "scatter":
+                    x, y, series, _ = self.frame(["Recent", "Historical"])
+                    draw = lambda **kw: scatter(x, y, series=series, **shared, **kw)
+                else:
+                    _, y, series, groups = self.frame(["Recent", "Historical"])
+                    draw = lambda **kw: strip_summary(groups, y, series=series, order=["West", "East"], seed=11, **shared, **kw)
+                plain, plain_ax = draw()
+                legend_only, legend_ax = draw(legend_order=["Historical", "Recent"])
+                draw_only, draw_ax = draw(draw_order=["Historical", "Recent"])
+                both, both_ax = draw(draw_order=["Historical", "Recent"], legend_order=["Recent", "Historical"])
+                self.assertEqual(self.legend_texts(plain_ax), ["Recent", "Historical"])
+                self.assertEqual(self.legend_texts(legend_ax), ["Historical", "Recent"])
+                self.assertEqual(self.legend_texts(draw_ax), ["Recent", "Historical"])
+                self.assertEqual(self.legend_texts(both_ax), ["Recent", "Historical"])
+                self.assertEqual(len(plain_ax.collections), len(legend_ax.collections))
+                for one, two in zip(plain_ax.collections, legend_ax.collections):
+                    self.assertEqual(one.get_zorder(), two.get_zorder())
+                    np.testing.assert_array_equal(one.get_offsets(), two.get_offsets())
+                    np.testing.assert_array_equal(one.get_sizes(), two.get_sizes())
+                    self.assertEqual(one.get_alpha(), two.get_alpha())
+                for ax in (legend_ax, draw_ax, both_ax):
+                    self.assertEqual(ax.get_xlim(), plain_ax.get_xlim())
+                    self.assertEqual(ax.get_ylim(), plain_ax.get_ylim())
+                    self.assertEqual(tuple(ax.dataLim.bounds), tuple(plain_ax.dataLim.bounds))
+                    by_plain = {artist.get_label(): artist for artist in self.labelled(plain_ax)}
+                    for artist in self.labelled(ax):
+                        original = by_plain[artist.get_label()]
+                        np.testing.assert_array_equal(artist.get_offsets(), original.get_offsets())
+                        np.testing.assert_array_equal(artist.get_edgecolor(), original.get_edgecolor())
+                        self.assertEqual(float(artist.get_sizes()[0]), float(original.get_sizes()[0]))
+                        self.assertEqual(artist.get_alpha(), original.get_alpha())
+                        self.assertEqual(artist._figurestead_point_treatment["color"],
+                                         original._figurestead_point_treatment["color"])
+                if family == "strip":
+                    self.assertEqual([text.get_text() for text in plain_ax.get_xticklabels()], ["West", "East"])
+                    self.assertEqual([text.get_text() for text in both_ax.get_xticklabels()], ["West", "East"])
+                paint = self.fresh_layers(draw_ax, set(), ["Historical", "Recent"])
+                self.assert_whole_series_stacked(paint, ["Historical", "Recent"])
+                self.assertLess(max(artist.get_zorder() for artist in paint["Historical"]), 5)
+                self.assertLess(max(artist.get_zorder() for artist in paint["Recent"]), 5)
+                plain_paint = self.fresh_layers(plain_ax, set(), ["Recent", "Historical"])
+                for label, chunk in plain_paint.items():
+                    self.assertEqual(sorted(artist.get_zorder() for artist in chunk), [2, 3, 4])
+                plt.close("all")
+
+    def test_draw_order_stacks_theme_edge_filled_marks_and_strip_bars(self):
+        from matplotlib.colors import to_rgba
+        from figurestead import scatter, strip_summary
+        base, _ = resolve("slipware", "deep_scope")
+        theme = replace(base, series_edges=("#111111", "#222222", "#333333", "#444444"))
+        slots = {"Historical": 0, "Recent": 2, "Future": 1}
+        series = ["Historical", "Recent", "Historical", "Recent"]
+        shared = dict(series=series, series_slots=slots, theme=theme,
+                      point_style={"size": 18, "alpha": 0.4},
+                      series_styles={"Recent": {"size": 52, "alpha": 0.95, "marker": "diamond"},
+                                     "Future": {"size": 8}})
+        for profile, layer_count in (("deep_scope", 4), ("instrument", 1), ("monograph", 1)):
+            with self.subTest(profile=profile):
+                fig, ax = scatter([0, 1, 2, 3], [1, 1, 2, 2], profile=profile,
+                                  draw_order=["Historical", "Recent"], **shared)
+                layers = self.fresh_layers(ax, set(), ["Historical", "Recent"])
+                self.assertTrue(all(len(chunk) == layer_count for chunk in layers.values()))
+                self.assert_whole_series_stacked(layers, ["Historical", "Recent"])
+                if profile == "deep_scope":
+                    historical_edge = theme.series_edges[0]
+                    edge_layers = [artist for artist in layers["Historical"]
+                                   if len(artist.get_edgecolor())
+                                   and np.allclose(artist.get_edgecolor()[0, :3], to_rgba(historical_edge)[:3])]
+                    self.assertEqual(len(edge_layers), 1)
+                    self.assertLess(edge_layers[0].get_zorder(), min(artist.get_zorder() for artist in layers["Recent"]))
+                    self.assertGreater(edge_layers[0].get_zorder(),
+                                       min(artist.get_zorder() for artist in layers["Historical"]))
+                plt.close(fig)
+                fig, ax = strip_summary(["East", "West", "East", "West"], [1, 5, 3, 9],
+                                        profile=profile, seed=4,
+                                        draw_order=["Recent", "Historical"], **shared)
+                layers = self.fresh_layers(ax, set(), ["Recent", "Historical"])
+                self.assert_whole_series_stacked(layers, ["Recent", "Historical"])
+                point_z = [artist.get_zorder() for chunk in layers.values() for artist in chunk]
+                bar_z = [line.get_zorder() for line in ax.lines]
+                self.assertGreaterEqual(min(bar_z), 5)
+                self.assertLess(max(point_z), min(bar_z))
+                self.assertEqual(sorted({round(float(line.get_ydata()[0]), 10) for line in ax.lines}), [2.0, 7.0])
+                plt.close(fig)
+
+    def test_coincident_overlap_and_caller_artists_stay_scoped(self):
+        from matplotlib.colors import to_rgba
+        from figurestead import line, scatter, strip_summary
+        base, _ = resolve("lavender_fog_notebook", "deep_scope")
+        theme = replace(base, series_edges=("#aa3344", "#225588", "#117744", "#886622"))
+        slots = {"Historical": 0, "Recent": 1}
+        x = [0.0, 0.0, 0.0, 0.0]
+        y = [1.0, 1.0, 1.0, 1.0]
+        series = ["Historical", "Recent", "Historical", "Recent"]
+        fig, ax = plt.subplots()
+        caller = ax.scatter([2], [3], marker="*", c="black", s=40, label="Caller", zorder=1.2)
+        guide, = ax.plot([0, 2], [0, 3], color="#336699", label="Guide", zorder=6.4)
+        caller_z, guide_z = caller.get_zorder(), guide.get_zorder()
+        before = {id(caller)}
+        scatter(x, y, series=series, series_slots=slots, theme=theme, profile="deep_scope",
+                point_style={"size": 30, "alpha": 1},
+                series_styles={"Recent": {"size": 70, "marker": "diamond", "alpha": 1}},
+                draw_order=["Historical", "Recent"], legend_order=["Recent", "Historical"], ax=ax)
+        self.assertEqual(caller.get_zorder(), caller_z)
+        self.assertEqual(guide.get_zorder(), guide_z)
+        self.assertFalse(hasattr(caller, "_figurestead_legend_rank"))
+        self.assertFalse(hasattr(guide, "_figurestead_legend_rank"))
+        self.assertEqual(self.legend_texts(ax), ["Caller", "Guide", "Recent", "Historical"])
+        layers = self.fresh_layers(ax, before, ["Historical", "Recent"])
+        self.assertEqual(len(layers["Historical"]), 4)
+        self.assertEqual(len(layers["Recent"]), 4)
+        self.assert_whole_series_stacked(layers, ["Historical", "Recent"])
+        np.testing.assert_array_equal(self.labelled(ax)[0].get_offsets(), [[0, 1], [0, 1]])
+        np.testing.assert_array_equal(self.labelled(ax)[1].get_offsets(), [[0, 1], [0, 1]])
+        historical_edge = [artist for artist in layers["Historical"]
+                           if len(artist.get_edgecolor())
+                           and np.allclose(artist.get_edgecolor()[0, :3], to_rgba(theme.series_edges[0])[:3])]
+        self.assertEqual(len(historical_edge), 1)
+        self.assertLess(historical_edge[0].get_zorder(), min(artist.get_zorder() for artist in layers["Recent"]))
+        line([0, 1], [[4, 5], [5, 6]], labels=["North", "South"], ax=ax)
+        self.assertEqual(self.legend_texts(ax), ["Caller", "Guide", "Recent", "Historical", "North", "South"])
+        self.assertEqual(caller.get_zorder(), caller_z)
+        plt.close(fig)
+        fig, ax = plt.subplots()
+        star = ax.scatter([-1], [4], marker="*", c="black", s=30, label="Caller", zorder=7)
+        star_z = star.get_zorder()
+        before = {id(star)}
+        strip_summary(["East", "East", "West", "West"], [2, 2, 2, 2], series=series, seed=3,
+                      series_slots=slots, theme=theme, profile="monograph",
+                      draw_order=["Recent", "Historical"], legend_order=["Historical", "Recent"], ax=ax)
+        layers = self.fresh_layers(ax, before, ["Recent", "Historical"])
+        self.assertTrue(all(len(chunk) == 1 for chunk in layers.values()))
+        self.assert_whole_series_stacked(layers, ["Recent", "Historical"])
+        self.assertLess(max(artist.get_zorder() for chunk in layers.values() for artist in chunk),
+                        min(line.get_zorder() for line in ax.lines))
+        self.assertEqual(star.get_zorder(), star_z)
+        self.assertEqual(self.legend_texts(ax), ["Caller", "Historical", "Recent"])
+        np.testing.assert_array_equal(layers["Recent"][0].get_offsets()[:, 1], [2, 2])
+        plt.close(fig)
+
+    def test_series_orders_survive_legend_refresh_without_reordering_other_artists(self):
+        from figurestead import scatter
+        fig, ax = scatter([0, 0, 1, 1], [1, 2, 1, 2], series=["A", "B", "A", "B"],
+                          draw_order=["B", "A"], legend_order=["B", "A"])
+        self.assertEqual(self.legend_texts(ax), ["B", "A"])
+        layers = self.fresh_layers(ax, set(), ["B", "A"])
+        self.assert_whole_series_stacked(layers, ["B", "A"])
+        line([0, 1], [[3, 4], [4, 5]], labels=["North", "South"], ax=ax)
+        self.assertEqual(self.legend_texts(ax), ["B", "A", "North", "South"])
+        fig2, ax2 = scatter([0, 0, 1, 1], [1, 2, 1, 2], series=["A", "B", "A", "B"], draw_order=["B", "A"])
+        self.assertEqual(self.legend_texts(ax2), ["A", "B"])
+        line([0, 1], [[3, 4], [4, 5]], labels=["North", "South"], ax=ax2)
+        self.assertEqual(self.legend_texts(ax2), ["A", "B", "North", "South"])
+        plt.close(fig)
+        plt.close(fig2)
+
+    def test_reattached_calls_reorder_only_inside_their_own_legend_slots(self):
+        from figurestead import _legend, scatter
+        fig, ax = plt.subplots()
+        for keys, xy in ((["A", "B"], 0), (["C", "D"], 1)):
+            scatter([xy, xy], [xy, xy], series=keys, profile="monograph",
+                    legend_order=keys[::-1], ax=ax)
+        guide, = ax.plot([0, 1], [0, 1], label="guide")
+        for label in ("A", "B"):
+            artist = next(artist for artist in list(ax.collections)
+                          if getattr(artist, "_figurestead_authored_label", False)
+                          and artist.get_label() == label)
+            artist.remove()
+            ax.add_collection(artist)
+        captured = {}
+
+        def keep_native(handles, texts):
+            captured["texts"] = list(texts)
+            return handles, texts
+
+        original = _legend._apply_legend_ranks
+        _legend._apply_legend_ranks = keep_native
+        try:
+            _legend.legend_entries(ax)
+        finally:
+            _legend._apply_legend_ranks = original
+        self.assertEqual(captured["texts"], ["C", "D", "guide", "A", "B"])
+        ranks = {}
+        for artist in ax.collections:
+            if getattr(artist, "_figurestead_authored_label", False):
+                ranks[artist.get_label()] = artist._figurestead_legend_rank
+        self.assertEqual(ranks["A"][0], ranks["B"][0])
+        self.assertEqual(ranks["C"][0], ranks["D"][0])
+        self.assertNotEqual(ranks["A"][0], ranks["C"][0])
+        self.assertLess(ranks["B"][1], ranks["A"][1])
+        self.assertLess(ranks["D"][1], ranks["C"][1])
+        self.assertFalse(hasattr(guide, "_figurestead_legend_rank"))
+        line([0, 1], [1, 2], labels=["refresh"], ax=ax)
+        self.assertEqual(self.legend_texts(ax), ["D", "C", "guide", "B", "A", "refresh"])
+        refresh = next(artist for artist in ax.lines if artist.get_label() == "refresh")
+        self.assertFalse(hasattr(refresh, "_figurestead_legend_rank"))
+        self.assertFalse(hasattr(guide, "_figurestead_legend_rank"))
+        plt.close(fig)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
