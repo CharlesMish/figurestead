@@ -199,21 +199,6 @@ def _validate_bins(datasets: list[np.ndarray], bins) -> np.ndarray:
         raise _input_error("histogram.bins", f"invalid bin specification: {exc}") from exc
 
 
-def _bins_resolve_once(bins) -> bool:
-    """Integer counts and automatic rules can be resolved on pooled data.
-
-    Explicit edge sequences already name the intervals. Booleans are not
-    integer bin counts; a zero-dimensional integer array is a count.
-    """
-    if isinstance(bins, (bool, np.bool_)):
-        return False
-    if isinstance(bins, (int, np.integer)):
-        return True
-    if isinstance(bins, str):
-        return True
-    return isinstance(bins, np.ndarray) and bins.shape == () and np.issubdtype(bins.dtype, np.integer)
-
-
 _POINT_MARKERS = tuple(marker for marker, _size in LINE_IDENTITIES)
 
 
@@ -1001,11 +986,12 @@ def histogram(values, *, labels=None, bins=20, shared_bins=False, spec=None,
     Explicit bin edges exclude observations outside their intervals from counts,
     with a UserWarning per affected dataset. Medians still use each full dataset.
 
-    ``shared_bins`` defaults to False. An integer bin count or a supported
-    automatic bin rule is then resolved for each dataset. ``shared_bins=True``
-    resolves that count or rule once on the pooled observations and draws every
-    dataset with those exact edges. Explicit edges already name common intervals
-    and keep their current counts, exclusions, and warnings. Counts stay raw.
+    ``shared_bins`` defaults to False. A scalar bin request is then resolved
+    for each dataset. ``shared_bins=True`` resolves every scalar request NumPy
+    accepts, including a boolean count, once on the pooled observations and
+    draws every dataset with those exact edges. Explicit edges already name
+    common intervals and keep their current counts, exclusions, and warnings.
+    Counts stay raw.
     """
     if not isinstance(shared_bins, bool):
         raise _input_error("histogram.shared_bins", "must be boolean")
@@ -1013,8 +999,9 @@ def histogram(values, *, labels=None, bins=20, shared_bins=False, spec=None,
     labels = ([f"series {index + 1}" for index in range(len(datasets))]
               if labels is None else _metadata(labels, path="histogram.labels", expected=len(datasets)))
     edges = _validate_bins(datasets, bins)
-    # Resolve before axes exist. Explicit edges stay caller-supplied.
-    use_shared_edges = shared_bins and _bins_resolve_once(bins)
+    # Classification follows successful validation. A scalar request has no
+    # edge axis; NumPy accepts True as one bin. Explicit edges stay as given.
+    use_shared_edges = shared_bins and np.ndim(bins) == 0
     if np.ndim(bins) > 0:
         # Preflight before allocating or styling axes, including when a caller
         # promotes warnings to errors. NumPy owns the inclusive final edge.

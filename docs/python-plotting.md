@@ -132,9 +132,9 @@ offsets, seeded jitter, group counts, pooled medians, or axis limits. This
 is not a grayscale, color-vision, print, or accessibility qualification.
 
 `shared_bins=False` is the histogram default and keeps the current per-dataset
-bin policy. An integer count, including a NumPy integer, or an automatic rule
-that NumPy accepts is resolved separately for each dataset.
-`shared_bins=True` resolves that count or rule once against the pooled
+bin policy. Any scalar request NumPy accepts, including an integer count, an
+automatic rule, or `True` as one bin, is resolved separately for each dataset.
+`shared_bins=True` resolves that same request once against the pooled
 observations and draws every dataset with those exact edges. Datasets `[0, 2]`
 and `[10, 14]` with `bins=2` use edges `[0, 1, 2]` and `[10, 12, 14]` by
 default, and edges `[0, 7, 14]` for both when the option is on. Explicit bin

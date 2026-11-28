@@ -270,6 +270,26 @@ class HistogramOwnershipTests(unittest.TestCase):
             np.testing.assert_array_equal(left, right)
         self.assertEqual(snapshots[0][1:], snapshots[1][1:])
 
+    def test_shared_boolean_bin_count_uses_pooled_edges(self):
+        data = [[0, 2], [10, 14]]
+        _, separate = histogram(data, labels=['Low', 'High'], bins=True)
+        separate_edges = [edges for _, edges in self._edges_matching_body(separate, data, True)]
+        np.testing.assert_array_equal(separate_edges[0], [0., 2.])
+        np.testing.assert_array_equal(separate_edges[1], [10., 14.])
+        _, shared = histogram(data, labels=['Low', 'High'], bins=True, shared_bins=True)
+        shared_matched = self._edges_matching_body(shared, data, [0, 14])
+        self.assertEqual(len(shared_matched), 2)
+        for counts, edges in shared_matched:
+            np.testing.assert_array_equal(edges, [0., 14.])
+            np.testing.assert_array_equal(counts, [2])
+        self.assertEqual([line.get_xdata()[0] for line in shared.lines], [1., 12.])
+        self.assertEqual([text.get_text() for text in shared.get_legend().get_texts()],
+                         ['Low · 1', 'High · 12'])
+        before = plt.get_fignums()
+        with self.assertRaisesRegex(ValueError, r"histogram\.bins: invalid bin specification"):
+            histogram(data, bins=False, shared_bins=True)
+        self.assertEqual(plt.get_fignums(), before)
+
     def test_shared_integer_bins_use_pooled_edges(self):
         data = [[0, 2], [10, 14]]
         pooled = np.array([0., 7., 14.])
@@ -350,6 +370,7 @@ class HistogramOwnershipTests(unittest.TestCase):
         samples = (
             ([0, 2, 10, 14], 2),
             ([0, 2, 10, 14], np.int64(2)),
+            ([0, 2, 10, 14], True),
             ([0, 2, 10, 14], 'sqrt'),
             ([0, 2, 10, 14], [0, 7, 14]),
             ([[0, 2, 10, 14]], 'sturges'),
