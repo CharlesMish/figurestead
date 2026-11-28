@@ -58,7 +58,7 @@ Passing `ax` draws into an existing Matplotlib axes. Choose a
 | --- | --- | --- |
 | `line(x, ys)` | One finite shared x vector; one or more matching y series | `labels`, `series_slots`, `series_keys`, `line_styles`, `marker_stride=1`, `direct_labels=False` |
 | `scatter(x, y)` | Paired finite numeric vectors; no fit is inferred | `series` supplies one category per point; optional `series_slots`, `point_style`, `series_styles`, `draw_order`, and `legend_order` |
-| `histogram(values)` | One finite vector or nested vectors; counts and dataset medians | `labels`, `bins=20`; explicit shared bin edges aid comparisons |
+| `histogram(values)` | One finite vector or nested vectors; counts and dataset medians | `labels`, `bins=20`, `shared_bins=False`; explicit edges already name common intervals |
 | `strip_summary(groups, values)` | One group per finite value; deterministic jitter and group median bars | `series`, `order` (x-axis groups only), `seed=42`; optional `series_slots`, `point_style`, `series_styles`, `draw_order`, and `legend_order` |
 | `heatmap(matrix)` | A nonempty finite 2D matrix; sequential color ramp and colorbar | `xlabels`, `ylabels` must match columns and rows |
 
@@ -130,6 +130,18 @@ arguments do not change first-appearance colors,
 slots, resolved `point_style` or `series_styles`, which rows are drawn,
 offsets, seeded jitter, group counts, pooled medians, or axis limits. This
 is not a grayscale, color-vision, print, or accessibility qualification.
+
+`shared_bins=False` is the histogram default and keeps the current per-dataset
+bin policy. Any scalar request NumPy accepts, including an integer count, an
+automatic rule, or `True` as one bin, is resolved separately for each dataset.
+`shared_bins=True` resolves that same request once against the pooled
+observations and draws every dataset with those exact edges. Datasets `[0, 2]`
+and `[10, 14]` with `bins=2` use edges `[0, 1, 2]` and `[10, 12, 14]` by
+default, and edges `[0, 7, 14]` for both when the option is on. Explicit bin
+edges already select the intervals, so their counts, exclusion warnings, and
+full-dataset medians stay the same either way. `shared_bins` must be a boolean
+and is rejected before axes are created or changed. One dataset keeps the theme
+summary color and does not gain a legend. Counts remain raw counts.
 
 Do not pass mismatched vectors, silently discard missing observations, or treat
 these examples as statistical analysis. `order` must include every observed

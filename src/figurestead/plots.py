@@ -974,8 +974,8 @@ def line(x, ys, *, labels=None, series_slots=None, series_keys=None, line_styles
     return fig, ax
 
 
-def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
-              profile="deep_scope", ax=None):
+def histogram(values, *, labels=None, bins=20, shared_bins=False, spec=None,
+              theme="slipware", profile="deep_scope", ax=None):
     """Draw finite distributions.
 
     A flat numeric sequence is one dataset. A nested sequence contains one
@@ -985,11 +985,23 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
     A single dataset retains summary_core and its existing legend behavior.
     Explicit bin edges exclude observations outside their intervals from counts,
     with a UserWarning per affected dataset. Medians still use each full dataset.
+
+    ``shared_bins`` defaults to False. A scalar bin request is then resolved
+    for each dataset. ``shared_bins=True`` resolves every scalar request NumPy
+    accepts, including a boolean count, once on the pooled observations and
+    draws every dataset with those exact edges. Explicit edges already name
+    common intervals and keep their current counts, exclusions, and warnings.
+    Counts stay raw.
     """
+    if not isinstance(shared_bins, bool):
+        raise _input_error("histogram.shared_bins", "must be boolean")
     datasets = _histogram_datasets(values)
     labels = ([f"series {index + 1}" for index in range(len(datasets))]
               if labels is None else _metadata(labels, path="histogram.labels", expected=len(datasets)))
     edges = _validate_bins(datasets, bins)
+    # Classification follows successful validation. A scalar request has no
+    # edge axis; NumPy accepts True as one bin. Explicit edges stay as given.
+    use_shared_edges = shared_bins and np.ndim(bins) == 0
     if np.ndim(bins) > 0:
         # Preflight before allocating or styling axes, including when a caller
         # promotes warnings to errors. NumPy owns the inclusive final edge.
@@ -1011,7 +1023,8 @@ def histogram(values, *, labels=None, bins=20, spec=None, theme="slipware",
     multiple = len(datasets) > 1
     pairs, medians = [], []
     for data, label, color in zip(datasets, labels, series_colors(theme)):
-        _, _, patches = ax.hist(data, bins=bins, histtype="stepfilled", color=color, alpha=0.15,
+        draw_bins = edges.copy() if use_shared_edges else bins
+        _, _, patches = ax.hist(data, bins=draw_bins, histtype="stepfilled", color=color, alpha=0.15,
                                 edgecolor=color, linewidth=1.0, label=label, zorder=3)
         authored_label(patches[0], label)
         median = np.median(data)
